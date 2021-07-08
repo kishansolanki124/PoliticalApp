@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="banner_red">#9D2F22</color>
+    <color name="red_light">#D0252E</color>
 </resources>

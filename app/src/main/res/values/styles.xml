@@ -64,4 +64,9 @@
         <item name="colorPrimary">@color/banner_red</item>
         <item name="colorAccent">@color/banner_red</item>
     </style>
+
+    <style name="ClickableViewWhite">
+        <item name="colorControlHighlight">@android:color/white</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+    </style>
 </resources>

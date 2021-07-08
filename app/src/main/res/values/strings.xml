@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PoliticalApp</string>
+    <string name="your_name">તમારું નામ</string>
+    <string name="your_phone">તમારો મોબાઇલ નંબર</string>
 </resources>

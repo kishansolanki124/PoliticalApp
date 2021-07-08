@@ -88,6 +88,15 @@ fun showSnackBar(message: String?, activity: Activity?) {
         ).show()
     }
 }
+fun Activity.showSnackBar(message: String?, ) {
+    if (null != message) {
+        hideKeyboard(this)
+        Snackbar.make(
+            this.findViewById(android.R.id.content),
+            message, Snackbar.LENGTH_SHORT
+        ).show()
+    }
+}
 
 fun showToast(text: String, context: Context) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()

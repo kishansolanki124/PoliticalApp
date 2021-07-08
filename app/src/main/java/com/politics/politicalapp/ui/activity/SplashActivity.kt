@@ -1,10 +1,12 @@
 package com.politics.politicalapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.politics.politicalapp.R
+import com.politics.politicalapp.apputils.SPreferenceManager
 
 class SplashActivity : AppCompatActivity() {
 
@@ -21,11 +23,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun openHome() {
-//        if (SPreferenceManager.getInstance(this).isLogin) {
-//            startActivity(Intent(this, HomeActivity::class.java))
-//        } else {
-//            startActivity(Intent(this, RegisterActivity::class.java))
-//        }
-//        finish()
+        if (SPreferenceManager.getInstance(this).isLogin) {
+            //startActivity(Intent(this, HomeActivity::class.java))
+        } else {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+        finish()
     }
 }
