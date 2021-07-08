@@ -1,5 +1,6 @@
 package com.politics.politicalapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -18,7 +19,7 @@ class RegisterActivity : AppCompatActivity() {
         setupCitySpinner()
 
         ibRegister.setOnClickListener {
-
+            startActivity(Intent(this, HomeActivity::class.java))
         }
     }
 

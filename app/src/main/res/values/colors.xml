@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="banner_red">#9D2F22</color>
     <color name="red_light">#D0252E</color>
+    <color name="red_actionbar">#B71C20</color>
+    <color name="yellow">#CBFC00</color>
 </resources>

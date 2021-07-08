@@ -2,4 +2,9 @@
     <string name="app_name">PoliticalApp</string>
     <string name="your_name">તમારું નામ</string>
     <string name="your_phone">તમારો મોબાઇલ નંબર</string>
+    <string name="Home">Home</string>
+    <string name="Live_Poll">Live Poll</string>
+    <string name="Winners">Winners</string>
+    <string name="Menu">Menu</string>
+    <string name="your_point">Your Point</string>
 </resources>
