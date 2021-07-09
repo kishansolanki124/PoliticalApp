@@ -2,12 +2,15 @@ package com.politics.politicalapp.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.politics.politicalapp.R
 import com.politics.politicalapp.ui.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.fragment_menu.*
 
 class HomeActivity : ExtendedToolbarActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -22,9 +25,21 @@ class HomeActivity : ExtendedToolbarActivity(),
 
         setToolbarTitle(getString(R.string.colors_of_guj))
 
+        setupListener()
+
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
 
         switchFragment(HomeFragment(), false)
+    }
+
+    private fun setupListener() {
+        ivClose.setOnClickListener {
+            if (newsCategory.isVisible) {
+                newsCategory.visibility = View.GONE
+            } else {
+                newsCategory.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -37,7 +52,9 @@ class HomeActivity : ExtendedToolbarActivity(),
                     //switchFragment(OpinionPollFragment(), false)
                 }
                 R.id.navigation_menu -> {
-                    //switchFragment(MenuFragment(), false)
+                    if (!newsCategory.isVisible) {
+                        newsCategory.visibility = View.VISIBLE
+                    }
                 }
                 R.id.navigation_winners -> {
                     //switchFragment(ShraddhanjaliHomeFragment(), false)
@@ -48,9 +65,9 @@ class HomeActivity : ExtendedToolbarActivity(),
     }
 
     private fun switchFragment(fragment: Fragment, addToBackStack: Boolean) {
-//        if (newsCategory.isVisible) {
-//            newsCategory.visibility = View.GONE
-//        }
+        if (newsCategory.isVisible) {
+            newsCategory.visibility = View.GONE
+        }
 
 //        if (fragment !is HomeFragment) {
 //            hideNavigationButton()
@@ -92,11 +109,11 @@ class HomeActivity : ExtendedToolbarActivity(),
 ////        }
 //    }
 
-//    override fun onBackPressed() {
-//        if (newsCategory.isVisible) {
-//            newsCategory.visibility = View.GONE
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
+    override fun onBackPressed() {
+        if (newsCategory.isVisible) {
+            newsCategory.visibility = View.GONE
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
