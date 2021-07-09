@@ -24,10 +24,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.politics.politicalapp.R
 import com.politics.politicalapp.ui.activity.SplashActivity
@@ -100,6 +102,10 @@ fun Activity.showSnackBar(message: String?, ) {
 
 fun showToast(text: String, context: Context) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+}
+
+fun Activity.showToast(text: String) {
+    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
 fun hideKeyboard(activity: Activity) {
@@ -388,4 +394,26 @@ fun EditText.setMultiLineCapSentencesAndDoneAction() {
 fun EditText.setMultiLineCapSentencesAndNextAction() {
     imeOptions = EditorInfo.IME_ACTION_NEXT
     setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE)
+}
+
+fun ViewPager2.setShowSideItems(pageMarginPx : Int, offsetPx : Int) {
+
+    clipToPadding = false
+    clipChildren = false
+    offscreenPageLimit = 3
+
+    setPageTransformer { page, position ->
+
+        val offset = position * -(2 * offsetPx + pageMarginPx)
+        if (this.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
+            if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                page.translationX = -offset
+            } else {
+                page.translationX = offset
+            }
+        } else {
+            page.translationY = offset
+        }
+    }
+
 }

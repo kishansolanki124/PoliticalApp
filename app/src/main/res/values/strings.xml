@@ -7,4 +7,12 @@
     <string name="Winners">Winners</string>
     <string name="Menu">Menu</string>
     <string name="your_point">Your Point</string>
+    <string name="govt_work">સરકારી કામગિરી</string>
+    <string name="dharasabhyo">ધારાસભ્યો</string>
+    <string name="poll_and_survey">પોલ અને સર્વે</string>
+    <string name="que_suggestion">પ્રશ્નો સૂચનો</string>
+    <string name="daily_skretch_card">ડેઇલી સ્ક્રેચ કાર્ડ</string>
+    <string name="quiz_and_contest">ક્વિઝ અને કોનટેસ્ટ</string>
+    <string name="hot_news">Hot News</string>
+    <string name="colors_of_guj">COLORS OF GUJARAT</string>
 </resources>

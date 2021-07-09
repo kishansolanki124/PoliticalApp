@@ -20,7 +20,7 @@ class HomeActivity : ExtendedToolbarActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setToolbarTitle("")
+        setToolbarTitle(getString(R.string.colors_of_guj))
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
 
