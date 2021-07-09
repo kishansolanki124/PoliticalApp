@@ -52,4 +52,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    //rounded corner imageview
+    implementation 'com.rishabhharit.roundedimageview:RoundedImageView:0.8.4'
 }
