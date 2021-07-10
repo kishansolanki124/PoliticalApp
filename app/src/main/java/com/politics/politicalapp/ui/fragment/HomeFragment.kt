@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.BreakingNewsAdapter
 import com.politics.politicalapp.apputils.setShowSideItems
+import com.politics.politicalapp.ui.activity.DharasabhyoListActivity
 import com.politics.politicalapp.ui.activity.GovtWorkActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -33,6 +34,10 @@ class HomeFragment : Fragment() {
     private fun setupListeners() {
         llGovtWork.setOnClickListener {
             startActivity(Intent(requireContext(), GovtWorkActivity::class.java))
+        }
+
+        llDharasabhyo.setOnClickListener {
+            startActivity(Intent(requireContext(), DharasabhyoListActivity::class.java))
         }
     }
 

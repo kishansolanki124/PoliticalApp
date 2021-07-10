@@ -19,4 +19,6 @@
     <color name="red_actionbar">#B71C20</color>
     <color name="yellow">#CBFC00</color>
     <color name="gray_bg">#F3F3F3</color>
+    <color name="gray_candidate_name">#9C9C9C</color>
+    <color name="circularBlue">#143AA7</color>
 </resources>

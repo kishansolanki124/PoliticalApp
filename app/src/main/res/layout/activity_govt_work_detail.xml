@@ -289,7 +289,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:padding="@dimen/dp_5"
-                        android:text="@string/give_rate_get_10_point"
+                        android:text="@string/give_rate_get_10_point_1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_18"
                         android:textStyle="bold" />
@@ -341,7 +341,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:padding="@dimen/dp_5"
-                        android:text="@string/give_opinion_get_10_point"
+                        android:text="@string/give_opinion_get_10_point_1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_18"
                         android:textStyle="bold" />
