@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
+import kotlinx.android.synthetic.main.dharasabhyo_item.view.*
 
 class DharasabhyoAdapter(
     private val itemClickCall: (String) -> Unit,
@@ -83,9 +84,9 @@ class DharasabhyoAdapter(
 //                itemView.tvNewsPortalEmail.text = newsPortal.email
 //                itemView.tvNewsPortalWebsite.text = newsPortal.website
 //
-//                itemView.cvRootGovtWorkNewsItem.setOnClickListener {
-//                    itemClickCall(this)
-//                }
+                itemView.rlDharasabhyaRoot.setOnClickListener {
+                    itemClickCall(this)
+                }
 //
 //                itemView.ivWeb.setOnClickListener {
 //                    itemClickWeb(this)

@@ -41,7 +41,7 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
         govtWorkNewsAdapter = DharasabhyoAdapter(
             {
                 //callIntent(this, it.contact_no!!)
-                startActivity(Intent(this, GovtWorkDetailActivity::class.java))
+                startActivity(Intent(this, DharasabhyoDetailActivity::class.java))
             }, {
                 //browserIntent(this, it.website!!)
             }
