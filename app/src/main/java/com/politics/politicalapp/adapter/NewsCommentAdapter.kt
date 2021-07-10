@@ -5,20 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
-import kotlinx.android.synthetic.main.govt_work_news_item.view.*
 
-class GovtWorkNewsAdapter(
+class NewsCommentAdapter(
     private val itemClickCall: (String) -> Unit,
     private val itemClickWeb: (String) -> Unit
 ) :
-    RecyclerView.Adapter<GovtWorkNewsAdapter.HomeOffersViewHolder>() {
+    RecyclerView.Adapter<NewsCommentAdapter.HomeOffersViewHolder>() {
 
     private var list: ArrayList<String> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.govt_work_news_item, parent, false)
+                .inflate(R.layout.comment_item, parent, false)
         return HomeOffersViewHolder(
             view, itemClickCall, itemClickWeb
         )
@@ -84,9 +83,9 @@ class GovtWorkNewsAdapter(
 //                itemView.tvNewsPortalEmail.text = newsPortal.email
 //                itemView.tvNewsPortalWebsite.text = newsPortal.website
 //
-                itemView.cvRootGovtWorkNewsItem.setOnClickListener {
-                    itemClickCall(this)
-                }
+//                itemView.cvRootGovtWorkNewsItem.setOnClickListener {
+//                    itemClickCall(this)
+//                }
 //
 //                itemView.ivWeb.setOnClickListener {
 //                    itemClickWeb(this)

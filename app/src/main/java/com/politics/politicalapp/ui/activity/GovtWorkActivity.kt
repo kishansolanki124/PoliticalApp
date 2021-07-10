@@ -1,5 +1,6 @@
 package com.politics.politicalapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -40,6 +41,7 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
         govtWorkNewsAdapter = GovtWorkNewsAdapter(
             {
                 //callIntent(this, it.contact_no!!)
+            startActivity(Intent(this,GovtWorkDetailActivity::class.java))
             }, {
                 //browserIntent(this, it.website!!)
             }

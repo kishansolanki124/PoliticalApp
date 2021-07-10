@@ -21,4 +21,10 @@
     <string name="Terms_Of_Use">Terms Of Use</string>
     <string name="Contact_Us">Contact Us</string>
     <string name="Rate">Rate :</string>
+    <string name="Rate_out_of_10">Rate out of 10</string>
+    <string name="enter_comment">Enter your Comments/Opinion</string>
+    <string name="give_rate_get_10_point">(Give Rate &amp; Get 10 Points)</string>
+    <string name="give_opinion_get_10_point">(Give Opinion &amp; Get 10 Points)</string>
+    <string name="submit">Submit</string>
+    <string name="write_comment">Write A Comment</string>
 </resources>

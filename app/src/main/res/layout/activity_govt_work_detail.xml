@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.GovtWorkDetailActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivMandir"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_200"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/dummy_news_image" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:background="@drawable/white_semi_trans_rounded_corner"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_5">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/Rate"
+                            android:textColor="@color/grayA9A9A9"
+                            android:textSize="@dimen/sp_14" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRateReceived"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="7"
+                            android:textColor="@color/red_light"
+                            android:textSize="@dimen/sp_14" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="/"
+                            android:textColor="@color/grayA9A9A9"
+                            android:textSize="@dimen/sp_14" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="10"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:paddingVertical="@dimen/dp_5"
+                        android:src="@drawable/share_icon2" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </FrameLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_5"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSanstha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:padding="@dimen/dp_5"
+                    android:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNewsDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:padding="@dimen/dp_5"
+                    android:text="પાસના નેતા અને હાર્દિક પટેલ સાથે કોંગ્રેસમાં જોડાયેલા યુવા કોંગ્રેસના ઉપપ્રમુખ નિખિલ સવાણીએ કોંગ્રેસમાંથી રાજીનામું આપી દીધું છે અને ગમે ત્યારે આમ આદમી પાર્ટીમાં જોડાઇ શકે છે. આ અંગે નિખિલ સવાણીએ દિવ્ય ભાસ્કર સાથે વાત કરતાં જણાવ્યું કે કેટલાંક લોકો સાથે ચર્ચા કરી નિર્ણય લેશે. કોંગ્રેસ છોડતાં પહેલાં તેમણે આક્ષેપ કર્યો કે કોંગ્રેસમાં હાર્દિક પટેલની અવગણના થઇ છે અને તેમની રાજકીય હત્યા થઇ છે. તેમણે કહ્યું કે આમ હું જ નથી કહેતો પણ હાર્દિક પટેલ પણ અગાઉ કહી ચૂક્યા છે કે તેમનું સન્માન કોંગ્રેસમાં જળવાતું નથી. તેમણે એમ પણ કહ્યું કે યુથ કોંગ્રેસમાં પ્રદેશ પ્રમુખ બનવા માટે નકલી મેમ્બરો ઊભા કરીને કૌભાંડ થાય છે."
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gray" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/Rate_out_of_10"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="1"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="2"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="3"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="4"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="5"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="6"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate7"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="7"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="8"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="9"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRate10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_rating"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_2"
+                        android:text="10"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btSubmitRegister"
+                        style="@style/CommonRedButton"
+                        android:text="@string/submit"
+                        app:cornerRadius="@dimen/dp_5"
+                        tools:ignore="MissingConstraints" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvGive_rate_get_10_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/dp_5"
+                        android:text="@string/give_rate_get_10_point"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gray" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/enter_comment"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etLavajamAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="@dimen/dp_5"
+                    android:background="@drawable/gray_rounded_corner"
+                    android:gravity="start"
+                    android:hint="@string/write_comment"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:padding="@dimen/dp_10" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btSubmitComment"
+                        style="@style/CommonRedButton"
+                        android:text="@string/submit"
+                        app:cornerRadius="@dimen/dp_5"
+                        tools:ignore="MissingConstraints" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvGive_opinion_get_10_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/dp_5"
+                        android:text="@string/give_opinion_get_10_point"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gray" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/comment_item" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
