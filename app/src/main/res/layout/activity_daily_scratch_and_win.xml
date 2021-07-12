@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.activity.DailyScratchAndWnActivity">
+
+    <include layout="@layout/common_toolbar" />
+    <!--Scratch Card  view to display our hidden image
+        src attribute is to add image which wil be visible
+        after scratching of our card.-->
+    <com.cooltechworks.views.ScratchImageView
+        android:id="@+id/idScratchCardIv"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_250"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@color/white"
+        android:src="@drawable/winner" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_20"
+        android:text="@string/scratch_and_point"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_20" />
+</LinearLayout>

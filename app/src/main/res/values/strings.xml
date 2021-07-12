@@ -11,7 +11,7 @@
     <string name="dharasabhyo">ધારાસભ્યો</string>
     <string name="poll_and_survey">પોલ અને સર્વે</string>
     <string name="que_suggestion">પ્રશ્નો સૂચનો</string>
-    <string name="daily_skretch_card">ડેઇલી સ્ક્રેચ કાર્ડ</string>
+    <string name="daily_scratch_card">ડેઇલી સ્ક્રેચ કાર્ડ</string>
     <string name="quiz_and_contest">ક્વિઝ અને કોનટેસ્ટ</string>
     <string name="hot_news">Hot News</string>
     <string name="colors_of_guj">COLORS OF GUJARAT</string>
@@ -29,4 +29,5 @@
     <string name="give_opinion_get_10_point_1">(Give Opinion &amp; Get</string>
     <string name="submit">Submit</string>
     <string name="write_comment">Write A Comment</string>
+    <string name="scratch_and_point">Scratch &amp; Get Point></string>
 </resources>

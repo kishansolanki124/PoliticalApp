@@ -10,9 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.BreakingNewsAdapter
 import com.politics.politicalapp.apputils.setShowSideItems
-import com.politics.politicalapp.ui.activity.DharasabhyoListActivity
-import com.politics.politicalapp.ui.activity.GovtWorkActivity
-import com.politics.politicalapp.ui.activity.PollAndSurveyActivity
+import com.politics.politicalapp.ui.activity.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -33,6 +31,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListeners() {
+
+        llQueSuggestion.setOnClickListener {
+            startActivity(Intent(requireContext(), QuestionSuggestionActivity::class.java))
+        }
+
+        llDailYScratch.setOnClickListener {
+            startActivity(Intent(requireContext(), DailyScratchAndWnActivity::class.java))
+        }
+
         llGovtWork.setOnClickListener {
             startActivity(Intent(requireContext(), GovtWorkActivity::class.java))
         }

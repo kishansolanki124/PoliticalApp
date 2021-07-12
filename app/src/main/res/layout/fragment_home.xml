@@ -183,6 +183,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/llDailYScratch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
@@ -203,7 +204,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/dp_5"
-                    android:text="@string/daily_skretch_card"
+                    android:text="@string/daily_scratch_card"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
