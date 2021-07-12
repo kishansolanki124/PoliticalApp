@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_5"
+    android:layout_marginVertical="@dimen/dp_10"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDharasabhyaReviewQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5"
+        android:text="નરેન્દ્ર મોદીના કાર્ય વિશે તમને શું લાગે છે?"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14" />
+
+    <RadioGroup
+        android:id="@+id/rgDharasabhyaReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbExcellent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/black"
+                android:checked="true"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/dp_5"
+                android:text="ખુબ જ સરસ"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+
+            <RadioButton
+                android:id="@+id/rbGood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/black"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/dp_5"
+                android:text="સરસ"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbcantAnswer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/black"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/dp_5"
+                android:text="કહિ ના શકાય"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+
+            <RadioButton
+                android:id="@+id/rbBad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/black"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="@dimen/dp_5"
+                android:text="ખરાબ"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/rbVeryBad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/black"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="@dimen/dp_5"
+            android:text="ખુબ જ ખરાબ"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14" />
+    </RadioGroup>
+</LinearLayout>

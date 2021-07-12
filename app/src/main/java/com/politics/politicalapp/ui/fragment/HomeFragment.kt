@@ -12,6 +12,7 @@ import com.politics.politicalapp.adapter.BreakingNewsAdapter
 import com.politics.politicalapp.apputils.setShowSideItems
 import com.politics.politicalapp.ui.activity.DharasabhyoListActivity
 import com.politics.politicalapp.ui.activity.GovtWorkActivity
+import com.politics.politicalapp.ui.activity.PollAndSurveyActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -38,6 +39,10 @@ class HomeFragment : Fragment() {
 
         llDharasabhyo.setOnClickListener {
             startActivity(Intent(requireContext(), DharasabhyoListActivity::class.java))
+        }
+
+        llPollAndSurvey.setOnClickListener {
+            startActivity(Intent(requireContext(), PollAndSurveyActivity::class.java))
         }
     }
 
