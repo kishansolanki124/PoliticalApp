@@ -40,6 +40,10 @@ class HomeFragment : Fragment() {
             startActivity(Intent(requireContext(), DailyScratchAndWnActivity::class.java))
         }
 
+        llQuizAndContest.setOnClickListener {
+            startActivity(Intent(requireContext(), QuizAndContestActivity::class.java))
+        }
+
         llGovtWork.setOnClickListener {
             startActivity(Intent(requireContext(), GovtWorkActivity::class.java))
         }

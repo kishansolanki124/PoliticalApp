@@ -69,6 +69,14 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".ui.activity.QuizAndContestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.activity.QuizAndContestRunningActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
             android:name=".ui.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
