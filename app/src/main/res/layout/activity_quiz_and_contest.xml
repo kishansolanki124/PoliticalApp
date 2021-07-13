@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_bg"
     android:orientation="vertical"
-    tools:context=".ui.activity.GovtWorkActivity">
+    tools:context=".ui.activity.QuizAndContestActivity">
 
     <include layout="@layout/common_toolbar" />
 
