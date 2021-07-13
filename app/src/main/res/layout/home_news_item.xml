@@ -31,11 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_150"
             android:ellipsize="end"
+            android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:maxLines="5"
+            android:letterSpacing="0.02"
             android:paddingVertical="@dimen/dp_5"
             android:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_14" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </LinearLayout>

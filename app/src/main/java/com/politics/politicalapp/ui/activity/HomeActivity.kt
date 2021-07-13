@@ -27,11 +27,8 @@ class HomeActivity : ExtendedToolbarActivity(),
         super.onCreate(savedInstanceState)
 
         setToolbarTitle(getString(R.string.colors_of_guj))
-
         setupListener()
-
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
-
         switchFragment(HomeFragment(), false)
     }
 

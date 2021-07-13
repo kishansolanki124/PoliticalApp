@@ -1,5 +1,6 @@
 package com.politics.politicalapp.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -110,6 +111,7 @@ class HomeFragment : Fragment() {
             }
 
 
+            @SuppressLint("SetTextI18n")
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 tvNewsIndex.text = (position + 1).toString() + "/" + stringList.size

@@ -23,6 +23,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
+            android:fontFamily="@font/semi_bold"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/Menu"
@@ -37,61 +38,31 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ivAboutUs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
+        style="@style/MenuFragmentTextView"
         android:drawableStart="@drawable/aboutus"
-        android:drawablePadding="@dimen/dp_10"
-        android:padding="@dimen/dp_10"
-        android:text="@string/About_Us"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_14" />
+        android:text="@string/About_Us" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ivRateUs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
+        style="@style/MenuFragmentTextView"
         android:drawableStart="@drawable/rateus"
-        android:drawablePadding="@dimen/dp_10"
-        android:padding="@dimen/dp_10"
-        android:text="@string/Rate_Us"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_14" />
+        android:text="@string/Rate_Us" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ivShareApp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
+        style="@style/MenuFragmentTextView"
         android:drawableStart="@drawable/share_app"
-        android:drawablePadding="@dimen/dp_10"
-        android:padding="@dimen/dp_10"
-        android:text="@string/Share_App"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_14" />
+        android:text="@string/Share_App" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ivTNC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
+        style="@style/MenuFragmentTextView"
         android:drawableStart="@drawable/tnc"
-        android:drawablePadding="@dimen/dp_10"
-        android:padding="@dimen/dp_10"
-        android:text="@string/Terms_Of_Use"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_14" />
+        android:text="@string/Terms_Of_Use" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvContactUs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
+        style="@style/MenuFragmentTextView"
         android:drawableStart="@drawable/contact"
-        android:drawablePadding="@dimen/dp_10"
-        android:padding="@dimen/dp_10"
-        android:text="@string/Contact_Us"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_14" />
+        android:text="@string/Contact_Us" />
 </androidx.appcompat.widget.LinearLayoutCompat>
