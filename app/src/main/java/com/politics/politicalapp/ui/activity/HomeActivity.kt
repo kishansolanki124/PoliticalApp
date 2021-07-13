@@ -1,5 +1,6 @@
 package com.politics.politicalapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.politics.politicalapp.R
 import com.politics.politicalapp.ui.fragment.HomeFragment
 import com.politics.politicalapp.ui.fragment.LivePollFragment
+import com.politics.politicalapp.ui.fragment.WinnerFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_menu.*
 
@@ -34,6 +36,27 @@ class HomeActivity : ExtendedToolbarActivity(),
     }
 
     private fun setupListener() {
+        ivAboutUs.setOnClickListener {
+            if (newsCategory.isVisible) {
+                newsCategory.visibility = View.GONE
+            }
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
+
+        tvContactUs.setOnClickListener {
+            if (newsCategory.isVisible) {
+                newsCategory.visibility = View.GONE
+            }
+            startActivity(Intent(this, ContactUsActivity::class.java))
+        }
+
+        ivTNC.setOnClickListener {
+            if (newsCategory.isVisible) {
+                newsCategory.visibility = View.GONE
+            }
+            startActivity(Intent(this, TNCActivity::class.java))
+        }
+
         ivClose.setOnClickListener {
             if (newsCategory.isVisible) {
                 newsCategory.visibility = View.GONE
@@ -56,9 +79,10 @@ class HomeActivity : ExtendedToolbarActivity(),
                     if (!newsCategory.isVisible) {
                         newsCategory.visibility = View.VISIBLE
                     }
+                    return false
                 }
                 R.id.navigation_winners -> {
-                    //switchFragment(ShraddhanjaliHomeFragment(), false)
+                    switchFragment(WinnerFragment(), false)
                 }
             }
         }

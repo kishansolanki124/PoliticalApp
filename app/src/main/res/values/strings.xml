@@ -5,6 +5,7 @@
     <string name="Home">Home</string>
     <string name="Live_Poll">Live Poll</string>
     <string name="Winners">Winners</string>
+    <string name="Winners_">Winners :</string>
     <string name="Menu">Menu</string>
     <string name="your_point">Your Point</string>
     <string name="govt_work">સરકારી કામગિરી</string>
@@ -14,6 +15,7 @@
     <string name="que_suggestion">પ્રશ્નો સૂચનો</string>
     <string name="daily_scratch_card">ડેઇલી સ્ક્રેચ કાર્ડ</string>
     <string name="quiz_and_contest">કવીઝ અને કોન્ટેસ્ટ</string>
+    <string name="winner">વિજેતા</string>
     <string name="hot_news">Hot News</string>
     <string name="colors_of_guj">COLORS OF GUJARAT</string>
     <string name="About_Us">About Us</string>
@@ -34,4 +36,11 @@
     <string name="scratch_and_point">Scratch &amp; Get Point></string>
     <string name="running">running</string>
     <string name="prize_details_and_rules">Prize Details &amp; Rules</string>
+    <string name="Prize_Details">Prize Details</string>
+    <string name="Check_Winner">CHECK WINNER</string>
+    <string name="Name">Name</string>
+    <string name="Email">Email</string>
+    <string name="Mobile_No">Mobile Number</string>
+    <string name="quest_comment">Enter your question or comment</string>
+    <string name="Send">Send</string>
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvRootGovtWorkNewsItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:padding="@dimen/dp_10"
+    app:cardElevation="@dimen/dp_0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuestionSuggestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dp_5"
+            android:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btViewWinner"
+            style="@style/CommonRedButton"
+            android:layout_margin="@dimen/dp_0"
+            android:paddingHorizontal="@dimen/sp_10"
+            android:text="@string/Prize_Details"
+            android:textAllCaps="false"
+            android:textSize="@dimen/sp_16"
+            app:cornerRadius="@dimen/dp_5" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

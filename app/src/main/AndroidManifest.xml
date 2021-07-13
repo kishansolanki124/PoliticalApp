@@ -73,7 +73,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".ui.activity.LivePollActivity"
+            android:name=".ui.activity.WinnerPrizeDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.activity.WinnerNamesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
@@ -86,6 +90,18 @@
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".ui.activity.LivePollRunningActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.activity.ContactUsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.activity.TNCActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
