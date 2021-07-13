@@ -26,7 +26,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btSubmitRegister"
             style="@style/CommonRedButton"
+            android:paddingHorizontal="@dimen/dp_20"
             android:text="@string/submit"
+            android:textSize="@dimen/sp_14"
             app:cornerRadius="@dimen/dp_5" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -34,10 +36,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/semi_bold"
             android:padding="@dimen/dp_5"
             android:text="@string/give_rate_get_10_point_1"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_18"
-            android:textStyle="bold" />
+            android:textSize="@dimen/sp_12" />
     </LinearLayout>
 </RelativeLayout>

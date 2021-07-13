@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/dharasabhyo_item" />
+        <include layout="@layout/dharasabhyo_item_large" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
@@ -24,7 +24,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_50"
                 android:layout_margin="@dimen/dp_10"
                 app:tabBackground="@drawable/tab_color_selector"
                 app:tabIndicator="@null"

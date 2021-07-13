@@ -11,6 +11,7 @@
         android:id="@+id/tvDharasabhyaReviewQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
         android:padding="@dimen/dp_5"
         android:text="નરેન્દ્ર મોદીના કાર્ય વિશે તમને શું લાગે છે?"
         android:textColor="@color/black"
@@ -29,30 +30,14 @@
 
             <RadioButton
                 android:id="@+id/rbExcellent"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/black"
+                style="@style/CommonRedButton_2"
                 android:checked="true"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="@dimen/dp_5"
-                android:text="ખુબ જ સરસ"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:text="ખુબ જ સરસ" />
 
             <RadioButton
                 android:id="@+id/rbGood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/black"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="@dimen/dp_5"
-                android:text="સરસ"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                style="@style/CommonRedButton_2"
+                android:text="સરસ" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,41 +47,20 @@
 
             <RadioButton
                 android:id="@+id/rbcantAnswer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/black"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="@dimen/dp_5"
-                android:text="કહિ ના શકાય"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                style="@style/CommonRedButton_2"
+                android:text="કહિ ના શકાય" />
 
             <RadioButton
                 android:id="@+id/rbBad"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/black"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="@dimen/dp_5"
-                android:text="ખરાબ"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                style="@style/CommonRedButton_2"
+                android:text="ખરાબ" />
         </LinearLayout>
 
         <RadioButton
             android:id="@+id/rbVeryBad"
+            style="@style/CommonRedButton_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/black"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:padding="@dimen/dp_5"
-            android:text="ખુબ જ ખરાબ"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
+            android:text="ખુબ જ ખરાબ" />
     </RadioGroup>
 </LinearLayout>

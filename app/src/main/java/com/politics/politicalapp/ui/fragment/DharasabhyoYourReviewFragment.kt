@@ -62,7 +62,35 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         )
         tvGive_rate_get_10_point.append(thirdText)
 
+        setupRadioButtons()
         setupChart()
+    }
+
+    private fun setupRadioButtons() {
+        rbBad.setOnClickListener {
+            resetRadioButtons()
+            rbBad.isChecked = !rbBad.isChecked
+        }
+
+        rbExcellent.setOnClickListener {
+            resetRadioButtons()
+            rbExcellent.isChecked = !rbBad.isChecked
+        }
+
+        rbGood.setOnClickListener {
+            resetRadioButtons()
+            rbGood.isChecked = !rbBad.isChecked
+        }
+
+        rbVeryBad.setOnClickListener {
+            resetRadioButtons()
+            rbVeryBad.isChecked = !rbBad.isChecked
+        }
+
+        rbcantAnswer.setOnClickListener {
+            resetRadioButtons()
+            rbcantAnswer.isChecked = !rbBad.isChecked
+        }
     }
 
     private fun setupChart() {
@@ -210,6 +238,14 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
     override fun onNothingSelected() {
         Log.i("PieChart", "nothing selected")
     }
-}
 
+    private fun resetRadioButtons() {
+        rbBad.isChecked = false
+        rbVeryBad.isChecked = false
+        rbGood.isChecked = false
+        rbExcellent.isChecked = false
+        rbcantAnswer.isChecked = false
+    }
+}
 //todo scroll whole screen issue
+//todo move aside of the names to pie chart

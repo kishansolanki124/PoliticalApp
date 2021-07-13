@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import com.politics.politicalapp.apputils.hideKeyboard
 import kotlinx.android.synthetic.main.common_toolbar.*
 
 abstract class ExtendedToolbarActivity : AppCompatActivity() {
@@ -18,10 +19,10 @@ abstract class ExtendedToolbarActivity : AppCompatActivity() {
         //ibBack.visibility = View.VISIBLE
         //ivNavigation.visibility = View.VISIBLE
 
-//        ibBack.setOnClickListener {
-//            hideKeyboard(this)
-//            onBackPressed()
-//        }
+        ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
     }
 
     fun setToolbarTitle(title: String?) {
@@ -31,9 +32,13 @@ abstract class ExtendedToolbarActivity : AppCompatActivity() {
         setTitle("")
     }
 
-//    fun hideBackButton() {
-//        ibBack.visibility = View.GONE
-//    }
+    fun hideBackButton() {
+        ibBack.visibility = View.GONE
+    }
+
+    fun showNotificationIcon() {
+        ivNotification.visibility = View.VISIBLE
+    }
 
 //    fun hideappLogo() {
 //        ivToolbarLogo.visibility = View.GONE

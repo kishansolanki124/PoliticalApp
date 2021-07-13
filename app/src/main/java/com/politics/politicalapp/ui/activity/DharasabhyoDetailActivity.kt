@@ -67,3 +67,4 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
         }
     }
 }
+//todo: scroll issue

@@ -48,8 +48,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="@font/semi_bold"
                             android:text="@string/Rate"
-                            android:textColor="@color/grayA9A9A9"
+                            android:textColor="@color/gray6C6C6C"
                             android:textSize="@dimen/sp_14" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -57,6 +58,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/dp_5"
+                            android:fontFamily="@font/semi_bold"
                             android:text="7"
                             android:textColor="@color/red_light"
                             android:textSize="@dimen/sp_14" />
@@ -65,14 +68,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="@font/semi_bold"
                             android:text="/"
-                            android:textColor="@color/grayA9A9A9"
+                            android:textColor="@color/gray6C6C6C"
                             android:textSize="@dimen/sp_14" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="@font/semi_bold"
                             android:text="10"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp_14" />
@@ -104,22 +109,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:fontFamily="@font/semi_bold"
+                    android:lineSpacingExtra="@dimen/dp_2"
                     android:maxLines="2"
                     android:padding="@dimen/dp_5"
                     android:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_16"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_14" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvNewsDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/dp_5"
                     android:ellipsize="end"
+                    android:fontFamily="@font/regular"
+                    android:lineSpacingExtra="@dimen/dp_2"
                     android:padding="@dimen/dp_5"
                     android:text="પાસના નેતા અને હાર્દિક પટેલ સાથે કોંગ્રેસમાં જોડાયેલા યુવા કોંગ્રેસના ઉપપ્રમુખ નિખિલ સવાણીએ કોંગ્રેસમાંથી રાજીનામું આપી દીધું છે અને ગમે ત્યારે આમ આદમી પાર્ટીમાં જોડાઇ શકે છે. આ અંગે નિખિલ સવાણીએ દિવ્ય ભાસ્કર સાથે વાત કરતાં જણાવ્યું કે કેટલાંક લોકો સાથે ચર્ચા કરી નિર્ણય લેશે. કોંગ્રેસ છોડતાં પહેલાં તેમણે આક્ષેપ કર્યો કે કોંગ્રેસમાં હાર્દિક પટેલની અવગણના થઇ છે અને તેમની રાજકીય હત્યા થઇ છે. તેમણે કહ્યું કે આમ હું જ નથી કહેતો પણ હાર્દિક પટેલ પણ અગાઉ કહી ચૂક્યા છે કે તેમનું સન્માન કોંગ્રેસમાં જળવાતું નથી. તેમણે એમ પણ કહ્યું કે યુથ કોંગ્રેસમાં પ્રદેશ પ્રમુખ બનવા માટે નકલી મેમ્બરો ઊભા કરીને કૌભાંડ થાય છે."
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_12" />
 
                 <View
                     android:layout_width="match_parent"
@@ -129,11 +138,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/dp_5"
                     android:text="@string/Rate_out_of_10"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_14" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,133 +151,53 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="1"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="1" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="2"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="2" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="3"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="3" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="4"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="4" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="5"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="5" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate6"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="6"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="6" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate7"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="7"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="7" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate8"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="8"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="8" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate9"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="9"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="9" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate10"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/circle_rating"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_2"
-                        android:text="10"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                        style="@style/RatingTextView"
+                        android:text="10" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -279,20 +208,21 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btSubmitRegister"
                         style="@style/CommonRedButton"
+                        android:paddingHorizontal="@dimen/dp_20"
                         android:text="@string/submit"
-                        app:cornerRadius="@dimen/dp_5"
-                        tools:ignore="MissingConstraints" />
+                        android:textSize="@dimen/sp_14"
+                        app:cornerRadius="@dimen/dp_5" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvGive_rate_get_10_point"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/semi_bold"
                         android:padding="@dimen/dp_5"
                         android:text="@string/give_rate_get_10_point_1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_18"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
 
                 <View
@@ -303,11 +233,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/dp_5"
                     android:text="@string/enter_comment"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_14" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etLavajamAddress"
@@ -316,12 +246,14 @@
                     android:layout_gravity="start"
                     android:layout_margin="@dimen/dp_5"
                     android:background="@drawable/gray_rounded_corner"
+                    android:fontFamily="@font/regular"
                     android:gravity="start"
                     android:hint="@string/write_comment"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
                     android:minLines="3"
-                    android:padding="@dimen/dp_10" />
+                    android:padding="@dimen/dp_10"
+                    android:textSize="@dimen/sp_12" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -331,7 +263,9 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btSubmitComment"
                         style="@style/CommonRedButton"
+                        android:paddingHorizontal="@dimen/dp_20"
                         android:text="@string/submit"
+                        android:textSize="@dimen/sp_14"
                         app:cornerRadius="@dimen/dp_5"
                         tools:ignore="MissingConstraints" />
 
@@ -340,11 +274,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/semi_bold"
                         android:padding="@dimen/dp_5"
                         android:text="@string/give_opinion_get_10_point_1"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_18"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
 
                 <View
@@ -356,6 +290,7 @@
                     android:id="@+id/rvComments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     tools:listitem="@layout/comment_item" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>

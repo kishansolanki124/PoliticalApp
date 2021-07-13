@@ -12,20 +12,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:fontFamily="@font/semi_bold"
         android:maxLines="2"
-        android:padding="@dimen/dp_5"
+        android:paddingHorizontal="@dimen/dp_5"
         android:text="Narendra Sinh Chudasma"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp_16"
-        android:textStyle="bold" />
+        android:textSize="@dimen/sp_14" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvNewsDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:fontFamily="@font/regular"
         android:padding="@dimen/dp_5"
         android:text="Jai Mataji"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/sp_14" />
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_12" />
 </androidx.appcompat.widget.LinearLayoutCompat>

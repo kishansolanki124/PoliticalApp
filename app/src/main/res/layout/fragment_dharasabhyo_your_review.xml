@@ -3,133 +3,130 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/gray_bg"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDharasabhyaReviewQuestion"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_5"
-            android:text="નરેન્દ્ર મોદીના કાર્ય વિશે તમને શું લાગે છે?"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
-
-        <RadioGroup
-            android:id="@+id/rgDharasabhyaReview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginVertical="@dimen/dp_10"
+            app:cardCornerRadius="@dimen/dp_2"
+            app:cardElevation="@dimen/dp_0">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/rbExcellent"
-                    android:layout_width="0dp"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDharasabhyaReviewQuestion"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/black"
-                    android:checked="true"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
                     android:padding="@dimen/dp_5"
-                    android:text="ખુબ જ સરસ"
+                    android:fontFamily="@font/regular"
+                    android:text="નરેન્દ્ર મોદીના કાર્ય વિશે તમને શું લાગે છે?"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_14" />
 
-                <RadioButton
-                    android:id="@+id/rbGood"
-                    android:layout_width="0dp"
+                <RadioGroup
+                    android:id="@+id/rgDharasabhyaReview"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/black"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:padding="@dimen/dp_5"
-                    android:text="સરસ"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbExcellent"
+                            style="@style/CommonRedButton_2"
+                            android:checked="true"
+                            android:text="ખુબ જ સરસ" />
+
+                        <RadioButton
+                            android:id="@+id/rbGood"
+                            style="@style/CommonRedButton_2"
+                            android:text="સરસ" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbcantAnswer"
+                            style="@style/CommonRedButton_2"
+                            android:text="કહિ ના શકાય" />
+
+                        <RadioButton
+                            android:id="@+id/rbBad"
+                            style="@style/CommonRedButton_2"
+                            android:text="ખરાબ" />
+                    </LinearLayout>
+
+                    <RadioButton
+                        android:id="@+id/rbVeryBad"
+                        style="@style/CommonRedButton_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ખુબ જ ખરાબ" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btSubmitRegister"
+                        style="@style/CommonRedButton"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:text="@string/submit"
+                        android:textSize="@dimen/sp_14"
+                        app:cornerRadius="@dimen/dp_5" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvGive_rate_get_10_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/semi_bold"
+                        android:padding="@dimen/dp_5"
+                        android:text="@string/give_rate_get_10_point_1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_10"
+            app:cardCornerRadius="@dimen/dp_2"
+            app:cardElevation="@dimen/dp_0">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/rbcantAnswer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/black"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:padding="@dimen/dp_5"
-                    android:text="કહિ ના શકાય"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_300" />
 
-                <RadioButton
-                    android:id="@+id/rbBad"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/black"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:padding="@dimen/dp_5"
-                    android:text="ખરાબ"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
-
-            <RadioButton
-                android:id="@+id/rbVeryBad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/black"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="@dimen/dp_5"
-                android:text="ખુબ જ ખરાબ"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
-        </RadioGroup>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btSubmitRegister"
-                style="@style/CommonRedButton"
-                android:text="@string/submit"
-                app:cornerRadius="@dimen/dp_5" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvGive_rate_get_10_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="@dimen/dp_5"
-                android:text="@string/give_rate_get_10_point_1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_300" />
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>
