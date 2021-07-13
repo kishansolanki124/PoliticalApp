@@ -73,7 +73,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
+            android:name=".ui.activity.LivePollActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.activity.QuizAndContestWinnerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
             android:name=".ui.activity.QuizAndContestRunningActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.activity.LivePollRunningActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity

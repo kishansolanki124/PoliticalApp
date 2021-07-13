@@ -6,20 +6,20 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
-import kotlinx.android.synthetic.main.quiz_and_contest_item.view.*
+import kotlinx.android.synthetic.main.live_poll_item.view.*
 
-class QuizAndContestAdapter(
-    private val itemClickCall: (String) -> Unit,
+class LivePollAdapter(
+    private val itemClickCall: (String, Boolean) -> Unit,
     private val itemClickWeb: (String) -> Unit
 ) :
-    RecyclerView.Adapter<QuizAndContestAdapter.HomeOffersViewHolder>() {
+    RecyclerView.Adapter<LivePollAdapter.HomeOffersViewHolder>() {
 
     private var list: ArrayList<String> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.quiz_and_contest_item, parent, false)
+                .inflate(R.layout.live_poll_item, parent, false)
         return HomeOffersViewHolder(
             view, itemClickCall, itemClickWeb
         )
@@ -43,7 +43,7 @@ class QuizAndContestAdapter(
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (String) -> Unit,
+        private val itemClickCall: (String, Boolean) -> Unit,
         private val itemClickWeb: (String) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
@@ -62,7 +62,7 @@ class QuizAndContestAdapter(
 
                 if (position == 3 || position == 4) {
                     itemView.tvGive_rate_get_10_point.text = ""
-                    itemView.btViewWinner.text = "check winner"
+                    itemView.btViewWinner.text = "result"
                     itemView.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(
                             itemView.btViewWinner.context, R.color.gray_BEBEBE
@@ -106,11 +106,16 @@ class QuizAndContestAdapter(
 //                itemView.tvNewsPortalWebsite.text = newsPortal.website
 //
                 itemView.cvRootGovtWorkNewsItem.setOnClickListener {
-                    itemClickCall(this)
+                    if (itemView.btViewWinner.text.equals("result")) {
+                        itemClickCall(this, false)
+                    } else {
+                        itemClickCall(this, true)
+                    }
+
                 }
 
                 itemView.btViewWinner.setOnClickListener {
-                    if (itemView.btViewWinner.text.equals("check winner")) {
+                    if (itemView.btViewWinner.text.equals("result")) {
                         itemClickWeb(this)
                     }
                 }

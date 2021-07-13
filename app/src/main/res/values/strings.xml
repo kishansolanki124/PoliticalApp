@@ -10,6 +10,7 @@
     <string name="govt_work">સરકારી કામગિરી</string>
     <string name="dharasabhyo">ધારાસભ્યો</string>
     <string name="poll_and_survey">પોલ અને સર્વે</string>
+    <string name="live_poll">લાઇવ પોલ</string>
     <string name="que_suggestion">પ્રશ્નો સૂચનો</string>
     <string name="daily_scratch_card">ડેઇલી સ્ક્રેચ કાર્ડ</string>
     <string name="quiz_and_contest">કવીઝ અને કોન્ટેસ્ટ</string>
@@ -23,6 +24,7 @@
     <string name="Rate">Rate :</string>
     <string name="Rate_out_of_10">Rate out of 10</string>
     <string name="enter_comment">Enter your Comments/Opinion</string>
+    <string name="participate_and">(Participate &amp; Get</string>
     <string name="give_rate_get_10_point_1">(Give Rate &amp; Get</string>
     <string name="give_rate_get_10_point_2">&#160;10&#160;</string>
     <string name="give_rate_get_10_point_3">Points)</string>

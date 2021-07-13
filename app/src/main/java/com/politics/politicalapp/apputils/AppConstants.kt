@@ -20,6 +20,7 @@ interface AppConstants {
         const val ORDER_ID: String = "ORDER_ID"
         const val AMOUNT: String = "AMOUNT"
         const val ADD_LAVAJAM: String = "ADD_LAVAJAM"
+        const val SHOW_SUBMIT: String = "SHOW_SUBMIT"
         const val ID: String = "id"
     }
 

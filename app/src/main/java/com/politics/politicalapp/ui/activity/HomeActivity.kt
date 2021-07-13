@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.politics.politicalapp.R
 import com.politics.politicalapp.ui.fragment.HomeFragment
+import com.politics.politicalapp.ui.fragment.LivePollFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_menu.*
 
@@ -49,7 +50,7 @@ class HomeActivity : ExtendedToolbarActivity(),
                     switchFragment(HomeFragment(), false)
                 }
                 R.id.navigation_live_poll -> {
-                    //switchFragment(OpinionPollFragment(), false)
+                    switchFragment(LivePollFragment(), false)
                 }
                 R.id.navigation_menu -> {
                     if (!newsCategory.isVisible) {

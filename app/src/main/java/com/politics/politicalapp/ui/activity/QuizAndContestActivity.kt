@@ -32,8 +32,10 @@ class QuizAndContestActivity : ExtendedToolbarActivity() {
             {
                 //callIntent(this, it.contact_no!!)
                 startActivity(Intent(this, QuizAndContestRunningActivity::class.java))
+
             }, {
                 //browserIntent(this, it.website!!)
+                startActivity(Intent(this, QuizAndContestWinnerActivity::class.java))
             }
         )
         govtWorkNewsAdapter.setItem(stringList)
