@@ -7,14 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
+import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.BreakingNewsAdapter
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.setShowSideItems
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.ui.activity.*
+import com.politics.politicalapp.viewmodel.SettingsViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
+
+    private lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +38,17 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         setupListeners()
+        setupPoints()
+    }
+
+    private fun setupPoints() {
+        settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+
+        settingsViewModel.settingsResponse().observe(requireActivity(), {
+            handleResponse(it)
+        })
+
+        fetchSettings()
     }
 
     private fun setupListeners() {
@@ -117,5 +137,35 @@ class HomeFragment : Fragment() {
                 tvNewsIndex.text = (position + 1).toString() + "/" + stringList.size
             }
         })
+    }
+
+    private fun handleResponse(settingsResponse: SettingsResponse?) {
+        pbHome.visibility = View.GONE
+        tvUserPoints.visibility = View.VISIBLE
+        if (null != settingsResponse) {
+            SPreferenceManager.getInstance(requireContext()).saveSettings(settingsResponse)
+            setupPointViews()
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong), requireActivity())
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setupPointViews() {
+        tvUserName.text =
+            "Hi, " + SPreferenceManager.getInstance(requireContext())
+                .getString(AppConstants.NAME, "")
+        tvUserPoints.text = SPreferenceManager.getInstance(requireContext())
+            .settings.user_points
+    }
+
+    private fun fetchSettings() {
+        if (isConnected(requireContext())) {
+            pbHome.visibility = View.VISIBLE
+            tvUserPoints.visibility = View.INVISIBLE
+            settingsViewModel.getSettings(SPreferenceManager.getInstance(requireContext()).session)
+        } else {
+            showSnackBar(getString(R.string.no_internet), requireActivity())
+        }
     }
 }

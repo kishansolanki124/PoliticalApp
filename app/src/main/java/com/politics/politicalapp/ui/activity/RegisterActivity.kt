@@ -22,6 +22,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private var districtId = ""
     private lateinit var settingsViewModel: SettingsViewModel
+    private lateinit var settingsResponse: SettingsResponse
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +58,12 @@ class RegisterActivity : AppCompatActivity() {
         settingsViewModel.commonResponse().observe(this, {
             pbRegister.visibility = View.GONE
             btSubmitRegister.visibility = View.VISIBLE
-            SPreferenceManager.getInstance(this).saveSession(et_mobile.text.toString())
+            SPreferenceManager.getInstance(this)
+                .saveSession(
+                    this.settingsResponse,
+                    et_mobile.text.toString(),
+                    et_name.text.toString()
+                )
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         })
@@ -112,6 +118,7 @@ class RegisterActivity : AppCompatActivity() {
         pbRegister.visibility = View.GONE
         btSubmitRegister.visibility = View.VISIBLE
         if (null != settingsResponse) {
+            this.settingsResponse = settingsResponse
             districtList.addAll(settingsResponse.district_list)
             setupDistrictSpinner()
         } else {

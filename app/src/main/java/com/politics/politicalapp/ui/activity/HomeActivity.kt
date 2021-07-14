@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.politics.politicalapp.R
+import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.ui.fragment.HomeFragment
 import com.politics.politicalapp.ui.fragment.LivePollFragment
 import com.politics.politicalapp.ui.fragment.WinnerFragment
@@ -54,6 +55,16 @@ class HomeActivity : ExtendedToolbarActivity(),
                 newsCategory.visibility = View.GONE
             }
             startActivity(Intent(this, TNCActivity::class.java))
+        }
+
+        tvLogout.setOnClickListener {
+            if (newsCategory.isVisible) {
+                newsCategory.visibility = View.GONE
+            }
+            SPreferenceManager.getInstance(this).clearSession()
+            val mIntent = Intent(this, SplashActivity::class.java)
+            finishAffinity()
+            startActivity(mIntent)
         }
 
         ivClose.setOnClickListener {

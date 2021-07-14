@@ -6,6 +6,7 @@ interface AppConstants {
         const val ACTION_CODE_100 = 100
         const val IS_LOGIN: String = "IS_LOGIN"
         const val MOBILE: String = "MOBILE"
+        const val SETTINGS: String = "SETTINGS"
         const val MOBILE_VERIFIED: String = "MOBILE_VERIFIED"
         const val NEWS_ID: String = "NEWS_ID"
         const val IMAGE_LIST: String = "IMAGE_LIST"
@@ -17,6 +18,7 @@ interface AppConstants {
         const val PATIDAR_SAMAJ_ID: String = "PATIDAR_SAMAJ_ID"
         const val IMAGE_POSITION: String = "IMAGE_POSITION"
         const val FILE_NAME: String = "FILE_NAME"
+        const val NAME: String = "NAME"
         const val ORDER_ID: String = "ORDER_ID"
         const val AMOUNT: String = "AMOUNT"
         const val ADD_LAVAJAM: String = "ADD_LAVAJAM"

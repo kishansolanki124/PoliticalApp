@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.politics.politicalapp.pojo.SettingsResponse;
 
 import app.app.patidarsaurabh.apputils.AppConstants;
 
@@ -13,13 +14,13 @@ public class SPreferenceManager {
     private static SPreferenceManager mInstance;
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
-    private Gson mGson;
+    private Gson gson;
 
 
     private SPreferenceManager(Context context) {
         mPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         mEditor = mPreferences.edit();
-        mGson = new Gson();
+        gson = new Gson();
     }
 
     public static SPreferenceManager getInstance(Context context) {
@@ -33,9 +34,11 @@ public class SPreferenceManager {
         return mPreferences.getBoolean(AppConstants.IS_LOGIN, false);
     }
 
-    public void saveSession(String mobileNumber) {
+    public void saveSession(SettingsResponse settingsResponse, String mobileNumber, String username) {
         setBoolean(AppConstants.IS_LOGIN, true);
         setString(AppConstants.MOBILE, mobileNumber);
+        setString(AppConstants.NAME, username);
+        saveSettings(settingsResponse);
     }
 
     public String getSession() {
@@ -80,5 +83,13 @@ public class SPreferenceManager {
 
     public void clearSession() {
         mPreferences.edit().clear().apply();
+    }
+
+    public void saveSettings(SettingsResponse settingsResponse) {
+        setString(AppConstants.SETTINGS, gson.toJson(settingsResponse));
+    }
+
+    public SettingsResponse getSettings() {
+        return gson.fromJson(getString(AppConstants.SETTINGS, null), SettingsResponse.class);
     }
 }

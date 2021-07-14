@@ -23,9 +23,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:fontFamily="@font/semi_bold"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/semi_bold"
             android:text="@string/Menu"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_14" />
@@ -65,4 +65,9 @@
         style="@style/MenuFragmentTextView"
         android:drawableStart="@drawable/contact"
         android:text="@string/Contact_Us" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLogout"
+        style="@style/MenuFragmentTextView"
+        android:text="@string/Logout" />
 </androidx.appcompat.widget.LinearLayoutCompat>
