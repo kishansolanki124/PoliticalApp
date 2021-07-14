@@ -34,7 +34,7 @@
                 android:id="@+id/btViewWinner"
                 style="@style/CommonRedButton"
                 android:layout_margin="@dimen/dp_0"
-                android:paddingHorizontal="@dimen/sp_20"
+                android:paddingHorizontal="@dimen/dp_10"
                 android:text="@string/running"
                 android:textSize="@dimen/sp_14"
                 app:cornerRadius="@dimen/dp_5" />

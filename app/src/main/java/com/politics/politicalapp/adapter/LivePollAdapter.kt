@@ -1,5 +1,8 @@
 package com.politics.politicalapp.adapter
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
 import kotlinx.android.synthetic.main.live_poll_item.view.*
+import kotlinx.android.synthetic.main.live_poll_item.view.btViewWinner
+import kotlinx.android.synthetic.main.live_poll_item.view.cvRootGovtWorkNewsItem
+import kotlinx.android.synthetic.main.live_poll_item.view.tvGive_rate_get_10_point
+import kotlinx.android.synthetic.main.quiz_and_contest_item.view.*
 
 class LivePollAdapter(
     private val itemClickCall: (String, Boolean) -> Unit,
@@ -71,6 +78,48 @@ class LivePollAdapter(
                 } else {
                     itemView.tvGive_rate_get_10_point.text =
                         "(Participate &amp; Get 10 points / Win Prize)"
+
+                    val greenText =
+                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.participate_and))
+                    greenText.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                itemView.tvGive_rate_get_10_point.context,
+                                R.color.black
+                            )
+                        ),
+                        0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    itemView.tvGive_rate_get_10_point.text = greenText
+
+                    val yellowText =
+                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.give_rate_get_10_point_2))
+                    yellowText.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                itemView.tvGive_rate_get_10_point.context,
+                                R.color.red_CC252C
+                            )
+                        ),
+                        0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+
+                    itemView.tvGive_rate_get_10_point.append(yellowText)
+
+                    val thirdText =
+                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.give_rate_get_10_point_3))
+                    thirdText.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                itemView.tvGive_rate_get_10_point.context,
+                                R.color.black
+                            )
+                        ),
+                        0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    itemView.tvGive_rate_get_10_point.append(thirdText)
+
+
                     itemView.btViewWinner.text = "running"
                     itemView.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(

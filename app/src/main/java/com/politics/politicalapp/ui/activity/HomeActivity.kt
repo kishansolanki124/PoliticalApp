@@ -141,3 +141,4 @@ class HomeActivity : ExtendedToolbarActivity(),
         }
     }
 }
+//todo: on back press back to home fragment, title change on selection of any fragment

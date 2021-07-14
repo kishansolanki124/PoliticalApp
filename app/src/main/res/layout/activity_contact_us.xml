@@ -56,27 +56,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_2"
                         android:text="Address :"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/semi_bold"
                         android:textColor="@color/red_CC252C"
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingVertical="@dimen/dp_2"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="COLORS OF GUJARAT"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/semi_bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingVertical="@dimen/dp_2"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
                         android:text="208, GURURAKSHA COMPLEX, NEAR SBI BANK, TAGORE ROAD, VIRANI CHOWK, RAJKOT - 360002 (GUJARAT)"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/sp_12" />
 
                     <View
                         android:layout_margin="@dimen/dp_5"
@@ -85,22 +89,24 @@
                         android:background="@color/gray" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingVertical="@dimen/dp_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:text="Make A Call :"
                         android:textColor="@color/red_CC252C"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/semi_bold"
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingVertical="@dimen/dp_2"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+91 98253 15700"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_12"
+                        android:fontFamily="@font/semi_bold" />
 
                     <View
                         android:layout_margin="@dimen/dp_5"
@@ -109,22 +115,24 @@
                         android:background="@color/gray" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingVertical="@dimen/dp_2"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send a Message :"
                         android:textColor="@color/red_CC252C"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/semi_bold"
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingVertical="@dimen/dp_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:text="info@colorsofgujarat.in"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_12"
+                        android:fontFamily="@font/semi_bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
@@ -137,9 +145,10 @@
                         android:text="Get In Touch"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_14"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/semi_bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:fontFamily="@font/regular"
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,6 +162,7 @@
                         android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:fontFamily="@font/regular"
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -166,6 +176,7 @@
                         android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:fontFamily="@font/regular"
                         android:id="@+id/etMobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -180,6 +191,7 @@
                         android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:fontFamily="@font/regular"
                         android:id="@+id/etQuestioNComment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -201,9 +213,9 @@
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/dp_0"
                         android:textAllCaps="false"
-                        android:paddingHorizontal="@dimen/sp_40"
+                        android:paddingHorizontal="@dimen/sp_30"
                         android:text="@string/Send"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
                 </LinearLayout>
             </ScrollView>
         </androidx.cardview.widget.CardView>

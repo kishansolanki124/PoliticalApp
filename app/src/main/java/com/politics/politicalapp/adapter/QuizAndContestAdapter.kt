@@ -1,5 +1,8 @@
 package com.politics.politicalapp.adapter
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,6 +74,61 @@ class QuizAndContestAdapter(
                 } else {
                     itemView.tvGive_rate_get_10_point.text =
                         "(Participate &amp; Get 10 points / Win Prize)"
+
+                    val greenText =
+                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.participate_and))
+                    greenText.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                itemView.tvGive_rate_get_10_point.context,
+                                R.color.black
+                            )
+                        ),
+                        0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    itemView.tvGive_rate_get_10_point.text = greenText
+
+                    val yellowText =
+                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.give_rate_get_10_point_2))
+                    yellowText.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                itemView.tvGive_rate_get_10_point.context,
+                                R.color.red_CC252C
+                            )
+                        ),
+                        0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+
+                    itemView.tvGive_rate_get_10_point.append(yellowText)
+
+                    val thirdText =
+                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.points_and_win_prizes))
+                    thirdText.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                itemView.tvGive_rate_get_10_point.context,
+                                R.color.black
+                            )
+                        ),
+                        0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    itemView.tvGive_rate_get_10_point.append(thirdText)
+
+                    val forthText =
+                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.points_and_win_prizes_2))
+                    forthText.setSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                itemView.tvGive_rate_get_10_point.context,
+                                R.color.red_CC252C
+                            )
+                        ),
+                        0, forthText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    itemView.tvGive_rate_get_10_point.append(forthText)
+
+                    ///(Participate &amp; Get 10 points / Win Prize)
                     itemView.btViewWinner.text = "running"
                     itemView.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(
@@ -106,7 +164,11 @@ class QuizAndContestAdapter(
 //                itemView.tvNewsPortalWebsite.text = newsPortal.website
 //
                 itemView.cvRootGovtWorkNewsItem.setOnClickListener {
-                    itemClickCall(this)
+                    if (itemView.btViewWinner.text.equals("running")) {
+                        itemClickCall(this)
+                    } else {
+                        itemClickWeb(this)
+                    }
                 }
 
                 itemView.btViewWinner.setOnClickListener {

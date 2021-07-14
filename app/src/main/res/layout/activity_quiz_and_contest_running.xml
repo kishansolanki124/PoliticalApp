@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_bg"
     android:orientation="vertical"
-    tools:context=".ui.activity.GovtWorkActivity">
+    tools:context=".ui.activity.QuizAndContestRunningActivity">
 
     <include layout="@layout/common_toolbar" />
 
@@ -31,24 +31,25 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:scrollbars="none"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/dp_5">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvQuestionSuggestion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_10"
+                    android:fontFamily="@font/semi_bold"
+                    android:padding="@dimen/dp_5"
                     android:text="ભારતના કયા પ્રધાનમંત્રી રાષ્ટ્રીય સ્વયંસેવક સંઘના સદસ્ય પણ છે ?"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_14" />
 
                 <RadioGroup
                     android:id="@+id/rgDharasabhyaReview"
@@ -58,52 +59,29 @@
 
                     <RadioButton
                         android:id="@+id/rbExcellent"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
                         android:checked="true"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="ગુલઝારી લાલા નંદા"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="ગુલઝારી લાલા નંદા" />
 
                     <RadioButton
                         android:id="@+id/rbGood"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:buttonTint="@color/black"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="ચૌધરી ચરણસિંહ"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="ચૌધરી ચરણસિંહ" />
 
                     <RadioButton
                         android:id="@+id/rbcantAnswer"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="નરેન્દ્ર મોદી"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="નરેન્દ્ર મોદી" />
 
                     <RadioButton
                         android:id="@+id/rbBad"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="ડો. મનમોહન સિંહ"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="ડો. મનમોહન સિંહ" />
                 </RadioGroup>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -112,12 +90,12 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btSubmitRegister"
+                        android:id="@+id/btViewWinner"
                         style="@style/CommonRedButton"
                         android:layout_margin="@dimen/dp_0"
-                        android:paddingHorizontal="@dimen/sp_20"
+                        android:paddingHorizontal="@dimen/dp_10"
                         android:text="@string/submit"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         app:cornerRadius="@dimen/dp_5" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -126,13 +104,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="8"
+                        android:fontFamily="@font/semi_bold"
                         android:padding="@dimen/dp_5"
                         android:text="(Participate &amp; Get 10 points / Win Prize)"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/sp_12" />
 
                     <FrameLayout
-                        android:layout_marginEnd="@dimen/dp_10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
@@ -159,21 +137,23 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="Quiz Start Date:"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_12"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvQuizStartDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
+                        android:fontFamily="@font/regular"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="05-07-2021"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_12" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -184,21 +164,23 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="Quiz End Date:"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_12"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvQuizEndDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
+                        android:fontFamily="@font/regular"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="15-07-2021"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_12" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -209,17 +191,20 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="Winner Declare Date:"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_12"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvQuizWinnerDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
+                        android:fontFamily="@font/regular"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="20-07-2021"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_12" />
@@ -228,12 +213,13 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btPrizeDetailsAndRules"
                     style="@style/CommonRedButton"
-                    android:layout_margin="@dimen/dp_0"
+                    android:layout_margin="@dimen/dp_5"
                     android:backgroundTint="@color/black"
-                    android:paddingHorizontal="@dimen/sp_20"
+                    android:paddingHorizontal="@dimen/dp_5"
+                    android:paddingVertical="@dimen/dp_5"
                     android:text="@string/prize_details_and_rules"
                     android:textAllCaps="false"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_14"
                     app:cornerRadius="@dimen/dp_5" />
 
                 <View
@@ -244,16 +230,18 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_10"
+                    android:fontFamily="@font/semi_bold"
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
                     android:text="Sponsor:"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_12" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivSponsor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_5"
                     android:src="@drawable/banner_about" />
             </LinearLayout>
         </ScrollView>

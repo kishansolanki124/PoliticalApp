@@ -18,19 +18,21 @@
             android:id="@+id/tvQuestionSuggestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:lineSpacingExtra="@dimen/dp_5"
             android:paddingVertical="@dimen/dp_5"
             android:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_12" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btViewWinner"
             style="@style/CommonRedButton"
             android:layout_margin="@dimen/dp_0"
-            android:paddingHorizontal="@dimen/sp_10"
+            android:paddingHorizontal="@dimen/dp_20"
             android:text="@string/Prize_Details"
             android:textAllCaps="false"
-            android:textSize="@dimen/sp_16"
+            android:textSize="@dimen/sp_14"
             app:cornerRadius="@dimen/dp_5" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

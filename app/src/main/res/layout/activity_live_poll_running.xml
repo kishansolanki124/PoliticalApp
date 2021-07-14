@@ -44,11 +44,11 @@
                     android:id="@+id/tvQuestionSuggestion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/dp_10"
                     android:text="ભારતના કયા પ્રધાનમંત્રી રાષ્ટ્રીય સ્વયંસેવક સંઘના સદસ્ય પણ છે ?"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp_14" />
 
                 <RadioGroup
                     android:id="@+id/rgDharasabhyaReview"
@@ -58,52 +58,28 @@
 
                     <RadioButton
                         android:id="@+id/rbExcellent"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
                         android:checked="true"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="ગુલઝારી લાલા નંદા"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="ગુલઝારી લાલા નંદા" />
 
                     <RadioButton
                         android:id="@+id/rbGood"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="ચૌધરી ચરણસિંહ"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="ચૌધરી ચરણસિંહ" />
 
                     <RadioButton
                         android:id="@+id/rbcantAnswer"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="નરેન્દ્ર મોદી"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="નરેન્દ્ર મોદી" />
 
                     <RadioButton
                         android:id="@+id/rbBad"
+                        style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/black"
-                        android:minWidth="0dp"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/dp_5"
-                        android:text="ડો. મનમોહન સિંહ"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:text="ડો. મનમોહન સિંહ" />
                 </RadioGroup>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -118,7 +94,7 @@
                         android:layout_margin="@dimen/dp_0"
                         android:paddingHorizontal="@dimen/sp_20"
                         android:text="@string/submit"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_14"
                         app:cornerRadius="@dimen/dp_5" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -127,10 +103,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="8"
+                        android:fontFamily="@font/semi_bold"
                         android:padding="@dimen/dp_5"
                         android:text="(Participate &amp; Get 10 points / Win Prize)"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/sp_12" />
 
                     <FrameLayout
                         android:layout_width="0dp"
