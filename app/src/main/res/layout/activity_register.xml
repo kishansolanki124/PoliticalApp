@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,13 +25,30 @@
         android:layout_marginVertical="@dimen/dp_10"
         android:background="@drawable/spinner_dropdown" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_city"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_city"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         android:layout_marginHorizontal="@dimen/dp_20"
         android:layout_marginVertical="@dimen/dp_10"
-        android:background="@drawable/spinner_dropdown" />
+        android:background="@drawable/red_rounded_corner_transparent_bg"
+        android:fontFamily="@font/regular"
+        android:hint="@string/your_city"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/sp_16" />
+
+    <!--    <androidx.appcompat.widget.AppCompatSpinner-->
+    <!--        android:id="@+id/sp_city"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/dp_50"-->
+    <!--        android:layout_marginHorizontal="@dimen/dp_20"-->
+    <!--        android:layout_marginVertical="@dimen/dp_10"-->
+    <!--        android:background="@drawable/spinner_dropdown" />-->
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_name"
@@ -39,6 +57,7 @@
         android:layout_marginHorizontal="@dimen/dp_20"
         android:layout_marginVertical="@dimen/dp_10"
         android:background="@drawable/red_rounded_corner_transparent_bg"
+        android:fontFamily="@font/regular"
         android:hint="@string/your_name"
         android:imeOptions="actionNext"
         android:inputType="textCapWords"
@@ -55,6 +74,7 @@
         android:layout_marginHorizontal="@dimen/dp_20"
         android:layout_marginVertical="@dimen/dp_10"
         android:background="@drawable/red_rounded_corner_transparent_bg"
+        android:fontFamily="@font/regular"
         android:hint="@string/your_phone"
         android:imeOptions="actionDone"
         android:inputType="numberSigned"
@@ -65,11 +85,32 @@
         android:textCursorDrawable="@null"
         android:textSize="@dimen/sp_16" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ibRegister"
-        android:layout_width="@dimen/dp_70"
-        android:layout_height="@dimen/dp_70"
-        android:layout_margin="@dimen/dp_40"
-        android:src="@drawable/register_round_button"
-        android:theme="@style/ClickableViewWhite" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_40">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btSubmitRegister"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:src="@drawable/register_round_button"
+            android:theme="@style/ClickableViewWhite"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/pbRegister"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateTint="@color/red_light"
+            android:indeterminateTintMode="multiply"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/btSubmitRegister"
+            app:layout_constraintEnd_toEndOf="@+id/btSubmitRegister"
+            app:layout_constraintStart_toStartOf="@+id/btSubmitRegister"
+            app:layout_constraintTop_toTopOf="@+id/btSubmitRegister" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

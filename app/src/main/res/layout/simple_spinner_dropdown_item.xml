@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
-    style="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_50"
+    android:gravity="center_vertical"
+    android:layout_gravity="center_vertical"
     android:layout_marginHorizontal="@dimen/dp_20"
     android:layout_marginVertical="@dimen/dp_10"
     android:background="@android:color/transparent"
-    android:padding="@dimen/dp_10"
     android:paddingHorizontal="@dimen/dp_20"
+    android:paddingVertical="@dimen/dp_5"
     android:textColor="@color/white"
-    android:textSize="@dimen/sp_16" />
+    android:fontFamily="@font/regular"
+    android:textSize="@dimen/sp_16"/>

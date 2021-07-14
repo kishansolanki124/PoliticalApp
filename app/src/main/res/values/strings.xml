@@ -45,4 +45,10 @@
     <string name="Mobile_No">Mobile Number</string>
     <string name="quest_comment">Enter your question or comment</string>
     <string name="Send">Send</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="no_internet">Internet connection not available</string>
+    <string name="your_city">તમારું શહેર</string>
+    <string name="invalid_city">Invalid city name</string>
+    <string name="invalid_name">Invalid name</string>
+    <string name="invalid_phone">Invalid mobile number</string>
 </resources>

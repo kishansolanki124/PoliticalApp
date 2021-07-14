@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun openHome() {
         if (SPreferenceManager.getInstance(this).isLogin) {
-            //startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
         } else {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
