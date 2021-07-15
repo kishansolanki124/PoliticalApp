@@ -9,6 +9,13 @@
 
     <include layout="@layout/common_toolbar" />
 
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spDistrict"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/spinner_dropdown_light_red" />
+
     <ProgressBar
         android:id="@+id/pbNewsPortal"
         android:layout_width="wrap_content"
@@ -19,13 +26,6 @@
         android:scaleX="0.7"
         android:scaleY="0.7"
         android:visibility="gone" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spDistrict"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/spinner_dropdown_light_red" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNewsPortal"

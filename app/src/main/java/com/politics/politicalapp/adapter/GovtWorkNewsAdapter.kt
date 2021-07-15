@@ -4,16 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
+import com.politics.politicalapp.pojo.GovtWorkListResponse
 import kotlinx.android.synthetic.main.govt_work_news_item.view.*
 
 class GovtWorkNewsAdapter(
-    private val itemClickCall: (String) -> Unit,
-    private val itemClickWeb: (String) -> Unit
+    private val itemClickCall: (GovtWorkListResponse.GovWork) -> Unit,
+    private val itemClickWeb: (GovtWorkListResponse.GovWork) -> Unit
 ) :
     RecyclerView.Adapter<GovtWorkNewsAdapter.HomeOffersViewHolder>() {
 
-    private var list: ArrayList<String> = ArrayList()
+    private var list: ArrayList<GovtWorkListResponse.GovWork> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
@@ -28,8 +30,8 @@ class GovtWorkNewsAdapter(
         holder.bindForecast(list[position])
     }
 
-    fun setItem(list: ArrayList<String>) {
-        this.list = list
+    fun setItem(list: ArrayList<GovtWorkListResponse.GovWork>) {
+        this.list.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -42,25 +44,21 @@ class GovtWorkNewsAdapter(
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (String) -> Unit,
-        private val itemClickWeb: (String) -> Unit
+        private val itemClickCall: (GovtWorkListResponse.GovWork) -> Unit,
+        private val itemClickWeb: (GovtWorkListResponse.GovWork) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
-//        constructor(parent: ViewGroup) : this(
-//            LayoutInflater.from(parent.context).inflate(
-//                R.layout.item_vatan_nu_gham,
-//                parent, false
-//            )
-//        )
-
         fun bindForecast(
-            newsPortal: String
+            newsPortal: GovtWorkListResponse.GovWork
         ) {
             with(newsPortal) {
 
-//                Glide.with(itemView.ivNewsPortal.context)
-//                    .load(newsPortal.up_pro_img)
-//                    .into(itemView.ivNewsPortal)
+                itemView.tvNewsTitle.text = newsPortal.name
+                itemView.tvRateReceived.text = newsPortal.average_rating
+
+                Glide.with(itemView.ivNews.context)
+                    .load(newsPortal.up_pro_img)
+                    .into(itemView.ivNews)
 //
 //                if (newsPortal.name.isNullOrEmpty()) {
 //                    itemView.tvNewsPortalTitle.visibility = View.GONE
@@ -86,6 +84,10 @@ class GovtWorkNewsAdapter(
 //
                 itemView.cvRootGovtWorkNewsItem.setOnClickListener {
                     itemClickCall(this)
+                }
+
+                itemView.ivNewsShare.setOnClickListener {
+                    itemClickWeb(this)
                 }
 //
 //                itemView.ivWeb.setOnClickListener {

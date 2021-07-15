@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvRootGovtWorkNewsItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,26 +17,26 @@
         android:padding="@dimen/dp_10">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSanstha"
+            android:id="@+id/tvNewsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="@dimen/dp_2"
             android:ellipsize="end"
             android:fontFamily="@font/regular"
+            android:lineSpacingExtra="@dimen/dp_2"
             android:maxLines="2"
             android:paddingVertical="@dimen/dp_5"
-            android:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            tools:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી" />
 
         <com.rishabhharit.roundedimageview.RoundedImageView
-            android:id="@+id/ivMandir"
+            android:id="@+id/ivNews"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_150"
             android:scaleType="centerCrop"
-            android:src="@drawable/dummy_news_image"
             app:cornerRadius="@dimen/dp_5"
-            app:roundedCorners="all" />
+            app:roundedCorners="all"
+            tools:src="@drawable/dummy_news_image" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -46,36 +47,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/Rate"
                 android:fontFamily="@font/semi_bold"
+                android:text="@string/Rate"
                 android:textColor="@color/gray6C6C6C"
                 android:textSize="@dimen/sp_14" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:fontFamily="@font/semi_bold"
                 android:id="@+id/tvRateReceived"
                 android:layout_width="wrap_content"
-                android:layout_marginStart="@dimen/dp_5"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="7"
+                android:layout_marginStart="@dimen/dp_5"
+                android:fontFamily="@font/semi_bold"
                 android:textColor="@color/red_light"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                tools:text="7" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:fontFamily="@font/semi_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/semi_bold"
                 android:text="/"
                 android:textColor="@color/gray6C6C6C"
                 android:textSize="@dimen/sp_14" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:fontFamily="@font/semi_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/semi_bold"
                 android:text="10"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
@@ -86,6 +87,7 @@
                 android:layout_weight="1" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivNewsShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"

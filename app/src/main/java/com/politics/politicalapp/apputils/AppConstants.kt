@@ -32,6 +32,7 @@ interface AppConstants {
             const val BASE_URL = "https://colorsofgujarat.in/cogapp/cogapi/"
             const val REGISTRATION: String = "registration"
             const val GET_SETTINGS: String = "get_settings"
+            const val GET_GOVT_WORK: String = "get_gov_work"
         }
     }
 
@@ -39,6 +40,8 @@ interface AppConstants {
         companion object {
             const val USER_MOBILE = "user_mobile"
             const val district_id = "district_id"
+            const val start = "start"
+            const val end = "end"
             const val city = "city"
             const val platform = "platform"
             const val name = "name"
