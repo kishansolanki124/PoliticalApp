@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -19,11 +20,12 @@
             android:background="@color/white">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBreakingNews"
                 android:layout_width="@dimen/dp_160"
                 android:layout_height="@dimen/dp_120"
                 android:layout_margin="@dimen/dp_5"
                 android:scaleType="centerCrop"
-                android:src="@drawable/dummy_news_image" />
+                tools:src="@drawable/dummy_news_image" />
         </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -36,7 +38,7 @@
             android:maxLines="5"
             android:letterSpacing="0.02"
             android:paddingVertical="@dimen/dp_5"
-            android:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
+            tools:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14" />
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -32,7 +32,6 @@ interface AppConstants {
             const val BASE_URL = "https://colorsofgujarat.in/cogapp/cogapi/"
             const val REGISTRATION: String = "registration"
             const val GET_SETTINGS: String = "get_settings"
-
         }
     }
 

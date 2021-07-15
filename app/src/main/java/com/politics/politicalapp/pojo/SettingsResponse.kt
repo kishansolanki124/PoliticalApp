@@ -3,12 +3,13 @@ package com.politics.politicalapp.pojo
 data class SettingsResponse(
     var district_list: List<District> = listOf(),
     var settings: List<Setting> = listOf(),
+    var news_list: List<News> = listOf(),
     var user_points: String = ""
 ) {
     data class District(
         var id: String = "",
         var name: String = ""
-    ){
+    ) {
         override fun toString(): String {
             return name
         }
@@ -22,5 +23,12 @@ data class SettingsResponse(
         var postsharemsg: String = "",
         var update_link: String = "",
         var updatemsg: String = ""
+    )
+
+    data class News(
+        var id: String = "",
+        var name: String = "",
+        var pdate: String = "",
+        var up_pro_img: String = ""
     )
 }

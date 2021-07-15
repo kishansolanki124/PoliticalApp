@@ -4,20 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
+import com.politics.politicalapp.pojo.SettingsResponse
+import kotlinx.android.synthetic.main.home_news_item.view.*
 
 class BreakingNewsAdapter(
-    private val itemClick: (String) -> Unit
+    private val itemClick: (SettingsResponse.News) -> Unit
 ) : RecyclerView.Adapter<BreakingNewsAdapter.HomeOffersViewHolder>() {
 
-    private var list: List<String> = listOf()
+    private var list: List<SettingsResponse.News> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         return HomeOffersViewHolder(
             parent
         )
     }
-
 
     override fun onBindViewHolder(holder: HomeOffersViewHolder, position: Int) {
 
@@ -28,7 +30,7 @@ class BreakingNewsAdapter(
         holder.bind(list[position])
     }
 
-    fun setItem(list: List<String>) {
+    fun setItem(list: List<SettingsResponse.News>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -44,14 +46,12 @@ class BreakingNewsAdapter(
             )
         )
 
-        fun bind(introImageModel: String) {
-            println(introImageModel)
+        fun bind(introImageModel: SettingsResponse.News) {
+            Glide.with(itemView.ivBreakingNews.context)
+                .load(introImageModel.up_pro_img)
+                .into(itemView.ivBreakingNews)
 
-//            Glide.with(itemView.ivBreakingNews.context)
-//                .load(introImageModel.up_pro_img)
-//                .into(itemView.ivBreakingNews)
-
-            //itemView.tvNewsTitle.text = introImageModel.name
+            itemView.tvNewsTitle.text = introImageModel.name
         }
     }
 }

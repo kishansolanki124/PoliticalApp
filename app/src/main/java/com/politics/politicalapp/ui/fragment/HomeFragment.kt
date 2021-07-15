@@ -36,7 +36,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
         setupListeners()
         setupPoints()
     }
@@ -78,16 +77,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
-
-        val stringList: ArrayList<String> = ArrayList()
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-
-        val adapter = BreakingNewsAdapter {
+    private fun setupNewsViewPager(newsList: List<SettingsResponse.News>) {
+        val breakingNewsAdapter = BreakingNewsAdapter {
 //            startActivity(
 //                Intent(
 //                    requireActivity(), NewsDetailsActivity::class.java
@@ -95,26 +86,12 @@ class HomeFragment : Fragment() {
 //            )
         }
 
-        adapter.setItem(stringList)
-
-//        rvNewsHome.adapter = adapter
-//
-//        rvNewsHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//                val offset: Int = rvNewsHome.computeHorizontalScrollOffset()
-//                if (offset % rvNewsHome.width == 0) {
-//                    val position: Int = rvNewsHome
-//                    Log.e("Current position is", position.toString())
-//                    requireActivity().showToast(position.toString())
-//                }
-//            }
-//        })
+        breakingNewsAdapter.setItem(newsList)
 
         //showing next page's partial visibility
         newsHomeViewPager.setShowSideItems(50, 0)
 
-        newsHomeViewPager.adapter = adapter
+        newsHomeViewPager.adapter = breakingNewsAdapter
 
         newsHomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
@@ -134,17 +111,20 @@ class HomeFragment : Fragment() {
             @SuppressLint("SetTextI18n")
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                tvNewsIndex.text = (position + 1).toString() + "/" + stringList.size
+                tvNewsIndex.text = (position + 1).toString() + "/" + newsList.size
             }
         })
     }
 
     private fun handleResponse(settingsResponse: SettingsResponse?) {
         pbHome.visibility = View.GONE
+        pbHomeNews.visibility = View.GONE
         tvUserPoints.visibility = View.VISIBLE
+        newsHomeViewPager.visibility = View.VISIBLE
         if (null != settingsResponse) {
             SPreferenceManager.getInstance(requireContext()).saveSettings(settingsResponse)
             setupPointViews()
+            setupNewsViewPager(settingsResponse.news_list)
         } else {
             showSnackBar(getString(R.string.something_went_wrong), requireActivity())
         }
@@ -162,7 +142,9 @@ class HomeFragment : Fragment() {
     private fun fetchSettings() {
         if (isConnected(requireContext())) {
             pbHome.visibility = View.VISIBLE
+            pbHomeNews.visibility = View.VISIBLE
             tvUserPoints.visibility = View.INVISIBLE
+            newsHomeViewPager.visibility = View.INVISIBLE
             settingsViewModel.getSettings(SPreferenceManager.getInstance(requireContext()).session)
         } else {
             showSnackBar(getString(R.string.no_internet), requireActivity())
