@@ -6,6 +6,7 @@ interface AppConstants {
         const val ACTION_CODE_100 = 100
         const val IS_LOGIN: String = "IS_LOGIN"
         const val MOBILE: String = "MOBILE"
+        const val GID: String = "GID"
         const val SETTINGS: String = "SETTINGS"
         const val MOBILE_VERIFIED: String = "MOBILE_VERIFIED"
         const val NEWS_ID: String = "NEWS_ID"
@@ -33,6 +34,8 @@ interface AppConstants {
             const val REGISTRATION: String = "registration"
             const val GET_SETTINGS: String = "get_settings"
             const val GET_GOVT_WORK: String = "get_gov_work"
+            const val GET_GOVT_WORK_DETAIL: String = "get_govwork_detail"
+            const val ADD_GOVT_WORK_RATING: String = "add_govwork_user_rating"
         }
     }
 
@@ -46,6 +49,9 @@ interface AppConstants {
             const val platform = "platform"
             const val name = "name"
             const val mobile = "mobile"
+            const val gid = "gid"
+            const val user_mobile = "user_mobile"
+            const val user_rating = "user_rating"
             const val CITY_ID = "city_id"
         }
     }

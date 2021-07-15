@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.GovtWorkNewsAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
@@ -111,7 +112,10 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
         govtWorkNewsAdapter = GovtWorkNewsAdapter(
             {
                 //callIntent(this, it.contact_no!!)
-                startActivity(Intent(this, GovtWorkDetailActivity::class.java))
+                startActivity(
+                    Intent(this, GovtWorkDetailActivity::class.java)
+                        .putExtra(AppConstants.GID, it.id)
+                )
             }, {
                 //browserIntent(this, it.website!!)
             }

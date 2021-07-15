@@ -125,10 +125,10 @@
         <item name="android:fontFamily">@font/semi_bold</item>
     </style>
 
+<!--    <item name="android:layout_weight">1</item>-->
     <style name="RatingTextView" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">@dimen/dp_30</item>
+        <item name="android:layout_height">@dimen/dp_30</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/circle_rating</item>
         <item name="android:padding">@dimen/dp_2</item>

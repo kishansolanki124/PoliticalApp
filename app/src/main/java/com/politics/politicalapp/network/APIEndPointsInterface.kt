@@ -1,9 +1,7 @@
 package com.politics.politicalapp.network
 
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.politics.politicalapp.pojo.CommonResponse
-import com.politics.politicalapp.pojo.GovtWorkListResponse
-import com.politics.politicalapp.pojo.SettingsResponse
+import com.politics.politicalapp.pojo.*
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -25,6 +23,16 @@ interface APIEndPointsInterface {
     suspend fun getGovtWork(
         @Body hashMap: MultipartBody
     ): GovtWorkListResponse
+
+    @POST(AppConstants.APIEndPoints.GET_GOVT_WORK_DETAIL)
+    suspend fun getGovtWorkDetail(
+        @Body hashMap: MultipartBody
+    ): GovtWorkDetailResponse
+
+    @POST(AppConstants.APIEndPoints.ADD_GOVT_WORK_RATING)
+    suspend fun addRatingGovtWork(
+        @Body hashMap: MultipartBody
+    ): GiveUserRatingToGovtWorkResponse
 
     @POST(AppConstants.APIEndPoints.REGISTRATION)
     suspend fun registration(
