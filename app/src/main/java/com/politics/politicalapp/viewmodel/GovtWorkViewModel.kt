@@ -21,6 +21,8 @@ class GovtWorkViewModel : ViewModel() {
     private val mutableGovtWorkDetailResponse = MutableLiveData<GovtWorkDetailResponse>()
     private val mutableGiveUserRatingToGovtWorkResponse =
         MutableLiveData<GiveUserRatingToGovtWorkResponse>()
+    private val mutableGovtWorkCommentResponse =
+        MutableLiveData<GiveUserRatingToGovtWorkResponse>()
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
 
@@ -82,6 +84,35 @@ class GovtWorkViewModel : ViewModel() {
         }
     }
 
+    fun addGovtWorkComment(gid: String, user_mobile: String, user_comment: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.gid,
+                    gid
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_mobile,
+                    user_mobile
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_comment,
+                    user_comment
+                )
+
+                val apiResponse = apiEndPointsInterface.addGovtWorkComment(
+                    requestBodyBuilder.build()
+                )
+                returnGovtWorkCommentResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun getGovtWorkDetail(gid: String, user_mobile: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -118,12 +149,22 @@ class GovtWorkViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnGovtWorkCommentResponse(apiResponse: GiveUserRatingToGovtWorkResponse) {
+        withContext(Dispatchers.Main) {
+            mutableGovtWorkCommentResponse.value = apiResponse
+        }
+    }
+
     fun govtWorkList(): LiveData<GovtWorkListResponse> {
         return mutableSettingsResponse
     }
 
     fun userRating(): LiveData<GiveUserRatingToGovtWorkResponse> {
         return mutableGiveUserRatingToGovtWorkResponse
+    }
+
+    fun newComment(): LiveData<GiveUserRatingToGovtWorkResponse> {
+        return mutableGovtWorkCommentResponse
     }
 
     private suspend fun returnGovtWorkDetailResponse(settingsResponse: GovtWorkDetailResponse) {

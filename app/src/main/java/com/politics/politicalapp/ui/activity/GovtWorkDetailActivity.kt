@@ -3,6 +3,7 @@ package com.politics.politicalapp.ui.activity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.NewsCommentAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.hideKeyboard
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.GiveUserRatingToGovtWorkResponse
@@ -41,7 +43,7 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         gid = intent.getStringExtra(AppConstants.GID)!!
 
         setToolbarTitle(getString(R.string.govt_work))
-        setupList()
+        initList()
 
         govtWorkViewModel = ViewModelProvider(this).get(GovtWorkViewModel::class.java)
 
@@ -51,6 +53,10 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
 
         govtWorkViewModel.userRating().observe(this, {
             handleResponseOfRating(it)
+        })
+
+        govtWorkViewModel.newComment().observe(this, {
+            handleResponseOfNewComment(it)
         })
 
         if (isConnected(this)) {
@@ -93,6 +99,15 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         tvGive_opinion_get_10_point.append(thirdText)
     }
 
+    private fun handleResponseOfNewComment(giveUserRatingToGovtWorkResponse: GiveUserRatingToGovtWorkResponse?) {
+        btSubmitComment.visibility = View.VISIBLE
+        pbComment.visibility = View.GONE
+        if (null != giveUserRatingToGovtWorkResponse) {
+            showAlertDialog(giveUserRatingToGovtWorkResponse.message)
+            //todo work here
+        }
+    }
+
     private fun handleResponseOfRating(giveUserRatingToGovtWorkResponse: GiveUserRatingToGovtWorkResponse?) {
         pbRateGovtWork.visibility = View.GONE
         btSubmitRatingOfGovtWorkDetail.visibility = View.VISIBLE
@@ -112,6 +127,7 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         nsvGovtWorkDetail.visibility = View.VISIBLE
         if (null != govtWorkDetailResponse) {
             setupViews(govtWorkDetailResponse)
+            addItems(govtWorkDetailResponse)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
         }
@@ -145,6 +161,25 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     }
 
     private fun setupRatings() {
+        btSubmitComment.setOnClickListener {
+            if (!TextUtils.isEmpty(etUserComment.text.toString())) {
+                if (isConnected(this)) {
+                    hideKeyboard(this)
+                    pbComment.visibility = View.VISIBLE
+                    btSubmitComment.visibility = View.INVISIBLE
+                    govtWorkViewModel.addGovtWorkComment(
+                        gid,
+                        SPreferenceManager.getInstance(this).session,
+                        etUserComment.text.toString()
+                    )
+                } else {
+                    showSnackBar(getString(R.string.no_internet))
+                }
+            } else {
+                showSnackBar(getString(R.string.invalid_comment))
+            }
+        }
+
         btSubmitRatingOfGovtWorkDetail.setOnClickListener {
             if (isConnected(this)) {
                 if (rating > 0) {
@@ -397,16 +432,9 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         setEmpty(tvRate10)
     }
 
-    private fun setupList() {
+    private fun initList() {
         layoutManager = LinearLayoutManager(this)
         rvComments.layoutManager = layoutManager
-
-        val stringList: ArrayList<String> = ArrayList()
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
 
         govtWorkNewsAdapter = NewsCommentAdapter(
             {
@@ -415,8 +443,13 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
                 //browserIntent(this, it.website!!)
             }
         )
-        govtWorkNewsAdapter.setItem(stringList)
         rvComments.adapter = govtWorkNewsAdapter
+    }
+
+    private fun addItems(govtWorkDetailResponse: GovtWorkDetailResponse) {
+        if (govtWorkDetailResponse.user_comment.isNotEmpty()) {
+            govtWorkNewsAdapter.setItem(govtWorkDetailResponse.user_comment)
+        }
     }
 
     private fun setFilled(textView: TextView) {
@@ -445,5 +478,4 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
-
 }

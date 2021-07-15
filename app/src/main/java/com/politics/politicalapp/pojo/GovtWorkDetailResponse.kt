@@ -4,7 +4,7 @@ data class GovtWorkDetailResponse(
     var gov_work_detail: List<GovWorkDetail> = listOf(),
     var message: String = "",
     var status: String = "",
-    var user_comment: List<UserComment> = listOf()
+    var user_comment: ArrayList<UserComment> = ArrayList()
 ) {
     data class GovWorkDetail(
         var average_rating: String = "",

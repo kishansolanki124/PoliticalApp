@@ -88,8 +88,9 @@ class HomeFragment : Fragment() {
 
         breakingNewsAdapter.setItem(newsList)
 
+        //todo work here
         //showing next page's partial visibility
-        newsHomeViewPager.setShowSideItems(50, 0)
+        //newsHomeViewPager.setShowSideItems(200, 0)
 
         newsHomeViewPager.adapter = breakingNewsAdapter
 

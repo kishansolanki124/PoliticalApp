@@ -5,14 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
+import com.politics.politicalapp.pojo.GovtWorkDetailResponse
+import kotlinx.android.synthetic.main.comment_item.view.*
 
 class NewsCommentAdapter(
-    private val itemClickCall: (String) -> Unit,
-    private val itemClickWeb: (String) -> Unit
+    private val itemClickCall: (GovtWorkDetailResponse.UserComment) -> Unit,
+    private val itemClickWeb: (GovtWorkDetailResponse.UserComment) -> Unit
 ) :
     RecyclerView.Adapter<NewsCommentAdapter.HomeOffersViewHolder>() {
 
-    private var list: ArrayList<String> = ArrayList()
+    private var list: ArrayList<GovtWorkDetailResponse.UserComment> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
@@ -27,7 +29,7 @@ class NewsCommentAdapter(
         holder.bindForecast(list[position])
     }
 
-    fun setItem(list: ArrayList<String>) {
+    fun setItem(list: ArrayList<GovtWorkDetailResponse.UserComment>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -41,8 +43,8 @@ class NewsCommentAdapter(
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (String) -> Unit,
-        private val itemClickWeb: (String) -> Unit
+        private val itemClickCall: (GovtWorkDetailResponse.UserComment) -> Unit,
+        private val itemClickWeb: (GovtWorkDetailResponse.UserComment) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
 //        constructor(parent: ViewGroup) : this(
@@ -53,14 +55,12 @@ class NewsCommentAdapter(
 //        )
 
         fun bindForecast(
-            newsPortal: String
+            newsPortal: GovtWorkDetailResponse.UserComment
         ) {
             with(newsPortal) {
+                itemView.tvCommentBy.text = newsPortal.user_name
+                itemView.tvComment.text = newsPortal.comment
 
-//                Glide.with(itemView.ivNewsPortal.context)
-//                    .load(newsPortal.up_pro_img)
-//                    .into(itemView.ivNewsPortal)
-//
 //                if (newsPortal.name.isNullOrEmpty()) {
 //                    itemView.tvNewsPortalTitle.visibility = View.GONE
 //                }

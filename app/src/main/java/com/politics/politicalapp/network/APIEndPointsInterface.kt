@@ -34,6 +34,11 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): GiveUserRatingToGovtWorkResponse
 
+    @POST(AppConstants.APIEndPoints.ADD_GOVT_WORK_COMMENT)
+    suspend fun addGovtWorkComment(
+        @Body hashMap: MultipartBody
+    ): GiveUserRatingToGovtWorkResponse
+
     @POST(AppConstants.APIEndPoints.REGISTRATION)
     suspend fun registration(
         @Body hashMap: MultipartBody

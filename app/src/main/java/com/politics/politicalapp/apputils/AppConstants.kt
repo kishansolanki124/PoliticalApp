@@ -36,6 +36,7 @@ interface AppConstants {
             const val GET_GOVT_WORK: String = "get_gov_work"
             const val GET_GOVT_WORK_DETAIL: String = "get_govwork_detail"
             const val ADD_GOVT_WORK_RATING: String = "add_govwork_user_rating"
+            const val ADD_GOVT_WORK_COMMENT: String = "add_govwork_user_comment"
         }
     }
 
@@ -51,6 +52,7 @@ interface AppConstants {
             const val mobile = "mobile"
             const val gid = "gid"
             const val user_mobile = "user_mobile"
+            const val user_comment = "user_comment"
             const val user_rating = "user_rating"
             const val CITY_ID = "city_id"
         }

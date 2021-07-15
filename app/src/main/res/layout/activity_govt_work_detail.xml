@@ -13,11 +13,11 @@
         android:id="@+id/nsvGovtWorkDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <!--        android:descendantFocusability="blocksDescendants"-->
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
             <FrameLayout
@@ -265,7 +265,7 @@
                     android:textSize="@dimen/sp_14" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etLavajamAddress"
+                    android:id="@+id/etUserComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -274,9 +274,8 @@
                     android:fontFamily="@font/regular"
                     android:gravity="start"
                     android:hint="@string/write_comment"
-                    android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
-                    android:minLines="3"
+                    android:lines="3"
                     android:padding="@dimen/dp_10"
                     android:textSize="@dimen/sp_12" />
 
@@ -285,14 +284,35 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btSubmitComment"
-                        style="@style/CommonRedButton"
-                        android:paddingHorizontal="@dimen/dp_20"
-                        android:text="@string/submit"
-                        android:textSize="@dimen/sp_14"
-                        app:cornerRadius="@dimen/dp_5"
-                        tools:ignore="MissingConstraints" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btSubmitComment"
+                            style="@style/CommonRedButton"
+                            android:paddingHorizontal="@dimen/dp_20"
+                            android:text="@string/submit"
+                            android:textSize="@dimen/sp_14"
+                            app:cornerRadius="@dimen/dp_5"
+                            tools:ignore="MissingConstraints" />
+
+                        <androidx.core.widget.ContentLoadingProgressBar
+                            android:id="@+id/pbComment"
+                            style="?android:attr/progressBarStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:indeterminateTint="@color/red_light"
+                            android:indeterminateTintMode="multiply"
+                            android:scaleX="0.7"
+                            android:scaleY="0.7"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/btSubmitComment"
+                            app:layout_constraintEnd_toEndOf="@+id/btSubmitComment"
+                            app:layout_constraintStart_toStartOf="@+id/btSubmitComment"
+                            app:layout_constraintTop_toTopOf="@+id/btSubmitComment" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvGive_opinion_get_10_point"
@@ -331,5 +351,4 @@
         android:scaleX="0.7"
         android:scaleY="0.7"
         android:visibility="gone" />
-
 </LinearLayout>
