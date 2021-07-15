@@ -37,6 +37,7 @@ interface AppConstants {
             const val GET_GOVT_WORK_DETAIL: String = "get_govwork_detail"
             const val ADD_GOVT_WORK_RATING: String = "add_govwork_user_rating"
             const val ADD_GOVT_WORK_COMMENT: String = "add_govwork_user_comment"
+            const val MLA_LIST: String = "get_gov_mla"
         }
     }
 

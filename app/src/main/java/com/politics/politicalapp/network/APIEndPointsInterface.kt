@@ -39,6 +39,11 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): GiveUserRatingToGovtWorkResponse
 
+    @POST(AppConstants.APIEndPoints.MLA_LIST)
+    suspend fun mlaList(
+        @Body hashMap: MultipartBody
+    ): MLAListResponse
+
     @POST(AppConstants.APIEndPoints.REGISTRATION)
     suspend fun registration(
         @Body hashMap: MultipartBody

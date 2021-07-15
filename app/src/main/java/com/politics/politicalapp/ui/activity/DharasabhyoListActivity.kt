@@ -5,14 +5,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.DharasabhyoAdapter
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.MLAListResponse
+import com.politics.politicalapp.pojo.SettingsResponse
+import com.politics.politicalapp.viewmodel.MLAViewModel
 import kotlinx.android.synthetic.main.activity_dharasabhyo.*
 
 class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
+    private lateinit var mlaViewModel: MLAViewModel
+    private var districtId = ""
+    private var startPage = 0
+    private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: DharasabhyoAdapter
 
@@ -24,19 +35,51 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
         setToolbarTitle(getString(R.string.dharasabhyo))
         setupList()
+
+        mlaViewModel = ViewModelProvider(this).get(MLAViewModel::class.java)
+
+        mlaViewModel.govtWorkList().observe(this, {
+            handleResponse(it)
+        })
+
         setupDistrictSpinner()
+    }
+
+    private fun handleResponse(mlaListResponse: MLAListResponse?) {
+        pbMLAs.visibility = View.GONE
+        rvMLAs.visibility = View.VISIBLE
+        if (null != mlaListResponse) {
+            when {
+                mlaListResponse.gov_mla_list.isNotEmpty() -> {
+                    addItems(mlaListResponse.gov_mla_list)
+                }
+                startPage == 0 -> {
+                    govtWorkNewsAdapter.reset()
+                    showSnackBar(getString(R.string.no_record_found), this)
+                }
+                else -> {
+                    showSnackBar(getString(R.string.something_went_wrong), this)
+                }
+            }
+
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong))
+        }
+    }
+
+    private fun getNews() {
+        if (isConnected(this)) {
+            pbMLAs.visibility = View.VISIBLE
+            rvMLAs.visibility = View.GONE
+            mlaViewModel.getGovtWorkList(districtId, "0", "10")
+        } else {
+            showSnackBar(getString(R.string.no_internet))
+        }
     }
 
     private fun setupList() {
         layoutManager = GridLayoutManager(this, 2)
-        rvNewsPortal.layoutManager = layoutManager
-
-        val stringList: ArrayList<String> = ArrayList()
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
+        rvMLAs.layoutManager = layoutManager
 
         govtWorkNewsAdapter = DharasabhyoAdapter(
             {
@@ -46,34 +89,39 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
                 //browserIntent(this, it.website!!)
             }
         )
-        govtWorkNewsAdapter.setItem(stringList)
-        rvNewsPortal.adapter = govtWorkNewsAdapter
+        rvMLAs.adapter = govtWorkNewsAdapter
+    }
+
+    private fun addItems(govMlaList: ArrayList<MLAListResponse.GovMla>) {
+        govtWorkNewsAdapter.setItem(govMlaList)
     }
 
     private fun setupDistrictSpinner() {
-        val cityList: ArrayList<String> = ArrayList()
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
+        districtList.addAll(SPreferenceManager.getInstance(this).settings.district_list)
 
-        val adapter: ArrayAdapter<String> = ArrayAdapter(
+        val adapter: ArrayAdapter<SettingsResponse.District> = ArrayAdapter(
             applicationContext,
-            R.layout.simple_spinner_dropdown_black_item,
-            cityList
+            R.layout.simple_spinner_dropdown_item_black,
+            districtList
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spDistrict.adapter = adapter
 
         spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                val district: SettingsResponse.District =
+                    parent.selectedItem as SettingsResponse.District
+                districtId = district.id
+                getNews()
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                return
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 }

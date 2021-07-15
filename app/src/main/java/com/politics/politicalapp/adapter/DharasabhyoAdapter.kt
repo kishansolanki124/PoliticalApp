@@ -1,19 +1,22 @@
 package com.politics.politicalapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
+import com.politics.politicalapp.pojo.MLAListResponse
 import kotlinx.android.synthetic.main.dharasabhyo_item.view.*
 
 class DharasabhyoAdapter(
-    private val itemClickCall: (String) -> Unit,
-    private val itemClickWeb: (String) -> Unit
+    private val itemClickCall: (MLAListResponse.GovMla) -> Unit,
+    private val itemClickWeb: (MLAListResponse.GovMla) -> Unit
 ) :
     RecyclerView.Adapter<DharasabhyoAdapter.HomeOffersViewHolder>() {
 
-    private var list: ArrayList<String> = ArrayList()
+    private var list: ArrayList<MLAListResponse.GovMla> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
@@ -28,8 +31,8 @@ class DharasabhyoAdapter(
         holder.bindForecast(list[position])
     }
 
-    fun setItem(list: ArrayList<String>) {
-        this.list = list
+    fun setItem(list: ArrayList<MLAListResponse.GovMla>) {
+        this.list.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -42,8 +45,8 @@ class DharasabhyoAdapter(
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (String) -> Unit,
-        private val itemClickWeb: (String) -> Unit
+        private val itemClickCall: (MLAListResponse.GovMla) -> Unit,
+        private val itemClickWeb: (MLAListResponse.GovMla) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
 //        constructor(parent: ViewGroup) : this(
@@ -53,14 +56,22 @@ class DharasabhyoAdapter(
 //            )
 //        )
 
+        @SuppressLint("SetTextI18n")
         fun bindForecast(
-            newsPortal: String
+            newsPortal: MLAListResponse.GovMla
         ) {
             with(newsPortal) {
 
-//                Glide.with(itemView.ivNewsPortal.context)
-//                    .load(newsPortal.up_pro_img)
-//                    .into(itemView.ivNewsPortal)
+                itemView.tvMLAName.text = newsPortal.mla_name
+                itemView.tvPartyName.text = newsPortal.political_party
+                itemView.tvCityName.text = newsPortal.city
+                itemView.pbMLA.progress = newsPortal.percenrage.toFloat().toInt()
+                itemView.tvPercentage.text = newsPortal.percenrage
+                itemView.tvVotesTotal.text = "Votes: " + newsPortal.votes
+
+                Glide.with(itemView.ivMLA.context)
+                    .load(newsPortal.up_pro_img)
+                    .into(itemView.ivMLA)
 //
 //                if (newsPortal.name.isNullOrEmpty()) {
 //                    itemView.tvNewsPortalTitle.visibility = View.GONE

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlDharasabhyaRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,32 +22,38 @@
             android:paddingTop="@dimen/dp_70">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvSanstha"
+                android:id="@+id/tvMLAName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:lines="2"
+                android:paddingHorizontal="@dimen/dp_2"
                 android:paddingVertical="@dimen/dp_5"
-                android:text="રાજદીપસિંહ સોલંકી"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                tools:text="રાજદીપસિંહ સોલંકી" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPartyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:padding="@dimen/dp_0"
-                android:text="ભારતીયા જનતા પાર્ટી"
                 android:textColor="@color/gray_candidate_name"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_12"
+                tools:text="ભારતીયા જનતા પાર્ટી" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCityName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:padding="@dimen/dp_0"
-                android:text="ધોળકા - અહમદાબાદ"
                 android:textColor="@color/gray_candidate_name"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_12"
+                tools:text="ધોળકા - અહમદાબાદ" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,7 +66,7 @@
                     android:layout_weight="1">
 
                     <ProgressBar
-                        android:id="@+id/circularProgressbar"
+                        android:id="@+id/pbMLA"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="@dimen/dp_100"
                         android:layout_height="@dimen/dp_50"
@@ -78,9 +85,9 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/semi_bold"
                         android:padding="@dimen/dp_5"
-                        android:text="75%"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_11" />
+                        android:textSize="@dimen/sp_11"
+                        tools:text="75%" />
                 </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -92,9 +99,9 @@
                     android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:padding="@dimen/dp_5"
-                    android:text="Votes: 1200"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_12"
+                    tools:text="Votes: 1200" />
 
             </LinearLayout>
         </LinearLayout>
@@ -108,9 +115,10 @@
         android:padding="@dimen/dp_1">
 
         <com.rishabhharit.roundedimageview.RoundedImageView
+            android:id="@+id/ivMLA"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_100"
-            android:src="@drawable/bhupo"
-            app:cornerRadius="@dimen/dp_200" />
+            app:cornerRadius="@dimen/dp_200"
+            tools:src="@drawable/bhupo" />
     </FrameLayout>
 </RelativeLayout>
