@@ -1,19 +1,35 @@
 package com.politics.politicalapp.ui.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import app.app.patidarsaurabh.apputils.AppConstants
+import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.MLADetailResponse
+import com.politics.politicalapp.pojo.MLAListResponse
 import com.politics.politicalapp.ui.fragment.DharasabhyoProfileFragment
 import com.politics.politicalapp.ui.fragment.DharasabhyoSpecialWorkFragment
 import com.politics.politicalapp.ui.fragment.DharasabhyoYourReviewFragment
+import com.politics.politicalapp.viewmodel.MLAViewModel
+import kotlinx.android.synthetic.main.activity_dharasabhyo_detail.*
+import kotlinx.android.synthetic.main.dharasabhyo_item_large.*
 
 class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
 
     private lateinit var viewPagerShraddhanjaliAdapter: ViewPagerShraddhanjaliAdapter
+    private lateinit var mlaDetailResponse: MLADetailResponse
+    private var govMla: MLAListResponse.GovMla? = null
     private lateinit var viewPager: ViewPager
+    private lateinit var mlaViewModel: MLAViewModel
 
     override val layoutId: Int
         get() = R.layout.activity_dharasabhyo_detail
@@ -21,12 +37,60 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setToolbarTitle("અમારો સંપર્ક")
+        setToolbarTitle(getString(R.string.dharasabhyo))
 
+        govMla = intent.getSerializableExtra(AppConstants.MLA) as MLAListResponse.GovMla
+
+        setupViews()
+
+        mlaViewModel = ViewModelProvider(this).get(MLAViewModel::class.java)
+
+        mlaViewModel.mlaDetail().observe(this, {
+            handleResponse(it)
+        })
+
+        if (isConnected(this)) {
+            pbMLADetail.visibility = View.VISIBLE
+            pager.visibility = View.GONE
+            mlaViewModel.getMLADetail(govMla!!.id, SPreferenceManager.getInstance(this).session)
+        } else {
+            showSnackBar(getString(R.string.no_internet))
+        }
+    }
+
+    private fun handleResponse(mlaDetailResponse: MLADetailResponse?) {
+        pager.visibility = View.VISIBLE
+        pbMLADetail.visibility = View.GONE
+        if (null != mlaDetailResponse) {
+            this.mlaDetailResponse = mlaDetailResponse
+            setupViewPager()
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong))
+        }
+    }
+
+    private fun setupViewPager() {
         viewPagerShraddhanjaliAdapter =
             ViewPagerShraddhanjaliAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = viewPagerShraddhanjaliAdapter
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setupViews() {
+        if (null != govMla) {
+            tvMLAName.text = govMla!!.mla_name
+            tvPartyName.text = govMla!!.political_party
+            tvCityName.text = govMla!!.city
+            pbMLA.progress = govMla!!.percenrage.toFloat().toInt()
+            tvPercentage.text = govMla!!.percenrage
+            tvVotesTotal.text = "Votes: " + govMla!!.votes
+
+            Glide.with(ivMLA.context)
+                .load(govMla!!.up_pro_img)
+                .into(ivMLA)
+//
+        }
     }
 
     // Since this is an object collection, use a FragmentStatePagerAdapter,
@@ -65,6 +129,10 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
                 "તમારો રીવ્યુ"
             }
         }
+    }
+
+    fun getMLADetailResponse(): MLADetailResponse {
+        return mlaDetailResponse
     }
 }
 //todo: scroll issue

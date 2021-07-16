@@ -20,6 +20,7 @@ interface AppConstants {
         const val IMAGE_POSITION: String = "IMAGE_POSITION"
         const val FILE_NAME: String = "FILE_NAME"
         const val NAME: String = "NAME"
+        const val MLA: String = "MLA"
         const val ORDER_ID: String = "ORDER_ID"
         const val AMOUNT: String = "AMOUNT"
         const val ADD_LAVAJAM: String = "ADD_LAVAJAM"
@@ -38,6 +39,7 @@ interface AppConstants {
             const val ADD_GOVT_WORK_RATING: String = "add_govwork_user_rating"
             const val ADD_GOVT_WORK_COMMENT: String = "add_govwork_user_comment"
             const val MLA_LIST: String = "get_gov_mla"
+            const val MLA_DETAIL: String = "get_govmla_detail"
         }
     }
 

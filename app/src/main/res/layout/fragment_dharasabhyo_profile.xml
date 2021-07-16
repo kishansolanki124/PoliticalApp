@@ -1,128 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_10"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
     android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_10"
         android:background="@color/white"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSName"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="નામ : ચુડાસમા શ્રી ભૂપેન્દ્રસિંહ મનુભા"
-            android:textSize="@dimen/sp_14" />
+            android:id="@+id/tvMLAProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:lineSpacingExtra="@dimen/dp_2"
+            android:padding="@dimen/dp_5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14"
+            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSFatherName"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="પિતાનું નામ : મનુભા"
-            android:textSize="@dimen/sp_14" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSBirthDate"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="જન્મ તારીખ : ૦૮ મે ૧૯૫૦"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSName"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="નામ : ચુડાસમા શ્રી ભૂપેન્દ્રસિંહ મનુભા"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSBirthLocation"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="જન્મ સ્થળ : નાના ઉમવાડા"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSFatherName"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="પિતાનું નામ : મનુભા"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSMaritialStatus"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="વૈવાહિક સ્થિતિ : પરિણિત"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSBirthDate"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="જન્મ તારીખ : ૦૮ મે ૧૯૫૦"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSWifeName"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="જીવનસાથીનું નામ : કૃષ્ણાબા"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSBirthLocation"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="જન્મ સ્થળ : નાના ઉમવાડા"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSState"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="રાજ્ય : ગુજરાત"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSMaritialStatus"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="વૈવાહિક સ્થિતિ : પરિણિત"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSDesignation"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="સર્વોચ્ચ લાયકાત : Graduate with Law"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSWifeName"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="જીવનસાથીનું નામ : કૃષ્ણાબા"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSAddress"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="હાલનું સરનામું : બંગલા નં. ૧૦, મંત્રીશ્રીઓનાં નિવાસસ્થાન, સેક્ટર - ૨૦,
-                 ગાંધીનગર - ૩૮૨ ૦૨૦."
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSState"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="રાજ્ય : ગુજરાત"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSPermanentAddress"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="કાયમી સરનામું  : પ/૭૬૬/૧, ઊંડાપાડાની પોળ, સ્વામિનારાયણ મંદિર
-                    પાસે, મુ. તા. ધોળકા, પિન - ૩૮ર રરપ, જિ. અમદાવાદ."
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSDesignation"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="સર્વોચ્ચ લાયકાત : Graduate with Law"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSPartyName"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="પક્ષનું નામ : ભારતીય જનતા પાર્ટી"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSAddress"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="હાલનું સરનામું : બંગલા નં. ૧૦, મંત્રીશ્રીઓનાં નિવાસસ્થાન, સેક્ટર - ૨૦,-->
+        <!--                 ગાંધીનગર - ૩૮૨ ૦૨૦."-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSPartyLocation"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="મત વિસ્તારનું નામ : ધોળકા"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSPermanentAddress"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="કાયમી સરનામું  : પ/૭૬૬/૧, ઊંડાપાડાની પોળ, સ્વામિનારાયણ મંદિર-->
+        <!--                    પાસે, મુ. તા. ધોળકા, પિન - ૩૮ર રરપ, જિ. અમદાવાદ."-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSEmail"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="ઇ-મેઇલ : mladholkagujarat.gov.in"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSPartyName"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="પક્ષનું નામ : ભારતીય જનતા પાર્ટી"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDSPhone"
-            style="@style/HomeMenuTextView"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:text="મોબાઇલ નંબર :૯૯૭૮૪૦૫૮૫૨"
-            android:textSize="@dimen/sp_14" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSPartyLocation"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="મત વિસ્તારનું નામ : ધોળકા"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
+
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSEmail"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="ઇ-મેઇલ : mladholkagujarat.gov.in"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
+
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDSPhone"-->
+        <!--            style="@style/HomeMenuTextView"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:gravity="start"-->
+        <!--            android:text="મોબાઇલ નંબર :૯૯૭૮૪૦૫૮૫૨"-->
+        <!--            android:textSize="@dimen/sp_14" />-->
     </LinearLayout>
 </ScrollView>

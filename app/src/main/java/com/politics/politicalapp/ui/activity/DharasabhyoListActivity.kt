@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.DharasabhyoAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
@@ -84,7 +85,10 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
         govtWorkNewsAdapter = DharasabhyoAdapter(
             {
                 //callIntent(this, it.contact_no!!)
-                startActivity(Intent(this, DharasabhyoDetailActivity::class.java))
+                startActivity(
+                    Intent(this, DharasabhyoDetailActivity::class.java)
+                        .putExtra(AppConstants.MLA, it)
+                )
             }, {
                 //browserIntent(this, it.website!!)
             }
