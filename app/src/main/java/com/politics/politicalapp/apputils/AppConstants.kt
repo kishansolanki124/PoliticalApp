@@ -40,6 +40,7 @@ interface AppConstants {
             const val ADD_GOVT_WORK_COMMENT: String = "add_govwork_user_comment"
             const val MLA_LIST: String = "get_gov_mla"
             const val MLA_DETAIL: String = "get_govmla_detail"
+            const val GIVE_MLA_RATING: String = "add_govmla_user_rating"
         }
     }
 
@@ -55,6 +56,7 @@ interface AppConstants {
             const val mobile = "mobile"
             const val gid = "gid"
             const val user_mobile = "user_mobile"
+            const val pid = "pid"
             const val user_comment = "user_comment"
             const val user_rating = "user_rating"
             const val CITY_ID = "city_id"

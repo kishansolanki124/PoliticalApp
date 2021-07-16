@@ -30,7 +30,7 @@ class NewsCommentAdapter(
     }
 
     fun setItem(list: ArrayList<GovtWorkDetailResponse.UserComment>) {
-        this.list = list
+        this.list.addAll(list)
         notifyDataSetChanged()
     }
 

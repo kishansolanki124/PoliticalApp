@@ -83,7 +83,7 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
             tvPartyName.text = govMla!!.political_party
             tvCityName.text = govMla!!.city
             pbMLA.progress = govMla!!.percenrage.toFloat().toInt()
-            tvPercentage.text = govMla!!.percenrage
+            tvPercentage.text = getString(R.string.percentage_, govMla!!.percenrage)
             tvVotesTotal.text = "Votes: " + govMla!!.votes
 
             Glide.with(ivMLA.context)

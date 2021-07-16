@@ -9,8 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
@@ -23,12 +25,20 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.MyValueFormatter
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.CommonResponse
+import com.politics.politicalapp.pojo.MLADetailResponse
+import com.politics.politicalapp.ui.activity.DharasabhyoDetailActivity
+import com.politics.politicalapp.viewmodel.MLAViewModel
 import kotlinx.android.synthetic.main.fragment_dharasabhyo_your_review.*
 import java.util.*
 
-
 class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
 
+    private lateinit var mlaDetailResponse: MLADetailResponse
+    private lateinit var mlaViewModel: MLAViewModel
+    private var checkedRadioId = ""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +49,16 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mlaDetailResponse = (activity as DharasabhyoDetailActivity).getMLADetailResponse()
+
+        setupViews()
+
+        mlaViewModel = ViewModelProvider(this).get(MLAViewModel::class.java)
+
+        mlaViewModel.mLAVoteResponse().observe(requireActivity(), {
+            handleResponse(it)
+        })
 
         val greenText = SpannableString(getString(R.string.give_rate_get_10_point_1))
         greenText.setSpan(
@@ -61,36 +81,88 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         tvGive_rate_get_10_point.append(thirdText)
+    }
 
-        setupRadioButtons()
-        setupChart()
+    private fun handleResponse(commonResponse: CommonResponse?) {
+        if (null != commonResponse) {
+            pbMLAReviewSubmit.visibility = View.GONE
+            btMLAReviewSubmit.visibility = View.VISIBLE
+            llGiveRatingToMLA.visibility = View.GONE
+            rgDharasabhyaReview.visibility = View.GONE
+            showAlertDialog(commonResponse.message)
+
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong), requireActivity())
+        }
+    }
+
+    private fun setupViews() {
+
+        if (mlaDetailResponse.gov_mla_detail[0].user_rating.isNotEmpty()) {
+            //rating is already done by this user
+            llGiveRatingToMLA.visibility = View.GONE
+            rgDharasabhyaReview.visibility = View.GONE
+        }
+
+        if (mlaDetailResponse.poll.isNotEmpty()) {
+            tvDharasabhyaReviewQuestion.text = mlaDetailResponse.poll[0].poll_question
+
+            rbExcellent.text = mlaDetailResponse.poll[0].poll_options[0].option_name
+            rbGood.text = mlaDetailResponse.poll[0].poll_options[1].option_name
+            rbCantAnswer.text = mlaDetailResponse.poll[0].poll_options[2].option_name
+            rbBad.text = mlaDetailResponse.poll[0].poll_options[3].option_name
+            rbVeryBad.text = mlaDetailResponse.poll[0].poll_options[4].option_name
+            setupRadioButtons()
+        }
     }
 
     private fun setupRadioButtons() {
-        rbBad.setOnClickListener {
-            resetRadioButtons()
-            rbBad.isChecked = !rbBad.isChecked
+        btMLAReviewSubmit.setOnClickListener {
+            if (checkedRadioId.isEmpty()) {
+                showSnackBar(getString(R.string.invalid_option), requireActivity())
+            } else {
+                pbMLAReviewSubmit.visibility = View.VISIBLE
+                btMLAReviewSubmit.visibility = View.INVISIBLE
+                mlaViewModel.giveMLARating(
+                    mlaDetailResponse.gov_mla_detail[0].id,
+                    SPreferenceManager.getInstance(requireContext()).session,
+                    mlaDetailResponse.poll[0].poll_id,
+                    checkedRadioId
+                )
+            }
         }
 
         rbExcellent.setOnClickListener {
             resetRadioButtons()
-            rbExcellent.isChecked = !rbBad.isChecked
+            rbExcellent.isChecked = !rbExcellent.isChecked
+            checkedRadioId = mlaDetailResponse.poll[0].poll_options[0].option_id
         }
 
         rbGood.setOnClickListener {
             resetRadioButtons()
-            rbGood.isChecked = !rbBad.isChecked
+            rbGood.isChecked = !rbGood.isChecked
+            checkedRadioId = mlaDetailResponse.poll[0].poll_options[1].option_id
+        }
+
+        rbCantAnswer.setOnClickListener {
+            resetRadioButtons()
+            rbCantAnswer.isChecked = !rbCantAnswer.isChecked
+            checkedRadioId = mlaDetailResponse.poll[0].poll_options[2].option_id
+        }
+
+        rbBad.setOnClickListener {
+            resetRadioButtons()
+            rbBad.isChecked = !rbBad.isChecked
+            checkedRadioId = mlaDetailResponse.poll[0].poll_options[3].option_id
         }
 
         rbVeryBad.setOnClickListener {
             resetRadioButtons()
-            rbVeryBad.isChecked = !rbBad.isChecked
+            rbVeryBad.isChecked = !rbVeryBad.isChecked
+            checkedRadioId = mlaDetailResponse.poll[0].poll_options[4].option_id
         }
 
-        rbcantAnswer.setOnClickListener {
-            resetRadioButtons()
-            rbcantAnswer.isChecked = !rbBad.isChecked
-        }
+        setupChart()
     }
 
     private fun setupChart() {
@@ -167,30 +239,15 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
 
         chart.isDrawHoleEnabled = false //remove center area
         chart.setDrawEntryLabels(false)//hide text in chart (label text)
-        setData(4, 100f)
+        setData()
     }
 
-    private fun setData(count: Int, range: Float) {
+    private fun setData() {
         val entries = ArrayList<PieEntry>()
 
-        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
-//        for (i in 0 until count) {
-//            //entries.add(PieEntry(25f, "label", null))
-//            entries.add(
-//                PieEntry(
-//                    ((Math.random() * range) + range / 5).toFloat(),
-//                    "label",
-//                    ContextCompat.getDrawable(requireContext(), R.drawable.aboutus)
-//                )
-//            )
-//        }
-
-        entries.add(PieEntry(45f, "ખુબ જ સરસ", null))
-        entries.add(PieEntry(25f, "સરસ", null))
-        entries.add(PieEntry(10f, "ખરાબ", null))
-        entries.add(PieEntry(5f, "ખુબ જ ખરાબ", null))
-        entries.add(PieEntry(15f, "કહિ ના શકાય", null))
+        for (item in mlaDetailResponse.poll_result) {
+            entries.add(PieEntry(item.percenrage.toFloat(), item.option_name, null))
+        }
 
         val dataSet = PieDataSet(entries, "")
         dataSet.setDrawIcons(false)
@@ -240,11 +297,28 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     private fun resetRadioButtons() {
+        rbExcellent.isChecked = false
+        rbGood.isChecked = false
+        rbCantAnswer.isChecked = false
         rbBad.isChecked = false
         rbVeryBad.isChecked = false
-        rbGood.isChecked = false
-        rbExcellent.isChecked = false
-        rbcantAnswer.isChecked = false
+    }
+
+    private fun showAlertDialog(msg: String) {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setMessage(msg)
+        alertDialogBuilder.setCancelable(true)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.red_CC252C))
     }
 }
 //todo scroll whole screen issue

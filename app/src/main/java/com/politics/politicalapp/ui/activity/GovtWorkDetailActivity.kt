@@ -103,8 +103,10 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         btSubmitComment.visibility = View.VISIBLE
         pbComment.visibility = View.GONE
         if (null != giveUserRatingToGovtWorkResponse) {
-            showAlertDialog(giveUserRatingToGovtWorkResponse.message)
-            //todo work here
+            etUserComment.setText("")
+            govtWorkNewsAdapter.reset()
+            addItems(giveUserRatingToGovtWorkResponse.comment_list)
+            //showAlertDialog(giveUserRatingToGovtWorkResponse.message)
         }
     }
 
@@ -118,7 +120,6 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             //rating of this article is done now
             llRatingSubmit.visibility = View.GONE
             tvYourRating.text = getString(R.string.your_ratings)
-
         }
     }
 
@@ -127,7 +128,7 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         nsvGovtWorkDetail.visibility = View.VISIBLE
         if (null != govtWorkDetailResponse) {
             setupViews(govtWorkDetailResponse)
-            addItems(govtWorkDetailResponse)
+            addItems(govtWorkDetailResponse.user_comment)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
         }
@@ -446,9 +447,9 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         rvComments.adapter = govtWorkNewsAdapter
     }
 
-    private fun addItems(govtWorkDetailResponse: GovtWorkDetailResponse) {
-        if (govtWorkDetailResponse.user_comment.isNotEmpty()) {
-            govtWorkNewsAdapter.setItem(govtWorkDetailResponse.user_comment)
+    private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>) {
+        if (userComment.isNotEmpty()) {
+            govtWorkNewsAdapter.setItem(userComment)
         }
     }
 

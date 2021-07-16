@@ -66,7 +66,10 @@ class DharasabhyoAdapter(
                 itemView.tvPartyName.text = newsPortal.political_party
                 itemView.tvCityName.text = newsPortal.city
                 itemView.pbMLA.progress = newsPortal.percenrage.toFloat().toInt()
-                itemView.tvPercentage.text = newsPortal.percenrage
+                itemView.tvPercentage.text = itemView.tvPercentage.context.getString(
+                    R.string.percentage_,
+                    newsPortal.percenrage
+                )
                 itemView.tvVotesTotal.text = "Votes: " + newsPortal.votes
 
                 Glide.with(itemView.ivMLA.context)

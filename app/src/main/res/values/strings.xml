@@ -10,6 +10,7 @@
     <string name="your_points">Your Points</string>
     <string name="govt_work">સરકારની કામગીરી</string>
     <string name="dharasabhyo">ધારાસભ્યો</string>
+    <string name="percentage_">%1$s%%</string>
     <string name="poll_and_survey">પોલ અને સર્વે</string>
     <string name="live_poll">લાઇવ પોલ</string>
     <string name="que_suggestion">પ્રશ્નો સૂચનો</string>
@@ -56,4 +57,5 @@
     <string name="invalid_rating">Kindly first give rating</string>
     <string name="your_ratings">Your Ratings</string>
     <string name="invalid_comment">Comment box is empty</string>
+    <string name="invalid_option">Kindly select any option</string>
 </resources>

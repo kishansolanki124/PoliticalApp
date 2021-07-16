@@ -49,6 +49,11 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): MLADetailResponse
 
+    @POST(AppConstants.APIEndPoints.GIVE_MLA_RATING)
+    suspend fun giveMLARating(
+        @Body hashMap: MultipartBody
+    ): CommonResponse
+
     @POST(AppConstants.APIEndPoints.REGISTRATION)
     suspend fun registration(
         @Body hashMap: MultipartBody

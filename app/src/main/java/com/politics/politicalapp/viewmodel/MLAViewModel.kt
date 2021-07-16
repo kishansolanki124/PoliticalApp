@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.network.APIEndPointsInterface
 import com.politics.politicalapp.network.RetrofitFactory
+import com.politics.politicalapp.pojo.CommonResponse
 import com.politics.politicalapp.pojo.MLADetailResponse
 import com.politics.politicalapp.pojo.MLAListResponse
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ class MLAViewModel : ViewModel() {
 
     private val mutableSettingsResponse = MutableLiveData<MLAListResponse>()
     private val mutableMLADetailResponse = MutableLiveData<MLADetailResponse>()
+    private val mutableMLAVoteResponse = MutableLiveData<CommonResponse>()
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
 
@@ -74,6 +76,40 @@ class MLAViewModel : ViewModel() {
         }
     }
 
+    fun giveMLARating(gid: String, user_mobile: String, pid: String, user_rating: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.gid,
+                    gid
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_mobile,
+                    user_mobile
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.pid,
+                    pid
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_rating,
+                    user_rating
+                )
+
+                val apiResponse = apiEndPointsInterface.giveMLARating(
+                    requestBodyBuilder.build()
+                )
+                returnMLARating(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private suspend fun returnSettingsResponse(settingsResponse: MLAListResponse) {
         withContext(Dispatchers.Main) {
             mutableSettingsResponse.value = settingsResponse
@@ -86,8 +122,18 @@ class MLAViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnMLARating(settingsResponse: CommonResponse) {
+        withContext(Dispatchers.Main) {
+            mutableMLAVoteResponse.value = settingsResponse
+        }
+    }
+
     fun govtWorkList(): LiveData<MLAListResponse> {
         return mutableSettingsResponse
+    }
+
+    fun mLAVoteResponse(): LiveData<CommonResponse> {
+        return mutableMLAVoteResponse
     }
 
     fun mlaDetail(): LiveData<MLADetailResponse> {
