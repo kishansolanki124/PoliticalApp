@@ -19,6 +19,11 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): SettingsResponse
 
+    @POST(AppConstants.APIEndPoints.GET_SCRATCHCARD)
+    suspend fun getScratchCard(
+        @Body hashMap: MultipartBody
+    ): ScratchCardResponse
+
     @POST(AppConstants.APIEndPoints.GET_GOVT_WORK)
     suspend fun getGovtWork(
         @Body hashMap: MultipartBody
