@@ -9,13 +9,18 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.politics.politicalapp.R
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.ui.fragment.PollAndSurveyFragment
 import com.politics.politicalapp.ui.fragment.PollAndSurveyResultFragment
-import kotlinx.android.synthetic.main.activity_dharasabhyo.*
+import kotlinx.android.synthetic.main.activity_poll_and_survey.*
+
 
 class PollAndSurveyActivity : ExtendedToolbarActivity() {
 
     private lateinit var viewPagerShraddhanjaliAdapter: ViewPagerShraddhanjaliAdapter
+    private var districtId = ""
+    private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var viewPager: ViewPager
 
     override val layoutId: Int
@@ -69,29 +74,51 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
     }
 
     private fun setupDistrictSpinner() {
-        val cityList: ArrayList<String> = ArrayList()
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
+        districtList.addAll(SPreferenceManager.getInstance(this).settings.district_list)
 
-        val adapter: ArrayAdapter<String> = ArrayAdapter(
+        val adapter: ArrayAdapter<SettingsResponse.District> = ArrayAdapter(
             applicationContext,
-            R.layout.simple_spinner_dropdown_black_item,
-            cityList
+            R.layout.simple_spinner_dropdown_item_black,
+            districtList
         )
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spDistrictPollAndSurvey.adapter = adapter
 
-        spDistrict.adapter = adapter
+        spDistrictPollAndSurvey.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    val district: SettingsResponse.District =
+                        parent.selectedItem as SettingsResponse.District
+                    districtId = district.id
 
-        spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    //refreshing fragments
+//                    val fm = supportFragmentManager
+//                    val fragment: PollAndSurveyFragment? =
+//                        fm.findFragmentById(R.id.tab_layout) as PollAndSurveyFragment?
+//                    fragment?.refreshPollAndSurvey()
 
+                    val fragments = supportFragmentManager.fragments
+                    for (fragment in fragments) {
+                        if (fragment is PollAndSurveyFragment) {
+                            fragment.refreshPollAndSurvey()
+                        }
+                        if (fragment is PollAndSurveyResultFragment) {
+                            fragment.refreshPollAndSurveyResult()
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+    }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                return
-            }
-        }
+    fun getDistrictId(): String {
+        return districtId
     }
 }

@@ -12,9 +12,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/llPollAndSurveyBottom"
+        android:layout_alignParentTop="true"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/poll_and_survey_item" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/pbPollAndSurvey"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_10"
+        android:indeterminateTint="@color/red_CC252C"
+        android:indeterminateTintMode="multiply"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/llPollAndSurveyBottom"
@@ -23,14 +37,35 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btSubmitRegister"
-            style="@style/CommonRedButton"
-            android:paddingHorizontal="@dimen/dp_20"
-            android:text="@string/submit"
-            android:textSize="@dimen/sp_14"
-            app:cornerRadius="@dimen/dp_5" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btSubmitPollAndSurvey"
+                style="@style/CommonRedButton"
+                android:paddingHorizontal="@dimen/dp_20"
+                android:text="@string/submit"
+                android:textSize="@dimen/sp_14"
+                app:cornerRadius="@dimen/dp_5"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/pbSubmitPollAndSurvey"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/red_light"
+                android:indeterminateTintMode="multiply"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/btSubmitPollAndSurvey"
+                app:layout_constraintEnd_toEndOf="@+id/btSubmitPollAndSurvey"
+                app:layout_constraintStart_toStartOf="@+id/btSubmitPollAndSurvey"
+                app:layout_constraintTop_toTopOf="@+id/btSubmitPollAndSurvey" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvGive_rate_get_10_point"
             android:layout_width="wrap_content"

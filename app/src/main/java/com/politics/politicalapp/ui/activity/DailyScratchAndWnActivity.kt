@@ -65,7 +65,7 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
         if (null != scratchCardResponse) {
             setupSpinWheel(scratchCardResponse)
         } else {
-            showSnackBar(getString(R.string.something_went_wrong), this)
+            showSnackBar(getString(R.string.something_went_wrong))
         }
     }
 

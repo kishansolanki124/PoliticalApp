@@ -90,7 +90,6 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
             llGiveRatingToMLA.visibility = View.GONE
             rgDharasabhyaReview.visibility = View.GONE
             showAlertDialog(commonResponse.message)
-
         } else {
             showSnackBar(getString(R.string.something_went_wrong), requireActivity())
         }

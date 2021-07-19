@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/dp_5"
@@ -8,14 +9,14 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDharasabhyaReviewQuestion"
+        android:id="@+id/tvPollAndSurveyQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:padding="@dimen/dp_5"
-        android:text="નરેન્દ્ર મોદીના કાર્ય વિશે તમને શું લાગે છે?"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/sp_14"
+        tools:text="નરેન્દ્ર મોદીના કાર્ય વિશે તમને શું લાગે છે?" />
 
     <RadioGroup
         android:id="@+id/rgDharasabhyaReview"
@@ -31,13 +32,12 @@
             <RadioButton
                 android:id="@+id/rbExcellent"
                 style="@style/CommonRedButton_2"
-                android:checked="true"
-                android:text="ખુબ જ સરસ" />
+                tools:text="ખુબ જ સરસ" />
 
             <RadioButton
                 android:id="@+id/rbGood"
                 style="@style/CommonRedButton_2"
-                android:text="સરસ" />
+                tools:text="સરસ" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,19 +48,24 @@
             <RadioButton
                 android:id="@+id/rbcantAnswer"
                 style="@style/CommonRedButton_2"
-                android:text="કહિ ના શકાય" />
+                tools:text="કહિ ના શકાય" />
 
             <RadioButton
                 android:id="@+id/rbBad"
                 style="@style/CommonRedButton_2"
-                android:text="ખરાબ" />
+                tools:text="ખરાબ" />
         </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/rbVeryBad"
-            style="@style/CommonRedButton_2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ખુબ જ ખરાબ" />
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbVeryBad"
+                style="@style/CommonRedButton_2"
+                tools:text="ખુબ જ ખરાબ" />
+        </LinearLayout>
     </RadioGroup>
 </LinearLayout>

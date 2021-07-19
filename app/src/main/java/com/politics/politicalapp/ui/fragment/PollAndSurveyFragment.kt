@@ -7,15 +7,25 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.PollAndSurveyAdapter
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.CommonResponse
+import com.politics.politicalapp.pojo.DistrictPollListResponse
+import com.politics.politicalapp.ui.activity.PollAndSurveyActivity
+import com.politics.politicalapp.viewmodel.PollAndSurveyViewModel
 import kotlinx.android.synthetic.main.fragment_poll_and_survey.*
 
 class PollAndSurveyFragment : Fragment() {
 
     private lateinit var govtWorkNewsAdapter: PollAndSurveyAdapter
+    private lateinit var settingsViewModel: PollAndSurveyViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +40,83 @@ class PollAndSurveyFragment : Fragment() {
 
         setupPointsTextView()
         setupList()
+
+        settingsViewModel = ViewModelProvider(this).get(PollAndSurveyViewModel::class.java)
+
+        settingsViewModel.getDistrictPoll().observe(requireActivity(), {
+            handleResponse(it)
+        })
+
+        settingsViewModel.getDistrictPollRating().observe(requireActivity(), {
+            handleResponseDistrictPollRating(it)
+        })
+
+        btSubmitPollAndSurvey.setOnClickListener {
+            if (govtWorkNewsAdapter.getPollList().isNotEmpty() && isAllAnswerSubmitted()) {
+                val pollListQuestions = ArrayList<String>()
+                val pollListAnswers = ArrayList<String>()
+
+                for (item in govtWorkNewsAdapter.getPollList()) {
+                    pollListQuestions.add(item.id)
+                    pollListAnswers.add(item.checkedRadioId)
+                }
+
+                if (isConnected(requireContext())) {
+                    btSubmitPollAndSurvey.visibility = View.INVISIBLE
+                    pbSubmitPollAndSurvey.visibility = View.VISIBLE
+
+                    val commaSeparatedStringQuestions =
+                        //pollListQuestions.joinToString { "\'${it}\'" }
+                        pollListQuestions.joinToString { it }
+
+                    val commaSeparatedStringAnswers =
+                        pollListAnswers.joinToString { it }
+
+                    settingsViewModel.addDistrictPollRating(
+                        ((activity as PollAndSurveyActivity).getDistrictId()),
+                        SPreferenceManager.getInstance(requireContext()).session,
+                        commaSeparatedStringQuestions, commaSeparatedStringAnswers
+                    )
+                } else {
+                    showSnackBar(getString(R.string.no_internet), requireActivity())
+                }
+            }
+        }
+    }
+
+    private fun isAllAnswerSubmitted(): Boolean {
+        for (item in govtWorkNewsAdapter.getPollList()) {
+            if (item.checkedRadioId.isEmpty()) {
+                showSnackBar(getString(R.string.answer_all_questions), requireActivity())
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun handleResponseDistrictPollRating(commonResponse: CommonResponse?) {
+        pbSubmitPollAndSurvey.visibility = View.GONE
+        btSubmitPollAndSurvey.visibility = View.VISIBLE
+        if (null != commonResponse) {
+            showAlertDialog(commonResponse.message)
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong), requireActivity())
+        }
+    }
+
+    private fun handleResponse(districtPollListResponse: DistrictPollListResponse?) {
+        rvPollAndSurvey.visibility = View.VISIBLE
+        pbPollAndSurvey.visibility = View.GONE
+
+        if (null != districtPollListResponse) {
+            govtWorkNewsAdapter.reset()
+            govtWorkNewsAdapter.setItem(
+                districtPollListResponse.poll_list,
+                districtPollListResponse.poll_option
+            )
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong), requireActivity())
+        }
     }
 
     private fun setupPointsTextView() {
@@ -57,13 +144,6 @@ class PollAndSurveyFragment : Fragment() {
     }
 
     private fun setupList() {
-        val stringList: ArrayList<String> = ArrayList()
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-
         govtWorkNewsAdapter = PollAndSurveyAdapter(
             {
                 //callIntent(this, it.contact_no!!)
@@ -72,7 +152,33 @@ class PollAndSurveyFragment : Fragment() {
                 //browserIntent(this, it.website!!)
             }
         )
-        govtWorkNewsAdapter.setItem(stringList)
         rvPollAndSurvey.adapter = govtWorkNewsAdapter
+    }
+
+    fun refreshPollAndSurvey() {
+        if (isConnected(requireContext())) {
+            pbPollAndSurvey.visibility = View.VISIBLE
+            rvPollAndSurvey.visibility = View.GONE
+            settingsViewModel.getGovtWorkList(((activity as PollAndSurveyActivity).getDistrictId()))
+        } else {
+            showSnackBar(getString(R.string.no_internet), requireActivity())
+        }
+    }
+
+    private fun showAlertDialog(msg: String) {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setMessage(msg)
+        alertDialogBuilder.setCancelable(true)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.red_CC252C))
     }
 }

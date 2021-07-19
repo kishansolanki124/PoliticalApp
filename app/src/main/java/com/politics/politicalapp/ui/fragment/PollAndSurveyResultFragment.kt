@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
@@ -19,9 +20,17 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.MyValueFormatter
+import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.DistrictPollListResponse
+import com.politics.politicalapp.ui.activity.PollAndSurveyActivity
+import com.politics.politicalapp.viewmodel.PollAndSurveyViewModel
 import kotlinx.android.synthetic.main.fragment_poll_and_survey_result.*
 
 class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
+
+    private lateinit var settingsViewModel: PollAndSurveyViewModel
+    private var districtPollListResponse: DistrictPollListResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,55 +42,60 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupChart()
+
+        settingsViewModel = ViewModelProvider(this).get(PollAndSurveyViewModel::class.java)
+
+        settingsViewModel.getDistrictPoll().observe(requireActivity(), {
+            handleResponse(it)
+        })
     }
 
     private fun setupChart() {
-        chart.description.isEnabled = false
-        chart.setExtraOffsets(5f, 10f, 5f, 5f)
+        chartPollAndSurveyResult.description.isEnabled = false
+        chartPollAndSurveyResult.setExtraOffsets(5f, 10f, 5f, 5f)
 
-        chart.dragDecelerationFrictionCoef = 0.95f
+        chartPollAndSurveyResult.dragDecelerationFrictionCoef = 0.95f
 
-        //chart.setCenterTextTypeface(tfLight);
-        //chart.setCenterText(generateCenterSpannableText());
+        //chartPollAndSurveyResult.setCenterTextTypeface(tfLight);
+        //chartPollAndSurveyResult.setCenterText(generateCenterSpannableText());
 
-        //chart.setDrawHoleEnabled(true);
-        //chart.setHoleColor(Color.WHITE);
-
-
-        //chart.setCenterTextTypeface(tfLight);
-        //chart.setCenterText(generateCenterSpannableText());
-
-        //chart.setDrawHoleEnabled(true);
-        //chart.setHoleColor(Color.WHITE);
-        chart.setTransparentCircleColor(Color.WHITE)
-        chart.setTransparentCircleAlpha(110)
-
-        //chart.setHoleRadius(58f);
-
-        //chart.setHoleRadius(58f);
-        chart.transparentCircleRadius = 61f
-
-        //chart.setDrawCenterText(true);
+        //chartPollAndSurveyResult.setDrawHoleEnabled(true);
+        //chartPollAndSurveyResult.setHoleColor(Color.WHITE);
 
 
-        //chart.setDrawCenterText(true);
-        chart.rotationAngle = 0f
+        //chartPollAndSurveyResult.setCenterTextTypeface(tfLight);
+        //chartPollAndSurveyResult.setCenterText(generateCenterSpannableText());
+
+        //chartPollAndSurveyResult.setDrawHoleEnabled(true);
+        //chartPollAndSurveyResult.setHoleColor(Color.WHITE);
+        chartPollAndSurveyResult.setTransparentCircleColor(Color.WHITE)
+        chartPollAndSurveyResult.setTransparentCircleAlpha(110)
+
+        //chartPollAndSurveyResult.setHoleRadius(58f);
+
+        //chartPollAndSurveyResult.setHoleRadius(58f);
+        chartPollAndSurveyResult.transparentCircleRadius = 61f
+
+        //chartPollAndSurveyResult.setDrawCenterText(true);
+
+
+        //chartPollAndSurveyResult.setDrawCenterText(true);
+        chartPollAndSurveyResult.rotationAngle = 0f
         // enable rotation of the chart by touch
         // enable rotation of the chart by touch
-        chart.isRotationEnabled = true
-        chart.isHighlightPerTapEnabled = true
+        chartPollAndSurveyResult.isRotationEnabled = true
+        chartPollAndSurveyResult.isHighlightPerTapEnabled = true
 
-        // chart.setUnit(" €");
-        // chart.setDrawUnitsInChart(true);
+        // chartPollAndSurveyResult.setUnit(" €");
+        // chartPollAndSurveyResult.setDrawUnitsInChart(true);
 
         // add a selection listener
 
-        // chart.setUnit(" €");
-        // chart.setDrawUnitsInChart(true);
+        // chartPollAndSurveyResult.setUnit(" €");
+        // chartPollAndSurveyResult.setDrawUnitsInChart(true);
 
         // add a selection listener
-        chart.setOnChartValueSelectedListener(this)
+        chartPollAndSurveyResult.setOnChartValueSelectedListener(this)
 
         //seekBarX.setProgress(4);
         //seekBarY.setProgress(10);
@@ -89,11 +103,11 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
 
         //seekBarX.setProgress(4);
         //seekBarY.setProgress(10);
-        chart.animateY(1400, Easing.EaseInOutQuad)
-        // chart.spin(2000, 0, 360);
+        chartPollAndSurveyResult.animateY(1400, Easing.EaseInOutQuad)
+        // chartPollAndSurveyResult.spin(2000, 0, 360);
 
-        // chart.spin(2000, 0, 360);
-        val l = chart.legend
+        // chartPollAndSurveyResult.spin(2000, 0, 360);
+        val l = chartPollAndSurveyResult.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l.orientation = Legend.LegendOrientation.VERTICAL
@@ -103,21 +117,21 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
         l.yOffset = 0f
 
         // entry label styling
-        chart.setEntryLabelColor(Color.WHITE)
-        //chart.setEntryLabelTypeface(tfRegular);
-        //chart.setEntryLabelTypeface(tfRegular);
-        chart.setEntryLabelTextSize(12f)
+        chartPollAndSurveyResult.setEntryLabelColor(Color.WHITE)
+        //chartPollAndSurveyResult.setEntryLabelTypeface(tfRegular);
+        //chartPollAndSurveyResult.setEntryLabelTypeface(tfRegular);
+        chartPollAndSurveyResult.setEntryLabelTextSize(12f)
 
-        chart.isDrawHoleEnabled = false //remove center area
-        chart.setDrawEntryLabels(false)//hide text in chart (label text)
-        setData(4, 100f)
+        chartPollAndSurveyResult.isDrawHoleEnabled = false //remove center area
+        chartPollAndSurveyResult.setDrawEntryLabels(false)//hide text in chart (label text)
+        setData()
     }
 
-    private fun setData(count: Int, range: Float) {
+    private fun setData() {
         val entries = ArrayList<PieEntry>()
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
+        // the chartPollAndSurveyResult.
 //        for (i in 0 until count) {
 //            //entries.add(PieEntry(25f, "label", null))
 //            entries.add(
@@ -129,11 +143,11 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
 //            )
 //        }
 
-        entries.add(PieEntry(45f, "ખુબ જ સરસ", null))
-        entries.add(PieEntry(25f, "સરસ", null))
-        entries.add(PieEntry(10f, "ખરાબ", null))
-        entries.add(PieEntry(5f, "ખુબ જ ખરાબ", null))
-        entries.add(PieEntry(15f, "કહિ ના શકાય", null))
+        districtPollListResponse?.let {
+            for (item in it.poll_result) {
+                entries.add(PieEntry(item.percenrage.toFloat(), item.option_name, null))
+            }
+        }
 
         val dataSet = PieDataSet(entries, "")
         dataSet.setDrawIcons(false)
@@ -157,16 +171,16 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
 //        //showing percentage in chart
 //        data.setValueFormatter(PercentFormatter(chart))
         data.setValueFormatter(MyValueFormatter())
-//        chart.setUsePercentValues(true)
+//        chartPollAndSurveyResult.setUsePercentValues(true)
 
         data.setValueTextSize(11f)
         data.setValueTextColor(Color.WHITE)
         //data.setValueTypeface(tfLight);
-        chart.data = data
+        chartPollAndSurveyResult.data = data
 
         // undo all highlights
-        chart.highlightValues(null)
-        chart.invalidate()
+        chartPollAndSurveyResult.highlightValues(null)
+        chartPollAndSurveyResult.invalidate()
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
@@ -181,6 +195,27 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
     override fun onNothingSelected() {
         Log.i("PieChart", "nothing selected")
     }
-}
 
+    private fun handleResponse(districtPollListResponse: DistrictPollListResponse?) {
+        chartPollAndSurveyResult.visibility = View.VISIBLE
+        pbPollAndSurveyResult.visibility = View.GONE
+
+        if (null != districtPollListResponse) {
+            this.districtPollListResponse = districtPollListResponse
+            setupChart()
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong), requireActivity())
+        }
+    }
+
+    fun refreshPollAndSurveyResult() {
+        if (isConnected(requireContext())) {
+            chartPollAndSurveyResult.visibility = View.GONE
+            pbPollAndSurveyResult.visibility = View.VISIBLE
+            settingsViewModel.getGovtWorkList(((activity as PollAndSurveyActivity).getDistrictId()))
+        } else {
+            showSnackBar(getString(R.string.no_internet), requireActivity())
+        }
+    }
+}
 //todo scroll whole screen issue

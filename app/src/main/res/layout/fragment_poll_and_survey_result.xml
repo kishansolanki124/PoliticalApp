@@ -29,8 +29,21 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_20" />
 
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/pbPollAndSurveyResult"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_10"
+                android:indeterminateTint="@color/red_CC252C"
+                android:indeterminateTintMode="multiply"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:visibility="gone" />
+
             <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/chart"
+                android:id="@+id/chartPollAndSurveyResult"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_400" />
         </LinearLayout>

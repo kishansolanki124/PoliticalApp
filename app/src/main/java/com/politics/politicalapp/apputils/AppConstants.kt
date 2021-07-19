@@ -42,6 +42,8 @@ interface AppConstants {
             const val MLA_LIST: String = "get_gov_mla"
             const val MLA_DETAIL: String = "get_govmla_detail"
             const val GIVE_MLA_RATING: String = "add_govmla_user_rating"
+            const val GET_DISTRICT_POLL: String = "get_district_poll"
+            const val ADD_DISTRICT_POLL_RATING: String = "add_district_poll_user_rating"
         }
     }
 

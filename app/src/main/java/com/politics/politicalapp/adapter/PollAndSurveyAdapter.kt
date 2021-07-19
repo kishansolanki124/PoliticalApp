@@ -5,15 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
+import com.politics.politicalapp.pojo.DistrictPollListResponse
 import kotlinx.android.synthetic.main.poll_and_survey_item.view.*
 
 class PollAndSurveyAdapter(
-    private val itemClickCall: (String) -> Unit,
-    private val itemClickWeb: (String) -> Unit
+    private val itemClickCall: (DistrictPollListResponse.Poll) -> Unit,
+    private val itemClickWeb: (DistrictPollListResponse.Poll) -> Unit
 ) :
     RecyclerView.Adapter<PollAndSurveyAdapter.HomeOffersViewHolder>() {
 
-    private var list: ArrayList<String> = ArrayList()
+    private var list: ArrayList<DistrictPollListResponse.Poll> = ArrayList()
+    private var pollOptionList: ArrayList<DistrictPollListResponse.PollOption> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
@@ -25,25 +27,34 @@ class PollAndSurveyAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeOffersViewHolder, position: Int) {
-        holder.bindForecast(list[position])
+        holder.bindForecast(list[position], pollOptionList)
     }
 
-    fun setItem(list: ArrayList<String>) {
-        this.list = list
+    fun setItem(
+        list: ArrayList<DistrictPollListResponse.Poll>,
+        pollOptionList: ArrayList<DistrictPollListResponse.PollOption>
+    ) {
+        this.list.addAll(list)
+        this.pollOptionList.addAll(pollOptionList)
         notifyDataSetChanged()
     }
 
     fun reset() {
         this.list.clear()
+        this.pollOptionList.clear()
         notifyDataSetChanged()
+    }
+
+    fun getPollList(): ArrayList<DistrictPollListResponse.Poll> {
+        return this.list
     }
 
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (String) -> Unit,
-        private val itemClickWeb: (String) -> Unit
+        private val itemClickCall: (DistrictPollListResponse.Poll) -> Unit,
+        private val itemClickWeb: (DistrictPollListResponse.Poll) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
 //        constructor(parent: ViewGroup) : this(
@@ -54,76 +65,54 @@ class PollAndSurveyAdapter(
 //        )
 
         fun bindForecast(
-            newsPortal: String
+            newsPortal: DistrictPollListResponse.Poll,
+            pollOption: ArrayList<DistrictPollListResponse.PollOption>
         ) {
-            with(newsPortal) {
-                itemView.rbBad.setOnClickListener {
-                    resetRadioButtons()
-                    itemView.rbBad.isChecked = !itemView.rbBad.isChecked
-                }
+            itemView.tvPollAndSurveyQuestion.text = newsPortal.name
 
-                itemView.rbExcellent.setOnClickListener {
-                    resetRadioButtons()
-                    itemView.rbExcellent.isChecked = !itemView.rbBad.isChecked
-                }
+            itemView.rbExcellent.text = pollOption[0].option_name
+            itemView.rbGood.text = pollOption[1].option_name
+            itemView.rbcantAnswer.text = pollOption[2].option_name
+            itemView.rbBad.text = pollOption[3].option_name
+            itemView.rbVeryBad.text = pollOption[4].option_name
 
-                itemView.rbGood.setOnClickListener {
-                    resetRadioButtons()
-                    itemView.rbGood.isChecked = !itemView.rbBad.isChecked
-                }
+            itemView.rbExcellent.setOnClickListener {
+                newsPortal.checkedRadioId = pollOption[0].option_id
+                resetRadioButtons()
+                itemView.rbExcellent.isChecked = !itemView.rbExcellent.isChecked
+            }
 
-                itemView.rbVeryBad.setOnClickListener {
-                    resetRadioButtons()
-                    itemView.rbVeryBad.isChecked = !itemView.rbBad.isChecked
-                }
+            itemView.rbGood.setOnClickListener {
+                newsPortal.checkedRadioId = pollOption[1].option_id
+                resetRadioButtons()
+                itemView.rbGood.isChecked = !itemView.rbGood.isChecked
+            }
 
-                itemView.rbcantAnswer.setOnClickListener {
-                    resetRadioButtons()
-                    itemView.rbcantAnswer.isChecked = !itemView.rbBad.isChecked
-                }
+            itemView.rbcantAnswer.setOnClickListener {
+                newsPortal.checkedRadioId = pollOption[2].option_id
+                resetRadioButtons()
+                itemView.rbcantAnswer.isChecked = !itemView.rbcantAnswer.isChecked
+            }
 
-//                Glide.with(itemView.ivNewsPortal.context)
-//                    .load(newsPortal.up_pro_img)
-//                    .into(itemView.ivNewsPortal)
-//
-//                if (newsPortal.name.isNullOrEmpty()) {
-//                    itemView.tvNewsPortalTitle.visibility = View.GONE
-//                }
-//                if (newsPortal.address.isNullOrEmpty()) {
-//                    itemView.llNewsPortalAddress.visibility = View.GONE
-//                }
-//                if (newsPortal.contact_no.isNullOrEmpty()) {
-//                    itemView.llNewsPortalPhone.visibility = View.GONE
-//                }
-//                if (newsPortal.email.isNullOrEmpty()) {
-//                    itemView.llNewsPortalEmail.visibility = View.GONE
-//                }
-//                if (newsPortal.website.isNullOrEmpty()) {
-//                    itemView.llNewsPortalWebsite.visibility = View.GONE
-//                }
-//
-//                itemView.tvNewsPortalTitle.text = newsPortal.name
-//                itemView.tvNewsPortalAddress.text = newsPortal.address
-//                itemView.tvNewsPortalPhone.text = newsPortal.contact_no
-//                itemView.tvNewsPortalEmail.text = newsPortal.email
-//                itemView.tvNewsPortalWebsite.text = newsPortal.website
-//
-//                itemView.rlDharasabhyaRoot.setOnClickListener {
-//                    itemClickCall(this)
-//                }
-//
-//                itemView.ivWeb.setOnClickListener {
-//                    itemClickWeb(this)
-//                }
+            itemView.rbBad.setOnClickListener {
+                newsPortal.checkedRadioId = pollOption[3].option_id
+                resetRadioButtons()
+                itemView.rbBad.isChecked = !itemView.rbBad.isChecked
+            }
+
+            itemView.rbVeryBad.setOnClickListener {
+                newsPortal.checkedRadioId = pollOption[4].option_id
+                resetRadioButtons()
+                itemView.rbVeryBad.isChecked = !itemView.rbVeryBad.isChecked
             }
         }
 
         private fun resetRadioButtons() {
+            itemView.rbExcellent.isChecked = false
+            itemView.rbGood.isChecked = false
+            itemView.rbcantAnswer.isChecked = false
             itemView.rbBad.isChecked = false
             itemView.rbVeryBad.isChecked = false
-            itemView.rbGood.isChecked = false
-            itemView.rbExcellent.isChecked = false
-            itemView.rbcantAnswer.isChecked = false
         }
     }
 }
