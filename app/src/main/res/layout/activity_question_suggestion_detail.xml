@@ -16,7 +16,7 @@
         <include layout="@layout/common_toolbar" />
 
         <ProgressBar
-            android:id="@+id/pbNewsPortal"
+            android:id="@+id/pbQuestionSuggestionDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -26,97 +26,107 @@
             android:scaleY="0.7"
             android:visibility="gone" />
 
-        <FrameLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llMainContent"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.rishabhharit.roundedimageview.RoundedImageView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_200"
-                android:scaleType="centerCrop"
-                android:src="@drawable/dummy_news_image"
-                app:cornerRadius="@dimen/dp_5" />
+                android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="@dimen/dp_5"
-                android:padding="@dimen/dp_5"
-                android:src="@drawable/share_icon2" />
-        </FrameLayout>
+                <com.rishabhharit.roundedimageview.RoundedImageView
+                    android:id="@+id/ivQuestionSuggestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_200"
+                    android:scaleType="centerCrop"
+                    app:cornerRadius="@dimen/dp_5"
+                    tools:src="@drawable/dummy_news_image" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_10"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvQuestionSuggestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/semi_bold"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:paddingVertical="@dimen/dp_7"
-                android:text="કોર્પોરેશનની ફરિયાદોનો નિકાલ સમયમાં થતો નર્થીીં...."
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="@dimen/dp_5"
+                    android:padding="@dimen/dp_5"
+                    android:src="@drawable/share_icon2" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:layout_margin="@dimen/dp_10"
+                android:orientation="vertical">
 
-                <com.rishabhharit.roundedimageview.RoundedImageView
-                    android:layout_width="@dimen/dp_50"
-                    android:layout_height="@dimen/dp_50"
-                    android:src="@drawable/bhupo"
-                    app:cornerRadius="@dimen/dp_100" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvQuestionSuggestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semi_bold"
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:paddingVertical="@dimen/dp_7"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="કોર્પોરેશનની ફરિયાદોનો નિકાલ સમયમાં થતો નર્થીીં...." />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_10"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvSanstha"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:paddingHorizontal="@dimen/dp_2"
-                        android:text="રાજદીપસિંહ સોલંકી"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                    <com.rishabhharit.roundedimageview.RoundedImageView
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_50"
+                        android:src="@drawable/user1"
+                        app:cornerRadius="@dimen/dp_100" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:paddingHorizontal="@dimen/dp_2"
-                        android:text="ધોળકા - અહમદાબાદ"
-                        android:textColor="@color/gray_candidate_name"
-                        android:textSize="@dimen/sp_12" />
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvQuestionSuggestionUserName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:paddingHorizontal="@dimen/dp_2"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14"
+                            tools:text="રાજદીપસિંહ સોલંકી" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvQuestionSuggestionCityDistrict"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:paddingHorizontal="@dimen/dp_2"
+                            android:textColor="@color/gray_candidate_name"
+                            android:textSize="@dimen/sp_12"
+                            tools:text="ધોળકા - અહમદાબાદ" />
+                    </LinearLayout>
                 </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvQuestionSuggestionDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:lineSpacingExtra="@dimen/dp_2"
+                    android:padding="@dimen/dp_10"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gray" />
             </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
-                android:lineSpacingExtra="@dimen/dp_2"
-                android:padding="@dimen/dp_10"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_12" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="@color/gray" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>
 </ScrollView>

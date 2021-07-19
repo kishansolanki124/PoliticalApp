@@ -5,14 +5,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.lifecycle.ViewModelProvider
+import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.QuestionsAndSuggestionAdapter
-import kotlinx.android.synthetic.main.activity_dharasabhyo.spDistrict
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.SettingsResponse
+import com.politics.politicalapp.pojo.UserAdviseResponse
+import com.politics.politicalapp.viewmodel.UserAdviseViewModel
 import kotlinx.android.synthetic.main.activity_question_suggestion.*
 
 class QuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     private lateinit var govtWorkNewsAdapter: QuestionsAndSuggestionAdapter
+    private var startPage = 0
+    private lateinit var govtWorkViewModel: UserAdviseViewModel
+    private var districtId = ""
+    private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
 
     override val layoutId: Int
         get() = R.layout.activity_question_suggestion
@@ -23,52 +34,92 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
         setToolbarTitle(getString(R.string.que_suggestion))
         setupList()
         setupDistrictSpinner()
+
+        govtWorkViewModel = ViewModelProvider(this).get(UserAdviseViewModel::class.java)
+
+        govtWorkViewModel.userAdviseList().observe(this, {
+            handleResponse(it)
+        })
+    }
+
+    private fun handleResponse(userAdviseResponse: UserAdviseResponse?) {
+        rvPollAndSurvey.visibility = View.VISIBLE
+        pbQuestionSuggestion.visibility = View.GONE
+
+        if (null != userAdviseResponse) {
+            when {
+                userAdviseResponse.user_advice_list.isNotEmpty() -> {
+                    addItems(userAdviseResponse.user_advice_list)
+                }
+                startPage == 0 -> {
+                    govtWorkNewsAdapter.reset()
+                    showSnackBar(getString(R.string.no_record_found), this)
+                }
+                else -> {
+                    showSnackBar(getString(R.string.something_went_wrong), this)
+                }
+            }
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong))
+        }
     }
 
     private fun setupList() {
-        val stringList: ArrayList<String> = ArrayList()
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-
         govtWorkNewsAdapter = QuestionsAndSuggestionAdapter(
             {
                 //callIntent(this, it.contact_no!!)
-                startActivity(Intent(this, QuestionSuggestionDetailActivity::class.java))
+                startActivity(
+                    Intent(this, QuestionSuggestionDetailActivity::class.java)
+                        .putExtra(AppConstants.ID, it.id)
+                )
             }, {
                 //browserIntent(this, it.website!!)
             }
         )
-        govtWorkNewsAdapter.setItem(stringList)
         rvPollAndSurvey.adapter = govtWorkNewsAdapter
     }
 
     private fun setupDistrictSpinner() {
-        val cityList: ArrayList<String> = ArrayList()
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
-        cityList.add("તમારો જિલ્લો પસંદ કરો")
+        districtList.addAll(SPreferenceManager.getInstance(this).settings.district_list)
 
-        val adapter: ArrayAdapter<String> = ArrayAdapter(
+        val adapter: ArrayAdapter<SettingsResponse.District> = ArrayAdapter(
             applicationContext,
-            R.layout.simple_spinner_dropdown_black_item,
-            cityList
+            R.layout.simple_spinner_dropdown_item_black,
+            districtList
         )
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spDistrictQuestionSuggestion.adapter = adapter
 
-        spDistrict.adapter = adapter
+        spDistrictQuestionSuggestion.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    val district: SettingsResponse.District =
+                        parent.selectedItem as SettingsResponse.District
+                    districtId = district.id
+                    getNews()
+                }
 
-        spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+    }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                return
-            }
+    private fun getNews() {
+        if (isConnected(this)) {
+            pbQuestionSuggestion.visibility = View.VISIBLE
+            rvPollAndSurvey.visibility = View.GONE
+            govtWorkViewModel.getUserAdviseList(districtId, "0", "10")
+        } else {
+            showSnackBar(getString(R.string.no_internet))
         }
+    }
+
+    private fun addItems(govWorkList: ArrayList<UserAdviseResponse.UserAdvice>) {
+        govtWorkNewsAdapter.setItem(govWorkList)
     }
 }

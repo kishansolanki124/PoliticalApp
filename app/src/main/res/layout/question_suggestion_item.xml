@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvRootGovtWorkNewsItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,9 +23,10 @@
             android:padding="@dimen/dp_10">
 
             <com.rishabhharit.roundedimageview.RoundedImageView
+                android:id="@+id/ivQuestionSuggestionUser"
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
-                android:src="@drawable/bhupo"
+                android:src="@drawable/user1"
                 app:cornerRadius="@dimen/dp_100" />
 
             <LinearLayout
@@ -34,21 +36,22 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvSanstha"
+                    android:id="@+id/tvQuestionSuggestionUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
                     android:paddingHorizontal="@dimen/dp_2"
-                    android:text="રાજદીપસિંહ સોલંકી"
+                    tools:text="રાજદીપસિંહ સોલંકી"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_14" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvUserCityDistrict"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
                     android:paddingHorizontal="@dimen/dp_2"
-                    android:text="ધોળકા - અહમદાબાદ"
+                    tools:text="ધોળકા - અહમદાબાદ"
                     android:textColor="@color/gray_candidate_name"
                     android:textSize="@dimen/sp_12" />
             </LinearLayout>
@@ -61,11 +64,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/semi_bold"
             android:paddingVertical="@dimen/dp_7"
-            android:text="કોર્પોરેશનની ફરિયાદોનો નિકાલ સમયમાં થતો નર્થીીં...."
+            tools:text="કોર્પોરેશનની ફરિયાદોનો નિકાલ સમયમાં થતો નર્થીીં...."
             android:textColor="@color/black"
             android:textSize="@dimen/sp_14" />
 
         <com.rishabhharit.roundedimageview.RoundedImageView
+            android:id="@+id/ivQuestionSuggestion"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_150"
             android:scaleType="centerCrop"

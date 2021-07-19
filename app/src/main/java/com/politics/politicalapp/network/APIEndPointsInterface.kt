@@ -29,6 +29,16 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): GovtWorkListResponse
 
+    @POST(AppConstants.APIEndPoints.GET_UER_ADVISE)
+    suspend fun getUserAdvise(
+        @Body hashMap: MultipartBody
+    ): UserAdviseResponse
+
+    @POST(AppConstants.APIEndPoints.GET_UER_ADVISE_DETAIL)
+    suspend fun getUserAdviseDetail(
+        @Body hashMap: MultipartBody
+    ): UserAdviseDetailResponse
+
     @POST(AppConstants.APIEndPoints.GET_DISTRICT_POLL)
     suspend fun getDistrictPoll(
         @Body hashMap: MultipartBody
