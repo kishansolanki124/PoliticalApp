@@ -24,8 +24,18 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): QuizAndContestResponse
 
+    @POST(AppConstants.APIEndPoints.GET_LIVE_POLL)
+    suspend fun getLivePollList(
+        @Body hashMap: MultipartBody
+    ): LivePollListResponse
+
     @POST(AppConstants.APIEndPoints.ADD_QUIZ_CONTEST_ANSWER)
     suspend fun addQuiZAnswer(
+        @Body hashMap: MultipartBody
+    ): CommonResponse
+
+    @POST(AppConstants.APIEndPoints.ADD_LIVE_POLL_ANSWER)
+    suspend fun addLivePollAnswer(
         @Body hashMap: MultipartBody
     ): CommonResponse
 
@@ -33,6 +43,11 @@ interface APIEndPointsInterface {
     suspend fun getQuizAndContestDetail(
         @Body hashMap: MultipartBody
     ): QuizAndContestRunningResponse
+
+    @POST(AppConstants.APIEndPoints.GET_LIVE_POLL_DETAIL)
+    suspend fun getLivePollDetail(
+        @Body hashMap: MultipartBody
+    ): LivePollDetailResponse
 
     @POST(AppConstants.APIEndPoints.GET_SCRATCHCARD)
     suspend fun getScratchCard(

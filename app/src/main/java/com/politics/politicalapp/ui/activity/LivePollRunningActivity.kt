@@ -7,7 +7,9 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
@@ -21,10 +23,21 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.MyValueFormatter
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.CommonResponse
+import com.politics.politicalapp.pojo.LivePollDetailResponse
+import com.politics.politicalapp.viewmodel.LivePollViewModel
 import kotlinx.android.synthetic.main.activity_live_poll_running.*
 import java.util.*
 
 class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedListener {
+
+    private var qid = ""
+    private var answerId = ""
+    private lateinit var settingsViewModel: LivePollViewModel
+    private var livePollDetailResponse: LivePollDetailResponse? = null
 
     private val showButton: Boolean by lazy {
         // runs on first access of messageView
@@ -37,17 +50,60 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        qid = intent.getStringExtra(AppConstants.ID)!!
+
         if (showButton) {
-            btSubmitRegister.visibility = View.VISIBLE
+            btSubmitLivePOllAnswer.visibility = View.VISIBLE
             tvGive_rate_get_10_point.visibility = View.VISIBLE
         } else {
-            btSubmitRegister.visibility = View.INVISIBLE
+            btSubmitLivePOllAnswer.visibility = View.INVISIBLE
             tvGive_rate_get_10_point.visibility = View.INVISIBLE
         }
 
         setToolbarTitle(getString(R.string.live_poll))
         setupPointText()
-        setupChart()
+
+        btSubmitLivePOllAnswer.setOnClickListener {
+            val index: Int =
+                rgLivePollRunning.indexOfChild(findViewById(rgLivePollRunning.checkedRadioButtonId))
+
+            if (index != -1) {
+                if (isConnected(this)) {
+                    btSubmitLivePOllAnswer.visibility = View.INVISIBLE
+                    pbSubmitLivePOllAnswer.visibility = View.VISIBLE
+                    settingsViewModel.addLivePollAnswer(
+                        qid,
+                        SPreferenceManager.getInstance(this).session,
+                        answerId
+                    )
+                } else {
+                    showSnackBar(getString(R.string.no_internet))
+                }
+            } else {
+                showSnackBar(getString(R.string.invalid_option))
+            }
+        }
+
+        settingsViewModel = ViewModelProvider(this).get(LivePollViewModel::class.java)
+
+        settingsViewModel.quizAndContestDetail().observe(this, {
+            handleResponse(it)
+        })
+
+        settingsViewModel.quizAndContestAnswer().observe(this, {
+            handleAnswerResponse(it)
+        })
+
+        if (isConnected(this)) {
+            cvQuizAndContestRunning.visibility = View.GONE
+            pbQuizAndContestRunning.visibility = View.VISIBLE
+            settingsViewModel.getLivePollDetail(
+                qid,
+                SPreferenceManager.getInstance(this).session
+            )
+        } else {
+            showSnackBar(getString(R.string.no_internet))
+        }
     }
 
     private fun setupPointText() {
@@ -148,10 +204,10 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
         chart.isDrawHoleEnabled = false //remove center area
         chart.setDrawEntryLabels(false)//hide text in chart (label text)
-        setData(4, 100f)
+        setData()
     }
 
-    private fun setData(count: Int, range: Float) {
+    private fun setData() {
         val entries = ArrayList<PieEntry>()
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
@@ -167,10 +223,16 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 //            )
 //        }
 
-        entries.add(PieEntry(45f, "નરેન્દ્ર મોદી", null))
-        entries.add(PieEntry(25f, "રાહુલ ગાંધી", null))
-        entries.add(PieEntry(10f, "મમતા બેનર્જી", null))
-        entries.add(PieEntry(5f, "અખિલેશ યાદવ", null))
+        livePollDetailResponse?.let {
+            for (item in it.poll_result) {
+                entries.add(PieEntry(item.percenrage.toFloat(), item.option_name, null))
+            }
+        }
+
+//        entries.add(PieEntry(45f, "નરેન્દ્ર મોદી", null))
+//        entries.add(PieEntry(25f, "રાહુલ ગાંધી", null))
+//        entries.add(PieEntry(10f, "મમતા બેનર્જી", null))
+//        entries.add(PieEntry(5f, "અખિલેશ યાદવ", null))
 
         val dataSet = PieDataSet(entries, "")
         dataSet.setDrawIcons(false)
@@ -217,6 +279,107 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
     override fun onNothingSelected() {
         Log.i("PieChart", "nothing selected")
+    }
+
+    private fun handleAnswerResponse(commonResponse: CommonResponse?) {
+        if (null != commonResponse) {
+            btSubmitLivePOllAnswer.visibility = View.VISIBLE
+            pbSubmitLivePOllAnswer.visibility = View.GONE
+            showAlertDialog(commonResponse.message)
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong))
+        }
+    }
+
+    private fun handleResponse(quizAndContestRunningResponse: LivePollDetailResponse?) {
+        pbQuizAndContestRunning.visibility = View.GONE
+        cvQuizAndContestRunning.visibility = View.VISIBLE
+
+        if (null != quizAndContestRunningResponse) {
+            setupViews(quizAndContestRunningResponse)
+        }
+    }
+
+    private fun setupViews(quizAndContestRunningResponse: LivePollDetailResponse) {
+        livePollDetailResponse = quizAndContestRunningResponse
+        setupChart()
+
+        tvLivePollQuestion.text = quizAndContestRunningResponse.poll[0].poll_question
+
+        rbExcellent.text =
+            quizAndContestRunningResponse.poll[0].poll_options[0].option_name
+        if (quizAndContestRunningResponse.poll[0].poll_options[0].option_id == quizAndContestRunningResponse.poll[0].user_rating
+        ) {
+            rbExcellent.isChecked = true
+        }
+
+        rbGood.text = quizAndContestRunningResponse.poll[0].poll_options[1].option_name
+        if (quizAndContestRunningResponse.poll[0].poll_options[1].option_id == quizAndContestRunningResponse.poll[0].user_rating
+        ) {
+            rbGood.isChecked = true
+        }
+
+        rbcantAnswer.text =
+            quizAndContestRunningResponse.poll[0].poll_options[2].option_name
+        if (quizAndContestRunningResponse.poll[0].poll_options[2].option_id == quizAndContestRunningResponse.poll[0].user_rating
+        ) {
+            rbcantAnswer.isChecked = true
+        }
+
+        rbBad.text = quizAndContestRunningResponse.poll[0].poll_options[3].option_name
+        if (quizAndContestRunningResponse.poll[0].poll_options[3].option_id == quizAndContestRunningResponse.poll[0].user_rating
+        ) {
+            rbBad.isChecked = true
+        }
+
+        if (quizAndContestRunningResponse.poll[0].user_rating.isNotEmpty()) {
+            //answer already submitted
+            btSubmitLivePOllAnswer.visibility = View.INVISIBLE
+            tvGive_rate_get_10_point.visibility = View.INVISIBLE
+            tvAnswerSubmitted.visibility = View.VISIBLE
+        }
+
+        //todo work here
+        rbExcellent.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.poll[0].poll_options[0].option_id
+            }
+        }
+
+        rbGood.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.poll[0].poll_options[1].option_id
+            }
+        }
+
+        rbcantAnswer.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.poll[0].poll_options[2].option_id
+            }
+        }
+
+        rbBad.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.poll[0].poll_options[3].option_id
+            }
+        }
+    }
+
+    private fun showAlertDialog(msg: String) {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage(msg)
+        alertDialogBuilder.setCancelable(true)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
 }
 

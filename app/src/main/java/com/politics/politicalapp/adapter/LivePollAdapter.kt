@@ -1,5 +1,6 @@
 package com.politics.politicalapp.adapter
 
+import android.annotation.SuppressLint
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -9,19 +10,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
+import com.politics.politicalapp.pojo.LivePollListResponse
 import kotlinx.android.synthetic.main.live_poll_item.view.*
-import kotlinx.android.synthetic.main.live_poll_item.view.btViewWinner
-import kotlinx.android.synthetic.main.live_poll_item.view.cvRootGovtWorkNewsItem
-import kotlinx.android.synthetic.main.live_poll_item.view.tvGive_rate_get_10_point
-import kotlinx.android.synthetic.main.quiz_and_contest_item.view.*
 
 class LivePollAdapter(
-    private val itemClickCall: (String, Boolean) -> Unit,
-    private val itemClickWeb: (String) -> Unit
+    private val itemClickCall: (LivePollListResponse.LivePoll, Boolean) -> Unit,
+    private val itemClickWeb: (LivePollListResponse.LivePoll) -> Unit
 ) :
     RecyclerView.Adapter<LivePollAdapter.HomeOffersViewHolder>() {
 
-    private var list: ArrayList<String> = ArrayList()
+    private var list: ArrayList<LivePollListResponse.LivePoll> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
@@ -33,10 +31,10 @@ class LivePollAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeOffersViewHolder, position: Int) {
-        holder.bindForecast(list[position], position)
+        holder.bindForecast(list[position])
     }
 
-    fun setItem(list: ArrayList<String>) {
+    fun setItem(list: ArrayList<LivePollListResponse.LivePoll>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -50,24 +48,19 @@ class LivePollAdapter(
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (String, Boolean) -> Unit,
-        private val itemClickWeb: (String) -> Unit
+        private val itemClickCall: (LivePollListResponse.LivePoll, Boolean) -> Unit,
+        private val itemClickWeb: (LivePollListResponse.LivePoll) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
-//        constructor(parent: ViewGroup) : this(
-//            LayoutInflater.from(parent.context).inflate(
-//                R.layout.item_vatan_nu_gham,
-//                parent, false
-//            )
-//        )
-
+        @SuppressLint("SetTextI18n")
         fun bindForecast(
-            newsPortal: String,
-            position: Int
+            newsPortal: LivePollListResponse.LivePoll
         ) {
             with(newsPortal) {
 
-                if (position == 3 || position == 4) {
+                itemView.tvQuestionSuggestion.text = newsPortal.name
+
+                if (newsPortal.poll_status == "Result") {
                     itemView.tvGive_rate_get_10_point.text = ""
                     itemView.btViewWinner.text = "result"
                     itemView.btViewWinner.setBackgroundColor(
