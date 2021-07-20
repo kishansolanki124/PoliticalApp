@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bluehomestudio.luckywheel.WheelItem
 import com.cooltechworks.views.ScratchImageView
@@ -35,6 +37,14 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
             handleResponse(it)
         })
 
+        settingsViewModel.addScratchCardResponse().observe(this, {
+            if (null != it) {
+                showAlertDialog(it.message)
+            } else {
+                showSnackBar(getString(R.string.something_went_wrong))
+            }
+        })
+
         idScratchCardIv.setRevealListener(object : ScratchImageView.IRevealListener {
             override fun onRevealed(iv: ScratchImageView) {
                 // this method is called after revealing the image.
@@ -62,7 +72,7 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
     private fun handleResponse(scratchCardResponse: ScratchCardResponse?) {
         lwv.visibility = View.VISIBLE
         pbScratchCard.visibility = View.GONE
-        if (null != scratchCardResponse) {
+        if (null != scratchCardResponse && scratchCardResponse.status == "1") {
             setupSpinWheel(scratchCardResponse)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
@@ -117,7 +127,14 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
 
         lwv.addWheelItems(wheelItems)
         lwv.setLuckyWheelReachTheTarget {
-
+            if (isConnected(this)) {
+                settingsViewModel.addScratchCard(
+                    SPreferenceManager.getInstance(this).session,
+                    "10"
+                )
+            } else {
+                showSnackBar(getString(R.string.no_internet), this)
+            }
         }
     }
 
@@ -131,4 +148,20 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
         }
     }
 
+    private fun showAlertDialog(msg: String) {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage(msg)
+        alertDialogBuilder.setCancelable(true)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
 }

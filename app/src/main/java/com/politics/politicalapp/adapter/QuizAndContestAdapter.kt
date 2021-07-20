@@ -1,5 +1,6 @@
 package com.politics.politicalapp.adapter
 
+import android.annotation.SuppressLint
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -9,15 +10,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
+import com.politics.politicalapp.pojo.QuizAndContestResponse
 import kotlinx.android.synthetic.main.quiz_and_contest_item.view.*
 
 class QuizAndContestAdapter(
-    private val itemClickCall: (String) -> Unit,
-    private val itemClickWeb: (String) -> Unit
+    private val itemClickCall: (QuizAndContestResponse.Quiz) -> Unit,
+    private val itemClickWeb: (QuizAndContestResponse.Quiz) -> Unit
 ) :
     RecyclerView.Adapter<QuizAndContestAdapter.HomeOffersViewHolder>() {
 
-    private var list: ArrayList<String> = ArrayList()
+    private var list: ArrayList<QuizAndContestResponse.Quiz> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val view =
@@ -29,10 +31,10 @@ class QuizAndContestAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeOffersViewHolder, position: Int) {
-        holder.bindForecast(list[position], position)
+        holder.bindForecast(list[position])
     }
 
-    fun setItem(list: ArrayList<String>) {
+    fun setItem(list: ArrayList<QuizAndContestResponse.Quiz>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -46,8 +48,8 @@ class QuizAndContestAdapter(
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (String) -> Unit,
-        private val itemClickWeb: (String) -> Unit
+        private val itemClickCall: (QuizAndContestResponse.Quiz) -> Unit,
+        private val itemClickWeb: (QuizAndContestResponse.Quiz) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
 //        constructor(parent: ViewGroup) : this(
@@ -57,13 +59,15 @@ class QuizAndContestAdapter(
 //            )
 //        )
 
+        @SuppressLint("SetTextI18n")
         fun bindForecast(
-            newsPortal: String,
-            position: Int
+            newsPortal: QuizAndContestResponse.Quiz
         ) {
             with(newsPortal) {
 
-                if (position == 3 || position == 4) {
+                itemView.tvQuizAndContestTitle.text = newsPortal.name
+
+                if (newsPortal.quiz_mode == "Quiz Winner") {
                     itemView.tvGive_rate_get_10_point.text = ""
                     itemView.btViewWinner.text = "check winner"
                     itemView.btViewWinner.setBackgroundColor(

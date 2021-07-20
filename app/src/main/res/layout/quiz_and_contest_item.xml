@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvRootGovtWorkNewsItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,14 +17,14 @@
         android:padding="@dimen/dp_10">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvQuestionSuggestion"
+            android:id="@+id/tvQuizAndContestTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/semi_bold"
             android:padding="@dimen/dp_5"
-            android:text="ભારતના કયા પ્રધાનમંત્રી રાષ્ટ્રીય સ્વયંસેવક સંઘના સદસ્ય પણ છે ?"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            tools:text="ભારતના કયા પ્રધાનમંત્રી રાષ્ટ્રીય સ્વયંસેવક સંઘના સદસ્ય પણ છે ?" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

@@ -35,6 +35,8 @@ interface AppConstants {
             const val REGISTRATION: String = "registration"
             const val GET_SETTINGS: String = "get_settings"
             const val GET_SCRATCHCARD: String = "get_scratchcard"
+            const val GET_QUIZ_CONTEST: String = "get_quiz"
+            const val ADD_SCRATCHCARD: String = "add_scratchcard"
             const val GET_GOVT_WORK: String = "get_gov_work"
             const val GET_UER_ADVISE: String = "get_user_advice"
             const val GET_UER_ADVISE_DETAIL: String = "get_user_advice_detail"
@@ -52,6 +54,7 @@ interface AppConstants {
     interface RequestParameters {
         companion object {
             const val USER_MOBILE = "user_mobile"
+            const val points = "points"
             const val district_id = "district_id"
             const val start = "start"
             const val end = "end"
