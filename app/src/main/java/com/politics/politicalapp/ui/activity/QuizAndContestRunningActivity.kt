@@ -4,11 +4,28 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import app.app.patidarsaurabh.apputils.AppConstants
+import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
+import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.openBrowser
+import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.pojo.CommonResponse
+import com.politics.politicalapp.pojo.QuizAndContestRunningResponse
+import com.politics.politicalapp.viewmodel.QuizAndContestViewModel
 import kotlinx.android.synthetic.main.activity_quiz_and_contest_running.*
 
 class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
+
+    private var qid = ""
+    private var answerId = ""
+    private var browserURL = ""
+    private lateinit var settingsViewModel: QuizAndContestViewModel
 
     override val layoutId: Int
         get() = R.layout.activity_quiz_and_contest_running
@@ -17,6 +34,33 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         super.onCreate(savedInstanceState)
 
         setToolbarTitle(getString(R.string.quiz_and_contest))
+
+        qid = intent.getStringExtra(AppConstants.ID)!!
+
+        ivSponsor.setOnClickListener {
+            openBrowser(this, browserURL)
+        }
+
+        btSubmitQuizContestAnswer.setOnClickListener {
+            val index: Int =
+                rgQuestionSuggestionRunning.indexOfChild(findViewById(rgQuestionSuggestionRunning.checkedRadioButtonId))
+
+            if (index != -1) {
+                if (isConnected(this)) {
+                    btSubmitQuizContestAnswer.visibility = View.INVISIBLE
+                    pbSubmitQuizContestAnswer.visibility = View.VISIBLE
+                    settingsViewModel.addQuiZAnswer(
+                        qid,
+                        SPreferenceManager.getInstance(this).session,
+                        answerId
+                    )
+                } else {
+                    showSnackBar(getString(R.string.no_internet))
+                }
+            } else {
+                showSnackBar(getString(R.string.invalid_option))
+            }
+        }
 
         val greenText =
             SpannableString(getString(R.string.participate_and))
@@ -70,5 +114,132 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
             0, forthText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         tvGive_rate_get_10_point.append(forthText)
+
+        settingsViewModel = ViewModelProvider(this).get(QuizAndContestViewModel::class.java)
+
+        settingsViewModel.quizAndContestDetail().observe(this, {
+            handleResponse(it)
+        })
+
+        settingsViewModel.quizAndContestAnswer().observe(this, {
+            handleAnswerResponse(it)
+        })
+
+        if (isConnected(this)) {
+            cvQuizAndContestRunning.visibility = View.GONE
+            pbQuizAndContestRunning.visibility = View.VISIBLE
+            settingsViewModel.getQuizAndContestDetail(
+                qid,
+                SPreferenceManager.getInstance(this).session
+            )
+        } else {
+            showSnackBar(getString(R.string.no_internet))
+        }
+    }
+
+    private fun handleAnswerResponse(commonResponse: CommonResponse?) {
+        if (null != commonResponse) {
+            btSubmitQuizContestAnswer.visibility = View.VISIBLE
+            pbSubmitQuizContestAnswer.visibility = View.GONE
+            showAlertDialog(commonResponse.message)
+        } else {
+            showSnackBar(getString(R.string.something_went_wrong))
+        }
+    }
+
+    private fun handleResponse(quizAndContestRunningResponse: QuizAndContestRunningResponse?) {
+        pbQuizAndContestRunning.visibility = View.GONE
+        cvQuizAndContestRunning.visibility = View.VISIBLE
+
+        if (null != quizAndContestRunningResponse) {
+            setupViews(quizAndContestRunningResponse)
+        }
+    }
+
+    private fun setupViews(quizAndContestRunningResponse: QuizAndContestRunningResponse) {
+        Glide.with(this)
+            .load(quizAndContestRunningResponse.quiz_detail[0].sponser_img)
+            .into(ivSponsor)
+
+        tvQuestionSuggestion.text = quizAndContestRunningResponse.quiz_question[0].question
+
+        rbExcellent.text =
+            quizAndContestRunningResponse.quiz_question[0].quiz_options[0].option_name
+        if (quizAndContestRunningResponse.quiz_question[0].quiz_options[0].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
+        ) {
+            rbExcellent.isChecked = true
+        }
+
+        rbGood.text = quizAndContestRunningResponse.quiz_question[0].quiz_options[1].option_name
+        if (quizAndContestRunningResponse.quiz_question[0].quiz_options[1].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
+        ) {
+            rbGood.isChecked = true
+        }
+
+        rbcantAnswer.text =
+            quizAndContestRunningResponse.quiz_question[0].quiz_options[2].option_name
+        if (quizAndContestRunningResponse.quiz_question[0].quiz_options[2].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
+        ) {
+            rbcantAnswer.isChecked = true
+        }
+
+        rbBad.text = quizAndContestRunningResponse.quiz_question[0].quiz_options[3].option_name
+        if (quizAndContestRunningResponse.quiz_question[0].quiz_options[3].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
+        ) {
+            rbBad.isChecked = true
+        }
+
+        if (quizAndContestRunningResponse.quiz_detail[0].user_answer.isNotEmpty()) {
+            //answer already submitted
+            llQuizAndContestAnswer.visibility = View.GONE
+            tvAnswerSubmitted.visibility = View.VISIBLE
+        }
+
+        rbExcellent.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[0].option_id
+            }
+        }
+
+        rbGood.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[1].option_id
+            }
+        }
+
+        rbcantAnswer.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[2].option_id
+            }
+        }
+
+        rbBad.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[3].option_id
+            }
+        }
+
+        tvQuizStartDate.text = quizAndContestRunningResponse.quiz_detail[0].start_date
+        tvQuizEndDate.text = quizAndContestRunningResponse.quiz_detail[0].end_date
+        tvQuizWinnerDate.text = quizAndContestRunningResponse.quiz_detail[0].result_date
+
+        browserURL = quizAndContestRunningResponse.quiz_detail[0].sponser_url
+    }
+
+    private fun showAlertDialog(msg: String) {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage(msg)
+        alertDialogBuilder.setCancelable(true)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
 }

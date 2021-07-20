@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.QuizAndContestAdapter
 import com.politics.politicalapp.apputils.isConnected
@@ -67,11 +68,15 @@ class QuizAndContestActivity : ExtendedToolbarActivity() {
         govtWorkNewsAdapter = QuizAndContestAdapter(
             {
                 //callIntent(this, it.contact_no!!)
-                startActivity(Intent(this, QuizAndContestRunningActivity::class.java))
+                startActivity(
+                    Intent(this, QuizAndContestRunningActivity::class.java)
+                        .putExtra(AppConstants.ID, it.id)
+                )
 
             }, {
                 //browserIntent(this, it.website!!)
-                startActivity(Intent(this, QuizAndContestWinnerActivity::class.java))
+                startActivity(Intent(this, QuizAndContestWinnerActivity::class.java)
+                    .putExtra(AppConstants.ID, it.id))
             }
         )
         //govtWorkNewsAdapter.setItem(stringList)

@@ -24,6 +24,16 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): QuizAndContestResponse
 
+    @POST(AppConstants.APIEndPoints.ADD_QUIZ_CONTEST_ANSWER)
+    suspend fun addQuiZAnswer(
+        @Body hashMap: MultipartBody
+    ): CommonResponse
+
+    @POST(AppConstants.APIEndPoints.GET_QUIZ_CONTEST_DETAIL)
+    suspend fun getQuizAndContestDetail(
+        @Body hashMap: MultipartBody
+    ): QuizAndContestRunningResponse
+
     @POST(AppConstants.APIEndPoints.GET_SCRATCHCARD)
     suspend fun getScratchCard(
         @Body hashMap: MultipartBody
