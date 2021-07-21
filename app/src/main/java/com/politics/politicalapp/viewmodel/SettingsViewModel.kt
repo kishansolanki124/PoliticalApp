@@ -76,7 +76,7 @@ class SettingsViewModel : ViewModel() {
                 val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
 
                 requestBodyBuilder.addFormDataPart(
-                    AppConstants.RequestParameters.USER_MOBILE,
+                    AppConstants.RequestParameters.name,
                     name
                 )
 

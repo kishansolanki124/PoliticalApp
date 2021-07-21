@@ -59,4 +59,6 @@
     <string name="invalid_comment">Comment box is empty</string>
     <string name="invalid_option">Kindly select any option</string>
     <string name="answer_all_questions">Kindly answer all questions</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="invalid_question_comment">Invalid question or comment</string>
 </resources>

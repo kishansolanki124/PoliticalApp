@@ -10,150 +10,154 @@
 
     <include layout="@layout/common_toolbar" />
 
-    <ProgressBar
-        android:id="@+id/pbNewsPortal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:indeterminateTint="@color/red_light"
-        android:indeterminateTintMode="multiply"
-        android:scaleX="0.7"
-        android:scaleY="0.7"
-        android:visibility="gone" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:scaleType="centerCrop"
-            android:src="@drawable/banner_about" />
+            android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvRootGovtWorkNewsItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_10"
-            app:cardElevation="@dimen/dp_0">
+            <WebView
+                android:id="@+id/wbMap"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_250"
+                tools:ignore="WebViewLayout" />
 
-            <ScrollView
+            <ProgressBar
+                android:id="@+id/pbContactUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:indeterminateTint="@color/red_light"
+                android:indeterminateTintMode="multiply"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:visibility="gone" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvContactUs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none">
+                android:layout_margin="@dimen/dp_10"
+                app:cardElevation="@dimen/dp_0">
+
 
                 <LinearLayout
-                    android:paddingBottom="@dimen/dp_30"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_10"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dp_30">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/semi_bold"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_2"
                         android:text="Address :"
-                        android:fontFamily="@font/semi_bold"
                         android:textColor="@color/red_CC252C"
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:paddingVertical="@dimen/dp_2"
-                        android:paddingHorizontal="@dimen/dp_5"
+                        android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="COLORS OF GUJARAT"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_2"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_14"
-                        android:fontFamily="@font/semi_bold" />
+                        tools:text="COLORS OF GUJARAT" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:paddingVertical="@dimen/dp_2"
-                        android:paddingHorizontal="@dimen/dp_5"
+                        android:id="@+id/tvAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="208, GURURAKSHA COMPLEX, NEAR SBI BANK, TAGORE ROAD, VIRANI CHOWK, RAJKOT - 360002 (GUJARAT)"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_2"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/sp_12"
+                        tools:text="208, GURURAKSHA COMPLEX, NEAR SBI BANK, TAGORE ROAD, VIRANI CHOWK, RAJKOT - 360002 (GUJARAT)" />
 
                     <View
-                        android:layout_margin="@dimen/dp_5"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_1"
+                        android:layout_margin="@dimen/dp_5"
                         android:background="@color/gray" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:paddingVertical="@dimen/dp_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/semi_bold"
                         android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_2"
                         android:text="Make A Call :"
                         android:textColor="@color/red_CC252C"
-                        android:fontFamily="@font/semi_bold"
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:paddingVertical="@dimen/dp_2"
-                        android:paddingHorizontal="@dimen/dp_5"
+                        android:id="@+id/tvPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+91 98253 15700"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_2"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_12"
-                        android:fontFamily="@font/semi_bold" />
+                        tools:text="+91 98253 15700" />
 
                     <View
-                        android:layout_margin="@dimen/dp_5"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_1"
+                        android:layout_margin="@dimen/dp_5"
                         android:background="@color/gray" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:paddingVertical="@dimen/dp_2"
-                        android:paddingHorizontal="@dimen/dp_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingHorizontal="@dimen/dp_5"
+                        android:paddingVertical="@dimen/dp_2"
                         android:text="Send a Message :"
                         android:textColor="@color/red_CC252C"
-                        android:fontFamily="@font/semi_bold"
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:paddingVertical="@dimen/dp_2"
+                        android:id="@+id/tvEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/semi_bold"
                         android:paddingHorizontal="@dimen/dp_5"
-                        android:text="info@colorsofgujarat.in"
+                        android:paddingVertical="@dimen/dp_2"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_12"
-                        android:fontFamily="@font/semi_bold" />
+                        tools:text="info@colorsofgujarat.in" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp_5"
                         android:background="@color/gray_BEBEBE"
+                        android:fontFamily="@font/semi_bold"
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/dp_5"
                         android:paddingVertical="@dimen/dp_10"
                         android:text="Get In Touch"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14"
-                        android:fontFamily="@font/semi_bold" />
+                        android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:fontFamily="@font/regular"
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp_5"
                         android:background="@drawable/transparent_bg_black_border"
+                        android:fontFamily="@font/regular"
                         android:hint="@string/Name"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
@@ -162,12 +166,12 @@
                         android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:fontFamily="@font/regular"
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp_5"
                         android:background="@drawable/transparent_bg_black_border"
+                        android:fontFamily="@font/regular"
                         android:hint="@string/Email"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
@@ -176,12 +180,12 @@
                         android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:fontFamily="@font/regular"
                         android:id="@+id/etMobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp_5"
                         android:background="@drawable/transparent_bg_black_border"
+                        android:fontFamily="@font/regular"
                         android:hint="@string/Mobile_No"
                         android:imeOptions="actionNext"
                         android:inputType="numberSigned"
@@ -191,33 +195,54 @@
                         android:textSize="@dimen/sp_12" />
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:fontFamily="@font/regular"
-                        android:id="@+id/etQuestioNComment"
+                        android:id="@+id/etSuggestion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp_5"
                         android:background="@drawable/transparent_bg_black_border"
+                        android:fontFamily="@font/regular"
                         android:gravity="start"
                         android:hint="@string/quest_comment"
                         android:imeOptions="actionDone"
                         android:inputType="textMultiLine"
-                        android:maxLength="10"
                         android:minLines="5"
                         android:padding="@dimen/dp_10"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_12" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btViewWinner"
-                        style="@style/CommonRedButton"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/dp_0"
-                        android:textAllCaps="false"
-                        android:paddingHorizontal="@dimen/sp_30"
-                        android:text="@string/Send"
-                        android:textSize="@dimen/sp_14" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btSendContactUs"
+                            style="@style/CommonRedButton"
+                            android:layout_margin="@dimen/dp_0"
+                            android:paddingHorizontal="@dimen/sp_30"
+                            android:text="@string/Send"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/sp_14"
+                            tools:ignore="MissingConstraints" />
+
+                        <androidx.core.widget.ContentLoadingProgressBar
+                            android:id="@+id/pbSendContactUs"
+                            style="?android:attr/progressBarStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:indeterminateTint="@color/red_light"
+                            android:indeterminateTintMode="multiply"
+                            android:scaleX="0.7"
+                            android:scaleY="0.7"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/btSendContactUs"
+                            app:layout_constraintEnd_toEndOf="@+id/btSendContactUs"
+                            app:layout_constraintStart_toStartOf="@+id/btSendContactUs"
+                            app:layout_constraintTop_toTopOf="@+id/btSendContactUs" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
-            </ScrollView>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
