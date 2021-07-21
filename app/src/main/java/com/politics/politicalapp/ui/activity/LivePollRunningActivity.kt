@@ -1,14 +1,19 @@
 package com.politics.politicalapp.ui.activity
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.github.mikephil.charting.animation.Easing
@@ -31,6 +36,7 @@ import com.politics.politicalapp.pojo.LivePollDetailResponse
 import com.politics.politicalapp.viewmodel.LivePollViewModel
 import kotlinx.android.synthetic.main.activity_live_poll_running.*
 import java.util.*
+
 
 class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedListener {
 
@@ -285,6 +291,9 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         if (null != commonResponse) {
             btSubmitLivePOllAnswer.visibility = View.VISIBLE
             pbSubmitLivePOllAnswer.visibility = View.GONE
+            btSubmitLivePOllAnswer.visibility = View.INVISIBLE
+            tvGive_rate_get_10_point.visibility = View.INVISIBLE
+            tvAnswerSubmitted.visibility = View.VISIBLE
             showAlertDialog(commonResponse.message)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
@@ -306,31 +315,76 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
         tvLivePollQuestion.text = quizAndContestRunningResponse.poll[0].poll_question
 
-        rbExcellent.text =
-            quizAndContestRunningResponse.poll[0].poll_options[0].option_name
-        if (quizAndContestRunningResponse.poll[0].poll_options[0].option_id == quizAndContestRunningResponse.poll[0].user_rating
-        ) {
-            rbExcellent.isChecked = true
+//        rbExcellentLivePollRunning.text =
+//            quizAndContestRunningResponse.poll[0].poll_options[0].option_name
+//        if (quizAndContestRunningResponse.poll[0].poll_options[0].option_id == quizAndContestRunningResponse.poll[0].user_rating
+//        ) {
+//            rbExcellentLivePollRunning.isChecked = true
+//        }
+//
+//        rbGood.text = quizAndContestRunningResponse.poll[0].poll_options[1].option_name
+//        if (quizAndContestRunningResponse.poll[0].poll_options[1].option_id == quizAndContestRunningResponse.poll[0].user_rating
+//        ) {
+//            rbGood.isChecked = true
+//        }
+//
+//        rbcantAnswer.text =
+//            quizAndContestRunningResponse.poll[0].poll_options[2].option_name
+//        if (quizAndContestRunningResponse.poll[0].poll_options[2].option_id == quizAndContestRunningResponse.poll[0].user_rating
+//        ) {
+//            rbcantAnswer.isChecked = true
+//        }
+
+
+        for (pollOption in quizAndContestRunningResponse.poll[0].poll_options) {
+            val radioButton = RadioButton(this)
+            radioButton.text = pollOption.option_name
+            radioButton.id = View.generateViewId()
+
+            val padding = resources.getDimensionPixelOffset(R.dimen.dp_5)
+            radioButton.setPadding(padding, padding, padding, padding)
+            radioButton.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+            val myColorStateList = ColorStateList(
+                arrayOf(
+                    intArrayOf(
+                        ContextCompat.getColor(this, R.color.black)
+                    )
+                ), intArrayOf(ContextCompat.getColor(this, R.color.black))
+            )
+
+            radioButton.buttonTintList = myColorStateList
+            radioButton.setTextSize(
+                TypedValue.COMPLEX_UNIT_PX,
+                resources.getDimension(R.dimen.sp_12)
+            )
+            val typeface = ResourcesCompat.getFont(this, R.font.regular)
+            radioButton.typeface = typeface
+
+            val rprms = RadioGroup.LayoutParams(
+                RadioGroup.LayoutParams.WRAP_CONTENT,
+                RadioGroup.LayoutParams.WRAP_CONTENT
+            )
+            rgLivePollRunning.addView(radioButton, rprms)
+
+            radioButton.setOnCheckedChangeListener { _, b ->
+                if (b) {
+                    answerId = pollOption.option_id
+                }
+            }
+
+            if (quizAndContestRunningResponse.poll[0].user_rating.isNotEmpty()) {
+                if (pollOption.option_id == quizAndContestRunningResponse.poll[0].user_rating) {
+                    radioButton.isChecked = true
+                }
+            }
         }
 
-        rbGood.text = quizAndContestRunningResponse.poll[0].poll_options[1].option_name
-        if (quizAndContestRunningResponse.poll[0].poll_options[1].option_id == quizAndContestRunningResponse.poll[0].user_rating
-        ) {
-            rbGood.isChecked = true
-        }
-
-        rbcantAnswer.text =
-            quizAndContestRunningResponse.poll[0].poll_options[2].option_name
-        if (quizAndContestRunningResponse.poll[0].poll_options[2].option_id == quizAndContestRunningResponse.poll[0].user_rating
-        ) {
-            rbcantAnswer.isChecked = true
-        }
-
-        rbBad.text = quizAndContestRunningResponse.poll[0].poll_options[3].option_name
-        if (quizAndContestRunningResponse.poll[0].poll_options[3].option_id == quizAndContestRunningResponse.poll[0].user_rating
-        ) {
-            rbBad.isChecked = true
-        }
+//        rbBad.text = quizAndContestRunningResponse.poll[0].poll_options[3].option_name
+//        if (quizAndContestRunningResponse.poll[0].poll_options[3].option_id == quizAndContestRunningResponse.poll[0].user_rating
+//        ) {
+//            rbBad.isChecked = true
+//        }
 
         if (quizAndContestRunningResponse.poll[0].user_rating.isNotEmpty()) {
             //answer already submitted
@@ -339,30 +393,29 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             tvAnswerSubmitted.visibility = View.VISIBLE
         }
 
-        //todo work here
-        rbExcellent.setOnCheckedChangeListener { _, b ->
-            if (b) {
-                answerId = quizAndContestRunningResponse.poll[0].poll_options[0].option_id
-            }
-        }
-
-        rbGood.setOnCheckedChangeListener { _, b ->
-            if (b) {
-                answerId = quizAndContestRunningResponse.poll[0].poll_options[1].option_id
-            }
-        }
-
-        rbcantAnswer.setOnCheckedChangeListener { _, b ->
-            if (b) {
-                answerId = quizAndContestRunningResponse.poll[0].poll_options[2].option_id
-            }
-        }
-
-        rbBad.setOnCheckedChangeListener { _, b ->
-            if (b) {
-                answerId = quizAndContestRunningResponse.poll[0].poll_options[3].option_id
-            }
-        }
+//        rbExcellentLivePollRunning.setOnCheckedChangeListener { _, b ->
+//            if (b) {
+//                answerId = quizAndContestRunningResponse.poll[0].poll_options[0].option_id
+//            }
+//        }
+//
+//        rbGood.setOnCheckedChangeListener { _, b ->
+//            if (b) {
+//                answerId = quizAndContestRunningResponse.poll[0].poll_options[1].option_id
+//            }
+//        }
+//
+//        rbcantAnswer.setOnCheckedChangeListener { _, b ->
+//            if (b) {
+//                answerId = quizAndContestRunningResponse.poll[0].poll_options[2].option_id
+//            }
+//        }
+//
+//        rbBad.setOnCheckedChangeListener { _, b ->
+//            if (b) {
+//                answerId = quizAndContestRunningResponse.poll[0].poll_options[3].option_id
+//            }
+//        }
     }
 
     private fun showAlertDialog(msg: String) {
@@ -382,6 +435,5 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
 }
-
 //todo scroll whole screen issue
 //todo disable radio buttons, convert it to as per the designs

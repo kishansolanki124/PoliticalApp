@@ -57,24 +57,28 @@
                     android:orientation="vertical">
 
                     <RadioButton
-                        android:id="@+id/rbExcellent"
+                        android:visibility="gone"
+                        android:id="@+id/rbExcellentLivePollRunning"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
                         tools:text="ગુલઝારી લાલા નંદા" />
 
                     <RadioButton
+                        android:visibility="gone"
                         android:id="@+id/rbGood"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
                         tools:text="ચૌધરી ચરણસિંહ" />
 
                     <RadioButton
+                        android:visibility="gone"
                         android:id="@+id/rbcantAnswer"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
                         tools:text="નરેન્દ્ર મોદી" />
 
                     <RadioButton
+                        android:visibility="gone"
                         android:id="@+id/rbBad"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
