@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvRootGovtWorkNewsItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,13 +16,13 @@
         android:padding="@dimen/dp_10">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvQuestionSuggestion"
+            android:id="@+id/tvWinnerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:lineSpacingExtra="@dimen/dp_5"
             android:paddingVertical="@dimen/dp_5"
-            android:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
+            tools:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_12" />
 

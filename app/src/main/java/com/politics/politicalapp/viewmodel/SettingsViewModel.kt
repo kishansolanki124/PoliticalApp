@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.network.APIEndPointsInterface
 import com.politics.politicalapp.network.RetrofitFactory
-import com.politics.politicalapp.pojo.CommonResponse
-import com.politics.politicalapp.pojo.ScratchCardResponse
-import com.politics.politicalapp.pojo.SettingsResponse
+import com.politics.politicalapp.pojo.*
 import com.politics.politicalapp.pojo.request.RegisterRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +19,8 @@ class SettingsViewModel : ViewModel() {
     private val mutableSettingsResponse = MutableLiveData<SettingsResponse>()
     private val mutableScratchCardResponse = MutableLiveData<ScratchCardResponse>()
     private val mutableCommonResponse = MutableLiveData<CommonResponse>()
+    private val mutableStaticPageResponse = MutableLiveData<StaticPageResponse>()
+    private val mutableContactUsResponse = MutableLiveData<ContactUsResponse>()
     private val mutableAddScratchCardResponse = MutableLiveData<CommonResponse>()
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
@@ -41,6 +41,64 @@ class SettingsViewModel : ViewModel() {
                     requestBodyBuilder.build()
                 )
                 returnSettingsResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getStaticPages() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+
+                val apiResponse = apiEndPointsInterface.getStaticPages()
+                returnStaticPages(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getContactUs() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val apiResponse = apiEndPointsInterface.getContactUs()
+                returnContactUs(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun inquiry(name: String, contact_no: String, email: String, message: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.USER_MOBILE,
+                    name
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.contact_no,
+                    contact_no
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.message,
+                    message
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.email,
+                    email
+                )
+
+                val apiResponse = apiEndPointsInterface.inquiry(
+                    requestBodyBuilder.build()
+                )
+                returnCommonResponse(apiResponse)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -138,6 +196,18 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnStaticPages(settingsResponse: StaticPageResponse) {
+        withContext(Dispatchers.Main) {
+            mutableStaticPageResponse.value = settingsResponse
+        }
+    }
+
+    private suspend fun returnContactUs(settingsResponse: ContactUsResponse) {
+        withContext(Dispatchers.Main) {
+            mutableContactUsResponse.value = settingsResponse
+        }
+    }
+
     private suspend fun returnScratchCardResponse(scratchCardResponse: ScratchCardResponse) {
         withContext(Dispatchers.Main) {
             mutableScratchCardResponse.value = scratchCardResponse
@@ -171,5 +241,13 @@ class SettingsViewModel : ViewModel() {
 
     fun addScratchCardResponse(): LiveData<CommonResponse> {
         return mutableAddScratchCardResponse
+    }
+
+    fun staticPages(): LiveData<StaticPageResponse> {
+        return mutableStaticPageResponse
+    }
+
+    fun contactUs(): LiveData<ContactUsResponse> {
+        return mutableContactUsResponse
     }
 }

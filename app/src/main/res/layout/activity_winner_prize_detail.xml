@@ -11,7 +11,7 @@
     <include layout="@layout/common_toolbar" />
 
     <ProgressBar
-        android:id="@+id/pbNewsPortal"
+        android:id="@+id/pbWinnerPrizeDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -27,16 +27,18 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/llWinnerPrizeDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPrizeDetail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_200"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:scaleType="centerCrop"
-                android:src="@drawable/banner_screen10a" />
+                tools:src="@drawable/banner_screen10a" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvRootGovtWorkNewsItem"
@@ -57,10 +59,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/semi_bold"
+                        android:gravity="center_horizontal"
                         android:paddingVertical="@dimen/dp_5"
-                        android:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/sp_18"
+                        tools:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -73,15 +76,16 @@
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrizeDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
                         android:lineSpacingExtra="@dimen/dp_5"
                         android:paddingHorizontal="@dimen/dp_10"
                         android:paddingVertical="@dimen/dp_5"
-                        android:text="પ્રથમ વિજેતા  : રૂા. ૧૦૦૦\nદ્વિતિય વિજેતા : રૂા. ૫૦૦\nતૃતિય વિજેતા : રૂા.  ૨૫૦\nપ્રોત્સાહિત ઇનામ ૧૫ વ્યકિતને : રૂા. ૧૫૦"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/sp_12"
+                        tools:text="પ્રથમ વિજેતા  : રૂા. ૧૦૦૦\nદ્વિતિય વિજેતા : રૂા. ૫૦૦\nતૃતિય વિજેતા : રૂા.  ૨૫૦\nપ્રોત્સાહિત ઇનામ ૧૫ વ્યકિતને : રૂા. ૧૫૦" />
 
                     <View
                         android:layout_width="match_parent"
@@ -99,15 +103,16 @@
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrizeRules"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
                         android:lineSpacingExtra="@dimen/dp_2"
                         android:paddingHorizontal="@dimen/dp_10"
-                        android:textColor="@color/black"
                         android:paddingVertical="@dimen/dp_5"
-                        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                        android:textSize="@dimen/sp_12" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_12"
+                        tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

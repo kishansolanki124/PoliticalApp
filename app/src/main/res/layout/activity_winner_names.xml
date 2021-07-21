@@ -11,7 +11,7 @@
     <include layout="@layout/common_toolbar" />
 
     <ProgressBar
-        android:id="@+id/pbNewsPortal"
+        android:id="@+id/pbWinnerPrizeWinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -27,16 +27,18 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/llWinnerPrizeWinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPrizeWinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_200"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:scaleType="centerCrop"
-                android:src="@drawable/winner" />
+                tools:src="@drawable/winner" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvRootGovtWorkNewsItem"
@@ -52,13 +54,14 @@
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvQuestionSuggestion"
+                        android:id="@+id/tvPrizeWinner"
+                        android:gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/semi_bold"
                         android:paddingVertical="@dimen/dp_5"
-                        android:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
+                        tools:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_18" />
 
@@ -73,13 +76,14 @@
                         android:textSize="@dimen/sp_14" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPrizeWinnerList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_5"
                         android:fontFamily="@font/regular"
                         android:lineSpacingExtra="@dimen/dp_10"
                         android:padding="@dimen/dp_10"
-                        android:text="(1) Mehul Patel, Ahmedabad\n(2) Ravi Chauhan, Jamnagar\n(3) Mehul Patel, Ahmedabad\n(4) Ravi Chauhan, Jamnagar\n(5) Ravi Chauhan, Jamnagar"
+                        tools:text="(1) Mehul Patel, Ahmedabad\n(2) Ravi Chauhan, Jamnagar\n(3) Mehul Patel, Ahmedabad\n(4) Ravi Chauhan, Jamnagar\n(5) Ravi Chauhan, Jamnagar"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_12" />
 
