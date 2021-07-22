@@ -13,6 +13,12 @@ public class MyValueFormatter extends ValueFormatter {
 
     @Override
     public String getFormattedValue(float value) {
-        return mFormat.format(value) + " %"; // e.g. append percentage sign
+        if (value == 0) {
+            return "";
+        } else {
+            return mFormat.format(value) + " %"; // e.g. append percentage sign
+        }
     }
 }
+
+//todo: post this answer : https://stackoverflow.com/questions/32940999/how-to-hide-zero-values-in-pie-chart-mpchart-android/42929380

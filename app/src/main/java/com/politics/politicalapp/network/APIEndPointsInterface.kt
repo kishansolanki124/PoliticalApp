@@ -133,7 +133,7 @@ interface APIEndPointsInterface {
     @POST(AppConstants.APIEndPoints.GIVE_MLA_RATING)
     suspend fun giveMLARating(
         @Body hashMap: MultipartBody
-    ): CommonResponse
+    ): GiveMLARatingResponse
 
     @POST(AppConstants.APIEndPoints.REGISTRATION)
     suspend fun registration(

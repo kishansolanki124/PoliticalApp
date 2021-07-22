@@ -6,9 +6,7 @@ import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -16,13 +14,15 @@ import android.os.Build
 import android.os.Environment
 import android.text.InputType
 import android.util.Patterns
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.github.mikephil.charting.data.PieDataSet
 import com.google.android.material.snackbar.Snackbar
 import com.politics.politicalapp.R
 import com.politics.politicalapp.ui.activity.SplashActivity
@@ -90,7 +91,8 @@ fun showSnackBar(message: String?, activity: Activity?) {
         ).show()
     }
 }
-fun Activity.showSnackBar(message: String?, ) {
+
+fun Activity.showSnackBar(message: String?) {
     if (null != message) {
         hideKeyboard(this)
         Snackbar.make(
@@ -396,7 +398,7 @@ fun EditText.setMultiLineCapSentencesAndNextAction() {
     setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE)
 }
 
-fun ViewPager2.setShowSideItems(pageMarginPx : Int, offsetPx : Int) {
+fun ViewPager2.setShowSideItems(pageMarginPx: Int, offsetPx: Int) {
 
     clipToPadding = false
     clipChildren = false
@@ -415,5 +417,20 @@ fun ViewPager2.setShowSideItems(pageMarginPx : Int, offsetPx : Int) {
             page.translationY = offset
         }
     }
+}
 
+fun Context.setUserPoints(points: Int) {
+    val settingsResponse = SPreferenceManager.getInstance(this).settings
+    settingsResponse.user_points = points.toString()
+    SPreferenceManager.getInstance(this).saveSettings(settingsResponse)
+}
+
+fun Context.setChartColors(dataSet: PieDataSet) {
+    val purple = this.let { ContextCompat.getColor(it, R.color.purple) }
+    val colorThird = this.let { ContextCompat.getColor(it, R.color.green_02CC9C) }
+    val colorSecond = this.let { ContextCompat.getColor(it, R.color.blue_5058AB) }
+    val neon = this.let { ContextCompat.getColor(it, R.color.neon) }
+    val blue = this.let { ContextCompat.getColor(it, R.color.blue_5058AB) }
+
+    dataSet.colors = mutableListOf(purple, colorSecond, colorThird, neon, blue)
 }

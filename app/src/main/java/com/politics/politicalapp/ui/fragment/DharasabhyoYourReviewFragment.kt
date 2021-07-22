@@ -24,10 +24,8 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.MyValueFormatter
-import com.politics.politicalapp.apputils.SPreferenceManager
-import com.politics.politicalapp.apputils.showSnackBar
-import com.politics.politicalapp.pojo.CommonResponse
+import com.politics.politicalapp.apputils.*
+import com.politics.politicalapp.pojo.GiveMLARatingResponse
 import com.politics.politicalapp.pojo.MLADetailResponse
 import com.politics.politicalapp.ui.activity.DharasabhyoDetailActivity
 import com.politics.politicalapp.viewmodel.MLAViewModel
@@ -39,6 +37,7 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var mlaDetailResponse: MLADetailResponse
     private lateinit var mlaViewModel: MLAViewModel
     private var checkedRadioId = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -83,34 +82,67 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         tvGive_rate_get_10_point.append(thirdText)
     }
 
-    private fun handleResponse(commonResponse: CommonResponse?) {
+    private fun handleResponse(commonResponse: GiveMLARatingResponse?) {
         if (null != commonResponse) {
             pbMLAReviewSubmit.visibility = View.GONE
             btMLAReviewSubmit.visibility = View.VISIBLE
             llGiveRatingToMLA.visibility = View.GONE
-            rgDharasabhyaReview.visibility = View.GONE
+            //rgDharasabhyaReview.visibility = View.GONE
+            tvAnswerSubmitted.visibility = View.VISIBLE
+
+            rbExcellent.isEnabled = false
+            rbGood.isEnabled = false
+            rbCantAnswer.isEnabled = false
+            rbBad.isEnabled = false
+            rbVeryBad.isEnabled = false
+
             showAlertDialog(commonResponse.message)
+            requireContext().setUserPoints(commonResponse.user_points)
+
+            mlaDetailResponse.poll_result = commonResponse.poll_result
+            setData()
         } else {
             showSnackBar(getString(R.string.something_went_wrong), requireActivity())
         }
     }
 
     private fun setupViews() {
-
         if (mlaDetailResponse.gov_mla_detail[0].user_rating.isNotEmpty()) {
             //rating is already done by this user
             llGiveRatingToMLA.visibility = View.GONE
-            rgDharasabhyaReview.visibility = View.GONE
+            //rgDharasabhyaReview.visibility = View.GONE
+            tvAnswerSubmitted.visibility = View.VISIBLE
+
+            rbExcellent.isEnabled = false
+            rbGood.isEnabled = false
+            rbCantAnswer.isEnabled = false
+            rbBad.isEnabled = false
+            rbVeryBad.isEnabled = false
         }
 
         if (mlaDetailResponse.poll.isNotEmpty()) {
             tvDharasabhyaReviewQuestion.text = mlaDetailResponse.poll[0].poll_question
 
             rbExcellent.text = mlaDetailResponse.poll[0].poll_options[0].option_name
+            if (mlaDetailResponse.poll[0].poll_options[0].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
+                rbExcellent.isChecked = true
+            }
             rbGood.text = mlaDetailResponse.poll[0].poll_options[1].option_name
+            if (mlaDetailResponse.poll[0].poll_options[1].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
+                rbGood.isChecked = true
+            }
             rbCantAnswer.text = mlaDetailResponse.poll[0].poll_options[2].option_name
+            if (mlaDetailResponse.poll[0].poll_options[2].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
+                rbCantAnswer.isChecked = true
+            }
             rbBad.text = mlaDetailResponse.poll[0].poll_options[3].option_name
+            if (mlaDetailResponse.poll[0].poll_options[3].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
+                rbBad.isChecked = true
+            }
             rbVeryBad.text = mlaDetailResponse.poll[0].poll_options[4].option_name
+            if (mlaDetailResponse.poll[0].poll_options[4].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
+                rbVeryBad.isChecked = true
+            }
             setupRadioButtons()
         }
     }
@@ -166,7 +198,8 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
 
     private fun setupChart() {
         chart.description.isEnabled = false
-        chart.setExtraOffsets(5f, 10f, 5f, 5f)
+        chart.setExtraOffsets(0f, 10f, 15f, 5f)
+        //https://stackoverflow.com/questions/56276481/android-mp-chart-set-space-between-legend-and-axis
 
         chart.dragDecelerationFrictionCoef = 0.95f
 
@@ -196,10 +229,8 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         //chart.setDrawCenterText(true);
         chart.rotationAngle = 0f
         // enable rotation of the chart by touch
-        // enable rotation of the chart by touch
         chart.isRotationEnabled = true
         chart.isHighlightPerTapEnabled = true
-
         // chart.setUnit(" €");
         // chart.setDrawUnitsInChart(true);
 
@@ -220,7 +251,6 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         chart.animateY(1400, Easing.EaseInOutQuad)
         // chart.spin(2000, 0, 360);
 
-        // chart.spin(2000, 0, 360);
         val l = chart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -262,7 +292,18 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         for (c in ColorTemplate.LIBERTY_COLORS) colors.add(c)
         for (c in ColorTemplate.PASTEL_COLORS) colors.add(c)
         colors.add(ColorTemplate.getHoloBlue())
-        dataSet.colors = colors
+
+//        val purple = context?.let { ContextCompat.getColor(it, R.color.purple) }
+//        val colorThird = context?.let { ContextCompat.getColor(it, R.color.green_02CC9C) }
+//        val colorSecond = context?.let { ContextCompat.getColor(it, R.color.blue_5058AB) }
+//        val neon = context?.let { ContextCompat.getColor(it, R.color.neon) }
+//        val blue = context?.let { ContextCompat.getColor(it, R.color.blue_5058AB) }
+//
+//        dataSet.colors = mutableListOf(purple, colorSecond, colorThird, neon, blue)
+
+        requireContext().setChartColors(dataSet)
+        //dataSet.colors = colors
+
         //dataSet.setSelectionShift(0f);
         val data = PieData(dataSet)
         //data.setValueFormatter(PercentFormatter())

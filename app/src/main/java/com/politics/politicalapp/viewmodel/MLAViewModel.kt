@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.network.APIEndPointsInterface
 import com.politics.politicalapp.network.RetrofitFactory
-import com.politics.politicalapp.pojo.CommonResponse
+import com.politics.politicalapp.pojo.GiveMLARatingResponse
 import com.politics.politicalapp.pojo.MLADetailResponse
 import com.politics.politicalapp.pojo.MLAListResponse
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ class MLAViewModel : ViewModel() {
 
     private val mutableSettingsResponse = MutableLiveData<MLAListResponse>()
     private val mutableMLADetailResponse = MutableLiveData<MLADetailResponse>()
-    private val mutableMLAVoteResponse = MutableLiveData<CommonResponse>()
+    private val mutableMLAVoteResponse = MutableLiveData<GiveMLARatingResponse>()
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
 
@@ -122,7 +122,7 @@ class MLAViewModel : ViewModel() {
         }
     }
 
-    private suspend fun returnMLARating(settingsResponse: CommonResponse) {
+    private suspend fun returnMLARating(settingsResponse: GiveMLARatingResponse) {
         withContext(Dispatchers.Main) {
             mutableMLAVoteResponse.value = settingsResponse
         }
@@ -132,7 +132,7 @@ class MLAViewModel : ViewModel() {
         return mutableSettingsResponse
     }
 
-    fun mLAVoteResponse(): LiveData<CommonResponse> {
+    fun mLAVoteResponse(): LiveData<GiveMLARatingResponse> {
         return mutableMLAVoteResponse
     }
 

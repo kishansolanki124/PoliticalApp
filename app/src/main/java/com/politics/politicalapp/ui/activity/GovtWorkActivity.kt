@@ -81,6 +81,7 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
                 val district: SettingsResponse.District =
                     parent.selectedItem as SettingsResponse.District
                 districtId = district.id
+                govtWorkNewsAdapter.reset()
                 getNews()
             }
 
@@ -122,5 +123,4 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
         )
         rvNewsPortal.adapter = govtWorkNewsAdapter
     }
-
 }

@@ -236,6 +236,7 @@
                     android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:padding="@dimen/dp_5"
+                    android:lineSpacingExtra="@dimen/dp_5"
                     android:text="@string/quiz_and_contest"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
@@ -285,8 +286,8 @@
             android:id="@+id/newsHomeViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_20"
             android:nestedScrollingEnabled="true"
-            android:paddingBottom="@dimen/dp_50"
             android:visibility="invisible" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

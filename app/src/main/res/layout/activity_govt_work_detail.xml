@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".ui.activity.GovtWorkDetailActivity">
 
@@ -28,6 +30,8 @@
                     android:id="@+id/ivNewsDetail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_200"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:scaleType="centerCrop"
                     tools:src="@drawable/dummy_news_image" />
 
@@ -71,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/semi_bold"
-                            android:text="/"
+                            android:text="@string/forward_slash"
                             android:textColor="@color/gray6C6C6C"
                             android:textSize="@dimen/sp_14" />
 
@@ -80,7 +84,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/semi_bold"
-                            android:text="10"
+                            android:text="@string/digit_10"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp_14" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -154,52 +158,52 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate1"
                         style="@style/RatingTextView"
-                        android:text="1" />
+                        android:text="@string/digit_1" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate2"
                         style="@style/RatingTextView"
-                        android:text="2" />
+                        android:text="@string/digit_2" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate3"
                         style="@style/RatingTextView"
-                        android:text="3" />
+                        android:text="@string/digit_3" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate4"
                         style="@style/RatingTextView"
-                        android:text="4" />
+                        android:text="@string/digit_4" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate5"
                         style="@style/RatingTextView"
-                        android:text="5" />
+                        android:text="@string/digit_5" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate6"
                         style="@style/RatingTextView"
-                        android:text="6" />
+                        android:text="@string/digit_6" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate7"
                         style="@style/RatingTextView"
-                        android:text="7" />
+                        android:text="@string/digit_7" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate8"
                         style="@style/RatingTextView"
-                        android:text="8" />
+                        android:text="@string/digit_8" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate9"
                         style="@style/RatingTextView"
-                        android:text="9" />
+                        android:text="@string/digit_9" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvRate10"
                         style="@style/RatingTextView"
-                        android:text="10" />
+                        android:text="@string/digit_10" />
                 </LinearLayout>
 
                 <LinearLayout

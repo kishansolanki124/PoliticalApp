@@ -21,6 +21,7 @@ import com.github.mikephil.charting.utils.MPPointF
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.MyValueFormatter
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.setChartColors
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.DistrictPollListResponse
 import com.politics.politicalapp.ui.activity.PollAndSurveyActivity
@@ -52,7 +53,8 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
 
     private fun setupChart() {
         chartPollAndSurveyResult.description.isEnabled = false
-        chartPollAndSurveyResult.setExtraOffsets(5f, 10f, 5f, 5f)
+        //chartPollAndSurveyResult.setExtraOffsets(5f, 10f, 5f, 5f)
+        chartPollAndSurveyResult.setExtraOffsets(0f, 10f, 15f, 5f)
 
         chartPollAndSurveyResult.dragDecelerationFrictionCoef = 0.95f
 
@@ -163,7 +165,8 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
         for (c in ColorTemplate.LIBERTY_COLORS) colors.add(c)
         for (c in ColorTemplate.PASTEL_COLORS) colors.add(c)
         colors.add(ColorTemplate.getHoloBlue())
-        dataSet.colors = colors
+        //dataSet.colors = colors
+        requireContext().setChartColors(dataSet)
         //dataSet.setSelectionShift(0f);
         val data = PieData(dataSet)
         //data.setValueFormatter(PercentFormatter())

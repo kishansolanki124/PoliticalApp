@@ -23,4 +23,9 @@
     <color name="gray_candidate_name">#9C9C9C</color>
     <color name="circularBlue">#143AA7</color>
     <color name="gray_BEBEBE">#BEBEBE</color>
+    <color name="purple">#CB62C1</color>
+    <color name="blue_5058AB">#5058AB</color>
+    <color name="green_02CC9C">#02CC9C</color>
+    <color name="neon">#7CE214</color>
+    <color name="sky">#139FC0</color>
 </resources>

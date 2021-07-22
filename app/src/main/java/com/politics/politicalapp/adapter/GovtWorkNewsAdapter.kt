@@ -59,29 +59,7 @@ class GovtWorkNewsAdapter(
                 Glide.with(itemView.ivNews.context)
                     .load(newsPortal.up_pro_img)
                     .into(itemView.ivNews)
-//
-//                if (newsPortal.name.isNullOrEmpty()) {
-//                    itemView.tvNewsPortalTitle.visibility = View.GONE
-//                }
-//                if (newsPortal.address.isNullOrEmpty()) {
-//                    itemView.llNewsPortalAddress.visibility = View.GONE
-//                }
-//                if (newsPortal.contact_no.isNullOrEmpty()) {
-//                    itemView.llNewsPortalPhone.visibility = View.GONE
-//                }
-//                if (newsPortal.email.isNullOrEmpty()) {
-//                    itemView.llNewsPortalEmail.visibility = View.GONE
-//                }
-//                if (newsPortal.website.isNullOrEmpty()) {
-//                    itemView.llNewsPortalWebsite.visibility = View.GONE
-//                }
-//
-//                itemView.tvNewsPortalTitle.text = newsPortal.name
-//                itemView.tvNewsPortalAddress.text = newsPortal.address
-//                itemView.tvNewsPortalPhone.text = newsPortal.contact_no
-//                itemView.tvNewsPortalEmail.text = newsPortal.email
-//                itemView.tvNewsPortalWebsite.text = newsPortal.website
-//
+
                 itemView.cvRootGovtWorkNewsItem.setOnClickListener {
                     itemClickCall(this)
                 }

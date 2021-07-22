@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="@dimen/dp_10"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_10"
         android:background="@drawable/news_bg"
         android:orientation="horizontal">
 
@@ -35,10 +35,11 @@
             android:ellipsize="end"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
-            android:maxLines="5"
+            android:maxLines="6"
             android:letterSpacing="0.02"
             android:paddingVertical="@dimen/dp_5"
-            tools:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
+            android:paddingEnd="@dimen/dp_25"
+            tools:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14" />
     </androidx.appcompat.widget.LinearLayoutCompat>

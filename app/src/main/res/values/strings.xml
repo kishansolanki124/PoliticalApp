@@ -61,4 +61,16 @@
     <string name="answer_all_questions">Kindly answer all questions</string>
     <string name="invalid_email">Invalid Email</string>
     <string name="invalid_question_comment">Invalid question or comment</string>
+    <string name="digit_10">10</string>
+    <string name="digit_1">1</string>
+    <string name="digit_2">2</string>
+    <string name="digit_3">3</string>
+    <string name="digit_4">4</string>
+    <string name="digit_5">5</string>
+    <string name="digit_6">6</string>
+    <string name="digit_7">7</string>
+    <string name="digit_8">8</string>
+    <string name="digit_9">9</string>
+    <string name="forward_slash">/</string>
+    <string name="review_submitted_already">You have already submitted your review.</string>
 </resources>

@@ -16,10 +16,7 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.NewsCommentAdapter
-import com.politics.politicalapp.apputils.SPreferenceManager
-import com.politics.politicalapp.apputils.hideKeyboard
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.*
 import com.politics.politicalapp.pojo.GiveUserRatingToGovtWorkResponse
 import com.politics.politicalapp.pojo.GovtWorkDetailResponse
 import com.politics.politicalapp.viewmodel.GovtWorkViewModel
@@ -106,6 +103,7 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             etUserComment.setText("")
             govtWorkNewsAdapter.reset()
             addItems(giveUserRatingToGovtWorkResponse.comment_list)
+            setUserPoints(giveUserRatingToGovtWorkResponse.user_points)
             //showAlertDialog(giveUserRatingToGovtWorkResponse.message)
         }
     }
@@ -116,6 +114,7 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
 
         if (null != giveUserRatingToGovtWorkResponse) {
             showAlertDialog(giveUserRatingToGovtWorkResponse.message)
+            setUserPoints(giveUserRatingToGovtWorkResponse.user_points)
             ratingDone = true
             //rating of this article is done now
             llRatingSubmit.visibility = View.GONE

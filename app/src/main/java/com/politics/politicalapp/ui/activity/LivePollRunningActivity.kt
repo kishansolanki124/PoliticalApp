@@ -27,10 +27,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.MyValueFormatter
-import com.politics.politicalapp.apputils.SPreferenceManager
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.*
 import com.politics.politicalapp.pojo.CommonResponse
 import com.politics.politicalapp.pojo.LivePollDetailResponse
 import com.politics.politicalapp.viewmodel.LivePollViewModel
@@ -138,7 +135,7 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
     private fun setupChart() {
         chart.description.isEnabled = false
-        chart.setExtraOffsets(5f, 10f, 5f, 5f)
+        chart.setExtraOffsets(0f, 10f, 15f, 5f)
 
         chart.dragDecelerationFrictionCoef = 0.95f
 
@@ -254,7 +251,9 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         for (c in ColorTemplate.LIBERTY_COLORS) colors.add(c)
         for (c in ColorTemplate.PASTEL_COLORS) colors.add(c)
         colors.add(ColorTemplate.getHoloBlue())
-        dataSet.colors = colors
+        //dataSet.colors = colors
+
+        setChartColors(dataSet)
         //dataSet.setSelectionShift(0f);
         val data = PieData(dataSet)
         //data.setValueFormatter(PercentFormatter())
