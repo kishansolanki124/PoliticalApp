@@ -21,13 +21,18 @@ class PollAndSurveyViewModel : ViewModel() {
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
 
-    fun getGovtWorkList(district_id: String) {
+    fun getGovtWorkList(district_id: String, user_mobile: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
                 requestBodyBuilder.addFormDataPart(
                     AppConstants.RequestParameters.district_id,
                     district_id
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_mobile,
+                    user_mobile
                 )
 
                 val apiResponse = apiEndPointsInterface.getDistrictPoll(
@@ -40,7 +45,12 @@ class PollAndSurveyViewModel : ViewModel() {
         }
     }
 
-    fun addDistrictPollRating(district_id: String,user_mobile: String,pid: String,user_rating: String) {
+    fun addDistrictPollRating(
+        district_id: String,
+        user_mobile: String,
+        pid: String,
+        user_rating: String
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)

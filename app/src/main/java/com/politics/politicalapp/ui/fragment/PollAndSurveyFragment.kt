@@ -15,6 +15,7 @@ import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.PollAndSurveyAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.setUserPoints
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.CommonResponse
 import com.politics.politicalapp.pojo.DistrictPollListResponse
@@ -97,7 +98,13 @@ class PollAndSurveyFragment : Fragment() {
     private fun handleResponseDistrictPollRating(commonResponse: CommonResponse?) {
         pbSubmitPollAndSurvey.visibility = View.GONE
         btSubmitPollAndSurvey.visibility = View.VISIBLE
+
         if (null != commonResponse) {
+            requireContext().setUserPoints(commonResponse.user_points)
+            //rating is done
+            btSubmitPollAndSurvey.visibility = View.GONE
+            tvGive_rate_get_10_point.visibility = View.GONE
+            tvRatingDone.visibility = View.VISIBLE
             showAlertDialog(commonResponse.message)
         } else {
             showSnackBar(getString(R.string.something_went_wrong), requireActivity())
@@ -109,6 +116,17 @@ class PollAndSurveyFragment : Fragment() {
         pbPollAndSurvey.visibility = View.GONE
 
         if (null != districtPollListResponse) {
+            if (districtPollListResponse.rating_status.isNotEmpty()) {
+                //already rating is done
+                btSubmitPollAndSurvey.visibility = View.GONE
+                tvGive_rate_get_10_point.visibility = View.GONE
+                tvRatingDone.visibility = View.VISIBLE
+            } else {
+                btSubmitPollAndSurvey.visibility = View.VISIBLE
+                tvGive_rate_get_10_point.visibility = View.VISIBLE
+                tvRatingDone.visibility = View.GONE
+            }
+
             govtWorkNewsAdapter.reset()
             govtWorkNewsAdapter.setItem(
                 districtPollListResponse.poll_list,
@@ -159,7 +177,10 @@ class PollAndSurveyFragment : Fragment() {
         if (isConnected(requireContext())) {
             pbPollAndSurvey.visibility = View.VISIBLE
             rvPollAndSurvey.visibility = View.GONE
-            settingsViewModel.getGovtWorkList(((activity as PollAndSurveyActivity).getDistrictId()))
+            settingsViewModel.getGovtWorkList(
+                ((activity as PollAndSurveyActivity).getDistrictId()),
+                SPreferenceManager.getInstance(requireContext()).session
+            )
         } else {
             showSnackBar(getString(R.string.no_internet), requireActivity())
         }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/gray_bg"
     android:orientation="vertical">
 
@@ -20,12 +21,13 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPollResultTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/dp_20"
                 android:fontFamily="@font/regular"
-                android:text="રાજકોટ જિલ્લામાં સરકારની કામગીરી"
+                tools:text="રાજકોટ જિલ્લામાં સરકારની કામગીરી"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_20" />
 

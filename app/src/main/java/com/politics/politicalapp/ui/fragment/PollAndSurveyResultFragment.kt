@@ -19,10 +19,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.MyValueFormatter
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.setChartColors
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.*
 import com.politics.politicalapp.pojo.DistrictPollListResponse
 import com.politics.politicalapp.ui.activity.PollAndSurveyActivity
 import com.politics.politicalapp.viewmodel.PollAndSurveyViewModel
@@ -201,10 +198,12 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
 
     private fun handleResponse(districtPollListResponse: DistrictPollListResponse?) {
         chartPollAndSurveyResult.visibility = View.VISIBLE
+        tvPollResultTitle.visibility = View.VISIBLE
         pbPollAndSurveyResult.visibility = View.GONE
 
         if (null != districtPollListResponse) {
             this.districtPollListResponse = districtPollListResponse
+            tvPollResultTitle.text = districtPollListResponse.poll_result_text
             setupChart()
         } else {
             showSnackBar(getString(R.string.something_went_wrong), requireActivity())
@@ -214,8 +213,12 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
     fun refreshPollAndSurveyResult() {
         if (isConnected(requireContext())) {
             chartPollAndSurveyResult.visibility = View.GONE
+            tvPollResultTitle.visibility = View.GONE
             pbPollAndSurveyResult.visibility = View.VISIBLE
-            settingsViewModel.getGovtWorkList(((activity as PollAndSurveyActivity).getDistrictId()))
+            settingsViewModel.getGovtWorkList(
+                ((activity as PollAndSurveyActivity).getDistrictId()),
+                SPreferenceManager.getInstance(requireContext()).session
+            )
         } else {
             showSnackBar(getString(R.string.no_internet), requireActivity())
         }

@@ -73,4 +73,5 @@
     <string name="digit_9">9</string>
     <string name="forward_slash">/</string>
     <string name="review_submitted_already">You have already submitted your review.</string>
+    <string name="you_have_already_submitted">You have already submitted this poll.</string>
 </resources>

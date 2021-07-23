@@ -105,6 +105,35 @@ class PollAndSurveyAdapter(
                 resetRadioButtons()
                 itemView.rbVeryBad.isChecked = !itemView.rbVeryBad.isChecked
             }
+
+            if (newsPortal.user_rating.isNotEmpty()) {
+                if (newsPortal.user_rating == pollOption[0].option_id) {
+                    resetRadioButtons()
+                    itemView.rbExcellent.isChecked = true
+                }
+
+                if (newsPortal.user_rating == pollOption[1].option_id) {
+                    resetRadioButtons()
+                    itemView.rbGood.isChecked = true
+                }
+
+                if (newsPortal.user_rating == pollOption[2].option_id) {
+                    resetRadioButtons()
+                    itemView.rbcantAnswer.isChecked = true
+                }
+
+                if (newsPortal.user_rating == pollOption[3].option_id) {
+                    resetRadioButtons()
+                    itemView.rbBad.isChecked = true
+                }
+
+                if (newsPortal.user_rating == pollOption[4].option_id) {
+                    resetRadioButtons()
+                    itemView.rbVeryBad.isChecked = true
+                }
+            } else {
+                resetRadioButtons()
+            }
         }
 
         private fun resetRadioButtons() {
