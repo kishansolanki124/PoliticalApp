@@ -1,7 +1,6 @@
 package com.politics.politicalapp.ui.activity
 
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,12 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.bluehomestudio.luckywheel.WheelItem
 import com.cooltechworks.views.ScratchImageView
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.ScratchCardResponse
 import com.politics.politicalapp.viewmodel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_daily_scratch_and_win.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
 
@@ -80,58 +80,124 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
     }
 
     private fun setupSpinWheel(scratchCardResponse: ScratchCardResponse) {
-        val centerValue =
-            ((scratchCardResponse.scratch_card[0].max.toInt() + scratchCardResponse.scratch_card[0].min.toInt()) / 2)
-        val centerValue1 =
-            ((scratchCardResponse.scratch_card[0].max.toInt() + centerValue) / 2)
+
+        val list = getRandomNonRepeatingIntegers(12, 1, 15)
+
+//        val centerValue =
+//            ((scratchCardResponse.scratch_card[0].max.toInt() + scratchCardResponse.scratch_card[0].min.toInt()) / 2)
+//        val centerValue1 =
+//            ((scratchCardResponse.scratch_card[0].max.toInt() + centerValue) / 2)
         val wheelItems: MutableList<WheelItem> = ArrayList()
-        val centerValue2 =
-            ((scratchCardResponse.scratch_card[0].min.toInt() + centerValue) / 2)
+//        val centerValue2 =
+//            ((scratchCardResponse.scratch_card[0].min.toInt() + centerValue) / 2)
+//        val centerValue3 =
+//            ((scratchCardResponse.scratch_card[0].min.toInt() + centerValue2) / 2)
+//        val centerValue4 =
+//            ((scratchCardResponse.scratch_card[0].max.toInt() + centerValue1) / 2)
+
         wheelItems.add(
             WheelItem(
-                Color.LTGRAY,
+                ContextCompat.getColor(this, R.color.red_light),
                 BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
                 scratchCardResponse.scratch_card[0].min
             )
         )
+
+
         wheelItems.add(
             WheelItem(
-                Color.BLUE,
+                ContextCompat.getColor(this, R.color.red_light_2),
                 BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                centerValue.toString()
+                list!![0].toString()
             )
         )
         wheelItems.add(
             WheelItem(
-                Color.BLACK,
+                ContextCompat.getColor(this, R.color.red_light_3),
                 BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                centerValue1.toString()
+                list[0].toString()
             )
         )
         wheelItems.add(
             WheelItem(
-                Color.GRAY,
+                ContextCompat.getColor(this, R.color.red_light),
                 BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                centerValue2.toString()
+                list[1].toString()
             )
         )
         wheelItems.add(
             WheelItem(
-                Color.RED,
+                ContextCompat.getColor(this, R.color.red_light_2),
                 BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
                 scratchCardResponse.scratch_card[0].max
             )
         )
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_3),
+                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+                list[2].toString()
+            )
+        )
 
-        lwv.setTarget(3)
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light),
+                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+                list[3].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_2),
+                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+                list[4].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_3),
+                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+                list[5].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light),
+                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+                list[6].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_2),
+                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+                list[7].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_3),
+                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+                list[8].toString()
+            )
+        )
+
+        lwv.setTarget(randomNumber())
 
         lwv.addWheelItems(wheelItems)
         lwv.setLuckyWheelReachTheTarget {
             if (isConnected(this)) {
-                settingsViewModel.addScratchCard(
-                    SPreferenceManager.getInstance(this).session,
-                    "10"
-                )
+                //todo work here
+//                settingsViewModel.addScratchCard(
+//                    SPreferenceManager.getInstance(this).session,
+//                    "10"
+//                )
             } else {
                 showSnackBar(getString(R.string.no_internet), this)
             }
@@ -142,7 +208,8 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
         if (isConnected(this)) {
             pbScratchCard.visibility = View.VISIBLE
             lwv.visibility = View.GONE
-            settingsViewModel.getScratchCard(SPreferenceManager.getInstance(this).session)
+            //settingsViewModel.getScratchCard(SPreferenceManager.getInstance(this).session)
+            settingsViewModel.getScratchCard("9825086150")
         } else {
             showSnackBar(getString(R.string.no_internet), this)
         }
@@ -164,4 +231,28 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
+
+    private fun randomNumber(): Int {
+        val rand = Random()
+        return rand.nextInt(4 - 0 + 1) + 0
+    }
+
+    private fun getRandomNonRepeatingIntegers(
+        size: Int, min: Int, max: Int
+    ): ArrayList<Int>? {
+        val numbers = ArrayList<Int>()
+        while (numbers.size < size) {
+            val random: Int = getRandomInt(min, max)
+            if (!numbers.contains(random)) {
+                numbers.add(random)
+            }
+        }
+        return numbers
+    }
+
+    fun getRandomInt(min: Int, max: Int): Int {
+        val random = Random()
+        return random.nextInt(max - min + 1) + min
+    }
+
 }

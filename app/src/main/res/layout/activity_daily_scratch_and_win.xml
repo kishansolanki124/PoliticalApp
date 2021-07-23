@@ -41,7 +41,8 @@
         android:layout_height="@dimen/dp_250"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dp_20"
-        LuckyWheel:background_color="@color/colorPrimary" />
+        LuckyWheel:arrow_image="@drawable/triangle"
+        LuckyWheel:background_color="@color/red_CC252C" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"

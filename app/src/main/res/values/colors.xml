@@ -15,6 +15,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="banner_red">#9D2F22</color>
     <color name="red_light">#D0252E</color>
+    <color name="red_light_2">#D16D72</color>
+    <color name="red_light_3">#CDABAD</color>
     <color name="red_CC252C">#CC252C</color>
     <color name="red_light_pink">#FBD8D6</color>
     <color name="red_actionbar">#B71C20</color>
