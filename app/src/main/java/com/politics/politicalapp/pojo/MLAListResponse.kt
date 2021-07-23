@@ -13,7 +13,7 @@ data class MLAListResponse(
         var district_id: String = "",
         var id: String = "",
         var mla_name: String = "",
-        var percenrage: String = "",
+        var percentage: String = "",
         var political_party: String = "",
         var up_pro_img: String = "",
         var votes: Int = 0

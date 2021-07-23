@@ -21,6 +21,6 @@ data class DistrictPollListResponse(
     data class PollResult(
         var option_id: String = "",
         var option_name: String = "",
-        var percenrage: String = ""
+        var percentage: String = ""
     )
 }

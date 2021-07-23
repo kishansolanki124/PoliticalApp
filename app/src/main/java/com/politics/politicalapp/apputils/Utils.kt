@@ -428,9 +428,11 @@ fun Context.setUserPoints(points: Int) {
 fun Context.setChartColors(dataSet: PieDataSet) {
     val purple = this.let { ContextCompat.getColor(it, R.color.purple) }
     val colorThird = this.let { ContextCompat.getColor(it, R.color.green_02CC9C) }
-    val colorSecond = this.let { ContextCompat.getColor(it, R.color.blue_5058AB) }
+    val sky = this.let { ContextCompat.getColor(it, R.color.sky) }
     val neon = this.let { ContextCompat.getColor(it, R.color.neon) }
     val blue = this.let { ContextCompat.getColor(it, R.color.blue_5058AB) }
+    val circularBlue = this.let { ContextCompat.getColor(it, R.color.circularBlue) }
+    val teal_700 = this.let { ContextCompat.getColor(it, R.color.teal_700) }
 
-    dataSet.colors = mutableListOf(purple, colorSecond, colorThird, neon, blue)
+    dataSet.colors = mutableListOf(purple, sky, colorThird, neon, blue, circularBlue, teal_700)
 }

@@ -147,7 +147,7 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
 
         districtPollListResponse?.let {
             for (item in it.poll_result) {
-                entries.add(PieEntry(item.percenrage.toFloat(), item.option_name, null))
+                entries.add(PieEntry(item.percentage.toFloat(), item.option_name, null))
             }
         }
 

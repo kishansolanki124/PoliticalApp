@@ -82,8 +82,8 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
             tvMLAName.text = govMla!!.mla_name
             tvPartyName.text = govMla!!.political_party
             tvCityName.text = govMla!!.city
-            pbMLA.progress = govMla!!.percenrage.toFloat().toInt()
-            tvPercentage.text = getString(R.string.percentage_, govMla!!.percenrage)
+            pbMLA.progress = govMla!!.percentage.toFloat().toInt()
+            tvPercentage.text = getString(R.string.percentage_, govMla!!.percentage)
             tvVotesTotal.text = "Votes: " + govMla!!.votes
 
             Glide.with(ivMLA.context)
@@ -136,3 +136,7 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
     }
 }
 //todo: scroll issue
+//https://stackoverflow.com/questions/7381360/is-it-possible-to-have-a-viewpager-inside-of-a-scrollview
+//https://stackoverflow.com/questions/39588322/viewpager-inside-scrollview-not-working
+//todo disable viewpager horizontal swipe
+//todo : show toolbar when collapsed

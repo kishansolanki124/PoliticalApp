@@ -14,7 +14,7 @@ data class MLADetailResponse(
         var mla_name: String = "",
         var mla_profile: String = "",
         var mla_work: String = "",
-        var percenrage: String = "",
+        var percentage: String = "",
         var political_party: String = "",
         var total_vote: String = "",
         var up_pro_img: String = "",
@@ -35,6 +35,6 @@ data class MLADetailResponse(
     data class PollResult(
         var option_id: String = "",
         var option_name: String = "",
-        var percenrage: String = ""
+        var percentage: String = ""
     )
 }

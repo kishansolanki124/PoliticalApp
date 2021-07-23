@@ -275,7 +275,7 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         val entries = ArrayList<PieEntry>()
 
         for (item in mlaDetailResponse.poll_result) {
-            entries.add(PieEntry(item.percenrage.toFloat(), item.option_name, null))
+            entries.add(PieEntry(item.percentage.toFloat(), item.option_name, null))
         }
 
         val dataSet = PieDataSet(entries, "")
