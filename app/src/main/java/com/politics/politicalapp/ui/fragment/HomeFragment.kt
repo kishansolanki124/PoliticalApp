@@ -3,7 +3,6 @@ package com.politics.politicalapp.ui.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +14,13 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.BreakingNewsAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.dpToPx
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
-import com.politics.politicalapp.apputils.showToast
 import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.ui.activity.*
 import com.politics.politicalapp.viewmodel.SettingsViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
-
 
 class HomeFragment : Fragment() {
 
@@ -91,10 +89,6 @@ class HomeFragment : Fragment() {
 
         breakingNewsAdapter.setItem(newsList)
 
-        //todo work here, post this answer in stackoverflow for showing next page partially
-        //showing next page's partial visibility
-        //newsHomeViewPager.setShowSideItems(200, 0)
-
         newsHomeViewPager.apply {
             clipToPadding = false   // allow full width shown with padding
             clipChildren = false    // allow left/right item is not clipped
@@ -102,13 +96,13 @@ class HomeFragment : Fragment() {
         }
 
         //increase this offset to show more of left/right
-        //val offsetPx = 30.dpToPx(resources.displayMetrics)
         val offsetPx =
             resources.getDimension(R.dimen.dp_30).toInt().dpToPx(resources.displayMetrics)
         newsHomeViewPager.setPadding(0, 0, offsetPx, 0)
 
         //increase this offset to increase distance between 2 items
-        val pageMarginPx = resources.getDimension(R.dimen.dp_5).toInt().dpToPx(resources.displayMetrics)
+        val pageMarginPx =
+            resources.getDimension(R.dimen.dp_5).toInt().dpToPx(resources.displayMetrics)
         val marginTransformer = MarginPageTransformer(pageMarginPx)
         newsHomeViewPager.setPageTransformer(marginTransformer)
 
@@ -174,11 +168,10 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        (activity as HomeActivity).setToolbarTitle(getString(R.string.colors_of_guj))
+
         tvUserPoints.text = SPreferenceManager.getInstance(requireContext())
             .settings.user_points
     }
-
-    fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()
-
-    fun Int.pxToDp(displayMetrics: DisplayMetrics): Int = (this / displayMetrics.density).toInt()
 }

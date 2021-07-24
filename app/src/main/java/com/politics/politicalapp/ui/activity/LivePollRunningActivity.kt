@@ -34,7 +34,6 @@ import com.politics.politicalapp.viewmodel.LivePollViewModel
 import kotlinx.android.synthetic.main.activity_live_poll_running.*
 import java.util.*
 
-
 class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedListener {
 
     private var qid = ""
@@ -374,17 +373,14 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             }
 
             if (quizAndContestRunningResponse.poll[0].user_rating.isNotEmpty()) {
+                radioButton.isEnabled = false
                 if (pollOption.option_id == quizAndContestRunningResponse.poll[0].user_rating) {
                     radioButton.isChecked = true
                 }
+            } else {
+                radioButton.isEnabled = true
             }
         }
-
-//        rbBad.text = quizAndContestRunningResponse.poll[0].poll_options[3].option_name
-//        if (quizAndContestRunningResponse.poll[0].poll_options[3].option_id == quizAndContestRunningResponse.poll[0].user_rating
-//        ) {
-//            rbBad.isChecked = true
-//        }
 
         if (quizAndContestRunningResponse.poll[0].user_rating.isNotEmpty()) {
             //answer already submitted
@@ -392,30 +388,6 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             tvGive_rate_get_10_point.visibility = View.INVISIBLE
             tvAnswerSubmitted.visibility = View.VISIBLE
         }
-
-//        rbExcellentLivePollRunning.setOnCheckedChangeListener { _, b ->
-//            if (b) {
-//                answerId = quizAndContestRunningResponse.poll[0].poll_options[0].option_id
-//            }
-//        }
-//
-//        rbGood.setOnCheckedChangeListener { _, b ->
-//            if (b) {
-//                answerId = quizAndContestRunningResponse.poll[0].poll_options[1].option_id
-//            }
-//        }
-//
-//        rbcantAnswer.setOnCheckedChangeListener { _, b ->
-//            if (b) {
-//                answerId = quizAndContestRunningResponse.poll[0].poll_options[2].option_id
-//            }
-//        }
-//
-//        rbBad.setOnCheckedChangeListener { _, b ->
-//            if (b) {
-//                answerId = quizAndContestRunningResponse.poll[0].poll_options[3].option_id
-//            }
-//        }
     }
 
     private fun showAlertDialog(msg: String) {
@@ -435,5 +407,3 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
 }
-//todo scroll whole screen issue
-//todo disable radio buttons, convert it to as per the designs

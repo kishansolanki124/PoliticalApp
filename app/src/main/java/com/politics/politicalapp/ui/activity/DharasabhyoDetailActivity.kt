@@ -135,8 +135,4 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
         return mlaDetailResponse
     }
 }
-//todo: scroll issue
-//https://stackoverflow.com/questions/7381360/is-it-possible-to-have-a-viewpager-inside-of-a-scrollview
-//https://stackoverflow.com/questions/39588322/viewpager-inside-scrollview-not-working
-//todo disable viewpager horizontal swipe
 //todo : show toolbar when collapsed

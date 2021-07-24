@@ -37,12 +37,7 @@ public class EndlessScrollListener extends RecyclerView.OnScrollListener {
             isLoading = true;
             if (hasMorePages && !isRefreshing) {
                 isRefreshing = true;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshList.onRefresh(pageNumber);
-                    }
-                }, 200);
+                new Handler().postDelayed(() -> refreshList.onRefresh(pageNumber), 200);
             }
         } else {
             isLoading = false;

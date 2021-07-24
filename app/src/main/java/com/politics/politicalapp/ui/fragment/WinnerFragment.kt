@@ -13,6 +13,7 @@ import com.politics.politicalapp.adapter.WinnerAdapter
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.WinnerListResponse
+import com.politics.politicalapp.ui.activity.HomeActivity
 import com.politics.politicalapp.ui.activity.WinnerNamesActivity
 import com.politics.politicalapp.ui.activity.WinnerPrizeDetailActivity
 import com.politics.politicalapp.viewmodel.WinnerViewModel
@@ -105,5 +106,10 @@ class WinnerFragment : Fragment() {
 
     private fun addItems(quizList: ArrayList<WinnerListResponse.PointsPrize>) {
         govtWorkNewsAdapter.setItem(quizList)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as HomeActivity).setToolbarTitle(getString(R.string.winner))
     }
 }

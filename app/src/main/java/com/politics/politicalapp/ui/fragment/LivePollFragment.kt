@@ -14,6 +14,7 @@ import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.LivePollListResponse
+import com.politics.politicalapp.ui.activity.HomeActivity
 import com.politics.politicalapp.ui.activity.LivePollRunningActivity
 import com.politics.politicalapp.viewmodel.LivePollViewModel
 import kotlinx.android.synthetic.main.fragment_live_poll.*
@@ -97,5 +98,10 @@ class LivePollFragment : Fragment() {
 
     private fun addItems(quizList: ArrayList<LivePollListResponse.LivePoll>) {
         govtWorkNewsAdapter.setItem(quizList)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as HomeActivity).setToolbarTitle(getString(R.string.live_poll))
     }
 }

@@ -364,5 +364,3 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
             .setTextColor(ContextCompat.getColor(requireContext(), R.color.red_CC252C))
     }
 }
-//todo scroll whole screen issue
-//todo move aside of the names to pie chart

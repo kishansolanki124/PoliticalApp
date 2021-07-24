@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.text.InputType
+import android.util.DisplayMetrics
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -436,3 +437,5 @@ fun Context.setChartColors(dataSet: PieDataSet) {
 
     dataSet.colors = mutableListOf(purple, sky, colorThird, neon, blue, circularBlue, teal_700)
 }
+
+fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()

@@ -2,6 +2,8 @@ package com.politics.politicalapp.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.showToast
 import com.politics.politicalapp.ui.fragment.HomeFragment
 import com.politics.politicalapp.ui.fragment.LivePollFragment
 import com.politics.politicalapp.ui.fragment.WinnerFragment
@@ -104,12 +107,6 @@ class HomeActivity : ExtendedToolbarActivity(),
             newsCategory.visibility = View.GONE
         }
 
-//        if (fragment !is HomeFragment) {
-//            hideNavigationButton()
-//        } else {
-//            showNavigationButton()
-//        }
-
         mTransaction = supportFragmentManager.beginTransaction()
         mTransaction.replace(R.id.fragmentContainer, fragment)
         if (addToBackStack) {
@@ -118,38 +115,21 @@ class HomeActivity : ExtendedToolbarActivity(),
         mTransaction.commit()
     }
 
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//
-////        supportFragmentManager.findFragmentById(R.id.fragmentContainer)?.let {
-////            // the fragment exists
-////            when (it) {
-//
-////        when (supportFragmentManager.fragments.last()) {
-////            is HomeFragment -> {
-////                bottomNavigationView.selectedItemId = R.id.navigation_news
-////            }
-////            is MenuFragment -> {
-////                bottomNavigationView.selectedItemId = R.id.navigation_menu
-////            }
-////            is ShraddhanjaliHomeFragment -> {
-////                bottomNavigationView.selectedItemId = R.id.navigation_shraddhanjali
-////            }
-////            is EMagazineFragment -> {
-////                bottomNavigationView.selectedItemId = R.id.navigation_magazine
-////            }
-////            is OpinionPollFragment -> {
-////                bottomNavigationView.selectedItemId = R.id.navigation_opinion_poll
-////            }
-////        }
-//    }
-
+    private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
         if (newsCategory.isVisible) {
             newsCategory.visibility = View.GONE
         } else {
-            super.onBackPressed()
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+            this.doubleBackToExitPressedOnce = true
+            showToast("Please click BACK again to exit")
+            Handler(Looper.getMainLooper()).postDelayed(
+                { doubleBackToExitPressedOnce = false },
+                2000
+            )
         }
     }
 }
-//todo: on back press back to home fragment, title change on selection of any fragment

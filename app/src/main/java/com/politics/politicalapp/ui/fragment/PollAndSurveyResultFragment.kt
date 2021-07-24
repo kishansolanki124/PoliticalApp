@@ -224,4 +224,3 @@ class PollAndSurveyResultFragment : Fragment(), OnChartValueSelectedListener {
         }
     }
 }
-//todo scroll whole screen issue
