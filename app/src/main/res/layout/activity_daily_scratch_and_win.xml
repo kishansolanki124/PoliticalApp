@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:LuckyWheel="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -9,13 +9,17 @@
     android:orientation="vertical"
     tools:context=".ui.activity.DailyScratchAndWnActivity">
 
-    <include layout="@layout/common_toolbar" />
+    <include
+        android:id="@+id/commonToolbar"
+        layout="@layout/common_toolbar" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/pbScratchCard"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/commonToolbar"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:indeterminateTint="@color/red_light"
         android:indeterminateTintMode="multiply"
@@ -30,6 +34,7 @@
         android:id="@+id/idScratchCardIv"
         android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_250"
+        android:layout_below="@id/commonToolbar"
         android:layout_marginTop="@dimen/dp_30"
         android:background="@color/white"
         android:src="@drawable/winner"
@@ -39,17 +44,55 @@
         android:id="@+id/lwv"
         android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_250"
+        android:layout_below="@id/commonToolbar"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dp_20"
+        android:visibility="invisible"
         LuckyWheel:arrow_image="@drawable/triangle"
         LuckyWheel:background_color="@color/red_CC252C" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSpinAndWin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/lwv"
+        android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/dp_20"
         android:fontFamily="@font/regular"
         android:text="@string/scratch_and_point"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_20" />
-</LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSpinAlreadyDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commonToolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_20"
+        android:fontFamily="@font/regular"
+        android:text="You've already won points for today"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_20"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvYourPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSpinAlreadyDone"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_20"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_20"
+        android:visibility="gone"
+        tools:text="Your points are 450" />
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/commonToolbar" />
+</RelativeLayout>

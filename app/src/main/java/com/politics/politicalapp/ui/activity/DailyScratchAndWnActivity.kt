@@ -1,7 +1,11 @@
 package com.politics.politicalapp.ui.activity
 
-import android.graphics.BitmapFactory
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -10,22 +14,29 @@ import androidx.lifecycle.ViewModelProvider
 import com.bluehomestudio.luckywheel.WheelItem
 import com.cooltechworks.views.ScratchImageView
 import com.politics.politicalapp.R
+import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.setUserPoints
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.ScratchCardResponse
 import com.politics.politicalapp.viewmodel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_daily_scratch_and_win.*
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 import java.util.*
 import kotlin.collections.ArrayList
 
 class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
-
+    private var numberList: ArrayList<Int> = ArrayList()
     private var isRevealed = false
+    private var targetValue = 0
+    private var points = 0
     override val layoutId: Int
         get() = R.layout.activity_daily_scratch_and_win
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +50,20 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
 
         settingsViewModel.addScratchCardResponse().observe(this, {
             if (null != it) {
-                showAlertDialog(it.message)
+                showWinnerAnimation()
+
+                setUserPoints(it.user_points)
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    lwv.visibility = View.GONE
+                    tvSpinAndWin.visibility = View.GONE
+                    tvSpinAlreadyDone.visibility = View.VISIBLE
+                    tvYourPoints.visibility = View.VISIBLE
+                    tvYourPoints.text =
+                        "Your Points are: " + SPreferenceManager.getInstance(this).settings.user_points
+                    showAlertDialog(it.message)
+                }, 3500L)
+
             } else {
                 showSnackBar(getString(R.string.something_went_wrong))
             }
@@ -69,147 +93,219 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
         fetchScratchCard()
     }
 
+    private fun showWinnerAnimation() {
+        viewKonfetti.build()
+            .addColors(
+                ContextCompat.getColor(this, R.color.red_CC252C),
+                ContextCompat.getColor(this, R.color.red_light_2),
+                ContextCompat.getColor(this, R.color.yellow),
+                ContextCompat.getColor(this, R.color.blue_5058AB)
+            )
+            .setDirection(0.0, 359.0)
+            .setSpeed(1f, 5f)
+            .setFadeOutEnabled(true)
+            .setTimeToLive(2000L)
+            .addShapes(Shape.Square, Shape.Circle)
+            .addSizes(Size(12))
+            .setPosition(-50f, viewKonfetti.width + 50f, -50f, -50f)
+            .streamFor(300, 3000L)
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun handleResponse(scratchCardResponse: ScratchCardResponse?) {
         lwv.visibility = View.VISIBLE
+        tvSpinAndWin.visibility = View.VISIBLE
         pbScratchCard.visibility = View.GONE
         if (null != scratchCardResponse && scratchCardResponse.status == "1") {
             setupSpinWheel(scratchCardResponse)
         } else {
-            showSnackBar(getString(R.string.something_went_wrong))
+            lwv.visibility = View.GONE
+            tvSpinAndWin.visibility = View.GONE
+            tvSpinAlreadyDone.visibility = View.VISIBLE
+            tvYourPoints.visibility = View.VISIBLE
+            tvYourPoints.text =
+                "Your Points are: " + SPreferenceManager.getInstance(this).settings.user_points
+            setupEmptyWheel()
         }
     }
 
     private fun setupSpinWheel(scratchCardResponse: ScratchCardResponse) {
+        numberList = getRandomNonRepeatingIntegers(
+            12, scratchCardResponse.scratch_card[0].min.toInt(),
+            scratchCardResponse.scratch_card[0].max.toInt()
+        )
 
-        val list = getRandomNonRepeatingIntegers(12, 1, 15)
-
-//        val centerValue =
-//            ((scratchCardResponse.scratch_card[0].max.toInt() + scratchCardResponse.scratch_card[0].min.toInt()) / 2)
-//        val centerValue1 =
-//            ((scratchCardResponse.scratch_card[0].max.toInt() + centerValue) / 2)
         val wheelItems: MutableList<WheelItem> = ArrayList()
-//        val centerValue2 =
-//            ((scratchCardResponse.scratch_card[0].min.toInt() + centerValue) / 2)
-//        val centerValue3 =
-//            ((scratchCardResponse.scratch_card[0].min.toInt() + centerValue2) / 2)
-//        val centerValue4 =
-//            ((scratchCardResponse.scratch_card[0].max.toInt() + centerValue1) / 2)
 
-        wheelItems.add(
-            WheelItem(
-                ContextCompat.getColor(this, R.color.red_light),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                scratchCardResponse.scratch_card[0].min
-            )
-        )
-
+//        wheelItems.add(
+//            WheelItem(
+//                ContextCompat.getColor(this, R.color.red_light),
+//                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light)),
+//                scratchCardResponse.scratch_card[0].min
+//            )
+////            WheelItem(
+////                ContextCompat.getColor(this, R.color.red_light),
+////                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
+////                scratchCardResponse.scratch_card[0].min
+////            )
+//        )
 
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light_2),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list!![0].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_2)),
+                numberList[0].toString()
             )
         )
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light_3),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[0].toString()
-            )
-        )
-        wheelItems.add(
-            WheelItem(
-                ContextCompat.getColor(this, R.color.red_light),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[1].toString()
-            )
-        )
-        wheelItems.add(
-            WheelItem(
-                ContextCompat.getColor(this, R.color.red_light_2),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                scratchCardResponse.scratch_card[0].max
-            )
-        )
-        wheelItems.add(
-            WheelItem(
-                ContextCompat.getColor(this, R.color.red_light_3),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[2].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_3)),
+                numberList[1].toString()
             )
         )
 
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[3].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light)),
+                numberList[2].toString()
             )
         )
 
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light_2),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[4].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_2)),
+                numberList[3].toString()
             )
         )
 
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light_3),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[5].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_3)),
+                numberList[4].toString()
+            )
+        )
+
+//        wheelItems.add(
+//            WheelItem(
+//                ContextCompat.getColor(this, R.color.red_light_2),
+//                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_2)),
+//                scratchCardResponse.scratch_card[0].max
+//            )
+//        )
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light),
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light)),
+                numberList[5].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_2),
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_2)),
+                numberList[6].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_3),
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_3)),
+                numberList[7].toString()
             )
         )
 
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[6].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light)),
+                numberList[8].toString()
             )
         )
 
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light_2),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[7].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_2)),
+                numberList[9].toString()
             )
         )
 
         wheelItems.add(
             WheelItem(
                 ContextCompat.getColor(this, R.color.red_light_3),
-                BitmapFactory.decodeResource(resources, R.drawable.ic_action_name),
-                list[8].toString()
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_3)),
+                numberList[10].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light),
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light)),
+                numberList[11].toString()
             )
         )
 
         lwv.setTarget(randomNumber())
 
         lwv.addWheelItems(wheelItems)
+
         lwv.setLuckyWheelReachTheTarget {
             if (isConnected(this)) {
-                //todo work here
-//                settingsViewModel.addScratchCard(
-//                    SPreferenceManager.getInstance(this).session,
-//                    "10"
-//                )
+                settingsViewModel.addScratchCard(
+                    SPreferenceManager.getInstance(this).session,
+                    points.toString()
+                )
             } else {
                 showSnackBar(getString(R.string.no_internet), this)
             }
         }
     }
 
+    private fun setupEmptyWheel() {
+        numberList = getRandomNonRepeatingIntegers(2, 1, 15)
+
+        val wheelItems: MutableList<WheelItem> = ArrayList()
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_2),
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_2)),
+                numberList[0].toString()
+            )
+        )
+
+        wheelItems.add(
+            WheelItem(
+                ContextCompat.getColor(this, R.color.red_light_3),
+                getBitmapFromColor(ContextCompat.getColor(this, R.color.red_light_3)),
+                numberList[1].toString()
+            )
+        )
+
+        lwv.setTarget(1)
+
+        lwv.addWheelItems(wheelItems)
+
+        lwv.setLuckyWheelReachTheTarget {
+
+        }
+
+        lwv.visibility = View.GONE
+    }
+
     private fun fetchScratchCard() {
         if (isConnected(this)) {
             pbScratchCard.visibility = View.VISIBLE
             lwv.visibility = View.GONE
-            //settingsViewModel.getScratchCard(SPreferenceManager.getInstance(this).session)
-            settingsViewModel.getScratchCard("9825086150")
+            tvSpinAndWin.visibility = View.GONE
+            settingsViewModel.getScratchCard(SPreferenceManager.getInstance(this).session)
         } else {
             showSnackBar(getString(R.string.no_internet), this)
         }
@@ -233,13 +329,16 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
     }
 
     private fun randomNumber(): Int {
-        val rand = Random()
-        return rand.nextInt(4 - 0 + 1) + 0
+        targetValue = (Math.random() * numberList.size).toInt()
+//        val rand = Random()
+//        targetValue = rand.nextInt(4 - 0 + 1) + 0
+        points = numberList[targetValue - 1]
+        return targetValue
     }
 
     private fun getRandomNonRepeatingIntegers(
         size: Int, min: Int, max: Int
-    ): ArrayList<Int>? {
+    ): ArrayList<Int> {
         val numbers = ArrayList<Int>()
         while (numbers.size < size) {
             val random: Int = getRandomInt(min, max)
@@ -255,4 +354,10 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
         return random.nextInt(max - min + 1) + min
     }
 
+    private fun getBitmapFromColor(color: Int): Bitmap {
+        val bmp = Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+        canvas.drawColor(color)
+        return bmp
+    }
 }
