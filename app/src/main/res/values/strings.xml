@@ -74,4 +74,5 @@
     <string name="forward_slash">/</string>
     <string name="review_submitted_already">You have already submitted your review.</string>
     <string name="you_have_already_submitted">You have already submitted this poll.</string>
+    <string name="answer_already_given">You have already given answer.</string>
 </resources>

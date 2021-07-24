@@ -55,7 +55,7 @@ class WinnerAdapter(
         ) {
             with(newsPortal) {
 
-                itemView.tvWinnerTitle.text = newsPortal.name1 + "\n" + newsPortal.name2
+                itemView.tvWinnerTitle.text = newsPortal.name1 + "\n(" + newsPortal.name2 + ")"
                 if (newsPortal.prize_mode == "Points Winner") {
                     itemView.btViewWinner.text =
                         itemView.btViewWinner.context.getString(R.string.Check_Winner)

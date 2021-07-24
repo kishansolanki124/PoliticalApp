@@ -34,10 +34,11 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btViewWinner"
                 style="@style/CommonRedButton"
+                android:layout_height="@dimen/dp_50"
                 android:layout_margin="@dimen/dp_0"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:text="@string/running"
-                android:textSize="@dimen/sp_14"
+                android:textSize="@dimen/sp_12"
                 app:cornerRadius="@dimen/dp_5" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -48,9 +49,9 @@
                 android:layout_weight="8"
                 android:fontFamily="@font/semi_bold"
                 android:padding="@dimen/dp_5"
-                android:text="(Participate &amp; Get 10 points / Win Prize)"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_12"
+                tools:text="(Participate &amp; Get 10 points / Win Prize)" />
 
             <FrameLayout
                 android:layout_width="0dp"

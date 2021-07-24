@@ -65,7 +65,6 @@ class WinnerNamesActivity : ExtendedToolbarActivity() {
         )
 
         tvPrizeWinner.text =
-            prizeDetailResponse.prize_detail[0].name1 + "\n" + prizeDetailResponse.prize_detail[0].name2
-
+            prizeDetailResponse.prize_detail[0].name1 + "\n(" + prizeDetailResponse.prize_detail[0].name2 + ")"
     }
 }

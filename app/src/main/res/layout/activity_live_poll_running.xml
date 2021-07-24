@@ -57,31 +57,31 @@
                     android:orientation="vertical">
 
                     <RadioButton
-                        android:visibility="gone"
                         android:id="@+id/rbExcellentLivePollRunning"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
+                        android:visibility="gone"
                         tools:text="ગુલઝારી લાલા નંદા" />
 
                     <RadioButton
-                        android:visibility="gone"
                         android:id="@+id/rbGood"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
+                        android:visibility="gone"
                         tools:text="ચૌધરી ચરણસિંહ" />
 
                     <RadioButton
-                        android:visibility="gone"
                         android:id="@+id/rbcantAnswer"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
+                        android:visibility="gone"
                         tools:text="નરેન્દ્ર મોદી" />
 
                     <RadioButton
-                        android:visibility="gone"
                         android:id="@+id/rbBad"
                         style="@style/CommonRedButton_2"
                         android:layout_width="wrap_content"
+                        android:visibility="gone"
                         tools:text="ડો. મનમોહન સિંહ" />
                 </RadioGroup>
 
@@ -130,9 +130,9 @@
                         android:layout_weight="8"
                         android:fontFamily="@font/semi_bold"
                         android:padding="@dimen/dp_5"
-                        android:text="(Participate &amp; Get 10 points / Win Prize)"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/sp_12"
+                        tools:text="(Participate &amp; Get 10 points / Win Prize)" />
 
                     <FrameLayout
                         android:layout_width="0dp"
@@ -155,11 +155,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/dp_5"
-                    android:text="You have already given answer."
+                    android:text="@string/answer_already_given"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12"
                     android:visibility="gone" />
-
 
                 <View
                     android:layout_width="match_parent"

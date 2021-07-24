@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.SPreferenceManager
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.openBrowser
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.*
 import com.politics.politicalapp.pojo.CommonResponse
 import com.politics.politicalapp.pojo.QuizAndContestRunningResponse
 import com.politics.politicalapp.viewmodel.QuizAndContestViewModel
@@ -141,6 +138,11 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         if (null != commonResponse) {
             btSubmitQuizContestAnswer.visibility = View.VISIBLE
             pbSubmitQuizContestAnswer.visibility = View.GONE
+            setUserPoints(commonResponse.user_points)
+
+            //answer submitted
+            llQuizAndContestAnswer.visibility = View.GONE
+            tvAnswerSubmitted.visibility = View.VISIBLE
             showAlertDialog(commonResponse.message)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))

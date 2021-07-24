@@ -293,6 +293,7 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             btSubmitLivePOllAnswer.visibility = View.INVISIBLE
             tvGive_rate_get_10_point.visibility = View.INVISIBLE
             tvAnswerSubmitted.visibility = View.VISIBLE
+            setUserPoints(commonResponse.user_points)
             showAlertDialog(commonResponse.message)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))

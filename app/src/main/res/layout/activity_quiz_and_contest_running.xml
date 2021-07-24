@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/dp_5"
-                    android:text="You have already given answer."
+                    android:text="@string/answer_already_given"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12"
                     android:visibility="gone" />

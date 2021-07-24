@@ -47,9 +47,9 @@
                     android:fontFamily="@font/semi_bold"
                     android:paddingHorizontal="@dimen/dp_10"
                     android:paddingVertical="@dimen/dp_5"
-                    tools:text="ભારતના કયા પ્રધાનમંત્રી રાષ્ટ્રીય સ્વયંસેવક સંઘના સદસ્ય પણ છે ?"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_12"
+                    tools:text="ભારતના કયા પ્રધાનમંત્રી રાષ્ટ્રીય સ્વયંસેવક સંઘના સદસ્ય પણ છે ?" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAnswer"
@@ -58,9 +58,9 @@
                     android:fontFamily="@font/semi_bold"
                     android:paddingHorizontal="@dimen/dp_10"
                     android:paddingVertical="@dimen/dp_5"
-                    tools:text="જવાબ: નરેન્દ્ર મોદી"
                     android:textColor="@color/red_actionbar"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_12"
+                    tools:text="જવાબ: નરેન્દ્ર મોદી" />
 
                 <View
                     android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/dp_10"
-                    android:text="Winner :"
+                    android:text="@string/Winners_"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12" />
 
@@ -80,13 +80,14 @@
                     android:id="@+id/tvQuizWinnerNames"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_5"
                     android:layout_marginBottom="@dimen/dp_5"
                     android:fontFamily="@font/regular"
-                    android:lineSpacingExtra="@dimen/dp_10"
+                    android:lineSpacingExtra="@dimen/dp_5"
                     android:padding="@dimen/dp_5"
-                    tools:text="(1) Mehul Patel, Ahmedabad\n(2) Ravi Chauhan, Jamnagar\n(3) Mehul Patel, Ahmedabad\n(4) Ravi Chauhan, Jamnagar\n(5) Ravi Chauhan, Jamnagar"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_12"
+                    tools:text="(1) Mehul Patel, Ahmedabad\n(2) Ravi Chauhan, Jamnagar\n(3) Mehul Patel, Ahmedabad\n(4) Ravi Chauhan, Jamnagar\n(5) Ravi Chauhan, Jamnagar" />
 
                 <View
                     android:layout_width="match_parent"

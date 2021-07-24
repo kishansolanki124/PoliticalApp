@@ -34,10 +34,11 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btViewWinner"
                 style="@style/CommonRedButton"
+                android:layout_height="@dimen/dp_50"
                 android:layout_margin="@dimen/dp_0"
                 android:paddingHorizontal="@dimen/sp_20"
                 android:text="@string/running"
-                android:textSize="@dimen/sp_14"
+                android:textSize="@dimen/sp_12"
                 app:cornerRadius="@dimen/dp_5" />
 
             <androidx.appcompat.widget.AppCompatTextView

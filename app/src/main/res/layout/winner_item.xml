@@ -22,18 +22,19 @@
             android:fontFamily="@font/regular"
             android:lineSpacingExtra="@dimen/dp_5"
             android:paddingVertical="@dimen/dp_5"
-            tools:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14"
+            tools:text="જુલાઇ -૨૦૨૧ પ્રથમ અઠવાડિયું\n(તા. ૧ જુલાઇ થી ૭ જુલાઇ)" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btViewWinner"
             style="@style/CommonRedButton"
+            android:layout_height="@dimen/dp_50"
             android:layout_margin="@dimen/dp_0"
             android:paddingHorizontal="@dimen/dp_20"
             android:text="@string/Prize_Details"
             android:textAllCaps="false"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_12"
             app:cornerRadius="@dimen/dp_5" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
