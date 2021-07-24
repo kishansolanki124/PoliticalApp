@@ -23,6 +23,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     private var startPage = 0
     private lateinit var govtWorkViewModel: UserAdviseViewModel
     private var districtId = ""
+    private var districtPosition = 0
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
 
     override val layoutId: Int
@@ -40,6 +41,13 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
         govtWorkViewModel.userAdviseList().observe(this, {
             handleResponse(it)
         })
+
+        tvAddQuestionSuggestion.setOnClickListener {
+            startActivity(
+                Intent(this, AddQuestionSuggestionActivity::class.java)
+                    .putExtra(AppConstants.DISTRICTID, districtPosition)
+            )
+        }
     }
 
     private fun handleResponse(userAdviseResponse: UserAdviseResponse?) {
@@ -102,6 +110,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
                     val district: SettingsResponse.District =
                         parent.selectedItem as SettingsResponse.District
                     districtId = district.id
+                    districtPosition = position
                     getNews()
                 }
 

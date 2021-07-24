@@ -10,6 +10,7 @@ import com.politics.politicalapp.network.RetrofitFactory
 import com.politics.politicalapp.pojo.GiveUserRatingToGovtWorkResponse
 import com.politics.politicalapp.pojo.GovtWorkDetailResponse
 import com.politics.politicalapp.pojo.GovtWorkListResponse
+import com.politics.politicalapp.pojo.NewsDetailResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,6 +20,7 @@ class GovtWorkViewModel : ViewModel() {
 
     private val mutableSettingsResponse = MutableLiveData<GovtWorkListResponse>()
     private val mutableGovtWorkDetailResponse = MutableLiveData<GovtWorkDetailResponse>()
+    private val newsDetailResponse = MutableLiveData<NewsDetailResponse>()
     private val mutableGiveUserRatingToGovtWorkResponse =
         MutableLiveData<GiveUserRatingToGovtWorkResponse>()
     private val mutableGovtWorkCommentResponse =
@@ -137,6 +139,25 @@ class GovtWorkViewModel : ViewModel() {
         }
     }
 
+    fun getNewsDetail(nid: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.nid,
+                    nid
+                )
+
+                val apiResponse = apiEndPointsInterface.getNewsDetail(
+                    requestBodyBuilder.build()
+                )
+                returnNewsDetailResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private suspend fun returnSettingsResponse(settingsResponse: GovtWorkListResponse) {
         withContext(Dispatchers.Main) {
             mutableSettingsResponse.value = settingsResponse
@@ -173,7 +194,17 @@ class GovtWorkViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnNewsDetailResponse(settingsResponse: NewsDetailResponse) {
+        withContext(Dispatchers.Main) {
+            newsDetailResponse.value = settingsResponse
+        }
+    }
+
     fun govtWorkDetail(): LiveData<GovtWorkDetailResponse> {
         return mutableGovtWorkDetailResponse
+    }
+
+    fun newsDetail(): LiveData<NewsDetailResponse> {
+        return newsDetailResponse
     }
 }

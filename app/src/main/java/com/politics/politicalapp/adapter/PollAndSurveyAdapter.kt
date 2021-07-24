@@ -131,8 +131,10 @@ class PollAndSurveyAdapter(
                     resetRadioButtons()
                     itemView.rbVeryBad.isChecked = true
                 }
+                radioButtonenableStatus(false)
             } else {
                 resetRadioButtons()
+                radioButtonenableStatus(true)
             }
         }
 
@@ -142,6 +144,14 @@ class PollAndSurveyAdapter(
             itemView.rbcantAnswer.isChecked = false
             itemView.rbBad.isChecked = false
             itemView.rbVeryBad.isChecked = false
+        }
+
+        private fun radioButtonenableStatus(isenable: Boolean) {
+            itemView.rbExcellent.isEnabled = isenable
+            itemView.rbGood.isEnabled = isenable
+            itemView.rbcantAnswer.isEnabled = isenable
+            itemView.rbBad.isEnabled = isenable
+            itemView.rbVeryBad.isEnabled = isenable
         }
     }
 }

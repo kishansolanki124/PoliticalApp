@@ -3,13 +3,12 @@ package com.politics.politicalapp.network
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.pojo.*
 import okhttp3.MultipartBody
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface APIEndPointsInterface {
 
-//    @POST(AppConstants.APIEndPoints.NEWS_CATEGORY)
+    //    @POST(AppConstants.APIEndPoints.NEWS_CATEGORY)
 //    suspend fun newsCategory(
 //
 //    ): NewsCategoryResponse
@@ -90,6 +89,23 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): UserAdviseResponse
 
+//    @Multipart
+//    @POST(AppConstants.APIEndPoints.ADD_UER_ADVISE)
+//    suspend fun addUserAdvise(
+//        @Query("district_id") district_id: String, @Query("user_mobile") user_mobile: String,
+//        @Query("city") city: String, @Query("title") title: String,
+//        @Query("description") description: String,
+//        //@Part file: MultipartBody.Part, @Part("up_pro_img") fileName: RequestBody
+//        //@Part("up_pro_img") file: RequestBody
+//        @Part filePart: MultipartBody.Part
+//    ): CommonResponse
+
+
+    @POST(AppConstants.APIEndPoints.ADD_UER_ADVISE)
+    suspend fun addUserAdvise(
+        @Body hashMap: MultipartBody
+    ): CommonResponse
+
     @POST(AppConstants.APIEndPoints.GET_UER_ADVISE_DETAIL)
     suspend fun getUserAdviseDetail(
         @Body hashMap: MultipartBody
@@ -109,6 +125,11 @@ interface APIEndPointsInterface {
     suspend fun getGovtWorkDetail(
         @Body hashMap: MultipartBody
     ): GovtWorkDetailResponse
+
+    @POST(AppConstants.APIEndPoints.GET_NEWS_DETAIL)
+    suspend fun getNewsDetail(
+        @Body hashMap: MultipartBody
+    ): NewsDetailResponse
 
     @POST(AppConstants.APIEndPoints.ADD_GOVT_WORK_RATING)
     suspend fun addRatingGovtWork(

@@ -154,6 +154,9 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
             } else {
                 pbMLAReviewSubmit.visibility = View.VISIBLE
                 btMLAReviewSubmit.visibility = View.INVISIBLE
+
+                mlaDetailResponse.gov_mla_detail[0].user_rating = mlaDetailResponse.poll[0].poll_id
+
                 mlaViewModel.giveMLARating(
                     mlaDetailResponse.gov_mla_detail[0].id,
                     SPreferenceManager.getInstance(requireContext()).session,

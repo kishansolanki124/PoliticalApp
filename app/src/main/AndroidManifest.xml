@@ -37,6 +37,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".ui.activity.AddQuestionSuggestionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".ui.activity.DailyScratchAndWnActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -55,6 +60,10 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.activity.GovtWorkDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.activity.NewsDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity

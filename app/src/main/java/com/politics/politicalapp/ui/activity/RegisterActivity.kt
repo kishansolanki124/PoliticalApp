@@ -56,8 +56,8 @@ class RegisterActivity : AppCompatActivity() {
         })
 
         settingsViewModel.commonResponse().observe(this, {
-            pbRegister.visibility = View.GONE
-            btSubmitRegister.visibility = View.VISIBLE
+//            pbRegister.visibility = View.GONE
+//            btSubmitRegister.visibility = View.VISIBLE
             SPreferenceManager.getInstance(this)
                 .saveSession(
                     this.settingsResponse,

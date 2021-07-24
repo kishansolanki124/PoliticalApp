@@ -25,6 +25,7 @@ interface AppConstants {
         const val AMOUNT: String = "AMOUNT"
         const val ADD_LAVAJAM: String = "ADD_LAVAJAM"
         const val SHOW_SUBMIT: String = "SHOW_SUBMIT"
+        const val DISTRICTID: String = "DISTRICTID"
         const val ID: String = "id"
     }
 
@@ -49,8 +50,10 @@ interface AppConstants {
             const val ADD_SCRATCHCARD: String = "add_scratchcard"
             const val GET_GOVT_WORK: String = "get_gov_work"
             const val GET_UER_ADVISE: String = "get_user_advice"
+            const val ADD_UER_ADVISE: String = "add_user_advice"
             const val GET_UER_ADVISE_DETAIL: String = "get_user_advice_detail"
             const val GET_GOVT_WORK_DETAIL: String = "get_govwork_detail"
+            const val GET_NEWS_DETAIL: String = "get_news_detail"
             const val ADD_GOVT_WORK_RATING: String = "add_govwork_user_rating"
             const val ADD_GOVT_WORK_COMMENT: String = "add_govwork_user_comment"
             const val MLA_LIST: String = "get_gov_mla"
@@ -81,7 +84,11 @@ interface AppConstants {
             const val qid = "qid"
             const val pid = "pid"
             const val aid = "aid"
+            const val nid = "nid"
             const val user_comment = "user_comment"
+            const val description = "description"
+            const val title = "title"
+            const val up_pro_img = "up_pro_img"
             const val user_rating = "user_rating"
             const val CITY_ID = "city_id"
         }

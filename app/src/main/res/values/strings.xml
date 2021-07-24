@@ -75,4 +75,8 @@
     <string name="review_submitted_already">You have already submitted your review.</string>
     <string name="you_have_already_submitted">You have already submitted this poll.</string>
     <string name="answer_already_given">You have already given answer.</string>
+    <string name="Enter_Title">Enter Title</string>
+    <string name="Enter_Desc">Enter Description</string>
+    <string name="Enter_City">Enter City/Town</string>
+    <string name="questions_suggestion">તમારા પ્રશ્ર્નો / સુચનો લખો</string>
 </resources>

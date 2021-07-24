@@ -82,11 +82,11 @@ class HomeFragment : Fragment() {
 
     private fun setupNewsViewPager(newsList: List<SettingsResponse.News>) {
         val breakingNewsAdapter = BreakingNewsAdapter {
-//            startActivity(
-//                Intent(
-//                    requireActivity(), NewsDetailsActivity::class.java
-//                ).putExtra(AppConstants.NEWS_ID, it.id)
-//            )
+            startActivity(
+                Intent(
+                    requireActivity(), NewsDetailActivity::class.java
+                ).putExtra(AppConstants.ID, it.id)
+            )
         }
 
         breakingNewsAdapter.setItem(newsList)
@@ -176,7 +176,6 @@ class HomeFragment : Fragment() {
         super.onResume()
         tvUserPoints.text = SPreferenceManager.getInstance(requireContext())
             .settings.user_points
-        showToast("Points updated",requireContext())
     }
 
     fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()

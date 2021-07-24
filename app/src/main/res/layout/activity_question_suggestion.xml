@@ -28,15 +28,15 @@
         android:layout_margin="@dimen/dp_10"
         android:background="@drawable/spinner_dropdown_light_red" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etAddQuestionSuggestion"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAddQuestionSuggestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:background="@drawable/white_semi_trans_rounded_corner"
         android:drawableEnd="@drawable/upload_icon_screen6"
-        android:hint="તમારા પ્રશ્ર્નો / સુચનો લખો"
         android:padding="@dimen/dp_10"
+        android:text="@string/questions_suggestion"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="@dimen/sp_14" />
