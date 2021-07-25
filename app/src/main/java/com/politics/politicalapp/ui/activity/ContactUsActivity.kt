@@ -1,6 +1,8 @@
 package com.politics.politicalapp.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -23,6 +25,7 @@ class ContactUsActivity : ExtendedToolbarActivity() {
     override val layoutId: Int
         get() = R.layout.activity_contact_us
 
+    @SuppressLint("QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,7 +49,17 @@ class ContactUsActivity : ExtendedToolbarActivity() {
         }
 
         tvPhone.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:${tvPhone.text}")
+            startActivity(intent)
+        }
 
+        tvEmail.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("mailto:")
+            intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(tvEmail.text.toString()))
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Contact Us")
+            startActivity(Intent.createChooser(intent, "Email via..."))
         }
 
         btSendContactUs.setOnClickListener {

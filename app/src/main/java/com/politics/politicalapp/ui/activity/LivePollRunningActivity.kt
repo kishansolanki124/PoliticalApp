@@ -388,6 +388,14 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             tvGive_rate_get_10_point.visibility = View.INVISIBLE
             tvAnswerSubmitted.visibility = View.VISIBLE
         }
+
+        ivLivePollShare.setOnClickListener {
+            shareIntent(
+                "Participate in Live Poll and Win Prizes:\n\n" +
+                        quizAndContestRunningResponse.poll[0].poll_question,
+                this
+            )
+        }
     }
 
     private fun showAlertDialog(msg: String) {

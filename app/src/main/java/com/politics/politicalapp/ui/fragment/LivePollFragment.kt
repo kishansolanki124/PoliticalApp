@@ -12,6 +12,7 @@ import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.LivePollAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.shareIntent
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.LivePollListResponse
 import com.politics.politicalapp.ui.activity.HomeActivity
@@ -87,6 +88,13 @@ class LivePollFragment : Fragment() {
                         .putExtra(AppConstants.SHOW_SUBMIT, showButton)
                         .putExtra(AppConstants.ID, it.id)
                 )
+            }, {
+                shareIntent(
+                    "Participate in Live Poll and Win Prizes:\n\n" + it.name,
+                    requireContext()
+                )
+                //browserIntent(this, it.website!!)
+                //startActivity(Intent(this, QuizAndContestWinnerActivity::class.java))
             }, {
                 //browserIntent(this, it.website!!)
                 //startActivity(Intent(this, QuizAndContestWinnerActivity::class.java))

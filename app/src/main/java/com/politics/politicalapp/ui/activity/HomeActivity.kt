@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.rateApp
+import com.politics.politicalapp.apputils.shareIntent
 import com.politics.politicalapp.apputils.showToast
 import com.politics.politicalapp.ui.fragment.HomeFragment
 import com.politics.politicalapp.ui.fragment.LivePollFragment
@@ -40,30 +42,32 @@ class HomeActivity : ExtendedToolbarActivity(),
 
     private fun setupListener() {
         ivAboutUs.setOnClickListener {
-            if (newsCategory.isVisible) {
-                newsCategory.visibility = View.GONE
-            }
+            hideMenu()
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
         tvContactUs.setOnClickListener {
-            if (newsCategory.isVisible) {
-                newsCategory.visibility = View.GONE
-            }
+            hideMenu()
             startActivity(Intent(this, ContactUsActivity::class.java))
         }
 
+        ivShareApp.setOnClickListener {
+            hideMenu()
+            shareIntent("Lorem Ipsum is simply dummy text of", this)
+        }
+
+        ivRateUs.setOnClickListener {
+            hideMenu()
+            rateApp()
+        }
+
         ivTNC.setOnClickListener {
-            if (newsCategory.isVisible) {
-                newsCategory.visibility = View.GONE
-            }
+            hideMenu()
             startActivity(Intent(this, TNCActivity::class.java))
         }
 
         tvLogout.setOnClickListener {
-            if (newsCategory.isVisible) {
-                newsCategory.visibility = View.GONE
-            }
+            hideMenu()
             SPreferenceManager.getInstance(this).clearSession()
             val mIntent = Intent(this, SplashActivity::class.java)
             finishAffinity()
@@ -103,9 +107,7 @@ class HomeActivity : ExtendedToolbarActivity(),
     }
 
     private fun switchFragment(fragment: Fragment, addToBackStack: Boolean) {
-        if (newsCategory.isVisible) {
-            newsCategory.visibility = View.GONE
-        }
+        hideMenu()
 
         mTransaction = supportFragmentManager.beginTransaction()
         mTransaction.replace(R.id.fragmentContainer, fragment)
@@ -130,6 +132,12 @@ class HomeActivity : ExtendedToolbarActivity(),
                 { doubleBackToExitPressedOnce = false },
                 2000
             )
+        }
+    }
+
+    private fun hideMenu() {
+        if (newsCategory.isVisible) {
+            newsCategory.visibility = View.GONE
         }
     }
 }

@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.live_poll_item.view.*
 
 class LivePollAdapter(
     private val itemClickCall: (LivePollListResponse.LivePoll, Boolean) -> Unit,
+    private val itemClickShare: (LivePollListResponse.LivePoll) -> Unit,
     private val itemClickWeb: (LivePollListResponse.LivePoll) -> Unit
 ) :
     RecyclerView.Adapter<LivePollAdapter.HomeOffersViewHolder>() {
@@ -26,7 +27,7 @@ class LivePollAdapter(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.live_poll_item, parent, false)
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
+            view, itemClickCall, itemClickShare, itemClickWeb
         )
     }
 
@@ -49,6 +50,7 @@ class LivePollAdapter(
     class HomeOffersViewHolder(
         view: View,
         private val itemClickCall: (LivePollListResponse.LivePoll, Boolean) -> Unit,
+        private val itemClickShare: (LivePollListResponse.LivePoll) -> Unit,
         private val itemClickWeb: (LivePollListResponse.LivePoll) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
@@ -160,6 +162,10 @@ class LivePollAdapter(
                     if (itemView.btViewWinner.text.equals("result")) {
                         itemClickWeb(this)
                     }
+                }
+
+                itemView.ivLivePollShare.setOnClickListener {
+                    itemClickShare(this)
                 }
 //
 //                itemView.ivWeb.setOnClickListener {

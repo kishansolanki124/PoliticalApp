@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
@@ -444,3 +445,28 @@ fun Context.setChartColors(dataSet: PieDataSet) {
 }
 
 fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()
+
+fun Context.rateApp() {
+    val uri: Uri = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)
+    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+    // To count with Play market backstack, After pressing back button,
+    // to taken back to our application, we need to add following flags to intent.
+    goToMarket.addFlags(
+        Intent.FLAG_ACTIVITY_NO_HISTORY or
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+    )
+    try {
+        startActivity(goToMarket)
+    } catch (e: ActivityNotFoundException) {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    "http://play.google.com/store/apps/details?id="
+                            + BuildConfig.APPLICATION_ID
+                )
+            )
+        )
+    }
+}
