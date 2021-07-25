@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.question_suggestion_item.view.*
 
 class QuestionsAndSuggestionAdapter(
     private val itemClickCall: (UserAdviseResponse.UserAdvice) -> Unit,
-    private val itemClickWeb: (UserAdviseResponse.UserAdvice) -> Unit
+    private val itemShareCall: (UserAdviseResponse.UserAdvice) -> Unit
 ) :
     RecyclerView.Adapter<QuestionsAndSuggestionAdapter.HomeOffersViewHolder>() {
 
@@ -23,7 +23,7 @@ class QuestionsAndSuggestionAdapter(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.question_suggestion_item, parent, false)
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
+            view, itemClickCall, itemShareCall
         )
     }
 
@@ -46,7 +46,7 @@ class QuestionsAndSuggestionAdapter(
     class HomeOffersViewHolder(
         view: View,
         private val itemClickCall: (UserAdviseResponse.UserAdvice) -> Unit,
-        private val itemClickWeb: (UserAdviseResponse.UserAdvice) -> Unit
+        private val itemShareCall: (UserAdviseResponse.UserAdvice) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
 //        constructor(parent: ViewGroup) : this(
@@ -98,6 +98,10 @@ class QuestionsAndSuggestionAdapter(
 //
                 itemView.cvRootGovtWorkNewsItem.setOnClickListener {
                     itemClickCall(this)
+                }
+
+                itemView.ivShareQuestionSuggestion.setOnClickListener {
+                    itemShareCall(this)
                 }
 //
 //                itemView.ivWeb.setOnClickListener {

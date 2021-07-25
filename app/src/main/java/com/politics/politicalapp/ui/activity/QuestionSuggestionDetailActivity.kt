@@ -9,6 +9,7 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.shareIntent
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.UserAdviseDetailResponse
 import com.politics.politicalapp.viewmodel.UserAdviseViewModel
@@ -70,5 +71,12 @@ class QuestionSuggestionDetailActivity : ExtendedToolbarActivity() {
         tvQuestionSuggestionCityDistrict.text =
             userAdviseDetailResponse.advice_detail[0].city + "," +
                     userAdviseDetailResponse.advice_detail[0].district
+
+        ivShareQuestionSuggestionDetail.setOnClickListener {
+            shareIntent(
+                userAdviseDetailResponse.advice_detail[0].title,
+                userAdviseDetailResponse.advice_detail[0].up_pro_img, this
+            )
+        }
     }
 }

@@ -8,6 +8,7 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.QuizAndContestAdapter
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.shareIntent
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.QuizAndContestResponse
 import com.politics.politicalapp.viewmodel.QuizAndContestViewModel
@@ -72,11 +73,17 @@ class QuizAndContestActivity : ExtendedToolbarActivity() {
                     Intent(this, QuizAndContestRunningActivity::class.java)
                         .putExtra(AppConstants.ID, it.id)
                 )
-
+            }, {
+                shareIntent(
+                    "Participate in Quiz and Contest and Win Prizes:\n\n" + it.name,
+                    this
+                )
             }, {
                 //browserIntent(this, it.website!!)
-                startActivity(Intent(this, QuizAndContestWinnerActivity::class.java)
-                    .putExtra(AppConstants.ID, it.id))
+                startActivity(
+                    Intent(this, QuizAndContestWinnerActivity::class.java)
+                        .putExtra(AppConstants.ID, it.id)
+                )
             }
         )
         //govtWorkNewsAdapter.setItem(stringList)

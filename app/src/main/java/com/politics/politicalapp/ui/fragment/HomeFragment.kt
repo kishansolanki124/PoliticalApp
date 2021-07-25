@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import app.app.patidarsaurabh.apputils.AppConstants
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.BreakingNewsAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
@@ -52,6 +54,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListeners() {
+
+        ivPointQuestion.setOnClickListener {
+            showInfoWindow()
+        }
 
         llQueSuggestion.setOnClickListener {
             startActivity(Intent(requireContext(), QuestionSuggestionActivity::class.java))
@@ -173,5 +179,21 @@ class HomeFragment : Fragment() {
 
         tvUserPoints.text = SPreferenceManager.getInstance(requireContext())
             .settings.user_points
+    }
+
+    private fun showInfoWindow() {
+        BubbleShowCaseBuilder(requireActivity()) //Activity instance
+            .title("Lorem Ipsum") //Any title for the bubble view
+            .description("Lorem Ipsum is simply dummy text of the printing and typesetting") //Any title for the bubble view
+            .targetView(ivPointQuestion) //View to point out
+            .backgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red_CC252C
+                )
+            ) //Bubble background color
+            .textColor(ContextCompat.getColor(requireContext(), R.color.white)) //Bubble Text color
+//            .titleTextSize(R.dimen.sp_14) //Title text size in SP (default value 16sp)
+            .show() //Display the ShowCase
     }
 }

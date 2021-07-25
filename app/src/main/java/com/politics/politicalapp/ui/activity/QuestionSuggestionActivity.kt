@@ -11,6 +11,7 @@ import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.QuestionsAndSuggestionAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.shareIntent
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.pojo.UserAdviseResponse
@@ -82,6 +83,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
                 )
             }, {
                 //browserIntent(this, it.website!!)
+                shareIntent(it.title, it.up_pro_img, this)
             }
         )
         rvPollAndSurvey.adapter = govtWorkNewsAdapter

@@ -24,15 +24,20 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.downloader.OnDownloadListener
+import com.downloader.PRDownloader
 import com.github.mikephil.charting.data.PieDataSet
 import com.google.android.material.snackbar.Snackbar
+import com.politics.politicalapp.BuildConfig
 import com.politics.politicalapp.R
 import com.politics.politicalapp.ui.activity.SplashActivity
 import java.io.File
@@ -233,91 +238,91 @@ fun getRootDirPath(context: Context): String? {
     }
 }
 
-//fun shareIntent(text: String, url: String, context: Context) {
-//    val fileName: String =
-//        url.substring(url.lastIndexOf('/') + 1, url.length)
-//
-//    val pdfFile = File(getRootDirPath(context) + "/" + fileName)
-//    if (pdfFile.exists()) {
-//        shareTextAndImage(context, fileName, text)
-//    } else {
-//        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context)
-//        alertDialogBuilder.setCancelable(false)
-//        alertDialogBuilder.setView(R.layout.layout_download_dialog)
-//        alertDialogBuilder.create()
-//        val alertDialog: AlertDialog = alertDialogBuilder.create()
-//        alertDialog.show()
-//
-//        val tvTitleForShare = alertDialog.findViewById<TextView>(R.id.tvTitleForShare)
-//        tvTitleForShare!!.text = context.getString(R.string.sharing)
-//
-//        val dirPath = getRootDirPath(context)
-//
-//        PRDownloader.download(
-//            url,
-//            dirPath, fileName
-//        ).build()
-//            .setOnStartOrResumeListener {
-//                if (!alertDialog.isShowing) {
-//                    alertDialog.show()
-//                }
-//            }
-//            .setOnPauseListener {
-//
-//            }
-//            .setOnCancelListener {
-//                alertDialog.dismiss()
-//            }
-//            .setOnProgressListener {
-//
-//            }
-//            .start(object : OnDownloadListener {
-//                override fun onDownloadComplete() {
-//                    alertDialog.dismiss() // to hide this dialog
-//                    println("File download complete")
-//                    //showToast("File download successfully", requireContext())
-//                    shareTextAndImage(context, fileName, text)
-//                }
-//
-//                override fun onError(error: com.downloader.Error?) {
-//                    alertDialog.dismiss() // to hide this dialog
-//                    println("PDF download error: ${error.toString()}")
-//                    showToast("Sorry! File download failed.", context)
-//                }
-//            })
-//    }
-//}
+fun shareIntent(text: String, url: String, context: Context) {
+    val fileName: String =
+        url.substring(url.lastIndexOf('/') + 1, url.length)
 
-//fun shareTextAndImage(context: Context, fileName: String, shareableText: String) {
-//    val pdfFile = File(getRootDirPath(context) + "/" + fileName)
-//    val fileUri = FileProvider.getUriForFile(
-//        context,
-//        BuildConfig.APPLICATION_ID,
-//        pdfFile
-//    )
-//    val intent = Intent(Intent.ACTION_SEND)
-//    intent.type = "image/png"
-//    intent.putExtra(Intent.EXTRA_STREAM, fileUri)
-//    intent.putExtra(
-//        Intent.EXTRA_TEXT,
-//        shareableText + "\n\nઇન્સ્ટોલ કરો પાટીદાર સૌરભ એપ - https://play.google.com/store/apps/details?id=" +
-//                BuildConfig.APPLICATION_ID
-//    )
-//
-//    context.startActivity(Intent.createChooser(intent, "Share"))
-//}
+    val pdfFile = File(getRootDirPath(context) + "/" + fileName)
+    if (pdfFile.exists()) {
+        shareTextAndImage(context, fileName, text)
+    } else {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context)
+        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setView(R.layout.layout_download_dialog)
+        alertDialogBuilder.create()
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
 
-//fun shareIntent(shareableText: String, context: Context) {
-//    val txtIntent = Intent(Intent.ACTION_SEND)
-//    txtIntent.type = "text/plain"
-//    txtIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name))
-//    txtIntent.putExtra(
-//        Intent.EXTRA_TEXT, shareableText
-//                + "\nDownload the app from https://play.google.com/store/apps/details?id=" +
-//                BuildConfig.APPLICATION_ID
-//    )
-//    context.startActivity(Intent.createChooser(txtIntent, "Share"))
-//}
+        val tvTitleForShare = alertDialog.findViewById<TextView>(R.id.tvTitleForShare)
+        tvTitleForShare!!.text = context.getString(R.string.sharing)
+
+        val dirPath = getRootDirPath(context)
+
+        PRDownloader.download(
+            url,
+            dirPath, fileName
+        ).build()
+            .setOnStartOrResumeListener {
+                if (!alertDialog.isShowing) {
+                    alertDialog.show()
+                }
+            }
+            .setOnPauseListener {
+
+            }
+            .setOnCancelListener {
+                alertDialog.dismiss()
+            }
+            .setOnProgressListener {
+
+            }
+            .start(object : OnDownloadListener {
+                override fun onDownloadComplete() {
+                    alertDialog.dismiss() // to hide this dialog
+                    println("File download complete")
+                    //showToast("File download successfully", requireContext())
+                    shareTextAndImage(context, fileName, text)
+                }
+
+                override fun onError(error: com.downloader.Error?) {
+                    alertDialog.dismiss() // to hide this dialog
+                    println("PDF download error: ${error.toString()}")
+                    showToast("Sorry! File download failed.", context)
+                }
+            })
+    }
+}
+
+fun shareTextAndImage(context: Context, fileName: String, shareableText: String) {
+    val pdfFile = File(getRootDirPath(context) + "/" + fileName)
+    val fileUri = FileProvider.getUriForFile(
+        context,
+        BuildConfig.APPLICATION_ID + ".provider",
+        pdfFile
+    )
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.type = "image/png"
+    intent.putExtra(Intent.EXTRA_STREAM, fileUri)
+    intent.putExtra(
+        Intent.EXTRA_TEXT,
+        shareableText + "\n\nઇન્સ્ટોલ કરો એપ - https://play.google.com/store/apps/details?id=" +
+                BuildConfig.APPLICATION_ID
+    )
+
+    context.startActivity(Intent.createChooser(intent, "Share"))
+}
+
+fun shareIntent(shareableText: String, context: Context) {
+    val txtIntent = Intent(Intent.ACTION_SEND)
+    txtIntent.type = "text/plain"
+    txtIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name))
+    txtIntent.putExtra(
+        Intent.EXTRA_TEXT, shareableText
+                + "\n\nDownload the app from https://play.google.com/store/apps/details?id=" +
+                BuildConfig.APPLICATION_ID
+    )
+    context.startActivity(Intent.createChooser(txtIntent, "Share"))
+}
 
 //fun callIntent(activity: Activity, phoneNumber: String) {
 //    if (phoneNumber.contains(",")) {

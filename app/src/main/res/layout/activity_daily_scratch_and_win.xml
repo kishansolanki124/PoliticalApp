@@ -42,12 +42,12 @@
 
     <com.bluehomestudio.luckywheel.LuckyWheel
         android:id="@+id/lwv"
-        android:layout_width="@dimen/dp_250"
-        android:layout_height="@dimen/dp_250"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_300"
         android:layout_below="@id/commonToolbar"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_100"
         android:visibility="invisible"
         LuckyWheel:arrow_image="@drawable/triangle"
         LuckyWheel:background_color="@color/red_CC252C" />
@@ -72,7 +72,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/dp_20"
         android:fontFamily="@font/regular"
-        android:text="You've already won points for today"
+        android:text="@string/you_won_points_already"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_20"
         android:visibility="gone" />

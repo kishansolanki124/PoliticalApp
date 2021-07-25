@@ -144,9 +144,17 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
             llQuizAndContestAnswer.visibility = View.GONE
             tvAnswerSubmitted.visibility = View.VISIBLE
             showAlertDialog(commonResponse.message)
+            disableRadioButtons()
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
         }
+    }
+
+    private fun disableRadioButtons() {
+        rbExcellent.isEnabled = false
+        rbGood.isEnabled = false
+        rbcantAnswer.isEnabled = false
+        rbBad.isEnabled = false
     }
 
     private fun handleResponse(quizAndContestRunningResponse: QuizAndContestRunningResponse?) {
@@ -195,6 +203,7 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
             //answer already submitted
             llQuizAndContestAnswer.visibility = View.GONE
             tvAnswerSubmitted.visibility = View.VISIBLE
+            disableRadioButtons()
         }
 
         rbExcellent.setOnCheckedChangeListener { _, b ->
@@ -226,6 +235,14 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         tvQuizWinnerDate.text = quizAndContestRunningResponse.quiz_detail[0].result_date
 
         browserURL = quizAndContestRunningResponse.quiz_detail[0].sponser_url
+
+        ivShareQuizAndContestDetail.setOnClickListener {
+            shareIntent(
+                "Participate in Quiz and Contest and Win Prizes:\n\n" +
+                        quizAndContestRunningResponse.quiz_question[0].question,
+                this
+            )
+        }
     }
 
     private fun showAlertDialog(msg: String) {

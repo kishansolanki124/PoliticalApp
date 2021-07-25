@@ -12,6 +12,7 @@ import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.GovtWorkNewsAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
+import com.politics.politicalapp.apputils.shareIntent
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.GovtWorkListResponse
 import com.politics.politicalapp.pojo.SettingsResponse
@@ -118,7 +119,7 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
                         .putExtra(AppConstants.GID, it.id)
                 )
             }, {
-                //browserIntent(this, it.website!!)
+                shareIntent(it.name, it.up_pro_img, this)
             }
         )
         rvNewsPortal.adapter = govtWorkNewsAdapter

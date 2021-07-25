@@ -28,6 +28,8 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     private lateinit var govtWorkNewsAdapter: NewsCommentAdapter
     private lateinit var govtWorkViewModel: GovtWorkViewModel
     private var gid = ""
+    private var sharableText = ""
+    private var imageURL = ""
     private var ratingDone = true
     private var rating = 0
 
@@ -146,6 +148,9 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
 
+        sharableText = govtWorkDetailResponse.gov_work_detail[0].name
+        imageURL = govtWorkDetailResponse.gov_work_detail[0].up_pro_img
+
         setupRatings()
         if (govtWorkDetailResponse.gov_work_detail[0].user_rating.isEmpty()) {
             //rating is pending
@@ -161,6 +166,10 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     }
 
     private fun setupRatings() {
+
+        tvShareGovtWork.setOnClickListener {
+            shareIntent(sharableText, imageURL, this)
+        }
         btSubmitComment.setOnClickListener {
             if (!TextUtils.isEmpty(etUserComment.text.toString())) {
                 if (isConnected(this)) {

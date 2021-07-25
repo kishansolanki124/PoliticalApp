@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.quiz_and_contest_item.view.*
 
 class QuizAndContestAdapter(
     private val itemClickCall: (QuizAndContestResponse.Quiz) -> Unit,
+    private val itemClickShare: (QuizAndContestResponse.Quiz) -> Unit,
     private val itemClickWeb: (QuizAndContestResponse.Quiz) -> Unit
 ) :
     RecyclerView.Adapter<QuizAndContestAdapter.HomeOffersViewHolder>() {
@@ -26,7 +27,7 @@ class QuizAndContestAdapter(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.quiz_and_contest_item, parent, false)
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
+            view, itemClickCall, itemClickShare, itemClickWeb
         )
     }
 
@@ -49,6 +50,7 @@ class QuizAndContestAdapter(
     class HomeOffersViewHolder(
         view: View,
         private val itemClickCall: (QuizAndContestResponse.Quiz) -> Unit,
+        private val itemClickShare: (QuizAndContestResponse.Quiz) -> Unit,
         private val itemClickWeb: (QuizAndContestResponse.Quiz) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
@@ -178,6 +180,12 @@ class QuizAndContestAdapter(
                 itemView.btViewWinner.setOnClickListener {
                     if (itemView.btViewWinner.text.equals("check winner")) {
                         itemClickWeb(this)
+                    }
+                }
+
+                itemView.ivShareQuizAndContest.setOnClickListener {
+                    if (itemView.btViewWinner.text.equals("check winner")) {
+                        itemClickShare(this)
                     }
                 }
 //

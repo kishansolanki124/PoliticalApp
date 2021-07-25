@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.govt_work_news_item.view.*
 
 class GovtWorkNewsAdapter(
     private val itemClickCall: (GovtWorkListResponse.GovWork) -> Unit,
-    private val itemClickWeb: (GovtWorkListResponse.GovWork) -> Unit
+    private val itemClickShare: (GovtWorkListResponse.GovWork) -> Unit
 ) :
     RecyclerView.Adapter<GovtWorkNewsAdapter.HomeOffersViewHolder>() {
 
@@ -22,7 +22,7 @@ class GovtWorkNewsAdapter(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.govt_work_news_item, parent, false)
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
+            view, itemClickCall, itemClickShare
         )
     }
 
@@ -45,7 +45,7 @@ class GovtWorkNewsAdapter(
     class HomeOffersViewHolder(
         view: View,
         private val itemClickCall: (GovtWorkListResponse.GovWork) -> Unit,
-        private val itemClickWeb: (GovtWorkListResponse.GovWork) -> Unit
+        private val itemClickShare: (GovtWorkListResponse.GovWork) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
         fun bindForecast(
@@ -65,11 +65,11 @@ class GovtWorkNewsAdapter(
                 }
 
                 itemView.ivNewsShare.setOnClickListener {
-                    itemClickWeb(this)
+                    itemClickShare(this)
                 }
 //
 //                itemView.ivWeb.setOnClickListener {
-//                    itemClickWeb(this)
+//                    itemClickShare(this)
 //                }
             }
         }
