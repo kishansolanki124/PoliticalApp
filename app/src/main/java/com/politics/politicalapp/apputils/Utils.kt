@@ -306,8 +306,10 @@ fun shareTextAndImage(context: Context, fileName: String, shareableText: String)
     intent.putExtra(Intent.EXTRA_STREAM, fileUri)
     intent.putExtra(
         Intent.EXTRA_TEXT,
-        shareableText + "\n\nઇન્સ્ટોલ કરો એપ - https://play.google.com/store/apps/details?id=" +
-                BuildConfig.APPLICATION_ID
+//        shareableText + "\n\nઇન્સ્ટોલ કરો એપ - https://play.google.com/store/apps/details?id=" +
+//        BuildConfig.APPLICATION_ID
+        shareableText + "\n\n" + SPreferenceManager.getInstance(context).settings.settings[0].postsharemsg
+
     )
 
     context.startActivity(Intent.createChooser(intent, "Share"))
@@ -319,10 +321,21 @@ fun shareIntent(shareableText: String, context: Context) {
     txtIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name))
     txtIntent.putExtra(
         Intent.EXTRA_TEXT, shareableText
-                + "\n\nDownload the app from https://play.google.com/store/apps/details?id=" +
-                BuildConfig.APPLICATION_ID
+//                + "\n\nDownload the app from https://play.google.com/store/apps/details?id=" +
+//                BuildConfig.APPLICATION_ID
+                + "\n\n" + SPreferenceManager.getInstance(context).settings.settings[0].postsharemsg
     )
     context.startActivity(Intent.createChooser(txtIntent, "Share"))
+}
+
+fun Context.shareApp() {
+    val txtIntent = Intent(Intent.ACTION_SEND)
+    txtIntent.type = "text/plain"
+    txtIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+    txtIntent.putExtra(
+        Intent.EXTRA_TEXT, SPreferenceManager.getInstance(this).settings.settings[0].appsharemsg
+    )
+    startActivity(Intent.createChooser(txtIntent, "Share"))
 }
 
 //fun callIntent(activity: Activity, phoneNumber: String) {

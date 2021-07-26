@@ -54,7 +54,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListeners() {
-
         ivPointQuestion.setOnClickListener {
             showInfoWindow()
         }

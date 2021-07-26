@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.rateApp
-import com.politics.politicalapp.apputils.shareIntent
+import com.politics.politicalapp.apputils.shareApp
 import com.politics.politicalapp.apputils.showToast
 import com.politics.politicalapp.ui.fragment.HomeFragment
 import com.politics.politicalapp.ui.fragment.LivePollFragment
@@ -53,7 +52,7 @@ class HomeActivity : ExtendedToolbarActivity(),
 
         ivShareApp.setOnClickListener {
             hideMenu()
-            shareIntent("Lorem Ipsum is simply dummy text of", this)
+            shareApp()
         }
 
         ivRateUs.setOnClickListener {
@@ -66,13 +65,13 @@ class HomeActivity : ExtendedToolbarActivity(),
             startActivity(Intent(this, TNCActivity::class.java))
         }
 
-        tvLogout.setOnClickListener {
-            hideMenu()
-            SPreferenceManager.getInstance(this).clearSession()
-            val mIntent = Intent(this, SplashActivity::class.java)
-            finishAffinity()
-            startActivity(mIntent)
-        }
+//        tvLogout.setOnClickListener {
+//            hideMenu()
+//            SPreferenceManager.getInstance(this).clearSession()
+//            val mIntent = Intent(this, SplashActivity::class.java)
+//            finishAffinity()
+//            startActivity(mIntent)
+//        }
 
         ivClose.setOnClickListener {
             if (newsCategory.isVisible) {

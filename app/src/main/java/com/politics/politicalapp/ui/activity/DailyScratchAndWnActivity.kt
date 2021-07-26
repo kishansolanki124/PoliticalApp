@@ -58,9 +58,10 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
                     lwv.visibility = View.GONE
                     tvSpinAndWin.visibility = View.GONE
                     tvSpinAlreadyDone.visibility = View.VISIBLE
+                    tvSpinAlreadyDone.text = it.message
                     tvYourPoints.visibility = View.VISIBLE
                     tvYourPoints.text =
-                        "Your Points are: " + SPreferenceManager.getInstance(this).settings.user_points
+                        "Your Points Are: " + SPreferenceManager.getInstance(this).settings.user_points
                     showAlertDialog(it.message)
                 }, 3500L)
 
@@ -122,9 +123,10 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
             lwv.visibility = View.GONE
             tvSpinAndWin.visibility = View.GONE
             tvSpinAlreadyDone.visibility = View.VISIBLE
-            tvYourPoints.visibility = View.VISIBLE
-            tvYourPoints.text =
-                "Your Points are: " + SPreferenceManager.getInstance(this).settings.user_points
+            tvSpinAlreadyDone.text = scratchCardResponse?.message
+//            tvYourPoints.visibility = View.VISIBLE
+//            tvYourPoints.text =
+//                "Your Points are: " + SPreferenceManager.getInstance(this).settings.user_points
             setupEmptyWheel()
         }
     }

@@ -141,6 +141,11 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): GiveUserRatingToGovtWorkResponse
 
+    @POST(AppConstants.APIEndPoints.ADD_NEWS_COMMENT)
+    suspend fun addNewsComment(
+        @Body hashMap: MultipartBody
+    ): GiveUserRatingToGovtWorkResponse
+
     @POST(AppConstants.APIEndPoints.MLA_LIST)
     suspend fun mlaList(
         @Body hashMap: MultipartBody

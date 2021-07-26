@@ -17,6 +17,7 @@
             android:id="@+id/tvMLASpecialWork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
             android:fontFamily="@font/regular"
             android:lineSpacingExtra="@dimen/dp_2"
             android:padding="@dimen/dp_5"

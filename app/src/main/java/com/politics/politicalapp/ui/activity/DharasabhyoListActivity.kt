@@ -122,6 +122,7 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
                 val district: SettingsResponse.District =
                     parent.selectedItem as SettingsResponse.District
                 districtId = district.id
+                govtWorkNewsAdapter.reset()
                 getNews()
             }
 

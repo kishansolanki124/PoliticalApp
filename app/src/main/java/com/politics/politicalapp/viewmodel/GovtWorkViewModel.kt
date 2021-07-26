@@ -115,6 +115,35 @@ class GovtWorkViewModel : ViewModel() {
         }
     }
 
+    fun addNewsComment(nid: String, user_mobile: String, user_comment: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.nid,
+                    nid
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_mobile,
+                    user_mobile
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_comment,
+                    user_comment
+                )
+
+                val apiResponse = apiEndPointsInterface.addNewsComment(
+                    requestBodyBuilder.build()
+                )
+                returnGovtWorkCommentResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun getGovtWorkDetail(gid: String, user_mobile: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {

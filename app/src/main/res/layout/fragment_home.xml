@@ -253,7 +253,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"
                 android:padding="@dimen/dp_5"
-                android:text="@string/hot_news"
+                android:text="@string/latest_news"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 

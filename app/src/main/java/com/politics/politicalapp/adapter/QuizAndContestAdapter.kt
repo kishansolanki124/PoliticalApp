@@ -180,13 +180,13 @@ class QuizAndContestAdapter(
                 itemView.btViewWinner.setOnClickListener {
                     if (itemView.btViewWinner.text.equals("check winner")) {
                         itemClickWeb(this)
+                    } else {
+                        itemClickCall(this)
                     }
                 }
 
                 itemView.ivShareQuizAndContest.setOnClickListener {
-                    if (itemView.btViewWinner.text.equals("check winner")) {
                         itemClickShare(this)
-                    }
                 }
 //
 //                itemView.ivWeb.setOnClickListener {

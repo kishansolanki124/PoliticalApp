@@ -83,6 +83,7 @@
                     android:layout_marginHorizontal="@dimen/dp_5"
                     android:layout_marginBottom="@dimen/dp_5"
                     android:fontFamily="@font/regular"
+                    android:justificationMode="inter_word"
                     android:lineSpacingExtra="@dimen/dp_5"
                     android:padding="@dimen/dp_5"
                     android:textColor="@color/black"

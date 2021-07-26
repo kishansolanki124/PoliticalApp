@@ -52,6 +52,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTNC"
+                        android:justificationMode="inter_word"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"

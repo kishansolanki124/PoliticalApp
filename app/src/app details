@@ -1,8 +1,4 @@
-
 REQUIRED:
-
-Logout Icon (Menu screen)
-
 
 TODO:
 font change of percentage in chart in every screen
@@ -12,5 +8,38 @@ Pagination in
     3. LivePollFragment
     4. QuizAndContestActivity
     5. WinnerFragment
-Share in every screen
-    1. QuestionSuggestionActivity
+
+app minimize kare atle welcome screen thi app start karvi
+
+welcome screen (logo vadi screen) full dynamic image avse (settings vadi api ma data api dais)
+
+sarkar ne kamgiri ma all comment kari badhi comment show karvi
+
+question / advice na form ma niche terms avse dynamic
+
+scratch card nu name Spin & Win karvu
+
+spin & win screen ma niche terms avse dynamic
+
+back btn ghani var work nti kartu 2-3 var click kri tyare back jay che
+
+points winner ma winner nu list muki didhu hoy to details screen ma winner nu list nti avtu details ave che
+
+quiz detail ma date nu format change karvu dd-mm-yy karvu
+
+quiz ma prize detail & rules na btn uper popup open nti thatu
+
+your points tooltip text dynamic
+
+winners menu name rename with Points Winner
+
+spin and win & vaccine vadi screen ma popup banner alag thi avse
+
+Amit Masha feedback
+Amit mash new designs
+
+data nu default listing user j district select karyu hoy registretion vakhte e j karavu for ex. sarkar ni kamgiri, dharasabhyo etc
+
+notification bell icon not working
+
+onsignal notification for scratch card, quiz contest, live poll, sarkar ne kamgiri, vaccine screen

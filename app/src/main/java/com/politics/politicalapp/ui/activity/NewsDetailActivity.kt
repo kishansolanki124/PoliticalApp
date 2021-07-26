@@ -1,25 +1,33 @@
 package com.politics.politicalapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.adapter.NewsCommentAdapter
+import com.politics.politicalapp.adapter.NewsDetailsImageAdapter
+import com.politics.politicalapp.apputils.*
+import com.politics.politicalapp.pojo.GiveUserRatingToGovtWorkResponse
+import com.politics.politicalapp.pojo.GovtWorkDetailResponse
 import com.politics.politicalapp.pojo.NewsDetailResponse
 import com.politics.politicalapp.viewmodel.GovtWorkViewModel
 import kotlinx.android.synthetic.main.activity_news_detail.*
+import java.io.Serializable
 
 class NewsDetailActivity : ExtendedToolbarActivity() {
 
     private lateinit var govtWorkViewModel: GovtWorkViewModel
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var govtWorkNewsAdapter: NewsCommentAdapter
     private var nid = ""
 
     override val layoutId: Int
@@ -30,12 +38,17 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
 
         nid = intent.getStringExtra(AppConstants.ID)!!
 
-        setToolbarTitle(getString(R.string.hot_news))
+        setToolbarTitle(getString(R.string.latest_news))
+        initList()
 
         govtWorkViewModel = ViewModelProvider(this).get(GovtWorkViewModel::class.java)
 
         govtWorkViewModel.newsDetail().observe(this, {
             handleResponse(it)
+        })
+
+        govtWorkViewModel.newComment().observe(this, {
+            handleResponseOfNewComment(it)
         })
 
         if (isConnected(this)) {
@@ -75,15 +88,54 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
         nsvGovtWorkDetail.visibility = View.VISIBLE
         if (null != govtWorkDetailResponse) {
             setupViews(govtWorkDetailResponse)
+            addItems(govtWorkDetailResponse.user_comment)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
         }
     }
 
     private fun setupViews(govtWorkDetailResponse: NewsDetailResponse) {
-        Glide.with(this)
-            .load(govtWorkDetailResponse.news_detail[0].up_pro_img)
-            .into(ivNewsDetail)
+
+        btSubmitComment.setOnClickListener {
+            if (!TextUtils.isEmpty(etUserComment.text.toString())) {
+                if (isConnected(this)) {
+                    hideKeyboard(this)
+                    pbComment.visibility = View.VISIBLE
+                    btSubmitComment.visibility = View.INVISIBLE
+                    govtWorkViewModel.addNewsComment(
+                        nid,
+                        SPreferenceManager.getInstance(this).session,
+                        etUserComment.text.toString()
+                    )
+                } else {
+                    showSnackBar(getString(R.string.no_internet))
+                }
+            } else {
+                showSnackBar(getString(R.string.invalid_comment))
+            }
+        }
+
+        ivShareNews.setOnClickListener {
+            shareIntent(
+                govtWorkDetailResponse.news_detail[0].name,
+                govtWorkDetailResponse.news_detail[0].up_pro_img,
+                this
+            )
+        }
+
+        val imageList: ArrayList<String> = ArrayList()
+        if (!govtWorkDetailResponse.news_gallery.isNullOrEmpty()) {
+            imageList.add(govtWorkDetailResponse.news_detail[0].up_pro_img)
+            for (item in govtWorkDetailResponse.news_gallery) {
+                imageList.add(item.up_pro_img)
+            }
+        } else {
+            imageList.add(govtWorkDetailResponse.news_detail[0].up_pro_img)
+        }
+
+//        Glide.with(this)
+//            .load(govtWorkDetailResponse.news_detail[0].up_pro_img)
+//            .into(ivNewsDetail)
 
         tvNewsDetailTitle.text = govtWorkDetailResponse.news_detail[0].name
 
@@ -91,5 +143,51 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
             govtWorkDetailResponse.news_detail[0].description,
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
+
+        val adapter = NewsDetailsImageAdapter { _, position ->
+            startActivity(
+                Intent(this, DisplayPictureActivity::class.java)
+                    .putExtra(AppConstants.IMAGE_POSITION, position)
+                    .putExtra(
+                        AppConstants.IMAGE_LIST,
+                        imageList as Serializable
+                    )
+            )
+
+        }
+        adapter.setItem(imageList)
+        newsDetailsViewpager.adapter = adapter
+    }
+
+    private fun initList() {
+        layoutManager = LinearLayoutManager(this)
+        rvComments.layoutManager = layoutManager
+
+        govtWorkNewsAdapter = NewsCommentAdapter(
+            {
+                //callIntent(this, it.contact_no!!)
+            }, {
+                //browserIntent(this, it.website!!)
+            }
+        )
+        rvComments.adapter = govtWorkNewsAdapter
+    }
+
+    private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>) {
+        if (userComment.isNotEmpty()) {
+            govtWorkNewsAdapter.setItem(userComment)
+        }
+    }
+
+    private fun handleResponseOfNewComment(giveUserRatingToGovtWorkResponse: GiveUserRatingToGovtWorkResponse?) {
+        btSubmitComment.visibility = View.VISIBLE
+        pbComment.visibility = View.GONE
+        if (null != giveUserRatingToGovtWorkResponse) {
+            etUserComment.setText("")
+            govtWorkNewsAdapter.reset()
+            addItems(giveUserRatingToGovtWorkResponse.comment_list)
+            setUserPoints(giveUserRatingToGovtWorkResponse.user_points)
+            //showAlertDialog(giveUserRatingToGovtWorkResponse.message)
+        }
     }
 }

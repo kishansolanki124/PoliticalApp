@@ -66,8 +66,8 @@
         android:drawableStart="@drawable/contact"
         android:text="@string/Contact_Us" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvLogout"
-        style="@style/MenuFragmentTextView"
-        android:text="@string/Logout" />
+<!--    <androidx.appcompat.widget.AppCompatTextView-->
+<!--        android:id="@+id/tvLogout"-->
+<!--        style="@style/MenuFragmentTextView"-->
+<!--        android:text="@string/Logout" />-->
 </androidx.appcompat.widget.LinearLayoutCompat>
