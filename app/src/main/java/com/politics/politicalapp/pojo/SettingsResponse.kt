@@ -3,6 +3,7 @@ package com.politics.politicalapp.pojo
 data class SettingsResponse(
     var district_list: List<District> = listOf(),
     var settings: List<Setting> = listOf(),
+    var welcome_banner: List<WelcomeBanner> = listOf(),
     var news_list: List<News> = listOf(),
     var user_points: String = ""
 ) {
@@ -29,6 +30,11 @@ data class SettingsResponse(
         var id: String = "",
         var name: String = "",
         var pdate: String = "",
+        var up_pro_img: String = ""
+    )
+
+    data class WelcomeBanner(
+        var id: String = "",
         var up_pro_img: String = ""
     )
 }

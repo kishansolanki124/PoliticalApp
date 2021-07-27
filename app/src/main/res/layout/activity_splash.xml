@@ -1,24 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/banner_red"
     android:orientation="vertical"
     tools:context=".ui.activity.SplashActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/pbSplash"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_10"
+        android:indeterminateTint="@color/white"
+        android:indeterminateTintMode="multiply"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:visibility="gone" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7.5"
-        android:background="@color/banner_red"
-        android:scaleType="center"
-        android:src="@drawable/banner" />
+        android:layout_height="@dimen/dp_100"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSplash"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:background="@color/white"
-        android:scaleType="center"
-        android:src="@drawable/logo" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_height="match_parent"
+        tools:src="@drawable/banner" />
+
+    <!--    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--        xmlns:tools="http://schemas.android.com/tools"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        tools:context=".ui.activity.SplashActivity">-->
+
+    <!--    <androidx.appcompat.widget.AppCompatImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="7.5"-->
+    <!--        android:background="@color/banner_red"-->
+    <!--        android:scaleType="center"-->
+    <!--        android:src="@drawable/banner" />-->
+
+    <!--    <androidx.appcompat.widget.AppCompatImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="2.5"-->
+    <!--        android:background="@color/white"-->
+    <!--        android:scaleType="center"-->
+    <!--        android:src="@drawable/logo" />-->
+    <!--</androidx.appcompat.widget.LinearLayoutCompat>-->
+</RelativeLayout>
