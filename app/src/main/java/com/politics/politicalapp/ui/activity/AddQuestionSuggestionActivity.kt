@@ -9,12 +9,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.bumptech.glide.Glide
 import com.opensooq.supernova.gligar.GligarPicker
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.getTermsByName
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.CommonResponse
@@ -22,7 +24,6 @@ import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.viewmodel.UserAdviseViewModel
 import kotlinx.android.synthetic.main.activity_add_question_suggestion.*
 import java.io.File
-
 
 class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
 
@@ -42,6 +43,11 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
 
         setToolbarTitle(getString(R.string.que_suggestion))
         setupDistrictSpinner()
+
+        tvTNC.text = HtmlCompat.fromHtml(
+            getTermsByName("User Question"),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
 
         govtWorkViewModel = ViewModelProvider(this).get(UserAdviseViewModel::class.java)
 
@@ -91,6 +97,12 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     private fun fieldsAreValid(): Boolean {
         return when {
+
+            (!::selectedFile.isInitialized) -> {
+                showSnackBar(getString(R.string.add_image))
+                false
+            }
+
             TextUtils.isEmpty(etTitle.text.toString()) -> {
                 showSnackBar(getString(R.string.Enter_Title))
                 false

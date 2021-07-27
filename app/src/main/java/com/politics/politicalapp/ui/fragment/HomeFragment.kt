@@ -63,7 +63,7 @@ class HomeFragment : Fragment() {
         }
 
         llDailYScratch.setOnClickListener {
-            startActivity(Intent(requireContext(), DailyScratchAndWnActivity::class.java))
+            startActivity(Intent(requireContext(), DailySpinAndWinActivity::class.java))
         }
 
         llQuizAndContest.setOnClickListener {
@@ -182,8 +182,8 @@ class HomeFragment : Fragment() {
 
     private fun showInfoWindow() {
         BubbleShowCaseBuilder(requireActivity()) //Activity instance
-            .title("Lorem Ipsum") //Any title for the bubble view
-            .description("Lorem Ipsum is simply dummy text of the printing and typesetting") //Any title for the bubble view
+            .title(SPreferenceManager.getInstance(requireContext()).settings.settings[0].points_tooltip)
+            //.description("Lorem Ipsum is simply dummy text of the printing and typesetting") //Any title for the bubble view
             .targetView(ivPointQuestion) //View to point out
             .backgroundColor(
                 ContextCompat.getColor(

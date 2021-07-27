@@ -10,23 +10,21 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bluehomestudio.luckywheel.WheelItem
 import com.cooltechworks.views.ScratchImageView
 import com.politics.politicalapp.R
-import com.politics.politicalapp.apputils.SPreferenceManager
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.setUserPoints
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.*
 import com.politics.politicalapp.pojo.ScratchCardResponse
 import com.politics.politicalapp.viewmodel.SettingsViewModel
-import kotlinx.android.synthetic.main.activity_daily_scratch_and_win.*
+import kotlinx.android.synthetic.main.activity_daily_spin_and_win.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
+class DailySpinAndWinActivity : ExtendedToolbarActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
     private var numberList: ArrayList<Int> = ArrayList()
@@ -34,13 +32,13 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
     private var targetValue = 0
     private var points = 0
     override val layoutId: Int
-        get() = R.layout.activity_daily_scratch_and_win
+        get() = R.layout.activity_daily_spin_and_win
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setToolbarTitle(getString(R.string.daily_scratch_card))
+        setToolbarTitle(getString(R.string.daily_spin_and_win))
 
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
@@ -57,6 +55,8 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     lwv.visibility = View.GONE
                     tvSpinAndWin.visibility = View.GONE
+                    tvTNCHeader.visibility = View.GONE
+                    tvTNC.visibility = View.GONE
                     tvSpinAlreadyDone.visibility = View.VISIBLE
                     tvSpinAlreadyDone.text = it.message
                     tvYourPoints.visibility = View.VISIBLE
@@ -74,7 +74,7 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
             override fun onRevealed(iv: ScratchImageView) {
                 // this method is called after revealing the image.
                 Toast.makeText(
-                    this@DailyScratchAndWnActivity,
+                    this@DailySpinAndWinActivity,
                     "Congratulations",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -116,12 +116,16 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
     private fun handleResponse(scratchCardResponse: ScratchCardResponse?) {
         lwv.visibility = View.VISIBLE
         tvSpinAndWin.visibility = View.VISIBLE
+        tvTNCHeader.visibility = View.VISIBLE
+        tvTNC.visibility = View.VISIBLE
         pbScratchCard.visibility = View.GONE
         if (null != scratchCardResponse && scratchCardResponse.status == "1") {
             setupSpinWheel(scratchCardResponse)
         } else {
             lwv.visibility = View.GONE
             tvSpinAndWin.visibility = View.GONE
+            tvTNCHeader.visibility = View.GONE
+            tvTNC.visibility = View.GONE
             tvSpinAlreadyDone.visibility = View.VISIBLE
             tvSpinAlreadyDone.text = scratchCardResponse?.message
 //            tvYourPoints.visibility = View.VISIBLE
@@ -268,6 +272,11 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
                 showSnackBar(getString(R.string.no_internet), this)
             }
         }
+
+        tvTNC.text = HtmlCompat.fromHtml(
+            getTermsByName("Scratch Card"),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
     }
 
     private fun setupEmptyWheel() {
@@ -307,6 +316,8 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
             pbScratchCard.visibility = View.VISIBLE
             lwv.visibility = View.GONE
             tvSpinAndWin.visibility = View.GONE
+            tvTNCHeader.visibility = View.GONE
+            tvTNC.visibility = View.GONE
             settingsViewModel.getScratchCard(SPreferenceManager.getInstance(this).session)
         } else {
             showSnackBar(getString(R.string.no_internet), this)
@@ -334,6 +345,9 @@ class DailyScratchAndWnActivity : ExtendedToolbarActivity() {
         targetValue = (Math.random() * numberList.size).toInt()
 //        val rand = Random()
 //        targetValue = rand.nextInt(4 - 0 + 1) + 0
+        if (targetValue <= 0) {
+            targetValue = 1
+        }
         points = numberList[targetValue - 1]
         return targetValue
     }

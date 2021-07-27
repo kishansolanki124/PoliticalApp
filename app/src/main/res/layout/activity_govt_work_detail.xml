@@ -112,6 +112,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:letterSpacing="0.02"
                     android:id="@+id/tvNewsDetailTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -119,21 +120,22 @@
                     android:lineSpacingExtra="@dimen/dp_2"
                     android:padding="@dimen/dp_5"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_14"
+                    android:textSize="@dimen/sp_16"
                     tools:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvNewsDetailDesc"
                     android:layout_width="wrap_content"
-                    android:justificationMode="inter_word"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/dp_5"
                     android:ellipsize="end"
                     android:fontFamily="@font/regular"
+                    android:letterSpacing="0.02"
+                    android:justificationMode="inter_word"
                     android:lineSpacingExtra="@dimen/dp_2"
                     android:padding="@dimen/dp_5"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     tools:text="પાસના નેતા અને હાર્દિક પટેલ સાથે કોંગ્રેસમાં જોડાયેલા યુવા કોંગ્રેસના ઉપપ્રમુખ નિખિલ સવાણીએ કોંગ્રેસમાંથી રાજીનામું આપી દીધું છે અને ગમે ત્યારે આમ આદમી પાર્ટીમાં જોડાઇ શકે છે. આ અંગે નિખિલ સવાણીએ દિવ્ય ભાસ્કર સાથે વાત કરતાં જણાવ્યું કે કેટલાંક લોકો સાથે ચર્ચા કરી નિર્ણય લેશે. કોંગ્રેસ છોડતાં પહેલાં તેમણે આક્ષેપ કર્યો કે કોંગ્રેસમાં હાર્દિક પટેલની અવગણના થઇ છે અને તેમની રાજકીય હત્યા થઇ છે. તેમણે કહ્યું કે આમ હું જ નથી કહેતો પણ હાર્દિક પટેલ પણ અગાઉ કહી ચૂક્યા છે કે તેમનું સન્માન કોંગ્રેસમાં જળવાતું નથી. તેમણે એમ પણ કહ્યું કે યુથ કોંગ્રેસમાં પ્રદેશ પ્રમુખ બનવા માટે નકલી મેમ્બરો ઊભા કરીને કૌભાંડ થાય છે." />
 
                 <View
@@ -343,6 +345,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     tools:listitem="@layout/comment_item" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvViewAllComment"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/dp_10"
+                    android:fontFamily="@font/semi_bold"
+                    android:padding="@dimen/dp_5"
+                    android:theme="@style/ClickableTextView"
+                    android:text="@string/view_all_comments"
+                    android:textColor="@color/red_CC252C"
+                    android:textSize="@dimen/sp_12" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

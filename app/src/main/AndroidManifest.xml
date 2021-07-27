@@ -53,7 +53,7 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.activity.DailyScratchAndWnActivity"
+            android:name=".ui.activity.DailySpinAndWinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />

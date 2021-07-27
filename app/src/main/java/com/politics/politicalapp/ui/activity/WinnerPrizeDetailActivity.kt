@@ -19,6 +19,7 @@ class WinnerPrizeDetailActivity : ExtendedToolbarActivity() {
     private var pid = ""
     override val layoutId: Int
         get() = R.layout.activity_winner_prize_detail
+
     private lateinit var settingsViewModel: WinnerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

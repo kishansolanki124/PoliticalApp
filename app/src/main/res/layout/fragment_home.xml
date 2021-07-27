@@ -208,7 +208,7 @@
                     android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:padding="@dimen/dp_5"
-                    android:text="@string/daily_scratch_card"
+                    android:text="@string/daily_spin_and_win"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16" />
             </LinearLayout>

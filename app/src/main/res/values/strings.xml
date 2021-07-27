@@ -4,7 +4,7 @@
     <string name="your_phone">તમારો મોબાઇલ નંબર</string>
     <string name="Home">Home</string>
     <string name="Live_Poll">Live Poll</string>
-    <string name="Winners">Winners</string>
+    <string name="Points_Winners">Points Winner</string>
     <string name="Winners_">Winners :</string>
     <string name="Menu">Menu</string>
     <string name="your_points">Your Points</string>
@@ -14,7 +14,7 @@
     <string name="poll_and_survey">પોલ અને સર્વે</string>
     <string name="live_poll">લાઇવ પોલ</string>
     <string name="que_suggestion">પ્રશ્નો સૂચનો</string>
-    <string name="daily_scratch_card">ડેઇલી સ્ક્રેચ કાર્ડ</string>
+    <string name="daily_spin_and_win">સ્પિન કરો અને જીતો</string>
     <string name="quiz_and_contest">કવીઝ અને કોન્ટેસ્ટ</string>
     <string name="winner">વિજેતા</string>
     <string name="latest_news">Latest News</string>
@@ -40,6 +40,7 @@
     <string name="running">running</string>
     <string name="prize_details_and_rules">Prize Details &amp; Rules</string>
     <string name="Prize_Details">Prize Details</string>
+    <string name="Quiz_Details_">Quiz Details:</string>
     <string name="Check_Winner">CHECK WINNER</string>
     <string name="Name">Name</string>
     <string name="Email">Email</string>
@@ -82,4 +83,8 @@
     <string name="download_in_progress">Downloading. Please wait!</string>
     <string name="sharing">Sharing…</string>
     <string name="you_won_points_already">You\'ve won points for today</string>
+    <string name="view_all_comments"><u>View All Comments</u></string>
+    <string name="Terms_">Terms:</string>
+    <string name="add_image">Add Image</string>
+    <string name="Rules_">Rules:</string>
 </resources>

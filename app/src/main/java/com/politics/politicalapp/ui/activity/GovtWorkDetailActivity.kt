@@ -170,6 +170,11 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         tvShareGovtWork.setOnClickListener {
             shareIntent(sharableText, imageURL, this)
         }
+
+        tvViewAllComment.setOnClickListener {
+
+        }
+
         btSubmitComment.setOnClickListener {
             if (!TextUtils.isEmpty(etUserComment.text.toString())) {
                 if (isConnected(this)) {
@@ -455,9 +460,12 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         rvComments.adapter = govtWorkNewsAdapter
     }
 
-    private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>) {
-        if (userComment.isNotEmpty()) {
+    private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>?) {
+        if (null != userComment && userComment.isNotEmpty()) {
+            tvViewAllComment.visibility = View.VISIBLE
             govtWorkNewsAdapter.setItem(userComment)
+        } else {
+            tvViewAllComment.visibility = View.GONE
         }
     }
 

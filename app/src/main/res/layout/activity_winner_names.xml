@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_5"
                         android:fontFamily="@font/regular"
-                        android:lineSpacingExtra="@dimen/dp_10"
+                        android:lineSpacingExtra="@dimen/dp_5"
                         android:padding="@dimen/dp_10"
                         tools:text="(1) Mehul Patel, Ahmedabad\n(2) Ravi Chauhan, Jamnagar\n(3) Mehul Patel, Ahmedabad\n(4) Ravi Chauhan, Jamnagar\n(5) Ravi Chauhan, Jamnagar"
                         android:textColor="@color/black"

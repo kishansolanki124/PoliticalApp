@@ -47,8 +47,8 @@
                     android:fontFamily="@font/semi_bold"
                     android:paddingHorizontal="@dimen/dp_10"
                     android:paddingVertical="@dimen/dp_5"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/red_actionbar"
+                    android:textSize="@dimen/sp_16"
                     tools:text="ભારતના કયા પ્રધાનમંત્રી રાષ્ટ્રીય સ્વયંસેવક સંઘના સદસ્ય પણ છે ?" />
 
                 <androidx.appcompat.widget.AppCompatTextView

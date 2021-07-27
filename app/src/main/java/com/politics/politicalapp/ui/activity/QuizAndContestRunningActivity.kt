@@ -1,12 +1,19 @@
 package com.politics.politicalapp.ui.activity
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.bumptech.glide.Glide
@@ -22,6 +29,8 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
     private var qid = ""
     private var answerId = ""
     private var browserURL = ""
+    private var rules = ""
+    private var prizeDetail = ""
     private lateinit var settingsViewModel: QuizAndContestViewModel
 
     override val layoutId: Int
@@ -36,6 +45,10 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
 
         ivSponsor.setOnClickListener {
             openBrowser(this, browserURL)
+        }
+
+        btPrizeDetailsAndRules.setOnClickListener {
+            showAlertDialog()
         }
 
         btSubmitQuizContestAnswer.setOnClickListener {
@@ -235,6 +248,8 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         tvQuizWinnerDate.text = quizAndContestRunningResponse.quiz_detail[0].result_date
 
         browserURL = quizAndContestRunningResponse.quiz_detail[0].sponser_url
+        rules = quizAndContestRunningResponse.quiz_detail[0].quiz_rules
+        prizeDetail = quizAndContestRunningResponse.quiz_detail[0].quiz_detail
 
         ivShareQuizAndContestDetail.setOnClickListener {
             shareIntent(
@@ -260,5 +275,36 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
+
+    private fun showAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+
+        val viewGroup = this.findViewById<ViewGroup>(R.id.content)
+        val layout: View = LayoutInflater.from(this)
+            .inflate(R.layout.dialog_quize_rules, viewGroup, false)
+
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        alertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val ivClose = layout.findViewById(R.id.ivClose) as ImageView
+        val tvRules = layout.findViewById(R.id.tvRules) as TextView
+        val tvPrizeDetail = layout.findViewById(R.id.tvPrizeDetail) as TextView
+
+        tvRules.text = HtmlCompat.fromHtml(
+            rules,
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+        tvPrizeDetail.text = HtmlCompat.fromHtml(
+            prizeDetail,
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+
+        ivClose.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 }

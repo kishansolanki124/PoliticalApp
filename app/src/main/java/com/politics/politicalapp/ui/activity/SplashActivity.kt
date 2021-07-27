@@ -59,6 +59,8 @@ class SplashActivity : AppCompatActivity() {
         ivSplash.visibility = View.VISIBLE
 
         if (null != settingsResponse) {
+            SPreferenceManager.getInstance(this).saveSettings(settingsResponse)
+
             Glide.with(this)
                 .load(settingsResponse.welcome_banner[0].up_pro_img)
                 .into(ivSplash)

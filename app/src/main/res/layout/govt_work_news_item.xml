@@ -20,12 +20,12 @@
             android:id="@+id/tvNewsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/regular"
+            android:fontFamily="@font/semi_bold"
             android:lineSpacingExtra="@dimen/dp_2"
             android:paddingVertical="@dimen/dp_5"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_16"
+            android:letterSpacing="0.02"
             tools:text="ફાયર NOC મુદ્દે સુનાવણી:7 હોસ્પિટલોમાં આગ લાગ્યા બાદ સરકારે હાઈકોર્ટમાં સ્વીકાર્યું, 90 ટકા બિલ્ડિંગ્સને BU મળી શકે એમ નથી" />
 
         <com.rishabhharit.roundedimageview.RoundedImageView

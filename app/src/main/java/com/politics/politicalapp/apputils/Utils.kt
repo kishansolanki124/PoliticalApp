@@ -483,3 +483,12 @@ fun Context.rateApp() {
         )
     }
 }
+
+fun Context.getTermsByName(name: String): String {
+    for (item in SPreferenceManager.getInstance(this).settings.terms) {
+        if (item.name.contains(name)) {
+            return item.description
+        }
+    }
+    return ""
+}

@@ -60,7 +60,7 @@ class WinnerNamesActivity : ExtendedToolbarActivity() {
             .into(ivPrizeWinner)
 
         tvPrizeWinnerList.text = HtmlCompat.fromHtml(
-            prizeDetailResponse.prize_detail[0].prize_detail,
+            prizeDetailResponse.prize_detail[0].prize_winner,
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
 

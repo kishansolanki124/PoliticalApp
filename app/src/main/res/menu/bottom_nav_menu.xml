@@ -17,7 +17,7 @@
     <item
         android:id="@+id/navigation_winners"
         android:icon="@drawable/selector_bottom_navigation_winners"
-        android:title="@string/Winners"
+        android:title="@string/Points_Winners"
         app:showAsAction="always" />
 
     <item

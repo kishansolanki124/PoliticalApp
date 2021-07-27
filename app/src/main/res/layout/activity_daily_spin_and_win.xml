@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ui.activity.DailyScratchAndWnActivity">
+    tools:context=".ui.activity.DailySpinAndWinActivity">
 
     <include
         android:id="@+id/commonToolbar"
@@ -47,7 +46,7 @@
         android:layout_below="@id/commonToolbar"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_100"
+        android:layout_marginTop="@dimen/dp_50"
         android:visibility="invisible"
         LuckyWheel:arrow_image="@drawable/triangle"
         LuckyWheel:background_color="@color/red_CC252C" />
@@ -72,10 +71,10 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/dp_20"
         android:fontFamily="@font/regular"
-        tools:text="@string/you_won_points_already"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_20"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:text="@string/you_won_points_already" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvYourPoints"
@@ -89,6 +88,45 @@
         android:textSize="@dimen/sp_20"
         android:visibility="gone"
         tools:text="Your points are 450" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSpinAndWin"
+        tools:context=".ui.activity.DailySpinAndWinActivity">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTNCHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/semi_bold"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:text="@string/Terms_"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTNC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTNCHeader"
+                android:layout_margin="@dimen/dp_10"
+                android:ellipsize="end"
+                android:fontFamily="@font/regular"
+                android:justificationMode="inter_word"
+                android:lineSpacingExtra="@dimen/dp_2"
+                android:padding="@dimen/dp_5"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_12"
+                tools:text="પાસના નેતા અને હાર્દિક પટેલ સાથે કોંગ્રેસમાં જોડાયેલા યુવા કોંગ્રેસના ઉપપ્રમુખ નિખિલ સવાણીએ કોંગ્રેસમાંથી રાજીનામું આપી દીધું છે અને ગમે ત્યારે આમ આદમી પાર્ટીમાં જોડાઇ શકે છે. આ અંગે નિખિલ સવાણીએ દિવ્ય ભાસ્કર સાથે વાત કરતાં જણાવ્યું કે કેટલાંક લોકો સાથે ચર્ચા કરી નિર્ણય લેશે. કોંગ્રેસ છોડતાં પહેલાં તેમણે આક્ષેપ કર્યો કે કોંગ્રેસમાં હાર્દિક પટેલની અવગણના થઇ છે અને તેમની રાજકીય હત્યા થઇ છે. તેમણે કહ્યું કે આમ હું જ નથી કહેતો પણ હાર્દિક પટેલ પણ અગાઉ કહી ચૂક્યા છે કે તેમનું સન્માન કોંગ્રેસમાં જળવાતું નથી. તેમણે એમ પણ કહ્યું કે યુથ કોંગ્રેસમાં પ્રદેશ પ્રમુખ બનવા માટે નકલી મેમ્બરો ઊભા કરીને કૌભાંડ થાય છે." />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/viewKonfetti"
