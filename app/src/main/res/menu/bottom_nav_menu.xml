@@ -15,6 +15,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/navigation_quiz"
+        android:icon="@drawable/selector_bottom_navigation_poll"
+        android:title="@string/Quiz"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/navigation_winners"
         android:icon="@drawable/selector_bottom_navigation_winners"
         android:title="@string/Points_Winners"

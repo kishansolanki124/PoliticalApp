@@ -16,6 +16,7 @@ import com.politics.politicalapp.apputils.shareApp
 import com.politics.politicalapp.apputils.showToast
 import com.politics.politicalapp.ui.fragment.HomeFragment
 import com.politics.politicalapp.ui.fragment.LivePollFragment
+import com.politics.politicalapp.ui.fragment.QuizAndContestFragment
 import com.politics.politicalapp.ui.fragment.WinnerFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_menu.*
@@ -90,6 +91,9 @@ class HomeActivity : ExtendedToolbarActivity(),
                 }
                 R.id.navigation_live_poll -> {
                     switchFragment(LivePollFragment(), false)
+                }
+                R.id.navigation_quiz -> {
+                    switchFragment(QuizAndContestFragment(), false)
                 }
                 R.id.navigation_menu -> {
                     if (!newsCategory.isVisible) {
