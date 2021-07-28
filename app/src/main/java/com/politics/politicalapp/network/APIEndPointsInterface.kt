@@ -3,7 +3,9 @@ package com.politics.politicalapp.network
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.pojo.*
 import okhttp3.MultipartBody
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
 
 
 interface APIEndPointsInterface {
@@ -33,6 +35,12 @@ interface APIEndPointsInterface {
     suspend fun getQuizAndContest(
         @Body hashMap: MultipartBody
     ): QuizAndContestResponse
+
+    @GET(AppConstants.APIEndPoints.GET_QUIZ_CONTEST_DYNAMIC)
+    suspend fun getQuizAndContestDynamic(): QuizAndContestDynamicResponse
+
+    @POST(AppConstants.APIEndPoints.ADD_QUIZ_CONTEST_DYNAMIC)
+    suspend fun addPhotoContest(@Body hashMap: MultipartBody): CommonResponse
 
     @POST(AppConstants.APIEndPoints.GET_LIVE_POLL)
     suspend fun getLivePollList(
@@ -83,6 +91,16 @@ interface APIEndPointsInterface {
     suspend fun getGovtWork(
         @Body hashMap: MultipartBody
     ): GovtWorkListResponse
+
+    @POST(AppConstants.APIEndPoints.GET_GOVT_WORK_COMMENTS)
+    suspend fun getGovtWorkComments(
+        @Body hashMap: MultipartBody
+    ): GovtWorkAllCommentResponse
+
+    @POST(AppConstants.APIEndPoints.GET_NEWS_COMMENTS)
+    suspend fun getNewsComments(
+        @Body hashMap: MultipartBody
+    ): GovtWorkAllCommentResponse
 
     @POST(AppConstants.APIEndPoints.GET_UER_ADVISE)
     suspend fun getUserAdvise(

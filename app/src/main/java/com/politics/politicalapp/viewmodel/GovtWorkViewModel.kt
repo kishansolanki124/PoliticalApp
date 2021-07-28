@@ -7,10 +7,7 @@ import androidx.lifecycle.viewModelScope
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.network.APIEndPointsInterface
 import com.politics.politicalapp.network.RetrofitFactory
-import com.politics.politicalapp.pojo.GiveUserRatingToGovtWorkResponse
-import com.politics.politicalapp.pojo.GovtWorkDetailResponse
-import com.politics.politicalapp.pojo.GovtWorkListResponse
-import com.politics.politicalapp.pojo.NewsDetailResponse
+import com.politics.politicalapp.pojo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,6 +16,7 @@ import okhttp3.MultipartBody
 class GovtWorkViewModel : ViewModel() {
 
     private val mutableSettingsResponse = MutableLiveData<GovtWorkListResponse>()
+    private val allCommonResponse = MutableLiveData<GovtWorkAllCommentResponse>()
     private val mutableGovtWorkDetailResponse = MutableLiveData<GovtWorkDetailResponse>()
     private val newsDetailResponse = MutableLiveData<NewsDetailResponse>()
     private val mutableGiveUserRatingToGovtWorkResponse =
@@ -51,6 +49,64 @@ class GovtWorkViewModel : ViewModel() {
                     requestBodyBuilder.build()
                 )
                 returnSettingsResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getGovtWorkAllComments(gid: String, start: String, end: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.gid,
+                    gid
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.end,
+                    end
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.start,
+                    start
+                )
+
+                val apiResponse = apiEndPointsInterface.getGovtWorkComments(
+                    requestBodyBuilder.build()
+                )
+                returnGovtWorkAllCommentsResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getNewsComments(nid: String, start: String, end: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.nid,
+                    nid
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.end,
+                    end
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.start,
+                    start
+                )
+
+                val apiResponse = apiEndPointsInterface.getNewsComments(
+                    requestBodyBuilder.build()
+                )
+                returnGovtWorkAllCommentsResponse(apiResponse)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -193,6 +249,12 @@ class GovtWorkViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnGovtWorkAllCommentsResponse(settingsResponse: GovtWorkAllCommentResponse) {
+        withContext(Dispatchers.Main) {
+            allCommonResponse.value = settingsResponse
+        }
+    }
+
     private suspend fun returnGiveUserRatingToGovtWorkResponse(apiResponse: GiveUserRatingToGovtWorkResponse) {
         withContext(Dispatchers.Main) {
             mutableGiveUserRatingToGovtWorkResponse.value = apiResponse
@@ -235,5 +297,9 @@ class GovtWorkViewModel : ViewModel() {
 
     fun newsDetail(): LiveData<NewsDetailResponse> {
         return newsDetailResponse
+    }
+
+    fun govtWorkAllComments(): LiveData<GovtWorkAllCommentResponse> {
+        return allCommonResponse
     }
 }

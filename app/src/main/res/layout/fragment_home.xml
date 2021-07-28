@@ -188,10 +188,10 @@
             <LinearLayout
                 android:id="@+id/llDailYScratch"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_100"
                 android:layout_marginHorizontal="@dimen/dp_10"
                 android:layout_weight="1"
-                android:background="@drawable/daily_scratch"
+                android:background="@drawable/spin_icon"
                 android:orientation="horizontal">
 
                 <View
@@ -216,7 +216,7 @@
             <LinearLayout
                 android:id="@+id/llQuizAndContest"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_100"
                 android:layout_marginHorizontal="@dimen/dp_10"
                 android:layout_weight="1"
                 android:background="@drawable/daily_quiz"
@@ -229,6 +229,7 @@
                     tools:ignore="NestedWeights" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMenuDynamic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

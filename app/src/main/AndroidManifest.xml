@@ -74,6 +74,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".ui.activity.GovtWorkAllCommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.activity.NewsAllCommentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".ui.activity.NewsDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
@@ -84,6 +92,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.activity.QuizAndContestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.activity.ContestDynamicActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity

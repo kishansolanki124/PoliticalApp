@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    android:orientation="vertical"
+    tools:context=".ui.activity.ContestDynamicActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llContestDynamicMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvRootGovtWorkNewsItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginVertical="@dimen/dp_5"
+            app:cardCornerRadius="@dimen/dp_5"
+            app:cardElevation="@dimen/dp_2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitleQuiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/dp_20"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="@dimen/dp_5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_20"
+                    tools:text="Upload your vaCCINE CERTIficate and get a chance to win a car" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivSelectedImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/dp_20"
+                    android:src="@drawable/uploadicon" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btSelectImage"
+                    style="@style/CommonRedButton"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/dp_0"
+                    android:backgroundTint="@color/grayC2C0C1"
+                    android:paddingHorizontal="@dimen/dp_20"
+                    android:text="@string/Browse_Files"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/sp_14"
+                    app:cornerRadius="@dimen/dp_5" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btSubmitQuestion"
+                        style="@style/CommonRedButton"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/dp_0"
+                        android:paddingHorizontal="@dimen/sp_20"
+                        android:text="@string/submit"
+                        android:textSize="@dimen/sp_14"
+                        app:cornerRadius="@dimen/dp_5"
+                        tools:ignore="MissingConstraints" />
+
+                    <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/pbSubmitQuizContestAnswer"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:indeterminateTint="@color/red_light"
+                        android:indeterminateTintMode="multiply"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/btSubmitQuestion"
+                        app:layout_constraintEnd_toEndOf="@+id/btSubmitQuestion"
+                        app:layout_constraintStart_toStartOf="@+id/btSubmitQuestion"
+                        app:layout_constraintTop_toTopOf="@+id/btSubmitQuestion" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginVertical="@dimen/dp_5"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btPrizeDetailsAndRules"
+                style="@style/CommonRedButton"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_0"
+                android:backgroundTint="@color/black"
+                android:paddingHorizontal="@dimen/dp_20"
+                android:text="@string/prize_details_and_rules"
+                android:textAllCaps="false"
+                android:textSize="@dimen/sp_12"
+                app:cornerRadius="@dimen/dp_5" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_1"
+                android:layout_weight="1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btWinners"
+                style="@style/CommonRedButton"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_0"
+                android:paddingHorizontal="@dimen/dp_40"
+                android:text="@string/Winners"
+                android:textAllCaps="false"
+                android:textSize="@dimen/sp_12"
+                app:cornerRadius="@dimen/dp_5" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/pbContestDynamic"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:indeterminateTint="@color/red_CC252C"
+        android:indeterminateTintMode="multiply"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:visibility="gone" />
+</LinearLayout>

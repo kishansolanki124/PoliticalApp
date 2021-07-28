@@ -1,5 +1,6 @@
 package com.politics.politicalapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -172,7 +173,10 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         }
 
         tvViewAllComment.setOnClickListener {
-
+            startActivity(
+                Intent(this, GovtWorkAllCommentActivity::class.java)
+                    .putExtra(AppConstants.GID, gid)
+            )
         }
 
         btSubmitComment.setOnClickListener {

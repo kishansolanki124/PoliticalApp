@@ -5,6 +5,7 @@ data class SettingsResponse(
     var settings: List<Setting> = listOf(),
     var welcome_banner: List<WelcomeBanner> = listOf(),
     var terms: List<Terms> = listOf(),
+    var contest: List<Contest> = listOf(),
     var news_list: List<News> = listOf(),
     var user_points: String = ""
 ) {
@@ -28,6 +29,11 @@ data class SettingsResponse(
         var updatemsg: String = ""
     )
 
+    data class Contest(
+        var id: String = "",
+        var menu_name: String = "",
+        var menu_icon: String = ""
+    )
     data class News(
         var id: String = "",
         var name: String = "",

@@ -96,6 +96,13 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
 
     private fun setupViews(govtWorkDetailResponse: NewsDetailResponse) {
 
+        tvViewAllComment.setOnClickListener {
+            startActivity(
+                Intent(this, NewsAllCommentActivity::class.java)
+                    .putExtra(AppConstants.ID, nid)
+            )
+        }
+
         btSubmitComment.setOnClickListener {
             if (!TextUtils.isEmpty(etUserComment.text.toString())) {
                 if (isConnected(this)) {
@@ -175,7 +182,10 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
 
     private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>) {
         if (userComment.isNotEmpty()) {
+            tvViewAllComment.visibility = View.VISIBLE
             govtWorkNewsAdapter.setItem(userComment)
+        }else {
+            tvViewAllComment.visibility = View.GONE
         }
     }
 

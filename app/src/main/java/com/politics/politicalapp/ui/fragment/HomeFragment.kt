@@ -2,6 +2,7 @@ package com.politics.politicalapp.ui.fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import app.app.patidarsaurabh.apputils.AppConstants
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.BreakingNewsAdapter
@@ -67,7 +71,7 @@ class HomeFragment : Fragment() {
         }
 
         llQuizAndContest.setOnClickListener {
-            startActivity(Intent(requireContext(), QuizAndContestActivity::class.java))
+            startActivity(Intent(requireContext(), ContestDynamicActivity::class.java))
         }
 
         llGovtWork.setOnClickListener {
@@ -143,6 +147,22 @@ class HomeFragment : Fragment() {
         newsHomeViewPager.visibility = View.VISIBLE
         if (null != settingsResponse) {
             SPreferenceManager.getInstance(requireContext()).saveSettings(settingsResponse)
+            tvMenuDynamic.text = settingsResponse.contest[0].menu_name
+
+            Glide.with(this).load(settingsResponse.contest[0].menu_icon).into(object :
+                CustomTarget<Drawable>() {
+                override fun onLoadCleared(placeholder: Drawable?) {
+
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable>?
+                ) {
+                    llQuizAndContest.background = resource
+                }
+            })
+
             setupPointViews()
             setupNewsViewPager(settingsResponse.news_list)
         } else {

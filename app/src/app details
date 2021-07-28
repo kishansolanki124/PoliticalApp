@@ -8,12 +8,12 @@ Pagination in
     3. LivePollFragment
     4. QuizAndContestActivity
     5. WinnerFragment
+    6. NewsAllCommentActivity
+    7. GovtWorkAllCommentActivity
 
-Amit mash new designs
+Amit masha new designs
 
 data nu default listing user j district select karyu hoy registretion vakhte e j karavu for ex. sarkar ni kamgiri, dharasabhyo etc
-
-sarkar ne kamgiri ma all comment kari badhi comment show karvi
 
 app minimize kare atle welcome screen thi app start karvi
 
@@ -21,9 +21,13 @@ notification bell icon not working
 
 onsignal notification for scratch card, quiz contest, live poll, sarkar ne kamgiri, vaccine screen
 
+dynamic points
+
 pagination wherever required
 
 app update alert dialog in splash in settings API
+
+refresh issue after vote
 
 Banner ads everywhere:
 spin and win & vaccine vadi screen ma popup banner alag thi avse
@@ -31,3 +35,7 @@ spin and win & vaccine vadi screen ma popup banner alag thi avse
 icon change for bottom nav quiz and spin and win
 
 change app icon and create round icon
+
+splash screen change like news app
+
+add proguard before launch

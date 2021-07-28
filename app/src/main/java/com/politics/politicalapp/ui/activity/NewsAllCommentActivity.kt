@@ -14,12 +14,12 @@ import com.politics.politicalapp.pojo.GovtWorkDetailResponse
 import com.politics.politicalapp.viewmodel.GovtWorkViewModel
 import kotlinx.android.synthetic.main.activity_govt_work_all_comment.*
 
-class GovtWorkAllCommentActivity : ExtendedToolbarActivity() {
+class NewsAllCommentActivity : ExtendedToolbarActivity() {
 
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: NewsCommentAdapter
     private lateinit var govtWorkViewModel: GovtWorkViewModel
-    private var gid = ""
+    private var nid = ""
 
     override val layoutId: Int
         get() = R.layout.activity_govt_work_all_comment
@@ -27,7 +27,7 @@ class GovtWorkAllCommentActivity : ExtendedToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        gid = intent.getStringExtra(AppConstants.GID)!!
+        nid = intent.getStringExtra(AppConstants.ID)!!
 
         setToolbarTitle(getString(R.string.govt_work))
         initList()
@@ -41,12 +41,10 @@ class GovtWorkAllCommentActivity : ExtendedToolbarActivity() {
         if (isConnected(this)) {
             pbNewsDetail.visibility = View.VISIBLE
             rvComments.visibility = View.GONE
-            govtWorkViewModel.getGovtWorkAllComments(gid, "0", "10")
+            govtWorkViewModel.getNewsComments(nid, "0", "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
-
-
     }
 
     private fun handleResponse(govtWorkDetailResponse: GovtWorkAllCommentResponse) {

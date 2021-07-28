@@ -88,4 +88,7 @@
     <string name="add_image">Add Image</string>
     <string name="Rules_">Rules:</string>
     <string name="Quiz">Quiz</string>
+    <string name="Browse_Files">Browse Files</string>
+    <string name="Winners">Winners</string>
+    <string name="contest_detail_">Contest Details:</string>
 </resources>
