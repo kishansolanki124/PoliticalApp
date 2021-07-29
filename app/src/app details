@@ -1,4 +1,20 @@
-REQUIRED:
+Changes and additional features:
+1. Notification list not in the design, new screen and redirection
+2. hot news text change
+3. news detail new screen with image gallery and sharing and comments
+4. all comments new screen
+5. splash screen dynamic like excuse me app
+6. T&C in question and advise
+7. T&C in spin and win
+8. scratch card change to spin and win
+10. new screen to upload question and suggestion
+11. quiz rules popup
+12. winners menu text change
+13. quiz menu move to bottom
+14. dynamic new vaccination menu and new screen
+15. dharasabhyo vishesh kamgiri na hoy to hide tab
+
+=========================================================
 
 TODO:
 font change of percentage in chart in every screen
@@ -10,12 +26,6 @@ Pagination in
     5. WinnerFragment
     6. NewsAllCommentActivity
     7. GovtWorkAllCommentActivity
-
-Amit masha new designs
-
-notification bell icon not working
-
-onsignal notification for scratch card, quiz contest, live poll, sarkar ne kamgiri, vaccine screen
 
 dynamic points
 
@@ -38,21 +48,8 @@ splash screen change like news app
 
 add proguard before launch
 
-
 app minimize kare atle welcome screen thi app start karvi
-======================================================================
-Changes and additional features:
-1. Notification list not in the design, new screen and redirection
-2. hot news text change
-3. news detail new screen with image gallery and sharing and comments
-4. all comments new screen
-5. splash screen dynamic like excuse me app
-6. T&C in question and advise
-7. T&C in spin and win
-8. scratch card change to spin and win
-10. new screen to upload question and suggestion
-11. quiz rules popup
-12. winners menu text change
-13. quiz menu move to bottom
-14. dynamic new vaccination menu and new screen
-15. dharasabhyo vishesh kamgiri na hoy to hide tab
+
+notification bell icon not working - > notification screen
+
+onsignal notification for scratch card, quiz contest, live poll, sarkar ne kamgiri, vaccine screen

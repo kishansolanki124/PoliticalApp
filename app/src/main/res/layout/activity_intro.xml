@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ui.activity.IntroActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ivAppLogo"
+        android:layout_alignParentTop="true">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/introViewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp_20" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/introTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@android:color/transparent"
+            app:tabBackground="@drawable/intro_tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            app:tabSelectedTextColor="@android:color/transparent"
+            app:tabTextColor="@android:color/transparent" />
+
+        <ProgressBar
+            android:id="@+id/pbIntro"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_10"
+            android:indeterminateTint="@color/red_CC252C"
+            android:indeterminateTintMode="multiply" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAppLogo"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_200"
+        android:layout_above="@id/btGetStarted"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/splash_icon" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btGetStarted"
+        style="@style/CommonRedButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="@dimen/dp_20"
+        android:paddingHorizontal="@dimen/sp_20"
+        android:text="@string/Get_Started"
+        android:textSize="@dimen/sp_16"
+        app:cornerRadius="@dimen/dp_30" />
+</RelativeLayout>

@@ -1,10 +1,12 @@
 package com.politics.politicalapp.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,6 +75,7 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
         if (isConnected(this)) {
             pbMLAs.visibility = View.VISIBLE
             rvMLAs.visibility = View.GONE
+            govtWorkNewsAdapter.reset()
             mlaViewModel.getGovtWorkList(districtId, "0", "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -86,7 +89,7 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
         govtWorkNewsAdapter = DharasabhyoAdapter(
             {
                 //callIntent(this, it.contact_no!!)
-                startActivity(
+                resultLauncher.launch(
                     Intent(this, DharasabhyoDetailActivity::class.java)
                         .putExtra(AppConstants.MLA, it)
                 )
@@ -100,6 +103,17 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
     private fun addItems(govMlaList: ArrayList<MLAListResponse.GovMla>) {
         govtWorkNewsAdapter.setItem(govMlaList)
     }
+
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let {
+                    if (it.getBooleanExtra(AppConstants.REFRESH, false)) {
+                        getNews()
+                    }
+                }
+            }
+        }
 
     private fun setupDistrictSpinner() {
         districtList.addAll(SPreferenceManager.getInstance(this).settings.district_list)
@@ -125,7 +139,6 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
                 val district: SettingsResponse.District =
                     parent.selectedItem as SettingsResponse.District
                 districtId = district.id
-                govtWorkNewsAdapter.reset()
                 getNews()
             }
 

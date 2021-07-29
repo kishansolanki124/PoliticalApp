@@ -26,6 +26,7 @@ interface AppConstants {
         const val ADD_LAVAJAM: String = "ADD_LAVAJAM"
         const val SHOW_SUBMIT: String = "SHOW_SUBMIT"
         const val DISTRICTID: String = "DISTRICTID"
+        const val REFRESH: String = "REFRESH"
         const val ID: String = "id"
     }
 

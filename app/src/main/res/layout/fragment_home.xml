@@ -196,7 +196,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_70"
+                    android:layout_height="@dimen/dp_60"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/dp_10"
                     android:layout_weight="0.8"
@@ -227,7 +227,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivDynamicMenu"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_70"
+                    android:layout_height="@dimen/dp_60"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/dp_10"
                     android:layout_weight="0.8"

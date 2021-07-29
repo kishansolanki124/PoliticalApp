@@ -1,6 +1,8 @@
 package com.politics.politicalapp.ui.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ import com.politics.politicalapp.ui.fragment.DharasabhyoYourReviewFragment
 import com.politics.politicalapp.viewmodel.MLAViewModel
 import kotlinx.android.synthetic.main.activity_dharasabhyo_detail.*
 import kotlinx.android.synthetic.main.dharasabhyo_item_large.*
+
 
 class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
 
@@ -167,6 +170,13 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
 
     fun getMLADetailResponse(): MLADetailResponse {
         return mlaDetailResponse
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        intent.putExtra(AppConstants.REFRESH, true)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 }
 //todo : show toolbar when collapsed
