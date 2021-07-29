@@ -492,3 +492,10 @@ fun Context.getTermsByName(name: String): String {
     }
     return ""
 }
+
+fun Context.getUserSelectedDistrictIndex() : Int {
+    val index = SPreferenceManager.getInstance(this).settings.district_list.indexOfFirst {
+        it.id == SPreferenceManager.getInstance(this).settings.user_district
+    }
+    return index
+}

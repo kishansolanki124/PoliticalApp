@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.dharasabhyo_item_large.*
 class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
 
     private lateinit var viewPagerShraddhanjaliAdapter: ViewPagerShraddhanjaliAdapter
+    private lateinit var viewPagerWith2PageAdapter: ViewPagerWith2PageAdapter
     private lateinit var mlaDetailResponse: MLADetailResponse
     private var govMla: MLAListResponse.GovMla? = null
     private lateinit var viewPager: ViewPager
@@ -70,10 +71,15 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
     }
 
     private fun setupViewPager() {
-        viewPagerShraddhanjaliAdapter =
-            ViewPagerShraddhanjaliAdapter(supportFragmentManager)
-        viewPager = findViewById(R.id.pager)
-        viewPager.adapter = viewPagerShraddhanjaliAdapter
+        if (this.mlaDetailResponse.gov_mla_detail[0].mla_work.isNotEmpty()) {
+            viewPagerShraddhanjaliAdapter = ViewPagerShraddhanjaliAdapter(supportFragmentManager)
+            viewPager = findViewById(R.id.pager)
+            viewPager.adapter = viewPagerShraddhanjaliAdapter
+        } else {
+            viewPagerWith2PageAdapter = ViewPagerWith2PageAdapter(supportFragmentManager)
+            viewPager = findViewById(R.id.pager)
+            viewPager.adapter = viewPagerWith2PageAdapter
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -111,10 +117,6 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
                 }
                 else -> {
                     DharasabhyoYourReviewFragment()
-                    //                fragment.arguments = Bundle().apply {
-                    //                }
-                    //                 Our object is just an integer :-P
-                    //                putInt(ARG_OBJECT, i + 1)
                 }
             }
         }
@@ -127,6 +129,38 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
                 "વિશેષ કામગીરી"
             } else {
                 "તમારો રીવ્યુ"
+            }
+        }
+    }
+
+    class ViewPagerWith2PageAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        override fun getCount(): Int = 2
+
+        override fun getItem(i: Int): Fragment {
+
+            return when (i) {
+                0 -> {
+                    DharasabhyoProfileFragment()
+                }
+                1 -> {
+                    DharasabhyoYourReviewFragment()
+                }
+                else -> {
+                    DharasabhyoProfileFragment()
+                }
+            }
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+            //return "OBJECT ${(position + 1)}"
+            return if (position == 0) {
+                "પ્રોફાઇલ"
+            } else if (position == 1) {
+                "તમારો રીવ્યુ"
+            } else {
+                "પ્રોફાઇલ"
             }
         }
     }

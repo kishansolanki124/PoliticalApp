@@ -127,11 +127,15 @@ class PollAndSurveyFragment : Fragment() {
                 tvRatingDone.visibility = View.GONE
             }
 
-            govtWorkNewsAdapter.reset()
-            govtWorkNewsAdapter.setItem(
-                districtPollListResponse.poll_list,
-                districtPollListResponse.poll_option
-            )
+            if (null != districtPollListResponse.poll_list && districtPollListResponse.poll_list.isNotEmpty()) {
+                govtWorkNewsAdapter.reset()
+                govtWorkNewsAdapter.setItem(
+                    districtPollListResponse.poll_list,
+                    districtPollListResponse.poll_option
+                )
+            } else {
+                govtWorkNewsAdapter.reset()
+            }
         } else {
             showSnackBar(getString(R.string.something_went_wrong), requireActivity())
         }

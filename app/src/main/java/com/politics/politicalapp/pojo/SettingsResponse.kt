@@ -7,7 +7,8 @@ data class SettingsResponse(
     var terms: List<Terms> = listOf(),
     var contest: List<Contest> = listOf(),
     var news_list: List<News> = listOf(),
-    var user_points: String = ""
+    var user_points: String = "",
+    var user_district: String = ""
 ) {
     data class District(
         var id: String = "",

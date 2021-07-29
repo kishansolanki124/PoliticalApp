@@ -149,19 +149,23 @@ class HomeFragment : Fragment() {
             SPreferenceManager.getInstance(requireContext()).saveSettings(settingsResponse)
             tvMenuDynamic.text = settingsResponse.contest[0].menu_name
 
-            Glide.with(this).load(settingsResponse.contest[0].menu_icon).into(object :
-                CustomTarget<Drawable>() {
-                override fun onLoadCleared(placeholder: Drawable?) {
+            Glide.with(this)
+                .load(settingsResponse.contest[0].menu_icon)
+                .into(ivDynamicMenu)
 
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable>?
-                ) {
-                    llQuizAndContest.background = resource
-                }
-            })
+//            Glide.with(this).load(settingsResponse.contest[0].menu_icon).into(object :
+//                CustomTarget<Drawable>() {
+//                override fun onLoadCleared(placeholder: Drawable?) {
+//
+//                }
+//
+//                override fun onResourceReady(
+//                    resource: Drawable,
+//                    transition: Transition<in Drawable>?
+//                ) {
+//                    llQuizAndContest.background = resource
+//                }
+//            })
 
             setupPointViews()
             setupNewsViewPager(settingsResponse.news_list)

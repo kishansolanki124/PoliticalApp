@@ -41,7 +41,7 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setToolbarTitle(getString(R.string.quiz_and_contest))
+        setToolbarTitle(SPreferenceManager.getInstance(this).settings.contest[0].menu_name)
 
         settingsViewModel = ViewModelProvider(this).get(QuizAndContestViewModel::class.java)
 

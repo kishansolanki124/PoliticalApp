@@ -12,6 +12,7 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.DharasabhyoAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.getUserSelectedDistrictIndex
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
 import com.politics.politicalapp.pojo.MLAListResponse
@@ -111,6 +112,8 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spDistrict.adapter = adapter
+
+        spDistrict.setSelection(getUserSelectedDistrictIndex())
 
         spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

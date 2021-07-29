@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.politics.politicalapp.R
 import com.politics.politicalapp.apputils.SPreferenceManager
+import com.politics.politicalapp.apputils.getUserSelectedDistrictIndex
 import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.ui.fragment.PollAndSurveyFragment
 import com.politics.politicalapp.ui.fragment.PollAndSurveyResultFragment
@@ -30,13 +31,12 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
         super.onCreate(savedInstanceState)
 
         setToolbarTitle("પોલ અને સર્વે")
+        setupDistrictSpinner()
 
         viewPagerShraddhanjaliAdapter =
             ViewPagerShraddhanjaliAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = viewPagerShraddhanjaliAdapter
-
-        setupDistrictSpinner()
     }
 
     // Since this is an object collection, use a FragmentStatePagerAdapter,
@@ -84,6 +84,8 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spDistrictPollAndSurvey.adapter = adapter
+
+        spDistrictPollAndSurvey.setSelection(getUserSelectedDistrictIndex())
 
         spDistrictPollAndSurvey.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

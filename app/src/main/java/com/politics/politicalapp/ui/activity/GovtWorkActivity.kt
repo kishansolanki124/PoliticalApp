@@ -10,14 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.GovtWorkNewsAdapter
-import com.politics.politicalapp.apputils.SPreferenceManager
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.shareIntent
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.*
 import com.politics.politicalapp.pojo.GovtWorkListResponse
 import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.viewmodel.GovtWorkViewModel
 import kotlinx.android.synthetic.main.activity_govt_work.*
+
 
 class GovtWorkActivity : ExtendedToolbarActivity() {
 
@@ -71,6 +69,8 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spDistrict.adapter = adapter
+
+        spDistrict.setSelection(getUserSelectedDistrictIndex())
 
         spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

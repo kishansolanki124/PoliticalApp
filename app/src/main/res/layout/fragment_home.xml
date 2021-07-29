@@ -188,17 +188,19 @@
             <LinearLayout
                 android:id="@+id/llDailYScratch"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dp_100"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_10"
                 android:layout_weight="1"
-                android:background="@drawable/spin_icon"
+                android:background="@drawable/ticket_bg"
                 android:orientation="horizontal">
 
-                <View
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_70"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/dp_10"
                     android:layout_weight="0.8"
-                    tools:ignore="NestedWeights" />
+                    android:src="@drawable/spin" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="0dp"
@@ -216,17 +218,20 @@
             <LinearLayout
                 android:id="@+id/llQuizAndContest"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dp_100"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_10"
                 android:layout_weight="1"
-                android:background="@drawable/daily_quiz"
+                android:background="@drawable/ticket_bg"
                 android:orientation="horizontal">
 
-                <View
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDynamicMenu"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_70"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/dp_10"
                     android:layout_weight="0.8"
-                    tools:ignore="NestedWeights" />
+                    tools:src="@drawable/spin" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvMenuDynamic"
@@ -236,11 +241,11 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
                     android:gravity="center"
-                    android:padding="@dimen/dp_5"
                     android:lineSpacingExtra="@dimen/dp_5"
-                    android:text="@string/quiz_and_contest"
+                    android:padding="@dimen/dp_5"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_16"
+                    tools:text="@string/quiz_and_contest" />
             </LinearLayout>
         </LinearLayout>
 
