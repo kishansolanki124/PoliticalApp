@@ -116,7 +116,9 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         )
         tvGive_rate_get_10_point.text = greenText
 
-        val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+//        val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+        val yellowText = SpannableString(getPollPoints())
+
         yellowText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.red_CC252C)),
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

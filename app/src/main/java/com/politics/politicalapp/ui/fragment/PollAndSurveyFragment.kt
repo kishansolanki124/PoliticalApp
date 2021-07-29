@@ -13,10 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.politics.politicalapp.R
 import com.politics.politicalapp.adapter.PollAndSurveyAdapter
-import com.politics.politicalapp.apputils.SPreferenceManager
-import com.politics.politicalapp.apputils.isConnected
-import com.politics.politicalapp.apputils.setUserPoints
-import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.*
 import com.politics.politicalapp.pojo.CommonResponse
 import com.politics.politicalapp.pojo.DistrictPollListResponse
 import com.politics.politicalapp.ui.activity.PollAndSurveyActivity
@@ -149,7 +146,9 @@ class PollAndSurveyFragment : Fragment() {
         )
         tvGive_rate_get_10_point.text = greenText
 
-        val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+        //val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+        val yellowText = SpannableString(requireActivity().getPollPoints())
+
         yellowText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.red_CC252C)),
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

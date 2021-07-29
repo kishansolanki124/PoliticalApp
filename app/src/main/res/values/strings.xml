@@ -30,6 +30,7 @@
     <string name="participate_and">(Participate &amp; Get</string>
     <string name="give_rate_get_10_point_1">(Give Rate &amp; Get</string>
     <string name="give_rate_get_10_point_2">&#160;10&#160;</string>
+    <string name="points_with_space">&#160;%1$s&#160;</string>
     <string name="give_rate_get_10_point_3">Points)</string>
     <string name="points_and_win_prizes">Points&#160;/</string>
     <string name="points_and_win_prizes_2">&#160;Win Prize)</string>

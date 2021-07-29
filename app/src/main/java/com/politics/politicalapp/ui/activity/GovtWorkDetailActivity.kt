@@ -80,7 +80,10 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         tvGive_rate_get_10_point.text = greenText
         tvGive_opinion_get_10_point.text = greenText2
 
-        val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+        //val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+
+        val yellowText = SpannableString(getPollPoints())
+
         yellowText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.red_CC252C)),
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -88,7 +91,6 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
 
         tvGive_rate_get_10_point.append(yellowText)
         tvGive_opinion_get_10_point.append(yellowText)
-
 
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
         thirdText.setSpan(

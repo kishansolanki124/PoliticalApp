@@ -13,6 +13,7 @@ Changes and additional features:
 13. quiz menu move to bottom
 14. dynamic new vaccination menu and new screen
 15. dharasabhyo vishesh kamgiri na hoy to hide tab
+16. dynamic points for every screen
 
 =========================================================
 
@@ -27,29 +28,23 @@ Pagination in
     6. NewsAllCommentActivity
     7. GovtWorkAllCommentActivity
 
-dynamic points
-
 pagination wherever required
 
 app update alert dialog in splash in settings API
 
 change package name to colors of gujarat
 
-refresh issue after vote
-
-Banner ads everywhere:
-spin and win & vaccine vadi screen ma popup banner alag thi avse
-
-icon change for bottom nav quiz and spin and win
-
-change app icon and create round icon
-
-splash screen change like news app
-
-add proguard before launch
-
 app minimize kare atle welcome screen thi app start karvi
 
 notification bell icon not working - > notification screen
 
 onsignal notification for scratch card, quiz contest, live poll, sarkar ne kamgiri, vaccine screen
+
+share points add on share (API)
+
+Banner ads everywhere:
+spin and win & vaccine vadi screen ma popup banner alag thi avse
+
+change app icon and create round icon
+
+add proguard before launch

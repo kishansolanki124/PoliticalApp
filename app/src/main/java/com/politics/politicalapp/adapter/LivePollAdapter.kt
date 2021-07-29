@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.politics.politicalapp.R
+import com.politics.politicalapp.apputils.getPollPoints
 import com.politics.politicalapp.pojo.LivePollListResponse
 import kotlinx.android.synthetic.main.live_poll_item.view.*
 
@@ -87,8 +88,11 @@ class LivePollAdapter(
                     )
                     itemView.tvGive_rate_get_10_point.text = greenText
 
-                    val yellowText =
-                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.give_rate_get_10_point_2))
+//                    val yellowText =
+//                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.give_rate_get_10_point_2))
+
+                    val yellowText = SpannableString(itemView.tvGive_rate_get_10_point.context.getPollPoints())
+
                     yellowText.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(

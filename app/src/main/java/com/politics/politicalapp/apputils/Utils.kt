@@ -6,6 +6,7 @@ import android.app.Application
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Paint
 import android.net.ConnectivityManager
@@ -493,9 +494,54 @@ fun Context.getTermsByName(name: String): String {
     return ""
 }
 
-fun Context.getUserSelectedDistrictIndex() : Int {
-    val index = SPreferenceManager.getInstance(this).settings.district_list.indexOfFirst {
+fun Context.getUserSelectedDistrictIndex(): Int {
+    return SPreferenceManager.getInstance(this).settings.district_list.indexOfFirst {
         it.id == SPreferenceManager.getInstance(this).settings.user_district
     }
-    return index
+}
+
+fun Context.getPollPoints(): String {
+    return getString(
+        R.string.points_with_space,
+        //SPreferenceManager.getInstance(this).settings.settings[0].poll_points
+        "25"
+    )
+}
+
+fun Context.getSharePoints(): String {
+    return SPreferenceManager.getInstance(this).settings.settings[0].share_points
+}
+
+fun updateVersion(context: Context, ForcedUpdate: Boolean) {
+    val dialog = android.app.AlertDialog.Builder(context)
+    dialog.setTitle("Update")
+    dialog.setMessage(
+        SPreferenceManager.getInstance(context).settings.settings[0].updatemsg
+    )
+    dialog.setPositiveButton(
+        "Update"
+    ) { dialogInterface: DialogInterface?, i: Int ->
+        //final String appPackageName = context.getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(
+                        SPreferenceManager.getInstance(context).settings.settings[0].update_link
+                    )
+                )
+            )
+        } catch (anfe: ActivityNotFoundException) {
+            anfe.printStackTrace()
+        }
+    }
+    if (ForcedUpdate) {
+        dialog.setCancelable(false)
+    }
+    if (!ForcedUpdate) {
+        dialog.setNegativeButton(
+            "Cancel"
+        ) { dialogInterface: DialogInterface?, i: Int -> }
+    }
+    dialog.show()
 }

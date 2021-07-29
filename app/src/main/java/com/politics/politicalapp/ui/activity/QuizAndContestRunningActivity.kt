@@ -85,8 +85,11 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         )
         tvGive_rate_get_10_point.text = greenText
 
-        val yellowText =
-            SpannableString(getString(R.string.give_rate_get_10_point_2))
+//        val yellowText =
+//            SpannableString(getString(R.string.give_rate_get_10_point_2))
+
+        val yellowText = SpannableString(getPollPoints())
+
         yellowText.setSpan(
             ForegroundColorSpan(
                 ContextCompat.getColor(

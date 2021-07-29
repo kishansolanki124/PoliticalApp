@@ -70,7 +70,9 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
             0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+        //val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
+        val yellowText = SpannableString(getPollPoints())
+
         yellowText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.red_CC252C)),
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -184,7 +186,7 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
         if (userComment.isNotEmpty()) {
             tvViewAllComment.visibility = View.VISIBLE
             govtWorkNewsAdapter.setItem(userComment)
-        }else {
+        } else {
             tvViewAllComment.visibility = View.GONE
         }
     }

@@ -26,6 +26,8 @@ data class SettingsResponse(
         var isfourceupdate: String = "",
         var postsharemsg: String = "",
         var update_link: String = "",
+        var share_points: String = "",
+        var poll_points: String = "",
         var points_tooltip: String = "",
         var updatemsg: String = ""
     )

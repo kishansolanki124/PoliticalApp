@@ -1,6 +1,7 @@
 package com.politics.politicalapp.ui.activity
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +15,7 @@ import com.politics.politicalapp.adapter.IntroAdapter
 import com.politics.politicalapp.apputils.SPreferenceManager
 import com.politics.politicalapp.apputils.isConnected
 import com.politics.politicalapp.apputils.showSnackBar
+import com.politics.politicalapp.apputils.updateVersion
 import com.politics.politicalapp.pojo.SettingsResponse
 import com.politics.politicalapp.viewmodel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_intro.*
@@ -98,8 +100,29 @@ class IntroActivity : AppCompatActivity() {
         if (null != settingsResponse) {
             SPreferenceManager.getInstance(this).saveSettings(settingsResponse)
             setupOffersViewPager(settingsResponse.welcome_banner)
+            checkForUpdate(
+                settingsResponse.settings[0].android_version,
+                settingsResponse.settings[0].isfourceupdate
+            )
         } else {
             showSnackBar(getString(R.string.something_went_wrong), this)
+        }
+    }
+
+    private fun checkForUpdate(apVersion: String, forceUpdate: String) {
+        var version = ""
+        try {
+            val pInfo = packageManager.getPackageInfo(applicationContext.packageName, 0)
+            version = pInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        if (!version.equals(apVersion, ignoreCase = true)) {
+            if (forceUpdate == "no") {
+                updateVersion(this@IntroActivity, false)
+            } else {
+                updateVersion(this@IntroActivity, true)
+            }
         }
     }
 }
