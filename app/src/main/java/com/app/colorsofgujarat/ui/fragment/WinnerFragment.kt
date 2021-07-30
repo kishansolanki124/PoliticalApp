@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.WinnerAdapter
+import com.app.colorsofgujarat.apputils.EndlessRecyclerOnScrollListener
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.pojo.WinnerListResponse
@@ -22,7 +24,9 @@ import kotlinx.android.synthetic.main.fragment_winner.*
 class WinnerFragment : Fragment() {
 
     private lateinit var govtWorkNewsAdapter: WinnerAdapter
-    private var startPage = 0
+    private var totalRecords = 0
+    private var loading = false
+    private var pageNo = 0
     private lateinit var settingsViewModel: WinnerViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,10 +48,11 @@ class WinnerFragment : Fragment() {
         })
 
         if (isConnected(requireContext())) {
+            loading = true
             rvWinner.visibility = View.GONE
             pbWinnerList.visibility = View.VISIBLE
             settingsViewModel.getWinnerList(
-                "0",
+                pageNo.toString(),
                 "10"
             )
         } else {
@@ -56,12 +61,25 @@ class WinnerFragment : Fragment() {
     }
 
     private fun setupList() {
-        val stringList: ArrayList<String> = ArrayList()
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
-        stringList.add("S")
+
+        val layoutManager = LinearLayoutManager(requireContext())
+        rvWinner.layoutManager = layoutManager
+
+        rvWinner.addOnScrollListener(object :
+            EndlessRecyclerOnScrollListener(layoutManager, 3) {
+            override fun onLoadMore() {
+                if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
+                    loading = true
+
+                    pageNo += 10
+
+                    settingsViewModel.getWinnerList(
+                        pageNo.toString(),
+                        "10"
+                    )
+                }
+            }
+        })
 
         govtWorkNewsAdapter = WinnerAdapter(
             { item, showButton ->
@@ -84,14 +102,17 @@ class WinnerFragment : Fragment() {
     }
 
     private fun handleResponse(livePollListResponse: WinnerListResponse?) {
+        loading = false
+        rvWinner.visibility = View.VISIBLE
+        pbWinnerList.visibility = View.GONE
+
         if (null != livePollListResponse) {
-            rvWinner.visibility = View.VISIBLE
-            pbWinnerList.visibility = View.GONE
             when {
                 livePollListResponse.points_prize_list.isNotEmpty() -> {
+                    totalRecords = livePollListResponse.total_records
                     addItems(livePollListResponse.points_prize_list)
                 }
-                startPage == 0 -> {
+                pageNo == 0 -> {
                     govtWorkNewsAdapter.reset()
                     showSnackBar(getString(R.string.no_record_found), requireActivity())
                 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.NewsCommentAdapter
+import com.app.colorsofgujarat.apputils.EndlessRecyclerOnScrollListener
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.pojo.GovtWorkAllCommentResponse
@@ -16,6 +17,9 @@ import kotlinx.android.synthetic.main.activity_govt_work_all_comment.*
 
 class NewsAllCommentActivity : ExtendedToolbarActivity() {
 
+    private var totalRecords = 0
+    private var loading = false
+    private var pageNo = 0
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: NewsCommentAdapter
     private lateinit var govtWorkViewModel: GovtWorkViewModel
@@ -39,27 +43,50 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
+            loading = true
             pbNewsDetail.visibility = View.VISIBLE
             rvComments.visibility = View.GONE
-            govtWorkViewModel.getNewsComments(nid, "0", "10")
+            govtWorkViewModel.getNewsComments(nid, pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
     }
 
     private fun handleResponse(govtWorkDetailResponse: GovtWorkAllCommentResponse) {
+        loading = false
         pbNewsDetail.visibility = View.GONE
         rvComments.visibility = View.VISIBLE
-        if (govtWorkDetailResponse.user_comment.isNotEmpty()) {
-            addItems(govtWorkDetailResponse.user_comment)
-        } else {
-            showSnackBar(getString(R.string.something_went_wrong))
+        when {
+            !govtWorkDetailResponse.user_comment.isNullOrEmpty() -> {
+                totalRecords = govtWorkDetailResponse.total_records
+                addItems(govtWorkDetailResponse.user_comment)
+            }
+            pageNo == 0 -> {
+                govtWorkNewsAdapter.reset()
+                showSnackBar(getString(R.string.no_record_found), this)
+            }
+            else -> {
+                showSnackBar(getString(R.string.something_went_wrong))
+            }
         }
     }
 
     private fun initList() {
         layoutManager = LinearLayoutManager(this)
         rvComments.layoutManager = layoutManager
+
+        rvComments.addOnScrollListener(object :
+            EndlessRecyclerOnScrollListener(layoutManager, 3) {
+            override fun onLoadMore() {
+                if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
+                    loading = true
+
+                    pageNo += 10
+
+                    govtWorkViewModel.getNewsComments(nid, pageNo.toString(), "10")
+                }
+            }
+        })
 
         govtWorkNewsAdapter = NewsCommentAdapter(
             {

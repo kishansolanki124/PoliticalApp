@@ -16,11 +16,12 @@ import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 import kotlinx.android.synthetic.main.activity_govt_work.*
 
-
 class GovtWorkActivity : ExtendedToolbarActivity() {
 
     private var districtId = ""
-    private var startPage = 0
+    private var totalRecords = 0
+    private var loading = false
+    private var pageNo = 0
     private lateinit var govtWorkViewModel: GovtWorkViewModel
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var layoutManager: LinearLayoutManager
@@ -46,9 +47,11 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
 
     private fun getNews() {
         if (isConnected(this)) {
+            pageNo = 0
+            loading = true
             pbNewsPortal.visibility = View.VISIBLE
             rvNewsPortal.visibility = View.GONE
-            govtWorkViewModel.getGovtWorkList(districtId, "0", "10")
+            govtWorkViewModel.getGovtWorkList(districtId, pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
@@ -91,13 +94,16 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(govtWorkListResponse: GovtWorkListResponse) {
+        loading = false
         pbNewsPortal.visibility = View.GONE
         rvNewsPortal.visibility = View.VISIBLE
         when {
             govtWorkListResponse.gov_work_list.isNotEmpty() -> {
+                totalRecords = govtWorkListResponse.total_records
                 addItems(govtWorkListResponse.gov_work_list)
             }
-            startPage == 0 -> {
+
+            pageNo == 0 -> {
                 govtWorkNewsAdapter.reset()
                 showSnackBar(getString(R.string.no_record_found), this)
             }
@@ -110,6 +116,23 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
     private fun setupList() {
         layoutManager = LinearLayoutManager(this)
         rvNewsPortal.layoutManager = layoutManager
+
+        rvNewsPortal.addOnScrollListener(object :
+            EndlessRecyclerOnScrollListener(layoutManager, 3) {
+            override fun onLoadMore() {
+                if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
+                    loading = true
+
+                    pageNo += 10
+
+                    govtWorkViewModel.getGovtWorkList(
+                        districtId,
+                        pageNo.toString(),
+                        "10"
+                    )
+                }
+            }
+        })
 
         govtWorkNewsAdapter = GovtWorkNewsAdapter(
             {

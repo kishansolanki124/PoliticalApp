@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.LivePollAdapter
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.shareIntent
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.LivePollListResponse
 import com.app.colorsofgujarat.ui.activity.HomeActivity
 import com.app.colorsofgujarat.ui.activity.LivePollRunningActivity
@@ -23,7 +21,9 @@ import kotlinx.android.synthetic.main.fragment_live_poll.*
 class LivePollFragment : Fragment() {
 
     private lateinit var govtWorkNewsAdapter: LivePollAdapter
-    private var startPage = 0
+    private var totalRecords = 0
+    private var loading = false
+    private var pageNo = 0
     private lateinit var settingsViewModel: LivePollViewModel
 
     override fun onCreateView(
@@ -46,11 +46,12 @@ class LivePollFragment : Fragment() {
         })
 
         if (isConnected(requireContext())) {
+            loading = true
             rvPollAndSurvey.visibility = View.GONE
             pbLivePoll.visibility = View.VISIBLE
             settingsViewModel.getLivePollList(
                 SPreferenceManager.getInstance(requireContext()).session,
-                "0",
+                pageNo.toString(),
                 "10"
             )
         } else {
@@ -59,14 +60,17 @@ class LivePollFragment : Fragment() {
     }
 
     private fun handleResponse(livePollListResponse: LivePollListResponse?) {
+        loading = false
+        rvPollAndSurvey.visibility = View.VISIBLE
+        pbLivePoll.visibility = View.GONE
+
         if (null != livePollListResponse) {
-            rvPollAndSurvey.visibility = View.VISIBLE
-            pbLivePoll.visibility = View.GONE
             when {
                 livePollListResponse.live_poll_list.isNotEmpty() -> {
+                    totalRecords = livePollListResponse.total_records
                     addItems(livePollListResponse.live_poll_list)
                 }
-                startPage == 0 -> {
+                pageNo == 0 -> {
                     govtWorkNewsAdapter.reset()
                     showSnackBar(getString(R.string.no_record_found), requireActivity())
                 }
@@ -80,6 +84,25 @@ class LivePollFragment : Fragment() {
     }
 
     private fun setupList() {
+        val layoutManager = LinearLayoutManager(requireContext())
+        rvPollAndSurvey.layoutManager = layoutManager
+
+        rvPollAndSurvey.addOnScrollListener(object :
+            EndlessRecyclerOnScrollListener(layoutManager, 3) {
+            override fun onLoadMore() {
+                if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
+                    loading = true
+
+                    pageNo += 10
+
+                    settingsViewModel.getLivePollList(
+                        SPreferenceManager.getInstance(requireContext()).session,
+                        pageNo.toString(), "10"
+                    )
+                }
+            }
+        })
+
         govtWorkNewsAdapter = LivePollAdapter(
             { it, showButton ->
                 //callIntent(this, it.contact_no!!)

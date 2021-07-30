@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.DharasabhyoAdapter
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.getUserSelectedDistrictIndex
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.MLAListResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.MLAViewModel
@@ -26,7 +23,9 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
     private lateinit var mlaViewModel: MLAViewModel
     private var districtId = ""
-    private var startPage = 0
+    private var totalRecords = 0
+    private var loading = false
+    private var pageNo = 0
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: DharasabhyoAdapter
@@ -50,14 +49,16 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(mlaListResponse: MLAListResponse?) {
+        loading = false
         pbMLAs.visibility = View.GONE
         rvMLAs.visibility = View.VISIBLE
         if (null != mlaListResponse) {
             when {
                 mlaListResponse.gov_mla_list.isNotEmpty() -> {
+                    totalRecords = mlaListResponse.total_records
                     addItems(mlaListResponse.gov_mla_list)
                 }
-                startPage == 0 -> {
+                pageNo == 0 -> {
                     govtWorkNewsAdapter.reset()
                     showSnackBar(getString(R.string.no_record_found), this)
                 }
@@ -73,10 +74,12 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
     private fun getNews() {
         if (isConnected(this)) {
+            pageNo = 0
+            loading = true
             pbMLAs.visibility = View.VISIBLE
             rvMLAs.visibility = View.GONE
             govtWorkNewsAdapter.reset()
-            mlaViewModel.getGovtWorkList(districtId, "0", "10")
+            mlaViewModel.getGovtWorkList(districtId, pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
@@ -85,6 +88,19 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
     private fun setupList() {
         layoutManager = GridLayoutManager(this, 2)
         rvMLAs.layoutManager = layoutManager
+
+        rvMLAs.addOnScrollListener(object :
+            EndlessRecyclerOnScrollListener(layoutManager, 3) {
+            override fun onLoadMore() {
+                if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
+                    loading = true
+
+                    pageNo += 10
+
+                    mlaViewModel.getGovtWorkList(districtId, pageNo.toString(), "10")
+                }
+            }
+        })
 
         govtWorkNewsAdapter = DharasabhyoAdapter(
             {

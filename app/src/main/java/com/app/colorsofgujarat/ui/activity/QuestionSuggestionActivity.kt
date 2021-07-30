@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.QuestionsAndSuggestionAdapter
@@ -18,7 +19,9 @@ import kotlinx.android.synthetic.main.activity_question_suggestion.*
 class QuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     private lateinit var govtWorkNewsAdapter: QuestionsAndSuggestionAdapter
-    private var startPage = 0
+    private var totalRecords = 0
+    private var loading = false
+    private var pageNo = 0
     private lateinit var govtWorkViewModel: UserAdviseViewModel
     private var districtId = ""
     private var districtPosition = 0
@@ -49,15 +52,17 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(userAdviseResponse: UserAdviseResponse?) {
+        loading = false
         rvPollAndSurvey.visibility = View.VISIBLE
         pbQuestionSuggestion.visibility = View.GONE
 
         if (null != userAdviseResponse) {
             when {
                 userAdviseResponse.user_advice_list.isNotEmpty() -> {
+                    totalRecords =userAdviseResponse.total_records
                     addItems(userAdviseResponse.user_advice_list)
                 }
-                startPage == 0 -> {
+                pageNo == 0 -> {
                     govtWorkNewsAdapter.reset()
                     showSnackBar(getString(R.string.no_record_found), this)
                 }
@@ -71,6 +76,23 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     }
 
     private fun setupList() {
+
+        val layoutManager = LinearLayoutManager(this)
+        rvPollAndSurvey.layoutManager = layoutManager
+
+        rvPollAndSurvey.addOnScrollListener(object :
+            EndlessRecyclerOnScrollListener(layoutManager, 3) {
+            override fun onLoadMore() {
+                if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
+                    loading = true
+
+                    pageNo += 10
+
+                    govtWorkViewModel.getUserAdviseList(districtId, pageNo.toString(), "10")
+                }
+            }
+        })
+
         govtWorkNewsAdapter = QuestionsAndSuggestionAdapter(
             {
                 //callIntent(this, it.contact_no!!)
@@ -121,9 +143,11 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     private fun getNews() {
         if (isConnected(this)) {
+            pageNo = 0
+            loading = true
             pbQuestionSuggestion.visibility = View.VISIBLE
             rvPollAndSurvey.visibility = View.GONE
-            govtWorkViewModel.getUserAdviseList(districtId, "0", "10")
+            govtWorkViewModel.getUserAdviseList(districtId, pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
