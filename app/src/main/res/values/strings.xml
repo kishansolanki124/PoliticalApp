@@ -93,4 +93,6 @@
     <string name="Winners">Winners</string>
     <string name="contest_detail_">Contest Details:</string>
     <string name="Get_Started">Get Started</string>
+    <string name="update_now">UPDATE NOW</string>
+    <string name="cancel">CANCEL</string>
 </resources>

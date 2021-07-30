@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.politics.politicalapp">
+    package="com.app.colorsofgujarat">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".PoliticalAppApplication"
+        android:name="com.app.colorsofgujarat.PoliticalAppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,7 +26,7 @@
         </provider>
 
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <!--            <intent-filter>-->
@@ -35,7 +35,7 @@
             <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".ui.activity.IntroActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.IntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -44,103 +44,103 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.RegisterActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.GovtWorkActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.GovtWorkActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.QuestionSuggestionActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.QuestionSuggestionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.activity.AddQuestionSuggestionActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.AddQuestionSuggestionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.activity.DailySpinAndWinActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.DailySpinAndWinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.activity.QuestionSuggestionDetailActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.QuestionSuggestionDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.DharasabhyoListActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.DharasabhyoListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.DharasabhyoDetailActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.DharasabhyoDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.GovtWorkDetailActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.GovtWorkDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.GovtWorkAllCommentActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.GovtWorkAllCommentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.NewsAllCommentActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.NewsAllCommentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.NewsDetailActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.NewsDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.PollAndSurveyActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.PollAndSurveyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.activity.QuizAndContestActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.QuizAndContestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.ContestDynamicActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.ContestDynamicActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.WinnerPrizeDetailActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.WinnerPrizeDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.WinnerNamesActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.WinnerNamesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.QuizAndContestWinnerActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.QuizAndContestWinnerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.QuizAndContestRunningActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.QuizAndContestRunningActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.LivePollRunningActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.LivePollRunningActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.AboutActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.ContactUsActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.ContactUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.TNCActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.TNCActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.activity.HomeActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <!--            <intent-filter>-->
@@ -149,7 +149,7 @@
             <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".ui.activity.DisplayPictureActivity"
+            android:name="com.app.colorsofgujarat.ui.activity.DisplayPictureActivity"
             android:launchMode="standard"
             android:theme="@style/AppTheme" />
     </application>
