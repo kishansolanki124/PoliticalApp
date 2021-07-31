@@ -78,11 +78,17 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
+        tvGive_opinion_get_10_point.append(yellowText)
+
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
         thirdText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
+
+        tvGive_opinion_get_10_point.append(thirdText)
+
+
     }
 
     private fun handleResponse(govtWorkDetailResponse: NewsDetailResponse?) {

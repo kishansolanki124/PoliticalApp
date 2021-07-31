@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.pojo.GovtWorkListResponse
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.govt_work_news_item.view.*
 
 class GovtWorkNewsAdapter(
-    private val itemClickCall: (GovtWorkListResponse.GovWork) -> Unit,
+    private val itemClickCall: (GovtWorkListResponse.GovWork, Int) -> Unit,
     private val itemClickShare: (GovtWorkListResponse.GovWork) -> Unit
 ) :
     RecyclerView.Adapter<GovtWorkNewsAdapter.HomeOffersViewHolder>() {
@@ -27,12 +27,17 @@ class GovtWorkNewsAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeOffersViewHolder, position: Int) {
-        holder.bindForecast(list[position])
+        holder.bindForecast(list[position], position)
     }
 
     fun setItem(list: ArrayList<GovtWorkListResponse.GovWork>) {
         this.list.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun updateItem(index: Int, rating: String) {
+        this.list[index].average_rating = rating
+        notifyItemChanged(index)
     }
 
     fun reset() {
@@ -44,12 +49,13 @@ class GovtWorkNewsAdapter(
 
     class HomeOffersViewHolder(
         view: View,
-        private val itemClickCall: (GovtWorkListResponse.GovWork) -> Unit,
+        private val itemClickCall: (GovtWorkListResponse.GovWork, Int) -> Unit,
         private val itemClickShare: (GovtWorkListResponse.GovWork) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
         fun bindForecast(
-            newsPortal: GovtWorkListResponse.GovWork
+            newsPortal: GovtWorkListResponse.GovWork,
+            index: Int
         ) {
             with(newsPortal) {
 
@@ -61,7 +67,7 @@ class GovtWorkNewsAdapter(
                     .into(itemView.ivNews)
 
                 itemView.cvRootGovtWorkNewsItem.setOnClickListener {
-                    itemClickCall(this)
+                    itemClickCall(this, index)
                 }
 
                 itemView.ivNewsShare.setOnClickListener {

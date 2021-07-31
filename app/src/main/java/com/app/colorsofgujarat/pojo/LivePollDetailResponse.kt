@@ -3,7 +3,7 @@ package com.app.colorsofgujarat.pojo
 data class LivePollDetailResponse(
     var message: String = "",
     var poll: List<Poll> = listOf(),
-    var poll_result: List<PollResult> = listOf(),
+    var poll_result: List<MLADetailResponse.PollResult> = listOf(),
     var status: String = ""
 ) {
     data class Poll(
@@ -18,9 +18,9 @@ data class LivePollDetailResponse(
         )
     }
 
-    data class PollResult(
-        var option_id: String = "",
-        var option_name: String = "",
-        var percentage: String = ""
-    )
+//    data class PollResult(
+//        var option_id: String = "",
+//        var option_name: String = "",
+//        var percentage: String = ""
+//    )
 }

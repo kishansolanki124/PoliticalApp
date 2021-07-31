@@ -8,6 +8,7 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.network.APIEndPointsInterface
 import com.app.colorsofgujarat.network.RetrofitFactory
 import com.app.colorsofgujarat.pojo.CommonResponse
+import com.app.colorsofgujarat.pojo.GiveMLARatingResponse
 import com.app.colorsofgujarat.pojo.PrizeDetailResponse
 import com.app.colorsofgujarat.pojo.WinnerListResponse
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,7 @@ class WinnerViewModel : ViewModel() {
     private val mutablePrizeDetailResponse =
         MutableLiveData<PrizeDetailResponse>()
     private val mutableCommonResponse = MutableLiveData<CommonResponse>()
+    private val mutableGiveMLARatingResponse = MutableLiveData<GiveMLARatingResponse>()
 
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
@@ -93,9 +95,9 @@ class WinnerViewModel : ViewModel() {
         }
     }
 
-    private suspend fun returnQuizAndContestAnswerResponse(apiResponse: CommonResponse) {
+    private suspend fun returnQuizAndContestAnswerResponse(apiResponse: GiveMLARatingResponse) {
         withContext(Dispatchers.Main) {
-            mutableCommonResponse.value = apiResponse
+            mutableGiveMLARatingResponse.value = apiResponse
         }
     }
 
@@ -120,7 +122,7 @@ class WinnerViewModel : ViewModel() {
         return mutablePrizeDetailResponse
     }
 
-    fun quizAndContestAnswer(): LiveData<CommonResponse> {
-        return mutableCommonResponse
+    fun quizAndContestAnswer(): LiveData<GiveMLARatingResponse> {
+        return mutableGiveMLARatingResponse
     }
 }

@@ -19,6 +19,7 @@ class LivePollViewModel : ViewModel() {
     private val mutableQuizAndContestDetailResponse =
         MutableLiveData<LivePollDetailResponse>()
     private val mutableCommonResponse = MutableLiveData<CommonResponse>()
+    private val mutableGiveMLARatingResponse = MutableLiveData<GiveMLARatingResponse>()
 
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
@@ -105,9 +106,9 @@ class LivePollViewModel : ViewModel() {
         }
     }
 
-    private suspend fun returnQuizAndContestAnswerResponse(apiResponse: CommonResponse) {
+    private suspend fun returnQuizAndContestAnswerResponse(apiResponse: GiveMLARatingResponse) {
         withContext(Dispatchers.Main) {
-            mutableCommonResponse.value = apiResponse
+            mutableGiveMLARatingResponse.value = apiResponse
         }
     }
 
@@ -132,7 +133,7 @@ class LivePollViewModel : ViewModel() {
         return mutableQuizAndContestDetailResponse
     }
 
-    fun quizAndContestAnswer(): LiveData<CommonResponse> {
-        return mutableCommonResponse
+    fun quizAndContestAnswer(): LiveData<GiveMLARatingResponse> {
+        return mutableGiveMLARatingResponse
     }
 }

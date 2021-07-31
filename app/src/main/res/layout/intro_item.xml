@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:fitsSystemWindows="true"
     android:gravity="center"
     android:orientation="vertical">
@@ -12,6 +11,6 @@
         android:id="@+id/introImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/user1" />
+        android:scaleType="fitCenter"
+        tools:src="@drawable/banner" />
 </LinearLayout>

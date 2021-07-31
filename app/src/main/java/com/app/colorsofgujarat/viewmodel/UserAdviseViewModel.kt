@@ -8,6 +8,7 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.network.APIEndPointsInterface
 import com.app.colorsofgujarat.network.RetrofitFactory
 import com.app.colorsofgujarat.pojo.CommonResponse
+import com.app.colorsofgujarat.pojo.NotificationResponse
 import com.app.colorsofgujarat.pojo.UserAdviseDetailResponse
 import com.app.colorsofgujarat.pojo.UserAdviseResponse
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ import java.io.File
 class UserAdviseViewModel : ViewModel() {
 
     private val mutableSettingsResponse = MutableLiveData<UserAdviseResponse>()
+    private val mutableNotificationResponse = MutableLiveData<NotificationResponse>()
     private val commonResponse = MutableLiveData<CommonResponse>()
     private val mutableUserAdviseDetailResponse = MutableLiveData<UserAdviseDetailResponse>()
 
@@ -52,6 +54,35 @@ class UserAdviseViewModel : ViewModel() {
                     requestBodyBuilder.build()
                 )
                 returnSettingsResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getNotification(user_mobile: String, start: String, end: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_mobile,
+                    user_mobile
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.end,
+                    end
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.start,
+                    start
+                )
+
+                val apiResponse = apiEndPointsInterface.getNotification(
+                    requestBodyBuilder.build()
+                )
+                returnNotificationResponse(apiResponse)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -163,6 +194,12 @@ class UserAdviseViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnNotificationResponse(settingsResponse: NotificationResponse) {
+        withContext(Dispatchers.Main) {
+            mutableNotificationResponse.value = settingsResponse
+        }
+    }
+
     private suspend fun returnCommonResponse(settingsResponse: CommonResponse) {
         withContext(Dispatchers.Main) {
             commonResponse.value = settingsResponse
@@ -185,5 +222,8 @@ class UserAdviseViewModel : ViewModel() {
 
     fun addQuestionResponse(): LiveData<CommonResponse> {
         return commonResponse
+    }
+    fun notificationResponse(): LiveData<NotificationResponse> {
+        return mutableNotificationResponse
     }
 }

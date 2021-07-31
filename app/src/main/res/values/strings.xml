@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PoliticalApp</string>
+    <string name="app_name">Colors Of Gujarat</string>
     <string name="your_name">તમારું નામ</string>
     <string name="your_phone">તમારો મોબાઇલ નંબર</string>
     <string name="Home">Home</string>
@@ -11,9 +11,11 @@
     <string name="govt_work">સરકારની કામગીરી</string>
     <string name="dharasabhyo">ધારાસભ્યો</string>
     <string name="percentage_">%1$s%%</string>
+    <string name="Date_">Date: %1$s</string>
     <string name="poll_and_survey">પોલ અને સર્વે</string>
     <string name="live_poll">લાઇવ પોલ</string>
     <string name="que_suggestion">પ્રશ્નો સૂચનો</string>
+    <string name="notification">નોટીફિકેશન</string>
     <string name="daily_spin_and_win">સ્પિન કરો અને જીતો</string>
     <string name="quiz_and_contest">કવીઝ અને કોન્ટેસ્ટ</string>
     <string name="winner">વિજેતા</string>
@@ -39,9 +41,10 @@
     <string name="write_comment">Write A Comment</string>
     <string name="scratch_and_point">Spin &amp; Get Points</string>
     <string name="running">running</string>
+    <string name="contest_details_and_rules">Contest Details &amp; Rules</string>
     <string name="prize_details_and_rules">Prize Details &amp; Rules</string>
     <string name="Prize_Details">Prize Details</string>
-    <string name="Quiz_Details_">Quiz Details:</string>
+    <string name="Prize_Details_">Prize Details:</string>
     <string name="Check_Winner">CHECK WINNER</string>
     <string name="Name">Name</string>
     <string name="Email">Email</string>

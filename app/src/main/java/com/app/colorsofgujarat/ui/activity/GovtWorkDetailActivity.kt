@@ -1,5 +1,6 @@
 package com.app.colorsofgujarat.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
@@ -14,13 +15,13 @@ import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.NewsCommentAdapter
 import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.GiveUserRatingToGovtWorkResponse
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_govt_work_detail.*
 
 class GovtWorkDetailActivity : ExtendedToolbarActivity() {
@@ -30,8 +31,10 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     private lateinit var govtWorkViewModel: GovtWorkViewModel
     private var gid = ""
     private var sharableText = ""
+    private var averageRating = ""
     private var imageURL = ""
     private var ratingDone = true
+    private var refreshPage = false
     private var rating = 0
 
     override val layoutId: Int
@@ -124,6 +127,9 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             //rating of this article is done now
             llRatingSubmit.visibility = View.GONE
             tvYourRating.text = getString(R.string.your_ratings)
+            refreshPage = true
+            averageRating = giveUserRatingToGovtWorkResponse.average_rating
+            tvRateReceived.text = giveUserRatingToGovtWorkResponse.average_rating
         }
     }
 
@@ -500,5 +506,13 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        intent.putExtra(AppConstants.REFRESH, refreshPage)
+        intent.putExtra(AppConstants.RATING, averageRating)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 }

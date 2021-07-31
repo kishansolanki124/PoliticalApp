@@ -105,13 +105,14 @@ class LivePollFragment : Fragment() {
 
         govtWorkNewsAdapter = LivePollAdapter(
             { it, showButton ->
-                //callIntent(this, it.contact_no!!)
+                //item click call
                 startActivity(
                     Intent(requireContext(), LivePollRunningActivity::class.java)
                         .putExtra(AppConstants.SHOW_SUBMIT, showButton)
                         .putExtra(AppConstants.ID, it.id)
                 )
             }, {
+                //item click share
                 shareIntent(
                     "Participate in Live Poll and Win Prizes:\n\n" + it.name,
                     requireContext()
@@ -119,8 +120,7 @@ class LivePollFragment : Fragment() {
                 //browserIntent(this, it.website!!)
                 //startActivity(Intent(this, QuizAndContestWinnerActivity::class.java))
             }, {
-                //browserIntent(this, it.website!!)
-                //startActivity(Intent(this, QuizAndContestWinnerActivity::class.java))
+                //item click web
             }
         )
 

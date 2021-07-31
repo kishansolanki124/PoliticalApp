@@ -164,7 +164,9 @@ class LivePollAdapter(
 
                 itemView.btViewWinner.setOnClickListener {
                     if (itemView.btViewWinner.text.equals("result")) {
-                        itemClickWeb(this)
+                        itemClickCall(this, false)
+                    } else {
+                        itemClickCall(this, true)
                     }
                 }
 

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_5"
             android:fontFamily="@font/semi_bold"
-            android:text="@string/Quiz_Details_"
+            android:text="@string/Prize_Details_"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_14" />
 

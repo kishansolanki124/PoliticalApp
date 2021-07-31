@@ -1,10 +1,12 @@
 package com.app.colorsofgujarat.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
@@ -20,6 +22,7 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
 
     private var districtId = ""
     private var totalRecords = 0
+    private var selectedItemIndex = 0
     private var loading = false
     private var pageNo = 0
     private lateinit var govtWorkViewModel: GovtWorkViewModel
@@ -29,6 +32,20 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
 
     override val layoutId: Int
         get() = R.layout.activity_govt_work
+
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let {
+                    if (it.getBooleanExtra(AppConstants.REFRESH, false)) {
+                        govtWorkNewsAdapter.updateItem(
+                            selectedItemIndex,
+                            it.getStringExtra(AppConstants.RATING)!!
+                        )
+                    }
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,9 +152,9 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
         })
 
         govtWorkNewsAdapter = GovtWorkNewsAdapter(
-            {
-                //callIntent(this, it.contact_no!!)
-                startActivity(
+            { it, index ->
+                selectedItemIndex = index
+                resultLauncher.launch(
                     Intent(this, GovtWorkDetailActivity::class.java)
                         .putExtra(AppConstants.GID, it.id)
                 )

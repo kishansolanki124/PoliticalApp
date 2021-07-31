@@ -60,7 +60,7 @@ interface APIEndPointsInterface {
     @POST(AppConstants.APIEndPoints.ADD_LIVE_POLL_ANSWER)
     suspend fun addLivePollAnswer(
         @Body hashMap: MultipartBody
-    ): CommonResponse
+    ): GiveMLARatingResponse
 
     @POST(AppConstants.APIEndPoints.GET_QUIZ_CONTEST_DETAIL)
     suspend fun getQuizAndContestDetail(
@@ -106,6 +106,11 @@ interface APIEndPointsInterface {
     suspend fun getUserAdvise(
         @Body hashMap: MultipartBody
     ): UserAdviseResponse
+
+    @POST(AppConstants.APIEndPoints.GET_NOTIFICATION)
+    suspend fun getNotification(
+        @Body hashMap: MultipartBody
+    ): NotificationResponse
 
 //    @Multipart
 //    @POST(AppConstants.APIEndPoints.ADD_UER_ADVISE)

@@ -27,6 +27,7 @@ interface AppConstants {
         const val SHOW_SUBMIT: String = "SHOW_SUBMIT"
         const val DISTRICTID: String = "DISTRICTID"
         const val REFRESH: String = "REFRESH"
+        const val RATING: String = "RATING"
         const val ID: String = "id"
     }
 
@@ -55,6 +56,7 @@ interface AppConstants {
             const val GET_GOVT_WORK_COMMENTS: String = "get_govwork_comment"
             const val GET_NEWS_COMMENTS: String = "get_news_comment"
             const val GET_UER_ADVISE: String = "get_user_advice"
+            const val GET_NOTIFICATION: String = "get_notification"
             const val ADD_UER_ADVISE: String = "add_user_advice"
             const val GET_UER_ADVISE_DETAIL: String = "get_user_advice_detail"
             const val GET_GOVT_WORK_DETAIL: String = "get_govwork_detail"

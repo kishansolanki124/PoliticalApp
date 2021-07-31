@@ -16,6 +16,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
+import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.pojo.GiveMLARatingResponse
+import com.app.colorsofgujarat.pojo.LivePollDetailResponse
+import com.app.colorsofgujarat.viewmodel.LivePollViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
@@ -26,11 +31,6 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
-import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.apputils.*
-import com.app.colorsofgujarat.pojo.CommonResponse
-import com.app.colorsofgujarat.pojo.LivePollDetailResponse
-import com.app.colorsofgujarat.viewmodel.LivePollViewModel
 import kotlinx.android.synthetic.main.activity_live_poll_running.*
 import java.util.*
 
@@ -287,8 +287,8 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         Log.i("PieChart", "nothing selected")
     }
 
-    private fun handleAnswerResponse(commonResponse: CommonResponse?) {
-        if (null != commonResponse) {
+    private fun handleAnswerResponse(commonResponse: GiveMLARatingResponse) {
+        if (commonResponse.status == "1") {
             btSubmitLivePOllAnswer.visibility = View.VISIBLE
             pbSubmitLivePOllAnswer.visibility = View.GONE
             btSubmitLivePOllAnswer.visibility = View.INVISIBLE
@@ -296,8 +296,11 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             tvAnswerSubmitted.visibility = View.VISIBLE
             setUserPoints(commonResponse.user_points)
             showAlertDialog(commonResponse.message)
+
+            livePollDetailResponse?.poll_result = commonResponse.poll_result
+            setData()
         } else {
-            showSnackBar(getString(R.string.something_went_wrong))
+            showAlertDialog(commonResponse.message)
         }
     }
 

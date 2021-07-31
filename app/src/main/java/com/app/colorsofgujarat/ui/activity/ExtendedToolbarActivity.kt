@@ -1,5 +1,6 @@
 package com.app.colorsofgujarat.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.Nullable
@@ -23,6 +24,19 @@ abstract class ExtendedToolbarActivity : AppCompatActivity() {
             hideKeyboard(this)
             onBackPressed()
         }
+
+        ivNotification.setOnClickListener {
+            hideUnreadCount()
+            startActivity(Intent(this, NotificationActivity::class.java))
+        }
+    }
+
+    fun showUnreadCount() {
+        ivNotificationUnread.visibility = View.VISIBLE
+    }
+
+    fun hideUnreadCount() {
+        ivNotificationUnread.visibility = View.GONE
     }
 
     fun setToolbarTitle(title: String?) {

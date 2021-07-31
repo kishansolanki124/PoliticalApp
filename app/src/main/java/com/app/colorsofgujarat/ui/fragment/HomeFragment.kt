@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.BreakingNewsAdapter
 import com.app.colorsofgujarat.apputils.SPreferenceManager
@@ -23,6 +21,8 @@ import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.ui.activity.*
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
+import com.bumptech.glide.Glide
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -144,6 +144,15 @@ class HomeFragment : Fragment() {
         newsHomeViewPager.visibility = View.VISIBLE
         if (null != settingsResponse) {
             SPreferenceManager.getInstance(requireContext()).saveSettings(settingsResponse)
+
+            if (settingsResponse.notification_count == "0") {
+                //hide unread count
+                (activity as HomeActivity).hideUnreadCount()
+            } else {
+                //show unread count
+                (activity as HomeActivity).showUnreadCount()
+            }
+
             tvMenuDynamic.text = settingsResponse.contest[0].menu_name
 
             Glide.with(this)

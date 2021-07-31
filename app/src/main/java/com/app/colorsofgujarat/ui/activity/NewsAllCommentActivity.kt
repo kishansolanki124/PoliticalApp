@@ -33,7 +33,7 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
 
         nid = intent.getStringExtra(AppConstants.ID)!!
 
-        setToolbarTitle(getString(R.string.govt_work))
+        setToolbarTitle(getString(R.string.latest_news))
         initList()
 
         govtWorkViewModel = ViewModelProvider(this).get(GovtWorkViewModel::class.java)

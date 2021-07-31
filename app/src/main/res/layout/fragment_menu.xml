@@ -28,7 +28,7 @@
             android:fontFamily="@font/semi_bold"
             android:text="@string/Menu"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_16" />
     </RelativeLayout>
 
     <View

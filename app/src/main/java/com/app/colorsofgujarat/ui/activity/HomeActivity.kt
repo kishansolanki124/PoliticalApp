@@ -9,7 +9,6 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.rateApp
 import com.app.colorsofgujarat.apputils.shareApp
@@ -18,6 +17,7 @@ import com.app.colorsofgujarat.ui.fragment.HomeFragment
 import com.app.colorsofgujarat.ui.fragment.LivePollFragment
 import com.app.colorsofgujarat.ui.fragment.QuizAndContestFragment
 import com.app.colorsofgujarat.ui.fragment.WinnerFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_menu.*
 

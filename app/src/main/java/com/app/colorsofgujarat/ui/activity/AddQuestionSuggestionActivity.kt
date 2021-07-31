@@ -1,27 +1,24 @@
 package com.app.colorsofgujarat.ui.activity
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
-import com.opensooq.supernova.gligar.GligarPicker
 import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.getTermsByName
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.UserAdviseViewModel
+import com.bumptech.glide.Glide
+import com.github.drjacky.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_add_question_suggestion.*
 import java.io.File
 
@@ -35,6 +32,17 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     override val layoutId: Int
         get() = R.layout.activity_add_question_suggestion
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri = it.data?.data!!
+                // Use the uri to load the image
+                val filePath = FetchPath.getPath(this, uri)
+                selectedFile = File(filePath)
+                Glide.with(this).load(selectedFile).into(ivSelectedImage)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +83,12 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
         }
 
         rlImage.setOnClickListener {
-            GligarPicker().requestCode(100).limit(1).withActivity(this).show()
+            //GligarPicker().requestCode(100).limit(1).withActivity(this).show()
+            launcher.launch(
+                ImagePicker.with(this)
+                    .galleryOnly()
+                    .createIntent()
+            )
         }
 
         ivCamera.setOnClickListener {
@@ -150,31 +163,31 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
             }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
-
-        when (requestCode) {
-            100 -> {
-                val imagesList =
-                    data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)// return list of selected images paths.
-                if (!imagesList.isNullOrEmpty()) {
-                    //.load(File(imagePath))
-                    selectedFile = File(imagesList[0])
-                    Glide.with(this).load(selectedFile).into(ivSelectedImage)
-
-
-//                    val requestFile: RequestBody = selectedFile
-//                        .asRequestBody(contentResolver.getType(Uri.fromFile(selectedFile))!!.toMediaTypeOrNull())
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode != Activity.RESULT_OK) {
+//            return
+//        }
 //
-//                    val body: Part =
-//                        createFormData.createFormData("picture", selectedFile.name, requestFile)
-                }
-            }
-        }
-    }
+//        when (requestCode) {
+//            100 -> {
+//                val imagesList =
+//                    data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)// return list of selected images paths.
+//                if (!imagesList.isNullOrEmpty()) {
+//                    //.load(File(imagePath))
+//                    selectedFile = File(imagesList[0])
+//                    Glide.with(this).load(selectedFile).into(ivSelectedImage)
+//
+//
+////                    val requestFile: RequestBody = selectedFile
+////                        .asRequestBody(contentResolver.getType(Uri.fromFile(selectedFile))!!.toMediaTypeOrNull())
+////
+////                    val body: Part =
+////                        createFormData.createFormData("picture", selectedFile.name, requestFile)
+//                }
+//            }
+//        }
+//    }
 
     private fun showAlertDialog(msg: String) {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)

@@ -1,30 +1,34 @@
 package com.app.colorsofgujarat.ui.activity
 
 import android.app.Activity
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.opensooq.supernova.gligar.GligarPicker
 import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.apputils.FetchPath
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.QuizAndContestDynamicResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
+import com.bumptech.glide.Glide
+import com.github.drjacky.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_contest_dynamic.*
 import java.io.File
+
 
 class ContestDynamicActivity : ExtendedToolbarActivity() {
 
@@ -37,6 +41,17 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
 
     override val layoutId: Int
         get() = R.layout.activity_contest_dynamic
+
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val uri = it.data?.data!!
+                // Use the uri to load the image
+                val filePath = FetchPath.getPath(this, uri)
+                selectedFile = File(filePath)
+                Glide.with(this).load(selectedFile).into(ivSelectedImage)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +77,12 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         }
 
         btSelectImage.setOnClickListener {
-            GligarPicker().requestCode(100).limit(1).withActivity(this).show()
+            //GligarPicker().requestCode(100).limit(1).withActivity(this).show()
+            launcher.launch(
+                ImagePicker.with(this)
+                    .galleryOnly()
+                    .createIntent()
+            )
         }
 
         btPrizeDetailsAndRules.setOnClickListener {
@@ -111,23 +131,23 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         prizeDetail = quizAndContestResponse.photo_contest[0].contest_detail
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
-
-        when (requestCode) {
-            100 -> {
-                val imagesList =
-                    data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)// return list of selected images paths.
-                if (!imagesList.isNullOrEmpty()) {
-                    selectedFile = File(imagesList[0])
-                    Glide.with(this).load(selectedFile).into(ivSelectedImage)
-                }
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode != Activity.RESULT_OK) {
+//            return
+//        }
+//
+//        when (requestCode) {
+//            100 -> {
+//                val imagesList =
+//                    data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)// return list of selected images paths.
+//                if (!imagesList.isNullOrEmpty()) {
+//                    selectedFile = File(imagesList[0])
+//                    Glide.with(this).load(selectedFile).into(ivSelectedImage)
+//                }
+//            }
+//        }
+//    }
 
 
     private fun fieldsAreValid(): Boolean {
@@ -217,5 +237,25 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
+
+    private fun getPath(uri: Uri): String? {
+//        val projection = arrayOf(MediaStore.Images.Media.DATA)
+//        val cursor = contentResolver.query(uri, projection, null, null, null) ?: return null
+//        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+//        cursor.moveToFirst()
+//        val s = cursor.getString(column_index)
+//        cursor.close()
+        //return s
+
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor2 = contentResolver.query(uri, filePathColumn, null, null, null)
+        cursor2?.let {
+            it.moveToFirst()
+            val columnIndex = it.getColumnIndex(filePathColumn[0])
+            it.close()
+            return it.getString(columnIndex)
+        }
+        return null
     }
 }
