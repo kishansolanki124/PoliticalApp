@@ -1,3 +1,7 @@
+One Signal:
+email : whatsnewtoday2018@gmail.com
+password : whatsnew@2018
+=========================================================
 Changes and additional features:
 1. Notification list not in the design, new screen and redirection
 2. hot news text change
@@ -14,12 +18,8 @@ Changes and additional features:
 14. dynamic new vaccination menu and new screen
 15. dharasabhyo vishesh kamgiri na hoy to hide tab
 16. dynamic points for every screen
-
 =========================================================
-
 TODO:
-onsignal notification for scratch card, quiz contest, live poll, sarkar ne kamgiri, vaccine screen
-
 share points add on share (API)
 
 Banner ads everywhere:
@@ -28,11 +28,3 @@ spin and win & vaccine vadi screen ma popup banner alag thi avse
 add proguard before launch
 
 font change of percentage in chart in every screen
-
-app minimize kare atle welcome screen thi app start karvi
-
-=========================================================
-TODO: New FEEDBACK:
-upload vaccine certificate vadi screen ma photo upload karva mate browse karu atle back screen ma redirect thai jay che,
-amit bhai na mobile ma work kare che proper (mara ma android 11 update thyu che atle problem ave che prasno suchano ma same
-poroblem thy che mare atyare pela work kartu tu kale andoid nu version update thyu che atle nti chaltu)

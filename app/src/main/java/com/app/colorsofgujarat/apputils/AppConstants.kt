@@ -29,6 +29,21 @@ interface AppConstants {
         const val REFRESH: String = "REFRESH"
         const val RATING: String = "RATING"
         const val ID: String = "id"
+        const val TYPE: String = "type"
+    }
+
+    interface NotificationType {
+        companion object {
+            const val GOVT_WORK: String = "govt_work"
+            const val NEWS: String = "news"
+            const val LIVE_POLL: String = "poll"
+            const val QUIZ_NEW: String = "quiz_new"
+            const val QUIZ_WINNER: String = "quiz_winner"
+            const val POINT_NEW: String = "point_new"
+            const val POINT_WINNER: String = "point_winner"
+            const val SPIN: String = "spin"
+            const val CONTEST: String = "contest"
+        }
     }
 
     interface APIEndPoints {

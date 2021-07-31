@@ -29,7 +29,6 @@ import com.github.drjacky.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_contest_dynamic.*
 import java.io.File
 
-
 class ContestDynamicActivity : ExtendedToolbarActivity() {
 
     private lateinit var selectedFile: File
