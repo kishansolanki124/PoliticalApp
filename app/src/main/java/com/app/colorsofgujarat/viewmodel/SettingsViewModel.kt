@@ -22,6 +22,7 @@ class SettingsViewModel : ViewModel() {
     private val mutableStaticPageResponse = MutableLiveData<StaticPageResponse>()
     private val mutableContactUsResponse = MutableLiveData<ContactUsResponse>()
     private val mutableAddScratchCardResponse = MutableLiveData<CommonResponse>()
+    private val mutablePopupBannerResponse = MutableLiveData<PopupBannerResponse>()
     private var apiEndPointsInterface =
         RetrofitFactory.createService(APIEndPointsInterface::class.java)
 
@@ -148,6 +149,41 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
+    fun getPopupBanner() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                //val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+                val apiResponse = apiEndPointsInterface.getPopupBanner(
+                    //requestBodyBuilder.build()
+                )
+                returnPopupBannerResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getPopupBanner(screen: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.screen,
+                    screen
+                )
+
+                val apiResponse = apiEndPointsInterface.getPopupBanner(
+                    requestBodyBuilder.build()
+                )
+                returnPopupBannerResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     /**
      * Dispatchers.IO for network or disk operations that takes longer time and runs in background thread
      */
@@ -220,6 +256,12 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnPopupBannerResponse(popupBannerResponse: PopupBannerResponse) {
+        withContext(Dispatchers.Main) {
+            mutablePopupBannerResponse.value = popupBannerResponse
+        }
+    }
+
     private suspend fun returnCommonResponse(settingsResponse: CommonResponse) {
         withContext(Dispatchers.Main) {
             mutableCommonResponse.value = settingsResponse
@@ -249,5 +291,9 @@ class SettingsViewModel : ViewModel() {
 
     fun contactUs(): LiveData<ContactUsResponse> {
         return mutableContactUsResponse
+    }
+
+    fun popupBanners(): LiveData<PopupBannerResponse> {
+        return mutablePopupBannerResponse
     }
 }

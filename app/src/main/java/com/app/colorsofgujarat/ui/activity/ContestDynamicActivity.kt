@@ -3,9 +3,9 @@ package com.app.colorsofgujarat.ui.activity
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +15,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.apputils.FetchPath
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.CommonResponse
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.QuizAndContestDynamicResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
+import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_contest_dynamic.*
@@ -32,7 +32,10 @@ import java.io.File
 class ContestDynamicActivity : ExtendedToolbarActivity() {
 
     private lateinit var selectedFile: File
-    private lateinit var settingsViewModel: QuizAndContestViewModel
+    private lateinit var quizAndContestViewModel: QuizAndContestViewModel
+    private lateinit var settingsViewModel: SettingsViewModel
+    private var handler: Handler? = null
+    private var runnableCode: Runnable? = null
     private var rules = ""
     private var cid = ""
     private var prizeDetail = ""
@@ -57,20 +60,27 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
 
         setToolbarTitle(SPreferenceManager.getInstance(this).settings.contest[0].menu_name)
 
-        settingsViewModel = ViewModelProvider(this).get(QuizAndContestViewModel::class.java)
+        quizAndContestViewModel = ViewModelProvider(this).get(QuizAndContestViewModel::class.java)
 
-        settingsViewModel.quizAndContestDynamic().observe(this, {
+        settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+
+        settingsViewModel.popupBanners().observe(this, {
             handleResponse(it)
         })
 
-        settingsViewModel.quizAndContestAnswer().observe(this, {
+        quizAndContestViewModel.quizAndContestDynamic().observe(this, {
+            handleResponse(it)
+        })
+
+        quizAndContestViewModel.quizAndContestAnswer().observe(this, {
             handleCommonResponse(it)
         })
 
         if (isConnected(this)) {
             llContestDynamicMain.visibility = View.GONE
             pbContestDynamic.visibility = View.VISIBLE
-            settingsViewModel.getQuizAndContestDynamic()
+            quizAndContestViewModel.getQuizAndContestDynamic()
+            settingsViewModel.getPopupBanner("photo_contest")
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
@@ -97,7 +107,7 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
                 if (isConnected(this)) {
                     pbSubmitQuizContestAnswer.visibility = View.VISIBLE
                     btSubmitQuestion.visibility = View.INVISIBLE
-                    settingsViewModel.addPhotoContestUser(
+                    quizAndContestViewModel.addPhotoContestUser(
                         SPreferenceManager.getInstance(this).session,
                         cid,
                         selectedFile
@@ -238,23 +248,38 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
 
-    private fun getPath(uri: Uri): String? {
-//        val projection = arrayOf(MediaStore.Images.Media.DATA)
-//        val cursor = contentResolver.query(uri, projection, null, null, null) ?: return null
-//        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-//        cursor.moveToFirst()
-//        val s = cursor.getString(column_index)
-//        cursor.close()
-        //return s
-
-        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor2 = contentResolver.query(uri, filePathColumn, null, null, null)
-        cursor2?.let {
-            it.moveToFirst()
-            val columnIndex = it.getColumnIndex(filePathColumn[0])
-            it.close()
-            return it.getString(columnIndex)
+    private fun handleResponse(popupBannerResponse: PopupBannerResponse) {
+        if (!popupBannerResponse.popup_banner.isNullOrEmpty()) {
+            setupRepeatableBannerAd(
+                popupBannerResponse.delay_time, popupBannerResponse.initial_time,
+                popupBannerResponse.popup_banner
+            )
         }
-        return null
+    }
+
+    private fun setupRepeatableBannerAd(
+        delayTime: String,
+        initialTime: String,
+        popupBanner: List<PopupBannerResponse.PopupBanner>
+    ) {
+        handler = Handler(Looper.getMainLooper())
+        runnableCode = object : Runnable {
+            override fun run() {
+                if (!isDestroyed && !this@ContestDynamicActivity.isFinishing) {
+                    if (this@ContestDynamicActivity.lifecycle.currentState
+                            .isAtLeast(Lifecycle.State.RESUMED)
+                    ) {
+                        showProgressDialog(this@ContestDynamicActivity, popupBanner)
+                    }
+                    handler?.postDelayed(this, delayTime.toLong() * 1000)
+                }
+            }
+        }
+
+        if (!isDestroyed && !this.isFinishing) {
+            runnableCode?.let {
+                handler?.postDelayed(it, initialTime.toLong() * 1000)
+            }
+        }
     }
 }

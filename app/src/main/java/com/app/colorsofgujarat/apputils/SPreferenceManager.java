@@ -3,6 +3,7 @@ package com.app.colorsofgujarat.apputils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.app.colorsofgujarat.pojo.PopupBannerResponse;
 import com.google.gson.Gson;
 import com.app.colorsofgujarat.pojo.SettingsResponse;
 
@@ -89,7 +90,14 @@ public class SPreferenceManager {
         setString(AppConstants.SETTINGS, gson.toJson(settingsResponse));
     }
 
+    public void saveBanners(PopupBannerResponse popupBannerResponse) {
+        setString(AppConstants.BANNER, gson.toJson(popupBannerResponse));
+    }
+
     public SettingsResponse getSettings() {
         return gson.fromJson(getString(AppConstants.SETTINGS, null), SettingsResponse.class);
+    }
+    public PopupBannerResponse getBanners() {
+        return gson.fromJson(getString(AppConstants.BANNER, null), PopupBannerResponse.class);
     }
 }

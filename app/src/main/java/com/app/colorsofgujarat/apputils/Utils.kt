@@ -6,9 +6,11 @@ import android.app.Application
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Paint
+import android.graphics.PorterDuff
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -24,6 +26,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -34,14 +37,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.viewpager2.widget.ViewPager2
+import com.app.colorsofgujarat.BuildConfig
+import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
+import com.app.colorsofgujarat.ui.activity.SplashActivity
+import com.bumptech.glide.Glide
 import com.downloader.OnDownloadListener
 import com.downloader.PRDownloader
 import com.github.mikephil.charting.data.PieDataSet
 import com.google.android.material.snackbar.Snackbar
-import com.app.colorsofgujarat.BuildConfig
-import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.ui.activity.SplashActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -49,6 +55,9 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
+private var pgDialog: Dialog? = null
+private var newsBannerAdCurrentIndex = 0
 
 fun isConnected(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -143,8 +152,6 @@ fun sessionExpired(application: Application) {
 //        ).show()
 //    }
 }
-
-private var pgDialog: Dialog? = null
 
 fun showProgressDialog(context: Context) {
     if (pgDialog == null) {
@@ -509,4 +516,93 @@ fun Context.getPollPoints(): String {
 
 fun Context.getSharePoints(): String {
     return SPreferenceManager.getInstance(this).settings.settings[0].share_points
+}
+
+fun showProgressDialog(context: Context, popup_banner: List<PopupBannerResponse.PopupBanner>) {
+    if (pgDialog == null) {
+        if (!(context as Activity).isFinishing) {
+            pgDialog = getProgressDialog(context, popup_banner)
+            pgDialog?.show()
+        }
+    } else if (null != pgDialog && (!pgDialog!!.isShowing)) {
+        if (!(context as Activity).isFinishing) {
+            pgDialog?.show()
+        }
+    }
+}
+
+fun getProgressDialog(
+    context: Context,
+    popup_banner: List<PopupBannerResponse.PopupBanner>
+): Dialog {
+    var currentIndex = 0
+    val progressDialog = Dialog(context)
+    val view: View = View.inflate(context, R.layout.dialog_progress, null)
+    //LayoutInflater.from(context).inflate(R.layout.dialog_progress, parent, false)
+
+    val ivAppBanner = view.findViewById<ImageView>(R.id.ivAppBanner)
+    val ivClose = view.findViewById<ImageView>(R.id.ivClose)
+
+    ivClose.setOnClickListener {
+        dismissProgressDialog()
+    }
+
+    if (popup_banner.size - 1 < newsBannerAdCurrentIndex) {
+        newsBannerAdCurrentIndex = 0
+    }
+    currentIndex = newsBannerAdCurrentIndex
+
+    ivAppBanner.setOnClickListener {
+        browserIntent(context, popup_banner[currentIndex].url)
+        dismissProgressDialog()
+    }
+
+    val circularProgressDrawable = CircularProgressDrawable(context)
+    circularProgressDrawable.strokeWidth = 5f
+    circularProgressDrawable.centerRadius = 30f
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        circularProgressDrawable.colorFilter = BlendModeColorFilter(
+            ContextCompat.getColor(
+                context,
+                R.color.white
+            ), BlendMode.SRC_ATOP
+        )
+    } else {
+        circularProgressDrawable.setColorFilter(
+            ContextCompat.getColor(
+                context,
+                R.color.white
+            ), PorterDuff.Mode.SRC_ATOP
+        )
+    }
+
+    circularProgressDrawable.start()
+
+    Glide.with(ivAppBanner.context)
+        .load(popup_banner[currentIndex].up_pro_img)
+        //.error(R.drawable.error_load)
+        .placeholder(circularProgressDrawable)
+        .into(ivAppBanner)
+
+    progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    progressDialog.setContentView(view)
+    progressDialog.setCancelable(true)
+    progressDialog.setCanceledOnTouchOutside(false)
+    val window = progressDialog.window
+    if (window != null) {
+        window.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                context,
+                android.R.color.transparent
+            )
+        )
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+    }
+
+    newsBannerAdCurrentIndex += 1
+    return progressDialog
 }

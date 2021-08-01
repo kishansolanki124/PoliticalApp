@@ -112,6 +112,12 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): NotificationResponse
 
+    @POST(AppConstants.APIEndPoints.GET_POPUP_BANNER)
+    suspend fun getPopupBanner(): PopupBannerResponse
+
+    @POST(AppConstants.APIEndPoints.GET_POPUP_BANNER)
+    suspend fun getPopupBanner(@Body hashMap: MultipartBody): PopupBannerResponse
+
 //    @Multipart
 //    @POST(AppConstants.APIEndPoints.ADD_UER_ADVISE)
 //    suspend fun addUserAdvise(

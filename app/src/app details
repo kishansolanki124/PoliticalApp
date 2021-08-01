@@ -18,6 +18,7 @@ Changes and additional features:
 14. dynamic new vaccination menu and new screen
 15. dharasabhyo vishesh kamgiri na hoy to hide tab
 16. dynamic points for every screen
+17. different popup banner in spin and win and photo contest screen
 =========================================================
 TODO:
 share points add on share (API)
@@ -28,3 +29,8 @@ spin and win & vaccine vadi screen ma popup banner alag thi avse
 add proguard before launch
 
 font change of percentage in chart in every screen
+
+
+aa changes mate tamare get get_popup_banner ma screen nu name pass karvu pdse
+key : screen
+value : spin_win, photo_contest

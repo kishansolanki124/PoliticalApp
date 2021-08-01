@@ -8,6 +8,7 @@ interface AppConstants {
         const val MOBILE: String = "MOBILE"
         const val GID: String = "GID"
         const val SETTINGS: String = "SETTINGS"
+        const val BANNER: String = "BANNER"
         const val MOBILE_VERIFIED: String = "MOBILE_VERIFIED"
         const val NEWS_ID: String = "NEWS_ID"
         const val IMAGE_LIST: String = "IMAGE_LIST"
@@ -72,6 +73,7 @@ interface AppConstants {
             const val GET_NEWS_COMMENTS: String = "get_news_comment"
             const val GET_UER_ADVISE: String = "get_user_advice"
             const val GET_NOTIFICATION: String = "get_notification"
+            const val GET_POPUP_BANNER: String = "get_popup_banner"
             const val ADD_UER_ADVISE: String = "add_user_advice"
             const val GET_UER_ADVISE_DETAIL: String = "get_user_advice_detail"
             const val GET_GOVT_WORK_DETAIL: String = "get_govwork_detail"
@@ -90,6 +92,7 @@ interface AppConstants {
     interface RequestParameters {
         companion object {
             const val USER_MOBILE = "user_mobile"
+            const val screen = "screen"
             const val email = "email"
             const val message = "message"
             const val contact_no = "contact_no"

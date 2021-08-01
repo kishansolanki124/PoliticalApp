@@ -11,13 +11,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.bluehomestudio.luckywheel.WheelItem
-import com.cooltechworks.views.ScratchImageView
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.ScratchCardResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
+import com.bluehomestudio.luckywheel.WheelItem
+import com.cooltechworks.views.ScratchImageView
 import kotlinx.android.synthetic.main.activity_daily_spin_and_win.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -31,6 +33,8 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
     private var isRevealed = false
     private var targetValue = 0
     private var points = 0
+    private var handler: Handler? = null
+    private var runnableCode: Runnable? = null
     override val layoutId: Int
         get() = R.layout.activity_daily_spin_and_win
 
@@ -91,7 +95,13 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
             }
         })
 
+        settingsViewModel.popupBanners().observe(this, {
+            handleResponse(it)
+        })
+
         fetchScratchCard()
+
+        fetchPopupBanner()
     }
 
     private fun showWinnerAnimation() {
@@ -375,5 +385,57 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
         val canvas = Canvas(bmp)
         canvas.drawColor(color)
         return bmp
+    }
+
+    private fun fetchPopupBanner() {
+        if (isConnected(this)) {
+            settingsViewModel.getPopupBanner("spin_win")
+        } else {
+            showSnackBar(getString(R.string.no_internet), this)
+        }
+    }
+
+    private fun handleResponse(popupBannerResponse: PopupBannerResponse) {
+        if (!popupBannerResponse.popup_banner.isNullOrEmpty()) {
+            setupRepeatableBannerAd(
+                popupBannerResponse.delay_time, popupBannerResponse.initial_time,
+                popupBannerResponse.popup_banner
+            )
+        }
+    }
+
+    private fun setupRepeatableBannerAd(
+        delayTime: String,
+        initialTime: String,
+        popupBanner: List<PopupBannerResponse.PopupBanner>
+    ) {
+        handler = Handler(Looper.getMainLooper())
+        runnableCode = object : Runnable {
+            override fun run() {
+                if (!isDestroyed && !this@DailySpinAndWinActivity.isFinishing) {
+                    if (this@DailySpinAndWinActivity.lifecycle.currentState
+                            .isAtLeast(Lifecycle.State.RESUMED)
+                    ) {
+                        showProgressDialog(this@DailySpinAndWinActivity, popupBanner)
+                    }
+                    handler?.postDelayed(this, delayTime.toLong() * 1000)
+                }
+            }
+        }
+
+        if (!isDestroyed && !this.isFinishing) {
+            runnableCode?.let {
+                handler?.postDelayed(it, initialTime.toLong() * 1000)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != handler) {
+            runnableCode?.let {
+                handler!!.removeCallbacks(it)
+            }
+        }
     }
 }
