@@ -3,6 +3,8 @@ package com.app.colorsofgujarat.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
@@ -12,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
@@ -20,6 +23,7 @@ import com.app.colorsofgujarat.adapter.NewsCommentAdapter
 import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.GiveUserRatingToGovtWorkResponse
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_govt_work_detail.*
@@ -36,6 +40,8 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     private var ratingDone = true
     private var refreshPage = false
     private var rating = 0
+    private var handler: Handler? = null
+    private var runnableCode: Runnable? = null
 
     override val layoutId: Int
         get() = R.layout.activity_govt_work_detail
@@ -102,6 +108,14 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         )
         tvGive_rate_get_10_point.append(thirdText)
         tvGive_opinion_get_10_point.append(thirdText)
+
+        if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
+            setupRepeatableBannerAd(
+                SPreferenceManager.getInstance(this).banners.delay_time,
+                SPreferenceManager.getInstance(this).banners.initial_time,
+                SPreferenceManager.getInstance(this).banners.popup_banner
+            )
+        }
     }
 
     private fun handleResponseOfNewComment(giveUserRatingToGovtWorkResponse: GiveUserRatingToGovtWorkResponse?) {
@@ -514,5 +528,40 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         intent.putExtra(AppConstants.RATING, averageRating)
         setResult(Activity.RESULT_OK, intent)
         finish()
+    }
+
+    private fun setupRepeatableBannerAd(
+        delayTime: String,
+        initialTime: String,
+        popupBanner: List<PopupBannerResponse.PopupBanner>
+    ) {
+        handler = Handler(Looper.getMainLooper())
+        runnableCode = object : Runnable {
+            override fun run() {
+                if (!isDestroyed && !this@GovtWorkDetailActivity.isFinishing) {
+                    if (this@GovtWorkDetailActivity.lifecycle.currentState
+                            .isAtLeast(Lifecycle.State.RESUMED)
+                    ) {
+                        showProgressDialog(this@GovtWorkDetailActivity, popupBanner)
+                    }
+                    handler?.postDelayed(this, delayTime.toLong() * 1000)
+                }
+            }
+        }
+
+        if (!isDestroyed && !this.isFinishing) {
+            runnableCode?.let {
+                handler?.postDelayed(it, initialTime.toLong() * 1000)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != handler) {
+            runnableCode?.let {
+                handler!!.removeCallbacks(it)
+            }
+        }
     }
 }

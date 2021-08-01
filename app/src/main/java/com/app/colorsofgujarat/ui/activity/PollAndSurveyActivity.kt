@@ -1,24 +1,30 @@
 package com.app.colorsofgujarat.ui.activity
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager.widget.ViewPager
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.getUserSelectedDistrictIndex
+import com.app.colorsofgujarat.apputils.showProgressDialog
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.ui.fragment.PollAndSurveyFragment
 import com.app.colorsofgujarat.ui.fragment.PollAndSurveyResultFragment
 import kotlinx.android.synthetic.main.activity_poll_and_survey.*
 
-
 class PollAndSurveyActivity : ExtendedToolbarActivity() {
 
+    private var handler: Handler? = null
+    private var runnableCode: Runnable? = null
     private lateinit var viewPagerShraddhanjaliAdapter: ViewPagerShraddhanjaliAdapter
     private var districtId = ""
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
@@ -37,6 +43,14 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
             ViewPagerShraddhanjaliAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = viewPagerShraddhanjaliAdapter
+
+        if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
+            setupRepeatableBannerAd(
+                SPreferenceManager.getInstance(this).banners.delay_time,
+                SPreferenceManager.getInstance(this).banners.initial_time,
+                SPreferenceManager.getInstance(this).banners.popup_banner
+            )
+        }
     }
 
     // Since this is an object collection, use a FragmentStatePagerAdapter,
@@ -122,5 +136,40 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
 
     fun getDistrictId(): String {
         return districtId
+    }
+
+    private fun setupRepeatableBannerAd(
+        delayTime: String,
+        initialTime: String,
+        popupBanner: List<PopupBannerResponse.PopupBanner>
+    ) {
+        handler = Handler(Looper.getMainLooper())
+        runnableCode = object : Runnable {
+            override fun run() {
+                if (!isDestroyed && !this@PollAndSurveyActivity.isFinishing) {
+                    if (this@PollAndSurveyActivity.lifecycle.currentState
+                            .isAtLeast(Lifecycle.State.RESUMED)
+                    ) {
+                        showProgressDialog(this@PollAndSurveyActivity, popupBanner)
+                    }
+                    handler?.postDelayed(this, delayTime.toLong() * 1000)
+                }
+            }
+        }
+
+        if (!isDestroyed && !this.isFinishing) {
+            runnableCode?.let {
+                handler?.postDelayed(it, initialTime.toLong() * 1000)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != handler) {
+            runnableCode?.let {
+                handler!!.removeCallbacks(it)
+            }
+        }
     }
 }

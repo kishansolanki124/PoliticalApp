@@ -2,6 +2,8 @@ package com.app.colorsofgujarat.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
@@ -9,6 +11,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
@@ -19,6 +22,7 @@ import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.GiveUserRatingToGovtWorkResponse
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
 import com.app.colorsofgujarat.pojo.NewsDetailResponse
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 import kotlinx.android.synthetic.main.activity_news_detail.*
 import java.io.Serializable
@@ -29,6 +33,8 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: NewsCommentAdapter
     private var nid = ""
+    private var handler: Handler? = null
+    private var runnableCode: Runnable? = null
 
     override val layoutId: Int
         get() = R.layout.activity_news_detail
@@ -88,7 +94,13 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
 
         tvGive_opinion_get_10_point.append(thirdText)
 
-
+        if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
+            setupRepeatableBannerAd(
+                SPreferenceManager.getInstance(this).banners.delay_time,
+                SPreferenceManager.getInstance(this).banners.initial_time,
+                SPreferenceManager.getInstance(this).banners.popup_banner
+            )
+        }
     }
 
     private fun handleResponse(govtWorkDetailResponse: NewsDetailResponse?) {
@@ -206,6 +218,41 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
             addItems(giveUserRatingToGovtWorkResponse.comment_list)
             setUserPoints(giveUserRatingToGovtWorkResponse.user_points)
             //showAlertDialog(giveUserRatingToGovtWorkResponse.message)
+        }
+    }
+
+    private fun setupRepeatableBannerAd(
+        delayTime: String,
+        initialTime: String,
+        popupBanner: List<PopupBannerResponse.PopupBanner>
+    ) {
+        handler = Handler(Looper.getMainLooper())
+        runnableCode = object : Runnable {
+            override fun run() {
+                if (!isDestroyed && !this@NewsDetailActivity.isFinishing) {
+                    if (this@NewsDetailActivity.lifecycle.currentState
+                            .isAtLeast(Lifecycle.State.RESUMED)
+                    ) {
+                        showProgressDialog(this@NewsDetailActivity, popupBanner)
+                    }
+                    handler?.postDelayed(this, delayTime.toLong() * 1000)
+                }
+            }
+        }
+
+        if (!isDestroyed && !this.isFinishing) {
+            runnableCode?.let {
+                handler?.postDelayed(it, initialTime.toLong() * 1000)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != handler) {
+            runnableCode?.let {
+                handler!!.removeCallbacks(it)
+            }
         }
     }
 }

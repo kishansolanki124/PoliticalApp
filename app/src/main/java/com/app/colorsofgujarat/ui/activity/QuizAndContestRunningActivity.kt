@@ -3,6 +3,8 @@ package com.app.colorsofgujarat.ui.activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -14,12 +16,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.CommonResponse
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.QuizAndContestRunningResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
 import kotlinx.android.synthetic.main.activity_quiz_and_contest_running.*
@@ -32,7 +36,9 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
     private var rules = ""
     private var prizeDetail = ""
     private lateinit var settingsViewModel: QuizAndContestViewModel
-
+    private var handler: Handler? = null
+    private var runnableCode: Runnable? = null
+    
     override val layoutId: Int
         get() = R.layout.activity_quiz_and_contest_running
 
@@ -148,6 +154,15 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
+
+        if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
+            setupRepeatableBannerAd(
+                SPreferenceManager.getInstance(this).banners.delay_time,
+                SPreferenceManager.getInstance(this).banners.initial_time,
+                SPreferenceManager.getInstance(this).banners.popup_banner
+            )
+        }
+
     }
 
     private fun handleAnswerResponse(commonResponse: CommonResponse?) {
@@ -309,5 +324,40 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         }
 
         alertDialog.show()
+    }
+
+    private fun setupRepeatableBannerAd(
+        delayTime: String,
+        initialTime: String,
+        popupBanner: List<PopupBannerResponse.PopupBanner>
+    ) {
+        handler = Handler(Looper.getMainLooper())
+        runnableCode = object : Runnable {
+            override fun run() {
+                if (!isDestroyed && !this@QuizAndContestRunningActivity.isFinishing) {
+                    if (this@QuizAndContestRunningActivity.lifecycle.currentState
+                            .isAtLeast(Lifecycle.State.RESUMED)
+                    ) {
+                        showProgressDialog(this@QuizAndContestRunningActivity, popupBanner)
+                    }
+                    handler?.postDelayed(this, delayTime.toLong() * 1000)
+                }
+            }
+        }
+
+        if (!isDestroyed && !this.isFinishing) {
+            runnableCode?.let {
+                handler?.postDelayed(it, initialTime.toLong() * 1000)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != handler) {
+            runnableCode?.let {
+                handler!!.removeCallbacks(it)
+            }
+        }
     }
 }

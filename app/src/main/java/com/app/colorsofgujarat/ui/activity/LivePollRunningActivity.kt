@@ -3,6 +3,8 @@ package com.app.colorsofgujarat.ui.activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -14,12 +16,14 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.GiveMLARatingResponse
 import com.app.colorsofgujarat.pojo.LivePollDetailResponse
+import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.viewmodel.LivePollViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
@@ -40,7 +44,9 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
     private var answerId = ""
     private lateinit var settingsViewModel: LivePollViewModel
     private var livePollDetailResponse: LivePollDetailResponse? = null
-
+    private var handler: Handler? = null
+    private var runnableCode: Runnable? = null
+    
     private val showButton: Boolean by lazy {
         // runs on first access of messageView
         intent.getBooleanExtra(AppConstants.SHOW_SUBMIT, false)
@@ -105,6 +111,14 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             )
         } else {
             showSnackBar(getString(R.string.no_internet))
+        }
+
+        if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
+            setupRepeatableBannerAd(
+                SPreferenceManager.getInstance(this).banners.delay_time,
+                SPreferenceManager.getInstance(this).banners.initial_time,
+                SPreferenceManager.getInstance(this).banners.popup_banner
+            )
         }
     }
 
@@ -418,5 +432,40 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
+
+    private fun setupRepeatableBannerAd(
+        delayTime: String,
+        initialTime: String,
+        popupBanner: List<PopupBannerResponse.PopupBanner>
+    ) {
+        handler = Handler(Looper.getMainLooper())
+        runnableCode = object : Runnable {
+            override fun run() {
+                if (!isDestroyed && !this@LivePollRunningActivity.isFinishing) {
+                    if (this@LivePollRunningActivity.lifecycle.currentState
+                            .isAtLeast(Lifecycle.State.RESUMED)
+                    ) {
+                        showProgressDialog(this@LivePollRunningActivity, popupBanner)
+                    }
+                    handler?.postDelayed(this, delayTime.toLong() * 1000)
+                }
+            }
+        }
+
+        if (!isDestroyed && !this.isFinishing) {
+            runnableCode?.let {
+                handler?.postDelayed(it, initialTime.toLong() * 1000)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (null != handler) {
+            runnableCode?.let {
+                handler!!.removeCallbacks(it)
+            }
+        }
     }
 }
