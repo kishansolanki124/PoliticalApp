@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -19,7 +18,6 @@ import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.ScratchCardResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.bluehomestudio.luckywheel.WheelItem
-import com.cooltechworks.views.ScratchImageView
 import kotlinx.android.synthetic.main.activity_daily_spin_and_win.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -30,7 +28,7 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
     private var numberList: ArrayList<Int> = ArrayList()
-    private var isRevealed = false
+    //private var isRevealed = false
     private var targetValue = 0
     private var points = 0
     private var handler: Handler? = null
@@ -59,13 +57,13 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     lwv.visibility = View.GONE
                     tvSpinAndWin.visibility = View.GONE
-                    tvTNCHeader.visibility = View.GONE
-                    tvTNC.visibility = View.GONE
                     tvSpinAlreadyDone.visibility = View.VISIBLE
+                    tvTNCHeader.visibility = View.VISIBLE
+                    tvTNC.visibility = View.VISIBLE
                     tvSpinAlreadyDone.text = it.message
-                    tvYourPoints.visibility = View.VISIBLE
-                    tvYourPoints.text =
-                        "Your Points Are: " + SPreferenceManager.getInstance(this).settings.user_points
+                    //tvYourPoints.visibility = View.VISIBLE
+//                    tvYourPoints.text =
+//                        "Your Points Are: " + SPreferenceManager.getInstance(this).settings.user_points
                     showAlertDialog(it.message)
                 }, 3500L)
 
@@ -74,26 +72,26 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
             }
         })
 
-        idScratchCardIv.setRevealListener(object : ScratchImageView.IRevealListener {
-            override fun onRevealed(iv: ScratchImageView) {
-                // this method is called after revealing the image.
-                Toast.makeText(
-                    this@DailySpinAndWinActivity,
-                    "Congratulations",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            override fun onRevealPercentChangedListener(siv: ScratchImageView, percent: Float) {
-                // we can check how much percentage of
-                // image is revealed using percent variable
-                println("progress:" + percent * 100)
-                if (percent * 100 > 70 && !isRevealed) {
-                    idScratchCardIv.reveal()
-                    isRevealed = true
-                }
-            }
-        })
+//        idScratchCardIv.setRevealListener(object : ScratchImageView.IRevealListener {
+//            override fun onRevealed(iv: ScratchImageView) {
+//                // this method is called after revealing the image.
+//                Toast.makeText(
+//                    this@DailySpinAndWinActivity,
+//                    "Congratulations",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//            override fun onRevealPercentChangedListener(siv: ScratchImageView, percent: Float) {
+//                // we can check how much percentage of
+//                // image is revealed using percent variable
+//                println("progress:" + percent * 100)
+//                if (percent * 100 > 70 && !isRevealed) {
+//                    idScratchCardIv.reveal()
+//                    isRevealed = true
+//                }
+//            }
+//        })
 
         settingsViewModel.popupBanners().observe(this, {
             handleResponse(it)
@@ -129,13 +127,19 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
         tvTNCHeader.visibility = View.VISIBLE
         tvTNC.visibility = View.VISIBLE
         pbScratchCard.visibility = View.GONE
+
+        tvTNC.text = HtmlCompat.fromHtml(
+            getTermsByName("Scratch Card"),
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+
         if (null != scratchCardResponse && scratchCardResponse.status == "1") {
             setupSpinWheel(scratchCardResponse)
         } else {
             lwv.visibility = View.GONE
             tvSpinAndWin.visibility = View.GONE
-            tvTNCHeader.visibility = View.GONE
-            tvTNC.visibility = View.GONE
+            tvTNCHeader.visibility = View.VISIBLE
+            tvTNC.visibility = View.VISIBLE
             tvSpinAlreadyDone.visibility = View.VISIBLE
             tvSpinAlreadyDone.text = scratchCardResponse?.message
 //            tvYourPoints.visibility = View.VISIBLE
@@ -282,11 +286,6 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
                 showSnackBar(getString(R.string.no_internet), this)
             }
         }
-
-        tvTNC.text = HtmlCompat.fromHtml(
-            getTermsByName("Scratch Card"),
-            HtmlCompat.FROM_HTML_MODE_LEGACY
-        )
     }
 
     private fun setupEmptyWheel() {

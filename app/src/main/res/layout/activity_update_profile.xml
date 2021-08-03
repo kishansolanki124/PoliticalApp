@@ -5,96 +5,106 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/register_bg"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".ui.activity.RegisterActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:layout_marginVertical="@dimen/dp_40"
-        android:scaleType="center"
-        android:src="@drawable/logo3" />
+    <include layout="@layout/common_toolbar" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/sp_district"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginHorizontal="@dimen/dp_20"
-        android:layout_marginVertical="@dimen/dp_10"
-        android:background="@drawable/spinner_dropdown" />
+        android:layout_height="match_parent"
+        android:background="@drawable/register_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".ui.activity.RegisterActivity">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_city"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginHorizontal="@dimen/dp_20"
-        android:layout_marginVertical="@dimen/dp_10"
-        android:background="@drawable/red_rounded_corner_transparent_bg"
-        android:fontFamily="@font/regular"
-        android:hint="@string/your_city"
-        android:imeOptions="actionNext"
-        android:inputType="textCapWords"
-        android:paddingHorizontal="@dimen/dp_20"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textCursorDrawable="@null"
-        android:textSize="@dimen/sp_16" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginVertical="@dimen/dp_40"
+            android:scaleType="center"
+            android:src="@drawable/logo3" />
 
-    <!--    <androidx.appcompat.widget.AppCompatSpinner-->
-    <!--        android:id="@+id/sp_city"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="@dimen/dp_50"-->
-    <!--        android:layout_marginHorizontal="@dimen/dp_20"-->
-    <!--        android:layout_marginVertical="@dimen/dp_10"-->
-    <!--        android:background="@drawable/spinner_dropdown" />-->
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_district"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:background="@drawable/spinner_dropdown" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_name"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginHorizontal="@dimen/dp_20"
-        android:layout_marginVertical="@dimen/dp_10"
-        android:background="@drawable/red_rounded_corner_transparent_bg"
-        android:fontFamily="@font/regular"
-        android:hint="@string/your_name"
-        android:imeOptions="actionDone"
-        android:inputType="textCapWords"
-        android:paddingHorizontal="@dimen/dp_20"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textCursorDrawable="@null"
-        android:textSize="@dimen/sp_16" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_city"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:background="@drawable/red_rounded_corner_transparent_bg"
+            android:fontFamily="@font/regular"
+            android:hint="@string/your_city"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/sp_16" />
+
+        <!--    <androidx.appcompat.widget.AppCompatSpinner-->
+        <!--        android:id="@+id/sp_city"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="@dimen/dp_50"-->
+        <!--        android:layout_marginHorizontal="@dimen/dp_20"-->
+        <!--        android:layout_marginVertical="@dimen/dp_10"-->
+        <!--        android:background="@drawable/spinner_dropdown" />-->
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:background="@drawable/red_rounded_corner_transparent_bg"
+            android:fontFamily="@font/regular"
+            android:hint="@string/your_name"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/sp_16" />
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_40">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_40">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btUpdateProfile"
-            style="@style/CommonRedButton"
-            android:fontFamily="@font/semi_bold"
-            android:paddingHorizontal="@dimen/dp_40"
-            android:text="@string/Update"
-            app:cornerRadius="@dimen/dp_50"
-            tools:ignore="MissingConstraints" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btUpdateProfile"
+                style="@style/CommonRedButton"
+                android:fontFamily="@font/semi_bold"
+                android:paddingHorizontal="@dimen/dp_40"
+                android:text="@string/Update"
+                app:cornerRadius="@dimen/dp_50"
+                tools:ignore="MissingConstraints" />
 
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/pbRegister"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:indeterminateTint="@color/red_light"
-            android:indeterminateTintMode="multiply"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/btUpdateProfile"
-            app:layout_constraintEnd_toEndOf="@+id/btUpdateProfile"
-            app:layout_constraintStart_toStartOf="@+id/btUpdateProfile"
-            app:layout_constraintTop_toTopOf="@+id/btUpdateProfile" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/pbRegister"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/red_light"
+                android:indeterminateTintMode="multiply"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/btUpdateProfile"
+                app:layout_constraintEnd_toEndOf="@+id/btUpdateProfile"
+                app:layout_constraintStart_toStartOf="@+id/btUpdateProfile"
+                app:layout_constraintTop_toTopOf="@+id/btUpdateProfile" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

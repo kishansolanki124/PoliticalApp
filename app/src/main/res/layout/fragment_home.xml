@@ -34,6 +34,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivEditUser"
+                android:theme="@style/ClickableTextViewWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_2"
@@ -41,7 +42,6 @@
                 android:layout_toEndOf="@id/tvUserName"
                 android:padding="@dimen/dp_5"
                 android:src="@drawable/pencil"
-                android:theme="@style/ClickableViewWhite"
                 android:tint="@color/white" />
 
             <androidx.appcompat.widget.LinearLayoutCompat

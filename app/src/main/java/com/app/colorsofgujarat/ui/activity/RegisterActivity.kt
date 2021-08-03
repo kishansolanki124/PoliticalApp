@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
@@ -33,16 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         btSubmitRegister.setOnClickListener {
             if (isConnected(this)) {
                 if (areFieldsValid()) {
-                    pbRegister.visibility = View.VISIBLE
-                    btSubmitRegister.visibility = View.INVISIBLE
-                    settingsViewModel.registration(
-                        RegisterRequest(
-                            districtId,
-                            et_city.text.toString(),
-                            et_name.text.toString(),
-                            et_mobile.text.toString()
-                        )
-                    )
+                    showAlertDialog()
                 }
             } else {
                 showSnackBar(getString(R.string.no_internet), this)
@@ -74,6 +67,9 @@ class RegisterActivity : AppCompatActivity() {
     private fun areFieldsValid(): Boolean {
         if (districtList.isEmpty()) {
             showSnackBar(getString(R.string.something_went_wrong))
+            return false
+        } else if (districtId == "-1") {
+            showSnackBar(getString(R.string.invalid_district))
             return false
         } else if (TextUtils.isEmpty(et_city.text.toString())) {
             showSnackBar(getString(R.string.invalid_city))
@@ -119,6 +115,7 @@ class RegisterActivity : AppCompatActivity() {
         btSubmitRegister.visibility = View.VISIBLE
         if (null != settingsResponse) {
             this.settingsResponse = settingsResponse
+            districtList.add(SettingsResponse.District("-1", "તમારો જિલ્લો પસંદ કરો"))
             districtList.addAll(settingsResponse.district_list)
             setupDistrictSpinner()
         } else {
@@ -135,4 +132,43 @@ class RegisterActivity : AppCompatActivity() {
             showSnackBar(getString(R.string.no_internet), this)
         }
     }
+
+    private fun showAlertDialog() {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage("Hey ! Friends for the participate in Quiz & Contest, Please Confirm Your Mobile No. ("
+            + et_mobile.text.toString() +") once Again.\n" +
+                "You Can't change it later.")
+        alertDialogBuilder.setCancelable(false)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(R.string.submit)
+        ) { dialog, _ ->
+            dialog.dismiss()
+            pbRegister.visibility = View.VISIBLE
+            btSubmitRegister.visibility = View.INVISIBLE
+            settingsViewModel.registration(
+                RegisterRequest(
+                    districtId,
+                    et_city.text.toString(),
+                    et_name.text.toString(),
+                    et_mobile.text.toString()
+                )
+            )
+        }
+
+        alertDialogBuilder.setNegativeButton(
+            getString(R.string.cancel)
+        ) { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
+
 }

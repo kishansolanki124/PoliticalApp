@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#AA000000"
-    android:gravity="center"
+    android:paddingHorizontal="@dimen/dp_10"
     android:orientation="vertical">
 
     <LinearLayout

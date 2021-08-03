@@ -55,6 +55,7 @@
     <string name="no_internet">Internet connection not available</string>
     <string name="your_city">તમારું શહેર</string>
     <string name="invalid_city">Invalid city name</string>
+    <string name="invalid_district">Select District</string>
     <string name="invalid_name">Invalid name</string>
     <string name="invalid_phone">Invalid mobile number</string>
 <!--    <string name="Logout">Logout</string>-->
@@ -100,4 +101,6 @@
     <string name="cancel">CANCEL</string>
     <string name="Sponsor_">Sponsor:</string>
     <string name="Update">Update</string>
+    <string name="Update_Profile">Update Profile</string>
+    <string name="tnc_string">At Colors of Gujarat We Respect Your Privacy. By Continuing You Agree with T &amp; C. 2020&#8211;2021</string>
 </resources>

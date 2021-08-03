@@ -25,27 +25,27 @@ changes 1:
 
 changes 2:
 18. વેલકમ અને રજીસ્ટર્ડ સ્કીનમાં નવો લોગો મોકલ્યો એ મુકવાનો છે.
-=========================================================
-TODO:
-add proguard before launch
-
-font change of percentage in chart in every screen
-=========================================================
-- રજીસ્ટર્ડ ફોર્મમાં જીલ્લાના ડ્રોપ ડાઉનમાં તમારો જિલ્લો પસંદ કરો એવું ડીફોલ્ટ રાખવું છે.
-- રજીસ્ટર્ડ ફોર્મમાં નીચે લાઇન મુકવાની છે.
-At Colors of Gujarat We Respect Your Privacy. By Continuing You Agree with T & C. 2020-2021
-
+19. સરકારની કામગીરીમાંથી ફર્સ્ટ સ્કીનમાં શેરનું બટન કાઢવું.
+20. - રજીસ્ટર્ડ ફોર્મમાં નીચે લાઇન મુકવાની છે.
+    At Colors of Gujarat We Respect Your Privacy. By Continuing You Agree with T & C. 2020-2021
+21. Dialog added in register
 - રજીસ્ટર્ડ સબમીટ પહેલા મેસેજ મુકવો.
 Hey ! Friends for the participate in Quiz & Contest, Please Confirm Your Mobile No. (9978945556) once Again.
 You Can't change it later.
 CANCEL
 SUBMIT
 
+=========================================================
+TODO:
+ripple effect on bell icon common toolbar
+ripple effect on edit icon home fragment
+font change of percentage in chart in every screen
+add proguard before launch
+=========================================================
 - નામ પાસે એડીટનું બટન મુકવું છે... (તેમાં ડીસ્ટ્રીકટ, સીટી, અને નામ ચેન્જ કરવું.)
 - ફર્સ્ટ સ્કીનમાં પોઇન્ટસની બાજુમાં પ્રશ્ર્નાર્થ છે તેમાં ઘણી વાર લીંક આવતી નથી, તો તેનો એરીયો થોડો મોટો કરવો.
-- સરકારની કામગીરીમાંથી ફર્સ્ટ સ્કીનમાં શેરનું બટન કાઢવું.
-- સ્પીનમાં આખી સ્કીન સ્ક્રોલ કરવી છે. એ જ સ્કીનમાં સ્પીન હાઇડ થઇ જાય અને મેસેજ આવી જાય, નીચે ટર્મ્સ એ જ રીતે રહે. ત્યાં ટોટલ પોઇન્ટ નથી બતાડવા પરંતુ જેટલા પોઇન્ટ મળ્યા છે તે બતાવવા છે.
-- અપલોડ સર્ટીફીકેટમાં કોન્ટેસ્ટ ડીટેઇલ્સ પોપઅપમાં લેફટ અને રાઇટ સાઇડ થોડીક જગ્યા કરવી. તે રીતે જ વિનર્સમાં. કોન્ટેસ્ટ ડીટેઇલ્સ અને રુલ્સના હેડીંગ અને કન્ટેનના ફોન્ટસના થોડા મોટા કરવા.
+- અપલોડ સર્ટીફીકેટમાં કોન્ટેસ્ટ ડીટેઇલ્સ પોપઅપમાં લેફટ અને રાઇટ સાઇડ થોડીક જગ્યા કરવી. તે રીતે જ વિનર્સમાં.
+કોન્ટેસ્ટ ડીટેઇલ્સ અને રુલ્સના હેડીંગ અને કન્ટેનના ફોન્ટસના થોડા મોટા કરવા.
 -  Enter Your Comment/Opinion વાય કેપીટલ અને કોમેન્ટસમાંથી એસ કાઢી નાખવો.
 - લાઇવ પોલમાંથી ફર્સ્ટ સ્કીનમાંથી શેરનું આઇકન કાઢી નાખવું. લાઇવ પોલ ડીટેઇલમાં  મેસેજ ચેન્જ કરવો. You Have Already Submitted Answer.
 - કવીઝ અને કોન્ટેસ્ટની ફર્સ્ટ સ્કીનમાંથી શેરના આઇકન કાઢી નાખવા.
@@ -59,3 +59,18 @@ SUBMIT
 - પ્રશ્ર્નો અને સુચનોમાં તે સ્કીનમાં રીફ્રેશ નથી થતું. બીજી સ્કીનમાંથી આવી ત્યારે પોસ્ટ આવે છે.
 - ઇમેજ કમ્પલસરી નથી રાખવી. સબમીટ પહેલા એકવાર પુછી લેવું Are you sure to continue without photograph ? ઇમેજ ન હોય ત્યારે નો ઇમેજ એવેલેબલની ઇમેજ ડીફોલ્ટ આવી જાય.
 - અપલોડ વેકિસન સર્ટીફીકેટમાં Upload Photo અને બટન બ્લેક કરવું.
+
+Nandish:
+edit profile API to change name, district, city. In response, give everything like district id, city, name etc.
+
+- ફર્સ્ટ સ્કીનમાં પોઇન્ટસની બાજુમાં પ્રશ્ર્નાર્થ છે તેમાં ઘણી વાર લીંક આવતી નથી, તો તેનો એરીયો થોડો મોટો કરવો.
+-> Aa point ma set kro details and send kro screenshot to understand.
+- સ્પીનમાં આખી સ્કીન સ્ક્રોલ કરવી છે. એ જ સ્કીનમાં સ્પીન હાઇડ થઇ જાય અને મેસેજ આવી જાય, નીચે ટર્મ્સ એ જ રીતે રહે. ત્યાં ટોટલ પોઇન્ટ નથી બતાડવા પરંતુ જેટલા પોઇન્ટ મળ્યા છે તે બતાવવા છે.
+-> add scratch card na response ma mane msg ma j "you have won XYZ points today" kri nakhjo etle e dekhadi dau.Atyare alag thi points aapo cho tame response ma. get scratchcard ma je msg aave che, e add scrach card ma aapi dejo.
+
+Amit:
+icon for edit to show next to name in home screen.
+- સ્પીનમાં આખી સ્કીન સ્ક્રોલ કરવી છે.
+ -> Aakhi screen to scroll nahi thay kem k spin krvanu che etle scrolling nahi med pde.
+ એ જ સ્કીનમાં સ્પીન હાઇડ થઇ જાય અને મેસેજ આવી જાય, નીચે ટર્મ્સ એ જ રીતે રહે. ત્યાં ટોટલ પોઇન્ટ નથી બતાડવા પરંતુ જેટલા પોઇન્ટ મળ્યા છે તે બતાવવા છે.
+ -> aa kari didhu che

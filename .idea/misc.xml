@@ -3,12 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_daily_spin_and_win.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_quiz_and_contest_running.xml" value="0.12681159420289856" />
         <entry key="app/src/main/res/layout/activity_quiz_and_contest_winner.xml" value="0.12681159420289856" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.12409420289855072" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_update_profile.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="1.0" />
+        <entry key="app/src/main/res/layout/common_toolbar.xml" value="0.1213768115942029" />
+        <entry key="app/src/main/res/layout/dialog_quize_rules.xml" value="0.1213768115942029" />
+        <entry key="app/src/main/res/layout/dialog_winners.xml" value="0.1213768115942029" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24837812789620017" />
+        <entry key="app/src/main/res/layout/govt_work_news_item.xml" value="0.25" />
       </map>
     </option>
   </component>

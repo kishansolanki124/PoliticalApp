@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:background="@drawable/notification_icon"
-                        android:theme="@style/ClickableTextView"
+                        android:theme="@style/ClickableTextViewWhite"
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatImageView

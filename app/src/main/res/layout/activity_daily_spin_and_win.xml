@@ -12,88 +12,70 @@
         android:id="@+id/commonToolbar"
         layout="@layout/common_toolbar" />
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/pbScratchCard"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/llMainSpin"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/commonToolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:indeterminateTint="@color/red_light"
-        android:indeterminateTintMode="multiply"
-        android:scaleX="0.7"
-        android:scaleY="0.7"
-        android:visibility="gone" />
+        android:orientation="vertical">
 
-    <!--Scratch Card  view to display our hidden image
-        src attribute is to add image which wil be visible
-        after scratching of our card.-->
-    <com.cooltechworks.views.ScratchImageView
-        android:id="@+id/idScratchCardIv"
-        android:layout_width="@dimen/dp_250"
-        android:layout_height="@dimen/dp_250"
-        android:layout_below="@id/commonToolbar"
-        android:layout_marginTop="@dimen/dp_30"
-        android:background="@color/white"
-        android:src="@drawable/winner"
-        android:visibility="gone" />
+        <!--Scratch Card  view to display our hidden image
+            src attribute is to add image which wil be visible
+            after scratching of our card.-->
+        <!--    <com.cooltechworks.views.ScratchImageView-->
+        <!--        android:id="@+id/idScratchCardIv"-->
+        <!--        android:layout_width="@dimen/dp_250"-->
+        <!--        android:layout_height="@dimen/dp_250"-->
+        <!--        android:layout_below="@id/commonToolbar"-->
+        <!--        android:layout_marginTop="@dimen/dp_30"-->
+        <!--        android:background="@color/white"-->
+        <!--        android:src="@drawable/winner"-->
+        <!--        android:visibility="gone" />-->
 
-    <com.bluehomestudio.luckywheel.LuckyWheel
-        android:id="@+id/lwv"
-        android:layout_width="@dimen/dp_300"
-        android:layout_height="@dimen/dp_300"
-        android:layout_below="@id/commonToolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp_50"
-        android:visibility="invisible"
-        LuckyWheel:arrow_image="@drawable/triangle"
-        LuckyWheel:background_color="@color/red_CC252C" />
+        <com.bluehomestudio.luckywheel.LuckyWheel
+            android:id="@+id/lwv"
+            android:layout_width="@dimen/dp_300"
+            android:layout_height="@dimen/dp_300"
+            android:layout_below="@id/commonToolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_50"
+            android:visibility="invisible"
+            LuckyWheel:arrow_image="@drawable/triangle"
+            LuckyWheel:background_color="@color/red_CC252C" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSpinAndWin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lwv"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/dp_20"
-        android:fontFamily="@font/regular"
-        android:text="@string/scratch_and_point"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_20" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSpinAndWin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lwv"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/dp_20"
+            android:fontFamily="@font/regular"
+            android:text="@string/scratch_and_point"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_20" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSpinAlreadyDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/commonToolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/dp_20"
-        android:fontFamily="@font/regular"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_20"
-        android:visibility="gone"
-        tools:text="@string/you_won_points_already" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSpinAlreadyDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/commonToolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/dp_20"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_20"
+            android:visibility="visible"
+            tools:text="@string/you_won_points_already" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvYourPoints"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvSpinAlreadyDone"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/dp_20"
-        android:fontFamily="@font/regular"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_20"
-        android:visibility="gone"
-        tools:text="Your points are 450" />
-
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvSpinAndWin"
+        android:layout_below="@id/llMainSpin"
         tools:context=".ui.activity.DailySpinAndWinActivity">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -103,6 +85,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTNCHeader"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/semi_bold"
@@ -133,4 +116,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/commonToolbar" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/pbScratchCard"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commonToolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:indeterminateTint="@color/red_light"
+        android:indeterminateTintMode="multiply"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:visibility="gone" />
 </RelativeLayout>
