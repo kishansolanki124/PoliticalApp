@@ -59,6 +59,10 @@ class HomeFragment : Fragment() {
             showInfoWindow()
         }
 
+        ivEditUser.setOnClickListener {
+            startActivity(Intent(requireContext(), UpdateProfileActivity::class.java))
+        }
+
         llQueSuggestion.setOnClickListener {
             startActivity(Intent(requireContext(), QuestionSuggestionActivity::class.java))
         }

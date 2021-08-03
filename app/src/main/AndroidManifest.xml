@@ -48,6 +48,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme" />
         <activity
+            android:name="com.app.colorsofgujarat.ui.activity.UpdateProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" />
+        <activity
             android:name="com.app.colorsofgujarat.ui.activity.GovtWorkActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />

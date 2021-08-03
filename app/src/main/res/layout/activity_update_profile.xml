@@ -59,7 +59,7 @@
         android:background="@drawable/red_rounded_corner_transparent_bg"
         android:fontFamily="@font/regular"
         android:hint="@string/your_name"
-        android:imeOptions="actionNext"
+        android:imeOptions="actionDone"
         android:inputType="textCapWords"
         android:paddingHorizontal="@dimen/dp_20"
         android:textColor="@color/white"
@@ -67,35 +67,19 @@
         android:textCursorDrawable="@null"
         android:textSize="@dimen/sp_16" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_mobile"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginHorizontal="@dimen/dp_20"
-        android:layout_marginVertical="@dimen/dp_10"
-        android:background="@drawable/red_rounded_corner_transparent_bg"
-        android:fontFamily="@font/regular"
-        android:hint="@string/your_phone"
-        android:imeOptions="actionDone"
-        android:inputType="numberSigned"
-        android:maxLength="10"
-        android:paddingHorizontal="@dimen/dp_20"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textCursorDrawable="@null"
-        android:textSize="@dimen/sp_16" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_40">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btSubmitRegister"
-            android:layout_width="@dimen/dp_70"
-            android:layout_height="@dimen/dp_70"
-            android:src="@drawable/register_round_button"
-            android:theme="@style/ClickableViewWhite"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btUpdateProfile"
+            style="@style/CommonRedButton"
+            android:fontFamily="@font/semi_bold"
+            android:paddingHorizontal="@dimen/dp_40"
+            android:text="@string/Update"
+            app:cornerRadius="@dimen/dp_50"
             tools:ignore="MissingConstraints" />
 
         <androidx.core.widget.ContentLoadingProgressBar
@@ -108,9 +92,9 @@
             android:scaleX="0.7"
             android:scaleY="0.7"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/btSubmitRegister"
-            app:layout_constraintEnd_toEndOf="@+id/btSubmitRegister"
-            app:layout_constraintStart_toStartOf="@+id/btSubmitRegister"
-            app:layout_constraintTop_toTopOf="@+id/btSubmitRegister" />
+            app:layout_constraintBottom_toBottomOf="@+id/btUpdateProfile"
+            app:layout_constraintEnd_toEndOf="@+id/btUpdateProfile"
+            app:layout_constraintStart_toStartOf="@+id/btUpdateProfile"
+            app:layout_constraintTop_toTopOf="@+id/btUpdateProfile" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

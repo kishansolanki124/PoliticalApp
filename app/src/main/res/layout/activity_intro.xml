@@ -49,7 +49,7 @@
         android:layout_height="@dimen/dp_200"
         android:layout_above="@id/btGetStarted"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo_2" />
+        android:src="@drawable/logo3" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btGetStarted"
