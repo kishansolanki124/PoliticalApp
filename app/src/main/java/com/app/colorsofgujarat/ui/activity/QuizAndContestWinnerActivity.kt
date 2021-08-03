@@ -6,7 +6,6 @@ import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.isConnected
@@ -14,6 +13,7 @@ import com.app.colorsofgujarat.apputils.openBrowser
 import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.pojo.QuizAndContestRunningResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_quiz_and_contest_winner.*
 
 class QuizAndContestWinnerActivity : ExtendedToolbarActivity() {
@@ -65,9 +65,14 @@ class QuizAndContestWinnerActivity : ExtendedToolbarActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setupViews(quizAndContestRunningResponse: QuizAndContestRunningResponse) {
-        Glide.with(this)
-            .load(quizAndContestRunningResponse.quiz_detail[0].sponser_img)
-            .into(ivSponsor)
+        if (!quizAndContestRunningResponse.quiz_detail[0].sponser_img.isNullOrEmpty()) {
+            tvSponsor.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(quizAndContestRunningResponse.quiz_detail[0].sponser_img)
+                .into(ivSponsor)
+        } else {
+            tvSponsor.visibility = View.GONE
+        }
 
         tvQuestionSuggestion.text = quizAndContestRunningResponse.quiz_question[0].question
         tvAnswer.text = "જવાબ: " + quizAndContestRunningResponse.quiz_detail[0].correct_answer

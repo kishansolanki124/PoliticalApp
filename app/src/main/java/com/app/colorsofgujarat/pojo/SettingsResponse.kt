@@ -47,6 +47,7 @@ data class SettingsResponse(
 
     data class WelcomeBanner(
         var id: String = "",
+        var url: String = "",
         var up_pro_img: String = ""
     )
     data class Terms(

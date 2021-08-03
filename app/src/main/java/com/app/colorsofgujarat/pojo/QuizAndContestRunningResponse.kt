@@ -14,7 +14,7 @@ data class QuizAndContestRunningResponse(
         var quiz_rules: String = "",
         var quiz_winner: String = "",
         var result_date: String = "",
-        var sponser_img: String = "",
+        var sponser_img: String ?= null,
         var sponser_url: String = "",
         var start_date: String = "",
         var user_answer: String = ""

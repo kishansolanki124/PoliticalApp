@@ -393,13 +393,25 @@ fun Context.shareApp() {
 //}
 
 fun browserIntent(context: Context, url: String) {
-    var webpage = Uri.parse(url)
-    if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        webpage = Uri.parse("http://$url")
-    }
-    val intent = Intent(Intent.ACTION_VIEW, webpage)
-    if (intent.resolveActivity(context.packageManager) != null) {
+//    var webpage = Uri.parse(url)
+//    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+//        webpage = Uri.parse("http://$url")
+//    }
+//    val intent = Intent(Intent.ACTION_VIEW, webpage)
+//    if (intent.resolveActivity(context.packageManager) != null) {
+//        context.startActivity(intent)
+//    }
+
+    val uri = Uri.parse(url)
+    return try {
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        // LiveWallpaper and Daydream applications need this flag
+        if (context !is Activity) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
         context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        println(e.message)
     }
 }
 

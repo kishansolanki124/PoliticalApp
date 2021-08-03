@@ -198,9 +198,15 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
     }
 
     private fun setupViews(quizAndContestRunningResponse: QuizAndContestRunningResponse) {
-        Glide.with(this)
-            .load(quizAndContestRunningResponse.quiz_detail[0].sponser_img)
-            .into(ivSponsor)
+
+        if (!quizAndContestRunningResponse.quiz_detail[0].sponser_img.isNullOrEmpty()) {
+            tvSponsor.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(quizAndContestRunningResponse.quiz_detail[0].sponser_img)
+                .into(ivSponsor)
+        } else {
+            tvSponsor.visibility = View.GONE
+        }
 
         tvQuestionSuggestion.text = quizAndContestRunningResponse.quiz_question[0].question
 

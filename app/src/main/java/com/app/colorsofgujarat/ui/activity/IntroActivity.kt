@@ -13,10 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.app.colorsofgujarat.BuildConfig
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.IntroAdapter
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.rateApp
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -46,7 +43,7 @@ class IntroActivity : AppCompatActivity() {
 
     private fun setupOffersViewPager(homeBanner: List<SettingsResponse.WelcomeBanner>) {
         val adapter = IntroAdapter {
-            //browserIntent(this, it.)
+            browserIntent(this, it.url)
         }
         adapter.setItem(homeBanner)
         introViewpager.adapter = adapter
