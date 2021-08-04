@@ -144,7 +144,7 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         cid = quizAndContestResponse.photo_contest[0].id
         prizeDetail = quizAndContestResponse.photo_contest[0].contest_detail
 
-        if (null != quizAndContestResponse.photo_contest[0].user_participate) {
+        if (null != quizAndContestResponse.user_participate) {
             tvAlreadySubmittedResponse.visibility = View.VISIBLE
             btSubmitQuestion.visibility = View.GONE
             btSelectImage.visibility = View.GONE

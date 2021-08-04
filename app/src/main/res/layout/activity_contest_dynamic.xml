@@ -62,7 +62,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16"
                     android:visibility="gone"
-                    tools:text="@string/already_participated" />
+                    android:text="@string/already_participated" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btSelectImage"
