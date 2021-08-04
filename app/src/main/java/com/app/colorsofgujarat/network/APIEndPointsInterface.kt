@@ -41,8 +41,8 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): QuizAndContestResponse
 
-    @GET(AppConstants.APIEndPoints.GET_QUIZ_CONTEST_DYNAMIC)
-    suspend fun getQuizAndContestDynamic(): QuizAndContestDynamicResponse
+    @POST(AppConstants.APIEndPoints.GET_QUIZ_CONTEST_DYNAMIC)
+    suspend fun getQuizAndContestDynamic(@Body hashMap: MultipartBody): QuizAndContestDynamicResponse
 
     @POST(AppConstants.APIEndPoints.ADD_QUIZ_CONTEST_DYNAMIC)
     suspend fun addPhotoContest(@Body hashMap: MultipartBody): CommonResponse

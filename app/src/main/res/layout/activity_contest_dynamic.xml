@@ -52,15 +52,27 @@
                     android:layout_margin="@dimen/dp_20"
                     android:src="@drawable/uploadicon" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAlreadySubmittedResponse"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_20"
+                    android:fontFamily="@font/semi_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"
+                    android:visibility="gone"
+                    tools:text="@string/already_participated" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btSelectImage"
                     style="@style/CommonRedButton"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="@dimen/dp_0"
-                    android:backgroundTint="@color/grayC2C0C1"
                     android:paddingHorizontal="@dimen/dp_20"
-                    android:text="@string/Browse_Files"
+                    android:text="@string/Select_Photo"
+                    android:backgroundTint="@color/black"
                     android:textAllCaps="false"
                     android:textSize="@dimen/sp_14"
                     app:cornerRadius="@dimen/dp_5" />
@@ -76,7 +88,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/dp_0"
                         android:paddingHorizontal="@dimen/sp_20"
-                        android:text="@string/submit"
+                        android:text="@string/Upload_Photo"
+                        android:textAllCaps="false"
                         android:textSize="@dimen/sp_14"
                         app:cornerRadius="@dimen/dp_5"
                         tools:ignore="MissingConstraints" />

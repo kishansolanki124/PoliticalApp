@@ -41,15 +41,15 @@
                 android:layout_toEndOf="@id/tvUserName"
                 android:padding="@dimen/dp_5"
                 android:src="@drawable/edit_icon"
-                android:theme="@style/ClickableTextViewWhite"/>
+                android:theme="@style/ClickableTextViewWhite" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvUserName"
                 android:layout_marginStart="@dimen/dp_40"
                 android:layout_marginTop="@dimen/dp_5"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView

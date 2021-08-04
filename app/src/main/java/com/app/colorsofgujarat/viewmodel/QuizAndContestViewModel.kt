@@ -55,10 +55,17 @@ class QuizAndContestViewModel : ViewModel() {
         }
     }
 
-    fun getQuizAndContestDynamic() {
+    fun getQuizAndContestDynamic(user_mobile: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val apiResponse = apiEndPointsInterface.getQuizAndContestDynamic()
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.user_mobile,
+                    user_mobile
+                )
+
+                val apiResponse = apiEndPointsInterface.getQuizAndContestDynamic(requestBodyBuilder.build())
                 returnQuizAndContestDynamicResponse(apiResponse)
             } catch (e: Exception) {
                 e.printStackTrace()

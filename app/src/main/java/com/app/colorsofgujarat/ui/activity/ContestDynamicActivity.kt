@@ -79,7 +79,7 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         if (isConnected(this)) {
             llContestDynamicMain.visibility = View.GONE
             pbContestDynamic.visibility = View.VISIBLE
-            quizAndContestViewModel.getQuizAndContestDynamic()
+            quizAndContestViewModel.getQuizAndContestDynamic(SPreferenceManager.getInstance(this).session)
             settingsViewModel.getPopupBanner("photo_contest")
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -123,7 +123,12 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
     private fun handleCommonResponse(commonResponse: CommonResponse?) {
         if (null != commonResponse) {
             pbSubmitQuizContestAnswer.visibility = View.GONE
-            btSubmitQuestion.visibility = View.VISIBLE
+            btSubmitQuestion.visibility = View.GONE
+            btSelectImage.visibility = View.GONE
+
+            tvAlreadySubmittedResponse.text = commonResponse.message
+            tvAlreadySubmittedResponse.visibility = View.VISIBLE
+
             showAlertDialog(commonResponse.message)
         }
     }
@@ -138,6 +143,16 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         winners = quizAndContestResponse.photo_contest[0].contest_winner
         cid = quizAndContestResponse.photo_contest[0].id
         prizeDetail = quizAndContestResponse.photo_contest[0].contest_detail
+
+        if (null != quizAndContestResponse.photo_contest[0].user_participate) {
+            tvAlreadySubmittedResponse.visibility = View.VISIBLE
+            btSubmitQuestion.visibility = View.GONE
+            btSelectImage.visibility = View.GONE
+        } else {
+            tvAlreadySubmittedResponse.visibility = View.GONE
+            btSubmitQuestion.visibility = View.VISIBLE
+            btSelectImage.visibility = View.VISIBLE
+        }
     }
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -161,9 +176,8 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
 
     private fun fieldsAreValid(): Boolean {
         return when {
-
             (!::selectedFile.isInitialized) -> {
-                showSnackBar(getString(R.string.add_image))
+                showSnackBar(getString(R.string.Select_Photo))
                 false
             }
             else -> true

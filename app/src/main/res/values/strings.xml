@@ -88,6 +88,7 @@
     <string name="download_in_progress">Downloading. Please wait!</string>
     <string name="sharing">Sharing…</string>
     <string name="you_won_points_already">You\'ve won points for today</string>
+    <string name="already_participated">You\'ve already submitted your response.</string>
     <string name="view_all_comments"><u>View All Comments</u></string>
     <string name="Terms_">Terms:</string>
     <string name="add_image">Add Image</string>
@@ -104,4 +105,6 @@
     <string name="Update_Profile">Update Profile</string>
     <string name="tnc_string">At Colors of Gujarat We Respect Your Privacy. By Continuing You Agree with T &amp; C. 2020&#8211;2021</string>
     <string name="poll_already_given">You Have Already Submitted Answer.</string>
+    <string name="Upload_Photo">Upload Photo</string>
+    <string name="Select_Photo">Select Photo</string>
 </resources>
