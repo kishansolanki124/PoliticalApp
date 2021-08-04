@@ -1,10 +1,12 @@
 package com.app.colorsofgujarat.ui.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
@@ -30,6 +32,16 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     override val layoutId: Int
         get() = R.layout.activity_question_suggestion
 
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let {
+                    if (it.getBooleanExtra(AppConstants.REFRESH, false)) {
+                        getNews()
+                    }
+                }
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,7 +56,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
         })
 
         tvAddQuestionSuggestion.setOnClickListener {
-            startActivity(
+            resultLauncher.launch(
                 Intent(this, AddQuestionSuggestionActivity::class.java)
                     .putExtra(AppConstants.DISTRICTID, districtPosition)
             )

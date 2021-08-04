@@ -1,6 +1,7 @@
 package com.app.colorsofgujarat.ui.activity
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -66,16 +67,20 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
         btSubmitQuestion.setOnClickListener {
             if (fieldsAreValid()) {
                 if (isConnected(this)) {
-                    pbSubmitQuizContestAnswer.visibility = View.VISIBLE
-                    btSubmitQuestion.visibility = View.INVISIBLE
-                    govtWorkViewModel.addUserAdvice(
-                        districtId,
-                        SPreferenceManager.getInstance(this).session,
-                        etCity.text.toString(),
-                        etTitle.text.toString(),
-                        etDescription.text.toString(),
-                        selectedFile
-                    )
+                    if (!::selectedFile.isInitialized) {
+                        showUploadStoryWithoutImageAlertDialog()
+                    } else {
+                        pbSubmitQuizContestAnswer.visibility = View.VISIBLE
+                        btSubmitQuestion.visibility = View.INVISIBLE
+                        govtWorkViewModel.addUserAdvice(
+                            districtId,
+                            SPreferenceManager.getInstance(this).session,
+                            etCity.text.toString(),
+                            etTitle.text.toString(),
+                            etDescription.text.toString(),
+                            selectedFile
+                        )
+                    }
                 } else {
                     showSnackBar(getString(R.string.no_internet))
                 }
@@ -110,12 +115,6 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     private fun fieldsAreValid(): Boolean {
         return when {
-
-            (!::selectedFile.isInitialized) -> {
-                showSnackBar(getString(R.string.add_image))
-                false
-            }
-
             TextUtils.isEmpty(etTitle.text.toString()) -> {
                 showSnackBar(getString(R.string.Enter_Title))
                 false
@@ -197,13 +196,52 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
         alertDialogBuilder.setPositiveButton(
             getString(android.R.string.ok)
         ) { dialog, _ ->
-            dialog.cancel()
+            dialog.dismiss()
+            val intent = Intent()
+            intent.putExtra(AppConstants.REFRESH, true)
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
 
         val alertDialog: AlertDialog = alertDialogBuilder.create()
         alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
+
+    private fun showUploadStoryWithoutImageAlertDialog() {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage("Are you sure to continue without photograph ?")
+        alertDialogBuilder.setCancelable(false)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog.dismiss()
+            pbSubmitQuizContestAnswer.visibility = View.VISIBLE
+            btSubmitQuestion.visibility = View.INVISIBLE
+            govtWorkViewModel.addUserAdvice(
+                districtId,
+                SPreferenceManager.getInstance(this).session,
+                etCity.text.toString(),
+                etTitle.text.toString(),
+                etDescription.text.toString(),
+                null
+            )
+        }
+
+        alertDialogBuilder.setNegativeButton(
+            getString(android.R.string.cancel)
+        ) { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
 }

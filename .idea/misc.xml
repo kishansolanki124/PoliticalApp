@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_add_question_suggestion.xml" value="0.11068895643363728" />
         <entry key="app/src/main/res/layout/activity_daily_spin_and_win.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_live_poll_running.xml" value="0.13779128672745694" />

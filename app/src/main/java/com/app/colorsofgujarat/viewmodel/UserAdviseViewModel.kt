@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.app.patidarsaurabh.apputils.AppConstants
+import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.network.APIEndPointsInterface
 import com.app.colorsofgujarat.network.RetrofitFactory
 import com.app.colorsofgujarat.pojo.CommonResponse
@@ -91,7 +93,7 @@ class UserAdviseViewModel : ViewModel() {
 
     fun addUserAdvice(
         district_id: String, user_mobile: String, city: String, title: String, description: String,
-        selectedFile: File
+        selectedFile: File?
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -120,12 +122,14 @@ class UserAdviseViewModel : ViewModel() {
                     description
                 )
 
-                val requestBody: RequestBody =
-                    selectedFile.asRequestBody("image/*".toMediaTypeOrNull())
+                if (null != selectedFile) {
+                    val requestBody: RequestBody =
+                        selectedFile.asRequestBody("image/*".toMediaTypeOrNull())
 
-                requestBodyBuilder.addFormDataPart(
-                    "up_pro_img", "up_pro_img.jpg", requestBody
-                )
+                    requestBodyBuilder.addFormDataPart(
+                        "up_pro_img", "up_pro_img.jpg", requestBody
+                    )
+                }
 
 //                val requestBody: RequestBody =
 //                    selectedFile.asRequestBody("*/*".toMediaTypeOrNull())
@@ -146,11 +150,11 @@ class UserAdviseViewModel : ViewModel() {
 //                    "xyz", filename
 //                )
 
-                val filePart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                    "up_pro_img",
-                    selectedFile.name,
-                    selectedFile.asRequestBody("image/*".toMediaTypeOrNull())
-                )
+//                val filePart: MultipartBody.Part = MultipartBody.Part.createFormData(
+//                    "up_pro_img",
+//                    selectedFile.name,
+//                    selectedFile.asRequestBody("image/*".toMediaTypeOrNull())
+//                )
 
 //                val apiResponse = apiEndPointsInterface.addUserAdvise(
 //                    district_id, user_mobile, city, title, description,

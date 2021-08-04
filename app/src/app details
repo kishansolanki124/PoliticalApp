@@ -5,7 +5,6 @@ password : whatsnew@2018
 Changes and additional features:
 
 changes 1:
-
 1. Notification list not in the design, new screen and redirection
 2. hot news text change
 3. news detail new screen with image gallery and sharing and comments
@@ -44,28 +43,7 @@ ripple effect on edit icon home fragment
 font change of percentage in chart in every screen
 add proguard before launch
 =========================================================
-- કવીઝ અને કોન્ટેસ્ટની પ્રાઇઝ ડીટેઇલ્સ પોપમાં લેફટ અને રાઇટ સાઇડ થોડીક જગ્યા કરવી.
-- કવીઝ અને કોન્ટેસ્ટમાં મેસેજ ચેન્જ Answer Submitted Successfully.
-- સરકારની કામગીરીમાં મેસેજ ચેન્જ Rating Submitted Successfully.
-- ધારાસભ્યમાં મેસેજ ચેન્જ Rating Submitted Successfully.
-- પોલ એન્ડ સર્વેમાં મેસેજ ચેન્જ Rating Submitted Successfully.
-- પ્રશ્ર્નો સુચનોમાં મેસેજ ચેન્જ Advice Submitted Successfully.
-- તમારા પ્રશ્ર્નો અને સુચનો અહીંયા લખો. અને ટર્મ્સની આખી સ્કીન સ્ક્રોલ કરવી.
-- પ્રશ્ર્નો અને સુચનોમાં તે સ્કીનમાં રીફ્રેશ નથી થતું. બીજી સ્કીનમાંથી આવી ત્યારે પોસ્ટ આવે છે.
-- ઇમેજ કમ્પલસરી નથી રાખવી. સબમીટ પહેલા એકવાર પુછી લેવું Are you sure to continue without photograph ? ઇમેજ ન હોય ત્યારે નો ઇમેજ એવેલેબલની ઇમેજ ડીફોલ્ટ આવી જાય.
 - અપલોડ વેકિસન સર્ટીફીકેટમાં Upload Photo અને બટન બ્લેક કરવું.
 
-Nandish:
-edit profile API to change name, district, city. In response, give everything like district id, city, name etc.
 
-- ફર્સ્ટ સ્કીનમાં પોઇન્ટસની બાજુમાં પ્રશ્ર્નાર્થ છે તેમાં ઘણી વાર લીંક આવતી નથી, તો તેનો એરીયો થોડો મોટો કરવો.
--> Aa point ma set kro details and send kro screenshot to understand.
-- સ્પીનમાં આખી સ્કીન સ્ક્રોલ કરવી છે. એ જ સ્કીનમાં સ્પીન હાઇડ થઇ જાય અને મેસેજ આવી જાય, નીચે ટર્મ્સ એ જ રીતે રહે. ત્યાં ટોટલ પોઇન્ટ નથી બતાડવા પરંતુ જેટલા પોઇન્ટ મળ્યા છે તે બતાવવા છે.
--> add scratch card na response ma mane msg ma j "you have won XYZ points today" kri nakhjo etle e dekhadi dau.Atyare alag thi points aapo cho tame response ma. get scratchcard ma je msg aave che, e add scrach card ma aapi dejo.
-
-Amit:
-icon for edit to show next to name in home screen.
-- સ્પીનમાં આખી સ્કીન સ્ક્રોલ કરવી છે.
- -> Aakhi screen to scroll nahi thay kem k spin krvanu che etle scrolling nahi med pde.
- એ જ સ્કીનમાં સ્પીન હાઇડ થઇ જાય અને મેસેજ આવી જાય, નીચે ટર્મ્સ એ જ રીતે રહે. ત્યાં ટોટલ પોઇન્ટ નથી બતાડવા પરંતુ જેટલા પોઇન્ટ મળ્યા છે તે બતાવવા છે.
- -> aa kari didhu che
+Which Mughal Emperor was born at Dahod in Gujarat

@@ -1,154 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/gray_bg"
-    android:orientation="vertical"
     tools:context=".ui.activity.GovtWorkActivity">
 
-    <include layout="@layout/common_toolbar" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/white_semi_trans_rounded_corner"
-        android:hint="@string/Enter_Title"
-        android:imeOptions="actionNext"
-        android:inputType="textCapWords"
-        android:padding="@dimen/dp_10"
-        android:textColor="@color/black"
-        android:textColorHint="@color/gray6C6C6C"
-        android:textSize="@dimen/sp_14" />
+        android:background="@color/gray_bg"
+        android:orientation="vertical"
+        tools:context=".ui.activity.GovtWorkActivity">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/white_semi_trans_rounded_corner"
-        android:gravity="start"
-        android:hint="@string/Enter_Desc"
-        android:imeOptions="actionDone"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:maxLines="5"
-        android:padding="@dimen/dp_10"
-        android:textColor="@color/black"
-        android:textColorHint="@color/gray6C6C6C"
-        android:textSize="@dimen/sp_14" />
+        <include layout="@layout/common_toolbar" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spDistrictQuestionSuggestion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/spinner_dropdown_light_red" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etCity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/white_semi_trans_rounded_corner"
-        android:hint="@string/Enter_City"
-        android:imeOptions="actionDone"
-        android:inputType="textCapWords"
-        android:padding="@dimen/dp_10"
-        android:textColor="@color/black"
-        android:textColorHint="@color/gray6C6C6C"
-        android:textSize="@dimen/sp_14" />
-
-    <RelativeLayout
-        android:id="@+id/rlImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/white_semi_trans_rounded_corner">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ip2" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivSelectedImage"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_80"
-            android:layout_margin="@dimen/dp_10" />
-    </RelativeLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btSubmitQuestion"
-            style="@style/CommonRedButton"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/dp_0"
-            android:paddingHorizontal="@dimen/sp_20"
-            android:text="@string/submit"
-            android:textSize="@dimen/sp_14"
-            app:cornerRadius="@dimen/dp_5"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/pbSubmitQuizContestAnswer"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:indeterminateTint="@color/red_light"
-            android:indeterminateTintMode="multiply"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/btSubmitQuestion"
-            app:layout_constraintEnd_toEndOf="@+id/btSubmitQuestion"
-            app:layout_constraintStart_toStartOf="@+id/btSubmitQuestion"
-            app:layout_constraintTop_toTopOf="@+id/btSubmitQuestion" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".ui.activity.DailySpinAndWinActivity">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/white_semi_trans_rounded_corner"
+            android:hint="@string/Enter_Title"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray6C6C6C"
+            android:textSize="@dimen/sp_14" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTNCHeader"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/white_semi_trans_rounded_corner"
+            android:gravity="start"
+            android:hint="@string/Enter_Desc"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:maxLines="5"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray6C6C6C"
+            android:textSize="@dimen/sp_14" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spDistrictQuestionSuggestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/spinner_dropdown_light_red" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/white_semi_trans_rounded_corner"
+            android:hint="@string/Enter_City"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray6C6C6C"
+            android:textSize="@dimen/sp_14" />
+
+        <RelativeLayout
+            android:id="@+id/rlImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/white_semi_trans_rounded_corner">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/semi_bold"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:text="@string/Terms_"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_12" />
+                android:layout_centerInParent="true"
+                android:src="@drawable/ip2" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTNC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvTNCHeader"
-                android:layout_margin="@dimen/dp_10"
-                android:ellipsize="end"
-                android:fontFamily="@font/regular"
-                android:justificationMode="inter_word"
-                android:lineSpacingExtra="@dimen/dp_2"
-                android:padding="@dimen/dp_5"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/sp_12"
-                tools:text="પાસના નેતા અને હાર્દિક પટેલ સાથે કોંગ્રેસમાં જોડાયેલા યુવા કોંગ્રેસના ઉપપ્રમુખ નિખિલ સવાણીએ કોંગ્રેસમાંથી રાજીનામું આપી દીધું છે અને ગમે ત્યારે આમ આદમી પાર્ટીમાં જોડાઇ શકે છે. આ અંગે નિખિલ સવાણીએ દિવ્ય ભાસ્કર સાથે વાત કરતાં જણાવ્યું કે કેટલાંક લોકો સાથે ચર્ચા કરી નિર્ણય લેશે. કોંગ્રેસ છોડતાં પહેલાં તેમણે આક્ષેપ કર્યો કે કોંગ્રેસમાં હાર્દિક પટેલની અવગણના થઇ છે અને તેમની રાજકીય હત્યા થઇ છે. તેમણે કહ્યું કે આમ હું જ નથી કહેતો પણ હાર્દિક પટેલ પણ અગાઉ કહી ચૂક્યા છે કે તેમનું સન્માન કોંગ્રેસમાં જળવાતું નથી. તેમણે એમ પણ કહ્યું કે યુથ કોંગ્રેસમાં પ્રદેશ પ્રમુખ બનવા માટે નકલી મેમ્બરો ઊભા કરીને કૌભાંડ થાય છે." />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
-</LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSelectedImage"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10" />
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btSubmitQuestion"
+                style="@style/CommonRedButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_0"
+                android:paddingHorizontal="@dimen/sp_20"
+                android:text="@string/submit"
+                android:textSize="@dimen/sp_14"
+                app:cornerRadius="@dimen/dp_5"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/pbSubmitQuizContestAnswer"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/red_light"
+                android:indeterminateTintMode="multiply"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/btSubmitQuestion"
+                app:layout_constraintEnd_toEndOf="@+id/btSubmitQuestion"
+                app:layout_constraintStart_toStartOf="@+id/btSubmitQuestion"
+                app:layout_constraintTop_toTopOf="@+id/btSubmitQuestion" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTNCHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/semi_bold"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:text="@string/Terms_"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_12" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTNC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:ellipsize="end"
+            android:fontFamily="@font/regular"
+            android:justificationMode="inter_word"
+            android:lineSpacingExtra="@dimen/dp_2"
+            android:padding="@dimen/dp_5"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_12"
+            tools:text="પાસના નેતા અને હાર્દિક પટેલ સાથે કોંગ્રેસમાં જોડાયેલા યુવા કોંગ્રેસના ઉપપ્રમુખ નિખિલ સવાણીએ કોંગ્રેસમાંથી રાજીનામું આપી દીધું છે અને ગમે ત્યારે આમ આદમી પાર્ટીમાં જોડાઇ શકે છે. આ અંગે નિખિલ સવાણીએ દિવ્ય ભાસ્કર સાથે વાત કરતાં જણાવ્યું કે કેટલાંક લોકો સાથે ચર્ચા કરી નિર્ણય લેશે. કોંગ્રેસ છોડતાં પહેલાં તેમણે આક્ષેપ કર્યો કે કોંગ્રેસમાં હાર્દિક પટેલની અવગણના થઇ છે અને તેમની રાજકીય હત્યા થઇ છે. તેમણે કહ્યું કે આમ હું જ નથી કહેતો પણ હાર્દિક પટેલ પણ અગાઉ કહી ચૂક્યા છે કે તેમનું સન્માન કોંગ્રેસમાં જળવાતું નથી. તેમણે એમ પણ કહ્યું કે યુથ કોંગ્રેસમાં પ્રદેશ પ્રમુખ બનવા માટે નકલી મેમ્બરો ઊભા કરીને કૌભાંડ થાય છે." />
+    </LinearLayout>
+</ScrollView>
