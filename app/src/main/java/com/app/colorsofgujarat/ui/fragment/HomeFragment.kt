@@ -59,6 +59,10 @@ class HomeFragment : Fragment() {
             showInfoWindow()
         }
 
+        tvUserPoints.setOnClickListener {
+            showInfoWindow()
+        }
+
         ivEditUser.setOnClickListener {
             startActivity(Intent(requireContext(), UpdateProfileActivity::class.java))
         }
@@ -188,7 +192,7 @@ class HomeFragment : Fragment() {
     private fun setupPointViews() {
         tvUserName.text =
             "Hi, " + SPreferenceManager.getInstance(requireContext())
-                .getString(AppConstants.NAME, "")
+                .settings.user_name
         tvUserPoints.text = SPreferenceManager.getInstance(requireContext())
             .settings.user_points
     }
@@ -205,6 +209,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
 
@@ -212,6 +217,9 @@ class HomeFragment : Fragment() {
 
         tvUserPoints.text = SPreferenceManager.getInstance(requireContext())
             .settings.user_points
+        tvUserName.text =
+            "Hi, " + SPreferenceManager.getInstance(requireContext())
+                .settings.user_name
     }
 
     private fun showInfoWindow() {

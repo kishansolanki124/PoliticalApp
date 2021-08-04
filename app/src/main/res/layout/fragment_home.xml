@@ -34,17 +34,17 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivEditUser"
-                android:theme="@style/ClickableTextViewWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_2"
                 android:layout_marginTop="@dimen/dp_50"
                 android:layout_toEndOf="@id/tvUserName"
                 android:padding="@dimen/dp_5"
-                android:src="@drawable/pencil"
-                android:tint="@color/white" />
+                android:src="@drawable/edit_icon"
+                android:theme="@style/ClickableTextViewWhite"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvUserName"
@@ -99,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginHorizontal="@dimen/dp_2"
+                    android:padding="@dimen/dp_5"
                     android:src="@drawable/question_point" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

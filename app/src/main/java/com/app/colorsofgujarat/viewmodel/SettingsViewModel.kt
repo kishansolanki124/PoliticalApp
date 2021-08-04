@@ -19,6 +19,7 @@ class SettingsViewModel : ViewModel() {
     private val mutableSettingsResponse = MutableLiveData<SettingsResponse>()
     private val mutableScratchCardResponse = MutableLiveData<ScratchCardResponse>()
     private val mutableCommonResponse = MutableLiveData<CommonResponse>()
+    private val updateProfileResponse = MutableLiveData<UpdateProfileResponse>()
     private val mutableStaticPageResponse = MutableLiveData<StaticPageResponse>()
     private val mutableContactUsResponse = MutableLiveData<ContactUsResponse>()
     private val mutableAddScratchCardResponse = MutableLiveData<CommonResponse>()
@@ -100,6 +101,41 @@ class SettingsViewModel : ViewModel() {
                     requestBodyBuilder.build()
                 )
                 returnCommonResponse(apiResponse)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun editProfile(mobile: String,name: String, district_id: String, city: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val requestBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.name,
+                    name
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.mobile,
+                    mobile
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.district_id,
+                    district_id
+                )
+
+                requestBodyBuilder.addFormDataPart(
+                    AppConstants.RequestParameters.city,
+                    city
+                )
+
+                val apiResponse = apiEndPointsInterface.editProfile(
+                    requestBodyBuilder.build()
+                )
+                returnUpdateProfilelResponse(apiResponse)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -268,6 +304,11 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
+    private suspend fun returnUpdateProfilelResponse(settingsResponse: UpdateProfileResponse) {
+        withContext(Dispatchers.Main) {
+            updateProfileResponse.value = settingsResponse
+        }
+    }
 
     fun settingsResponse(): LiveData<SettingsResponse> {
         return mutableSettingsResponse
@@ -295,5 +336,8 @@ class SettingsViewModel : ViewModel() {
 
     fun popupBanners(): LiveData<PopupBannerResponse> {
         return mutablePopupBannerResponse
+    }
+    fun updateProfileResponse(): LiveData<UpdateProfileResponse> {
+        return updateProfileResponse
     }
 }

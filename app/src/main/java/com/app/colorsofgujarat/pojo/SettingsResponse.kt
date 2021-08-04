@@ -9,6 +9,8 @@ data class SettingsResponse(
     var news_list: List<News> = listOf(),
     var notification_count: String = "",
     var user_points: String = "",
+    var user_name: String = "",
+    var user_city: String = "",
     var user_district: String = ""
 ) {
     data class District(

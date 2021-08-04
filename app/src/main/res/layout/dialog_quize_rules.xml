@@ -22,7 +22,7 @@
             android:fontFamily="@font/semi_bold"
             android:text="@string/Prize_Details_"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_16" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPrizeDetail"
@@ -33,7 +33,7 @@
             android:justificationMode="inter_word"
             tools:text="@string/live_poll"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
             android:justificationMode="inter_word"
             tools:text="@string/live_poll"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView

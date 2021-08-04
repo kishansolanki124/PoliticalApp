@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center_vertical"
                     android:paddingVertical="@dimen/dp_5"
+                    android:visibility="invisible"
                     android:src="@drawable/share_icon_2" />
             </FrameLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>

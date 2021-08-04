@@ -31,6 +31,11 @@ interface APIEndPointsInterface {
         @Body hashMap: MultipartBody
     ): CommonResponse
 
+    @POST(AppConstants.APIEndPoints.EDIT_PROFILE)
+    suspend fun editProfile(
+        @Body hashMap: MultipartBody
+    ): UpdateProfileResponse
+
     @POST(AppConstants.APIEndPoints.GET_QUIZ_CONTEST)
     suspend fun getQuizAndContest(
         @Body hashMap: MultipartBody

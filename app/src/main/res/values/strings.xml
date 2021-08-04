@@ -28,7 +28,7 @@
     <string name="Contact_Us">Contact Us</string>
     <string name="Rate">Rate :</string>
     <string name="Rate_out_of_10">Rate out of 10</string>
-    <string name="enter_comment">Enter your Comments/Opinion</string>
+    <string name="enter_comment">Enter Your Comment/Opinion</string>
     <string name="participate_and">(Participate &amp; Get</string>
     <string name="give_rate_get_10_point_1">(Give Rate &amp; Get</string>
     <string name="give_rate_get_10_point_2">&#160;10&#160;</string>
@@ -103,4 +103,5 @@
     <string name="Update">Update</string>
     <string name="Update_Profile">Update Profile</string>
     <string name="tnc_string">At Colors of Gujarat We Respect Your Privacy. By Continuing You Agree with T &amp; C. 2020&#8211;2021</string>
+    <string name="poll_already_given">You Have Already Submitted Answer.</string>
 </resources>

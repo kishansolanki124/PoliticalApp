@@ -56,6 +56,7 @@ interface AppConstants {
             const val GET_STATIC_PAGES: String = "get_staticpage"
             const val GET_CONTACT_US: String = "get_contactus"
             const val INQUIRY: String = "inquiry"
+            const val EDIT_PROFILE: String = "edit_profile"
             const val GET_SCRATCHCARD: String = "get_scratchcard"
             const val GET_QUIZ_CONTEST: String = "get_quiz"
             const val GET_QUIZ_CONTEST_DYNAMIC: String = "get_photo_contest"

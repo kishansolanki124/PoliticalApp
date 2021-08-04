@@ -5,8 +5,9 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.getUserSelectedDistrictIndex
@@ -21,7 +22,6 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
 
     private var districtId = ""
     private lateinit var settingsViewModel: SettingsViewModel
-    //private lateinit var settingsResponse: SettingsResponse
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
 
     override val layoutId: Int
@@ -41,13 +41,12 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
                 if (areFieldsValid()) {
                     pbRegister.visibility = View.VISIBLE
                     btUpdateProfile.visibility = View.INVISIBLE
-//                    settingsViewModel.registration(
-//                        RegisterRequest(
-//                            districtId,
-//                            et_city.text.toString(),
-//                            et_name.text.toString(),
-//                        )
-//                    )
+                    settingsViewModel.editProfile(
+                        SPreferenceManager.getInstance(this).session,
+                        et_name.text.toString(),
+                        districtId,
+                        et_city.text.toString()
+                    )
                 }
             } else {
                 showSnackBar(getString(R.string.no_internet), this)
@@ -60,15 +59,22 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
 //            handleResponse(it)
 //        })
 
-        settingsViewModel.commonResponse().observe(this, {
-//            startActivity(Intent(this, HomeActivity::class.java))
-//            finish()
+        settingsViewModel.updateProfileResponse().observe(this, {
+            pbRegister.visibility = View.GONE
+            btUpdateProfile.visibility = View.VISIBLE
+
+            val settings = SPreferenceManager.getInstance(this).settings
+            settings.user_city = it.user_city
+            settings.user_district = it.user_district
+            settings.user_name = it.user_name
+
+            SPreferenceManager.getInstance(this).saveSettings(settings)
+
+            showAlertDialog(it.message)
         })
 
-        //fetchSettings()
-
-        et_city.setText(SPreferenceManager.getInstance(this).settings.user_district)
-        et_name.setText(SPreferenceManager.getInstance(this).getString(AppConstants.NAME, ""))
+        et_city.setText(SPreferenceManager.getInstance(this).settings.user_city)
+        et_name.setText(SPreferenceManager.getInstance(this).settings.user_name)
     }
 
     private fun areFieldsValid(): Boolean {
@@ -167,4 +173,21 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
         }
     }
 
+    private fun showAlertDialog(msg: String) {
+        val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage(msg)
+        alertDialogBuilder.setCancelable(true)
+
+        alertDialogBuilder.setPositiveButton(
+            getString(android.R.string.ok)
+        ) { dialog, _ ->
+            dialog.dismiss()
+            finish()
+        }
+
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
+    }
 }
