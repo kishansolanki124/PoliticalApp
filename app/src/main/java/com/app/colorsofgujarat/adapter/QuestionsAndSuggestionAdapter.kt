@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.pojo.UserAdviseResponse
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.question_suggestion_item.view.*
 
 class QuestionsAndSuggestionAdapter(
@@ -32,13 +32,17 @@ class QuestionsAndSuggestionAdapter(
     }
 
     fun setItem(list: ArrayList<UserAdviseResponse.UserAdvice>) {
-        this.list = list
-        notifyDataSetChanged()
+        val size = this.list.size
+        this.list.addAll(list)
+        val sizeNew = this.list.size
+        notifyItemRangeChanged(size, sizeNew)
     }
 
     fun reset() {
+        val size = this.list.size
         this.list.clear()
-        notifyDataSetChanged()
+        //notifyDataSetChanged()
+        notifyItemRangeRemoved(0, size)
     }
 
     override fun getItemCount(): Int = list.size
@@ -48,13 +52,6 @@ class QuestionsAndSuggestionAdapter(
         private val itemClickCall: (UserAdviseResponse.UserAdvice) -> Unit,
         private val itemShareCall: (UserAdviseResponse.UserAdvice) -> Unit
     ) : RecyclerView.ViewHolder(view) {
-
-//        constructor(parent: ViewGroup) : this(
-//            LayoutInflater.from(parent.context).inflate(
-//                R.layout.item_vatan_nu_gham,
-//                parent, false
-//            )
-//        )
 
         @SuppressLint("SetTextI18n")
         fun bindForecast(

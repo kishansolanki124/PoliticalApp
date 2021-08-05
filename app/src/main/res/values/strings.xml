@@ -84,7 +84,7 @@
     <string name="Enter_Title">Enter Title</string>
     <string name="Enter_Desc">Enter Description</string>
     <string name="Enter_City">Enter City/Town</string>
-    <string name="questions_suggestion">તમારા પ્રશ્ર્નો / સુચનો લખો</string>
+    <string name="questions_suggestion">તમારા પ્રશ્ર્નો અને સુચનો અહીંયા લખો.</string>
     <string name="download_in_progress">Downloading. Please wait!</string>
     <string name="sharing">Sharing…</string>
     <string name="you_won_points_already">You\'ve won points for today</string>
@@ -103,7 +103,7 @@
     <string name="Sponsor_">Sponsor:</string>
     <string name="Update">Update</string>
     <string name="Update_Profile">Update Profile</string>
-    <string name="tnc_string">At Colors of Gujarat We Respect Your Privacy. By Continuing You Agree with T &amp; C. 2020&#8211;2021</string>
+    <string name="tnc_string">At Colors of Gujarat We Respect Your Privacy. By Continuing You Agree with T &amp; C. 2021&#8211;2022</string>
     <string name="poll_already_given">You Have Already Submitted Answer.</string>
     <string name="Upload_Photo">Upload Photo</string>
     <string name="Select_Photo">Select Photo</string>

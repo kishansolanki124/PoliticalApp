@@ -157,6 +157,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
         if (isConnected(this)) {
             pageNo = 0
             loading = true
+            govtWorkNewsAdapter.reset()
             pbQuestionSuggestion.visibility = View.VISIBLE
             rvPollAndSurvey.visibility = View.GONE
             govtWorkViewModel.getUserAdviseList(districtId, pageNo.toString(), "10")

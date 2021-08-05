@@ -1,9 +1,11 @@
 package com.app.colorsofgujarat.ui.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -45,6 +47,7 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
             }
         }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -103,6 +106,15 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
         ivSelectedImage.setOnClickListener {
             rlImage.callOnClick()
         }
+
+        etDescription.setOnTouchListener { view, event ->
+            view.parent.requestDisallowInterceptTouchEvent(true)
+            if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                view.parent.requestDisallowInterceptTouchEvent(false)
+            }
+            return@setOnTouchListener false
+        }
+
     }
 
     private fun handleResponse(commonResponse: CommonResponse?) {

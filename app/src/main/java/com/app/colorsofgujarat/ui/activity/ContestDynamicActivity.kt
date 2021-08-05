@@ -146,6 +146,7 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
 
         if (null != quizAndContestResponse.user_participate) {
             tvAlreadySubmittedResponse.visibility = View.VISIBLE
+            tvAlreadySubmittedResponse.text = quizAndContestResponse.user_participate
             btSubmitQuestion.visibility = View.GONE
             btSelectImage.visibility = View.GONE
         } else {
