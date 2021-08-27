@@ -3,10 +3,12 @@ package com.app.colorsofgujarat.ui.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.apputils.hideKeyboard
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.shareIntent
 import com.app.colorsofgujarat.apputils.showSnackBar
@@ -15,20 +17,30 @@ import com.app.colorsofgujarat.pojo.UserAdviseDetailResponse
 import com.app.colorsofgujarat.viewmodel.UserAdviseViewModel
 import com.bumptech.glide.Glide
 
-class QuestionSuggestionDetailActivity : ExtendedToolbarActivity() {
+class QuestionSuggestionDetailActivity : AppCompatActivity() {
 
     private lateinit var govtWorkViewModel: UserAdviseViewModel
     private var aid = ""
     private lateinit var binding: ActivityQuestionSuggestionDetailBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_question_suggestion_detail
+//    override val layoutId: Int
+//        get() = R.layout.activity_question_suggestion_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestionSuggestionDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.que_suggestion))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.que_suggestion)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.que_suggestion))
 
         aid = intent.getStringExtra(AppConstants.ID)!!
 

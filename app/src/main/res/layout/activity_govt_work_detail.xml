@@ -9,7 +9,9 @@
     android:orientation="vertical"
     tools:context=".ui.activity.GovtWorkDetailActivity">
 
-    <include layout="@layout/common_toolbar" />
+    <include
+        android:id="@+id/commonToolbar"
+        layout="@layout/common_toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvGovtWorkDetail"
@@ -112,11 +114,11 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:letterSpacing="0.02"
                     android:id="@+id/tvNewsDetailTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/semi_bold"
+                    android:letterSpacing="0.02"
                     android:lineSpacingExtra="@dimen/dp_2"
                     android:padding="@dimen/dp_5"
                     android:textColor="@android:color/black"
@@ -130,8 +132,8 @@
                     android:layout_marginVertical="@dimen/dp_5"
                     android:ellipsize="end"
                     android:fontFamily="@font/regular"
-                    android:letterSpacing="0.02"
                     android:justificationMode="inter_word"
+                    android:letterSpacing="0.02"
                     android:lineSpacingExtra="@dimen/dp_2"
                     android:padding="@dimen/dp_5"
                     android:textColor="@android:color/black"
@@ -349,16 +351,16 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvViewAllComment"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="@dimen/dp_10"
                     android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/dp_5"
-                    android:theme="@style/ClickableTextView"
                     android:text="@string/view_all_comments"
                     android:textColor="@color/red_CC252C"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_12"
+                    android:theme="@style/ClickableTextView"
+                    android:visibility="gone" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>

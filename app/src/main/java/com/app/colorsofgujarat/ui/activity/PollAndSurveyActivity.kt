@@ -6,6 +6,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -14,6 +15,7 @@ import androidx.viewpager.widget.ViewPager
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.getUserSelectedDistrictIndex
+import com.app.colorsofgujarat.apputils.hideKeyboard
 import com.app.colorsofgujarat.apputils.showProgressDialog
 import com.app.colorsofgujarat.databinding.ActivityPollAndSurveyBinding
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
@@ -21,7 +23,7 @@ import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.ui.fragment.PollAndSurveyFragment
 import com.app.colorsofgujarat.ui.fragment.PollAndSurveyResultFragment
 
-class PollAndSurveyActivity : ExtendedToolbarActivity() {
+class PollAndSurveyActivity : AppCompatActivity() {
 
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
@@ -31,14 +33,24 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
     private lateinit var viewPager: ViewPager
     private lateinit var binding: ActivityPollAndSurveyBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_poll_and_survey
+//    override val layoutId: Int
+//        get() = R.layout.activity_poll_and_survey
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPollAndSurveyBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle("પોલ અને સર્વે")
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = "પોલ અને સર્વે"
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle("પોલ અને સર્વે")
         setupDistrictSpinner()
 
         viewPagerShraddhanjaliAdapter =

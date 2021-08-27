@@ -9,7 +9,9 @@
     android:orientation="vertical"
     tools:context=".ui.activity.NewsDetailActivity">
 
-    <include layout="@layout/common_toolbar" />
+    <include
+        android:id="@+id/commonToolbar"
+        layout="@layout/common_toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvGovtWorkDetail"

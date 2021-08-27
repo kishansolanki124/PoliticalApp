@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
@@ -28,7 +29,7 @@ import com.app.colorsofgujarat.pojo.QuizAndContestRunningResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
 import com.bumptech.glide.Glide
 
-class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
+class QuizAndContestRunningActivity : AppCompatActivity() {
 
     private var qid = ""
     private var answerId = ""
@@ -40,14 +41,23 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
     private var runnableCode: Runnable? = null
     private lateinit var binding: ActivityQuizAndContestRunningBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_quiz_and_contest_running
+//    override val layoutId: Int
+//        get() = R.layout.activity_quiz_and_contest_running
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizAndContestRunningBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.quiz_and_contest))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.quiz_and_contest)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+        //setToolbarTitle(getString(R.string.quiz_and_contest))
 
         qid = intent.getStringExtra(AppConstants.ID)!!
 

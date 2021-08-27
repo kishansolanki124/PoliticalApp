@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +20,7 @@ import com.app.colorsofgujarat.pojo.MLAListResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.MLAViewModel
 
-class DharasabhyoListActivity : ExtendedToolbarActivity() {
+class DharasabhyoListActivity : AppCompatActivity() {
 
     private lateinit var mlaViewModel: MLAViewModel
     private var districtId = ""
@@ -31,14 +32,24 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
     private lateinit var govtWorkNewsAdapter: DharasabhyoAdapter
     private lateinit var binding: ActivityDharasabhyoBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_dharasabhyo
+//    override val layoutId: Int
+//        get() = R.layout.activity_dharasabhyo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDharasabhyoBinding.inflate(layoutInflater)
-        setToolbarTitle(getString(R.string.dharasabhyo))
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.dharasabhyo)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+        //setToolbarTitle(getString(R.string.dharasabhyo))
         setupList()
 
         mlaViewModel = ViewModelProvider(this).get(MLAViewModel::class.java)

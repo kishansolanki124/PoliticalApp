@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Lifecycle
@@ -38,7 +39,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
 import java.util.*
 
-class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedListener {
+class LivePollRunningActivity : AppCompatActivity(), OnChartValueSelectedListener {
 
     private var qid = ""
     private var answerId = ""
@@ -53,12 +54,22 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         intent.getBooleanExtra(AppConstants.SHOW_SUBMIT, false)
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_live_poll_running
+//    override val layoutId: Int
+//        get() = R.layout.activity_live_poll_running
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLivePollRunningBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.live_poll)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
 
         qid = intent.getStringExtra(AppConstants.ID)!!
 
@@ -70,7 +81,7 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             binding.tvGiveRateGet10Point.visibility = View.INVISIBLE
         }
 
-        setToolbarTitle(getString(R.string.live_poll))
+        //setToolbarTitle(getString(R.string.live_poll))
         setupPointText()
 
         binding.btSubmitLivePOllAnswer.setOnClickListener {

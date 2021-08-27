@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -22,24 +23,40 @@ import com.app.colorsofgujarat.ui.fragment.WinnerFragment
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : ExtendedToolbarActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mTransaction: FragmentTransaction
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var binding: ActivityHomeBinding
-    override val layoutId: Int
-        get() = R.layout.activity_home
+//    override val layoutId: Int
+//        get() = R.layout.activity_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.colors_of_guj))
-        hideBackButton()
-        showNotificationIcon()
+        //setToolbarTitle(getString(R.string.colors_of_guj))
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.colors_of_guj)
+        title = ""
+
+        binding.commonToolbar.ivNotification.setOnClickListener {
+            hideUnreadCount()
+            startActivity(Intent(this, NotificationActivity::class.java))
+        }
+
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+        binding.commonToolbar.ibBack.visibility = View.GONE
+        binding.commonToolbar.ivNotification.visibility = View.VISIBLE
+
         setupListener()
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         switchFragment(HomeFragment(), false)
@@ -209,5 +226,17 @@ class HomeActivity : ExtendedToolbarActivity(),
                 handler!!.removeCallbacks(it)
             }
         }
+    }
+
+    fun showUnreadCount() {
+        binding.commonToolbar.ivNotificationUnread.visibility = View.VISIBLE
+    }
+
+    fun hideUnreadCount() {
+        binding.commonToolbar.ivNotificationUnread.visibility = View.GONE
+    }
+
+    fun setToolbarTitle(text: String){
+        binding.commonToolbar.tvTitle.text = text
     }
 }

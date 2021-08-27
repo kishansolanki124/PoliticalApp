@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
@@ -18,7 +19,7 @@ import com.app.colorsofgujarat.pojo.GovtWorkListResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 
-class GovtWorkActivity : ExtendedToolbarActivity() {
+class GovtWorkActivity : AppCompatActivity() {
 
     private var districtId = ""
     private var totalRecords = 0
@@ -31,8 +32,8 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
     private lateinit var govtWorkNewsAdapter: GovtWorkNewsAdapter
     private lateinit var binding: ActivityGovtWorkBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_govt_work
+//    override val layoutId: Int
+//        get() = R.layout.activity_govt_work
 
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -52,7 +53,17 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGovtWorkBinding.inflate(layoutInflater)
 
-        setToolbarTitle(getString(R.string.govt_work))
+        //setToolbarTitle(getString(R.string.govt_work))
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.govt_work)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
         setupList()
 
         govtWorkViewModel = ViewModelProvider(this).get(GovtWorkViewModel::class.java)

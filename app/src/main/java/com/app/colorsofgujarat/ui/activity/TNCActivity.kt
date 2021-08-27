@@ -2,28 +2,40 @@ package com.app.colorsofgujarat.ui.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.apputils.hideKeyboard
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.databinding.ActivityTncBinding
 import com.app.colorsofgujarat.pojo.StaticPageResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 
-class TNCActivity : ExtendedToolbarActivity() {
+class TNCActivity : AppCompatActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var binding: ActivityTncBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_tnc
+//    override val layoutId: Int
+//        get() = R.layout.activity_tnc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTncBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.Terms_Of_Use))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.Terms_Of_Use)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.Terms_Of_Use))
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
         settingsViewModel.staticPages().observe(this, {

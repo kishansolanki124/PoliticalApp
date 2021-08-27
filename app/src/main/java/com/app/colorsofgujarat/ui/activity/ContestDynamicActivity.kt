@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
@@ -29,7 +30,7 @@ import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker.ImagePicker
 import java.io.File
 
-class ContestDynamicActivity : ExtendedToolbarActivity() {
+class ContestDynamicActivity : AppCompatActivity() {
 
     private lateinit var selectedFile: File
     private lateinit var quizAndContestViewModel: QuizAndContestViewModel
@@ -42,8 +43,8 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
     private var winners = ""
     private lateinit var binding: ActivityContestDynamicBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_contest_dynamic
+//    override val layoutId: Int
+//        get() = R.layout.activity_contest_dynamic
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -60,8 +61,18 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityContestDynamicBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(SPreferenceManager.getInstance(this).settings.contest[0].menu_name)
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = SPreferenceManager.getInstance(this).settings.contest[0].menu_name
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(SPreferenceManager.getInstance(this).settings.contest[0].menu_name)
 
         quizAndContestViewModel = ViewModelProvider(this).get(QuizAndContestViewModel::class.java)
 

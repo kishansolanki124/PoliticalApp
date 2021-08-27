@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
@@ -24,7 +25,7 @@ import nl.dionsegijn.konfetti.models.Size
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DailySpinAndWinActivity : ExtendedToolbarActivity() {
+class DailySpinAndWinActivity : AppCompatActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
     private var numberList: ArrayList<Int> = ArrayList()
@@ -35,16 +36,26 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
     private var runnableCode: Runnable? = null
     private lateinit var binding: ActivityDailySpinAndWinBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_daily_spin_and_win
+//    override val layoutId: Int
+//        get() = R.layout.activity_daily_spin_and_win
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding =  ActivityDailySpinAndWinBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.daily_spin_and_win))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.daily_spin_and_win)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.daily_spin_and_win))
 
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 

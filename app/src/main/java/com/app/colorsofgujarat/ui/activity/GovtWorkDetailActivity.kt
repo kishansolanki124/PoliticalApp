@@ -12,6 +12,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
@@ -28,7 +29,7 @@ import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 import com.bumptech.glide.Glide
 
-class GovtWorkDetailActivity : ExtendedToolbarActivity() {
+class GovtWorkDetailActivity : AppCompatActivity() {
 
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: NewsCommentAdapter
@@ -44,16 +45,26 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     private var runnableCode: Runnable? = null
     private lateinit var binding: ActivityGovtWorkDetailBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_govt_work_detail
+//    override val layoutId: Int
+//        get() = R.layout.activity_govt_work_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGovtWorkDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.govt_work)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
 
         gid = intent.getStringExtra(AppConstants.GID)!!
 
-        setToolbarTitle(getString(R.string.govt_work))
+        //setToolbarTitle(getString(R.string.govt_work))
         initList()
 
         govtWorkViewModel = ViewModelProvider(this).get(GovtWorkViewModel::class.java)

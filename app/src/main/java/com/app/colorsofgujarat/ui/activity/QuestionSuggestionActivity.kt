@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
@@ -18,7 +19,7 @@ import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.pojo.UserAdviseResponse
 import com.app.colorsofgujarat.viewmodel.UserAdviseViewModel
 
-class QuestionSuggestionActivity : ExtendedToolbarActivity() {
+class QuestionSuggestionActivity : AppCompatActivity() {
 
     private lateinit var govtWorkNewsAdapter: QuestionsAndSuggestionAdapter
     private var totalRecords = 0
@@ -30,8 +31,8 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var binding: ActivityQuestionSuggestionBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_question_suggestion
+//    override val layoutId: Int
+//        get() = R.layout.activity_question_suggestion
 
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -47,8 +48,18 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestionSuggestionBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.que_suggestion))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.que_suggestion)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.que_suggestion))
         setupList()
         setupDistrictSpinner()
 

@@ -9,6 +9,7 @@ import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
@@ -27,7 +28,7 @@ import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 import java.io.Serializable
 
-class NewsDetailActivity : ExtendedToolbarActivity() {
+class NewsDetailActivity : AppCompatActivity() {
 
     private lateinit var govtWorkViewModel: GovtWorkViewModel
     private lateinit var layoutManager: LinearLayoutManager
@@ -37,15 +38,27 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
     private var runnableCode: Runnable? = null
     private lateinit var binding: ActivityNewsDetailBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_news_detail
+//    override val layoutId: Int
+//        get() = R.layout.activity_news_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewsDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.latest_news)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
         nid = intent.getStringExtra(AppConstants.ID)!!
 
-        setToolbarTitle(getString(R.string.latest_news))
+        //setToolbarTitle(getString(R.string.latest_news))
+
         initList()
 
         govtWorkViewModel = ViewModelProvider(this).get(GovtWorkViewModel::class.java)

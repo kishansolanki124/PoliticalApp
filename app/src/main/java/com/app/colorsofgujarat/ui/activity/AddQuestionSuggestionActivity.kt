@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
@@ -25,7 +26,7 @@ import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker.ImagePicker
 import java.io.File
 
-class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
+class AddQuestionSuggestionActivity : AppCompatActivity() {
 
     private lateinit var govtWorkViewModel: UserAdviseViewModel
     private var districtId = ""
@@ -34,8 +35,8 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var binding: ActivityAddQuestionSuggestionBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_add_question_suggestion
+//    override val layoutId: Int
+//        get() = R.layout.activity_add_question_suggestion
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -53,10 +54,20 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAddQuestionSuggestionBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.que_suggestion)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
 
         districtPosition = intent.getIntExtra(AppConstants.DISTRICTID, 0)
 
-        setToolbarTitle(getString(R.string.que_suggestion))
+        //setToolbarTitle(getString(R.string.que_suggestion))
         setupDistrictSpinner()
 
         binding.tvTNC.text = HtmlCompat.fromHtml(

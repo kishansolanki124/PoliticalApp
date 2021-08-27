@@ -30,7 +30,6 @@ class SplashActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
         fetchSettings()

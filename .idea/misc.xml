@@ -3,19 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_add_question_suggestion.xml" value="0.11068895643363728" />
+        <entry key="app/src/main/res/layout/activity_contact_us.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_contest_dynamic.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_daily_spin_and_win.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_dharasabhyo.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_dharasabhyo_detail.xml" value="0.16894630192502533" />
+        <entry key="app/src/main/res/layout/activity_govt_work.xml" value="0.16894630192502533" />
+        <entry key="app/src/main/res/layout/activity_govt_work_all_comment.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_govt_work_detail.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_live_poll_running.xml" value="0.13779128672745694" />
+        <entry key="app/src/main/res/layout/activity_news_detail.xml" value="0.16894630192502533" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.16894630192502533" />
+        <entry key="app/src/main/res/layout/activity_poll_and_survey.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_question_suggestion.xml" value="0.10914855072463768" />
+        <entry key="app/src/main/res/layout/activity_question_suggestion_detail.xml" value="0.16894630192502533" />
+        <entry key="app/src/main/res/layout/activity_quiz_and_contest.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_quiz_and_contest_running.xml" value="0.12681159420289856" />
         <entry key="app/src/main/res/layout/activity_quiz_and_contest_winner.xml" value="0.12681159420289856" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_tnc.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/activity_update_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_winner_names.xml" value="0.16894630192502533" />
+        <entry key="app/src/main/res/layout/activity_winner_prize_detail.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/common_toolbar.xml" value="0.1213768115942029" />
         <entry key="app/src/main/res/layout/dharasabhyo_item_large.xml" value="0.16894630192502533" />
         <entry key="app/src/main/res/layout/dialog_quize_rules.xml" value="0.5" />

@@ -3,35 +3,43 @@ package com.app.colorsofgujarat.ui.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.openBrowser
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.databinding.ActivityQuizAndContestWinnerBinding
 import com.app.colorsofgujarat.pojo.QuizAndContestRunningResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
 import com.bumptech.glide.Glide
 
-class QuizAndContestWinnerActivity : ExtendedToolbarActivity() {
+class QuizAndContestWinnerActivity : AppCompatActivity() {
 
     private var qid = ""
     private var browserURL = ""
     private lateinit var settingsViewModel: QuizAndContestViewModel
     private lateinit var binding: ActivityQuizAndContestWinnerBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_quiz_and_contest_winner
+//    override val layoutId: Int
+//        get() = R.layout.activity_quiz_and_contest_winner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityQuizAndContestWinnerBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.quiz_and_contest))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.quiz_and_contest)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.quiz_and_contest))
 
         qid = intent.getStringExtra(AppConstants.ID)!!
 

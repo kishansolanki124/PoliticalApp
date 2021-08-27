@@ -6,31 +6,40 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.getUserSelectedDistrictIndex
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.databinding.ActivityUpdateProfileBinding
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 
-class UpdateProfileActivity : ExtendedToolbarActivity() {
+class UpdateProfileActivity : AppCompatActivity() {
 
     private var districtId = ""
     private lateinit var settingsViewModel: SettingsViewModel
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var binding: ActivityUpdateProfileBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_update_profile
+//    override val layoutId: Int
+//        get() = R.layout.activity_update_profile
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
-        setToolbarTitle(getString(R.string.Update_Profile))
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.Update_Profile)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.Update_Profile))
 
         binding.commonToolbar.abLayout.setBackgroundResource(android.R.color.transparent)
 

@@ -2,12 +2,14 @@ package com.app.colorsofgujarat.ui.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.NewsCommentAdapter
 import com.app.colorsofgujarat.apputils.EndlessRecyclerOnScrollListener
+import com.app.colorsofgujarat.apputils.hideKeyboard
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
 import com.app.colorsofgujarat.databinding.ActivityGovtWorkAllCommentBinding
@@ -15,7 +17,7 @@ import com.app.colorsofgujarat.pojo.GovtWorkAllCommentResponse
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 
-class NewsAllCommentActivity : ExtendedToolbarActivity() {
+class NewsAllCommentActivity : AppCompatActivity() {
 
     private var totalRecords = 0
     private var loading = false
@@ -27,16 +29,26 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
     private lateinit var binding: ActivityGovtWorkAllCommentBinding
 
 
-    override val layoutId: Int
-        get() = R.layout.activity_govt_work_all_comment
+//    override val layoutId: Int
+//        get() = R.layout.activity_govt_work_all_comment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding =  ActivityGovtWorkAllCommentBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.latest_news)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
 
         nid = intent.getStringExtra(AppConstants.ID)!!
 
-        setToolbarTitle(getString(R.string.latest_news))
+        //setToolbarTitle(getString(R.string.latest_news))
         initList()
 
         govtWorkViewModel = ViewModelProvider(this).get(GovtWorkViewModel::class.java)

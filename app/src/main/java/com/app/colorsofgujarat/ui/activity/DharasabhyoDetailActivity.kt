@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -15,10 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.apputils.SPreferenceManager
-import com.app.colorsofgujarat.apputils.isConnected
-import com.app.colorsofgujarat.apputils.showProgressDialog
-import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.apputils.*
 import com.app.colorsofgujarat.databinding.ActivityDharasabhyoDetailBinding
 import com.app.colorsofgujarat.pojo.MLADetailResponse
 import com.app.colorsofgujarat.pojo.MLAListResponse
@@ -30,7 +28,7 @@ import com.app.colorsofgujarat.viewmodel.MLAViewModel
 import com.bumptech.glide.Glide
 
 
-class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
+class DharasabhyoDetailActivity : AppCompatActivity() {
 
     private lateinit var viewPagerShraddhanjaliAdapter: ViewPagerShraddhanjaliAdapter
     private lateinit var viewPagerWith2PageAdapter: ViewPagerWith2PageAdapter
@@ -43,14 +41,24 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
     private lateinit var binding: ActivityDharasabhyoDetailBinding
 
 
-    override val layoutId: Int
-        get() = R.layout.activity_dharasabhyo_detail
+//    override val layoutId: Int
+//        get() = R.layout.activity_dharasabhyo_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDharasabhyoDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.dharasabhyo))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.dharasabhyo)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.dharasabhyo))
 
         govMla = intent.getSerializableExtra(AppConstants.MLA) as MLAListResponse.GovMla
 

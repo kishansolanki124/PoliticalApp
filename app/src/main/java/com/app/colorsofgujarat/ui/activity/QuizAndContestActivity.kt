@@ -3,10 +3,12 @@ package com.app.colorsofgujarat.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.QuizAndContestAdapter
+import com.app.colorsofgujarat.apputils.hideKeyboard
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.shareIntent
 import com.app.colorsofgujarat.apputils.showSnackBar
@@ -14,22 +16,32 @@ import com.app.colorsofgujarat.databinding.ActivityQuizAndContestBinding
 import com.app.colorsofgujarat.pojo.QuizAndContestResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
 
-class QuizAndContestActivity : ExtendedToolbarActivity() {
+class QuizAndContestActivity : AppCompatActivity() {
 
     private lateinit var govtWorkNewsAdapter: QuizAndContestAdapter
     private var startPage = 0
     private lateinit var settingsViewModel: QuizAndContestViewModel
     private lateinit var binding: ActivityQuizAndContestBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_quiz_and_contest
+//    override val layoutId: Int
+//        get() = R.layout.activity_quiz_and_contest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityQuizAndContestBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.quiz_and_contest))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.que_suggestion)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.quiz_and_contest))
         setupList()
 
         settingsViewModel = ViewModelProvider(this).get(QuizAndContestViewModel::class.java)

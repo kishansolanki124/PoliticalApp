@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
@@ -18,19 +19,30 @@ import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.ContactUsResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 
-class ContactUsActivity : ExtendedToolbarActivity() {
+class ContactUsActivity : AppCompatActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var binding: ActivityContactUsBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_contact_us
+//    override val layoutId: Int
+//        get() = R.layout.activity_contact_us
 
     @SuppressLint("QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding  = ActivityContactUsBinding.inflate(layoutInflater)
-        setToolbarTitle(getString(R.string.Contact_Us))
+        val view = binding.root
+        setContentView(view)
+
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.Contact_Us)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+
+        //setToolbarTitle(getString(R.string.Contact_Us))
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
         settingsViewModel.contactUs().observe(this, {

@@ -2,6 +2,7 @@ package com.app.colorsofgujarat.ui.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.colorsofgujarat.R
@@ -11,7 +12,7 @@ import com.app.colorsofgujarat.databinding.ActivityNotificationBinding
 import com.app.colorsofgujarat.pojo.NotificationResponse
 import com.app.colorsofgujarat.viewmodel.UserAdviseViewModel
 
-class NotificationActivity : ExtendedToolbarActivity() {
+class NotificationActivity : AppCompatActivity() {
 
     private lateinit var govtWorkNewsAdapter: NotificationAdapter
     private var totalRecords = 0
@@ -20,14 +21,23 @@ class NotificationActivity : ExtendedToolbarActivity() {
     private lateinit var govtWorkViewModel: UserAdviseViewModel
     private lateinit var binding: ActivityNotificationBinding
 
-    override val layoutId: Int
-        get() = R.layout.activity_notification
+//    override val layoutId: Int
+//        get() = R.layout.activity_notification
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        setToolbarTitle(getString(R.string.notification))
+        binding.commonToolbar.tvTitle.visibility = View.VISIBLE
+        binding.commonToolbar.tvTitle.text = getString(R.string.notification)
+        title = ""
+        binding.commonToolbar.ibBack.setOnClickListener {
+            hideKeyboard(this)
+            onBackPressed()
+        }
+        //setToolbarTitle(getString(R.string.notification))
         setupList()
 
         govtWorkViewModel = ViewModelProvider(this).get(UserAdviseViewModel::class.java)
