@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityLivePollRunningBinding
 import com.app.colorsofgujarat.pojo.GiveMLARatingResponse
 import com.app.colorsofgujarat.pojo.LivePollDetailResponse
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
@@ -35,7 +36,6 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
-import kotlinx.android.synthetic.main.activity_live_poll_running.*
 import java.util.*
 
 class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedListener {
@@ -46,7 +46,8 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
     private var livePollDetailResponse: LivePollDetailResponse? = null
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
-    
+    private lateinit var binding: ActivityLivePollRunningBinding
+
     private val showButton: Boolean by lazy {
         // runs on first access of messageView
         intent.getBooleanExtra(AppConstants.SHOW_SUBMIT, false)
@@ -57,28 +58,29 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLivePollRunningBinding.inflate(layoutInflater)
 
         qid = intent.getStringExtra(AppConstants.ID)!!
 
         if (showButton) {
-            btSubmitLivePOllAnswer.visibility = View.VISIBLE
-            tvGive_rate_get_10_point.visibility = View.VISIBLE
+            binding.btSubmitLivePOllAnswer.visibility = View.VISIBLE
+            binding.tvGiveRateGet10Point.visibility = View.VISIBLE
         } else {
-            btSubmitLivePOllAnswer.visibility = View.INVISIBLE
-            tvGive_rate_get_10_point.visibility = View.INVISIBLE
+            binding.btSubmitLivePOllAnswer.visibility = View.INVISIBLE
+            binding.tvGiveRateGet10Point.visibility = View.INVISIBLE
         }
 
         setToolbarTitle(getString(R.string.live_poll))
         setupPointText()
 
-        btSubmitLivePOllAnswer.setOnClickListener {
+        binding.btSubmitLivePOllAnswer.setOnClickListener {
             val index: Int =
-                rgLivePollRunning.indexOfChild(findViewById(rgLivePollRunning.checkedRadioButtonId))
+                binding.rgLivePollRunning.indexOfChild(findViewById(binding.rgLivePollRunning.checkedRadioButtonId))
 
             if (index != -1) {
                 if (isConnected(this)) {
-                    btSubmitLivePOllAnswer.visibility = View.INVISIBLE
-                    pbSubmitLivePOllAnswer.visibility = View.VISIBLE
+                    binding.btSubmitLivePOllAnswer.visibility = View.INVISIBLE
+                    binding.pbSubmitLivePOllAnswer.visibility = View.VISIBLE
                     settingsViewModel.addLivePollAnswer(
                         qid,
                         SPreferenceManager.getInstance(this).session,
@@ -103,8 +105,8 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         })
 
         if (isConnected(this)) {
-            cvQuizAndContestRunning.visibility = View.GONE
-            pbQuizAndContestRunning.visibility = View.VISIBLE
+            binding.cvQuizAndContestRunning.visibility = View.GONE
+            binding.pbQuizAndContestRunning.visibility = View.VISIBLE
             settingsViewModel.getLivePollDetail(
                 qid,
                 SPreferenceManager.getInstance(this).session
@@ -128,7 +130,7 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.text = greenText
+        binding.tvGiveRateGet10Point.text = greenText
 
 //        val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
         val yellowText = SpannableString(getPollPoints())
@@ -138,51 +140,51 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        tvGive_rate_get_10_point.append(yellowText)
+        binding.tvGiveRateGet10Point.append(yellowText)
 
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
         thirdText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.append(thirdText)
+        binding.tvGiveRateGet10Point.append(thirdText)
     }
 
     private fun setupChart() {
-        chart.description.isEnabled = false
-        chart.setExtraOffsets(0f, 10f, 15f, 5f)
+        binding.chart.description.isEnabled = false
+        binding.chart.setExtraOffsets(0f, 10f, 15f, 5f)
 
-        chart.dragDecelerationFrictionCoef = 0.95f
-
-        //chart.setCenterTextTypeface(tfLight);
-        //chart.setCenterText(generateCenterSpannableText());
-
-        //chart.setDrawHoleEnabled(true);
-        //chart.setHoleColor(Color.WHITE);
-
+        binding.chart.dragDecelerationFrictionCoef = 0.95f
 
         //chart.setCenterTextTypeface(tfLight);
         //chart.setCenterText(generateCenterSpannableText());
 
         //chart.setDrawHoleEnabled(true);
         //chart.setHoleColor(Color.WHITE);
-        chart.setTransparentCircleColor(Color.WHITE)
-        chart.setTransparentCircleAlpha(110)
+
+
+        //chart.setCenterTextTypeface(tfLight);
+        //chart.setCenterText(generateCenterSpannableText());
+
+        //chart.setDrawHoleEnabled(true);
+        //chart.setHoleColor(Color.WHITE);
+        binding.chart.setTransparentCircleColor(Color.WHITE)
+        binding.chart.setTransparentCircleAlpha(110)
 
         //chart.setHoleRadius(58f);
 
         //chart.setHoleRadius(58f);
-        chart.transparentCircleRadius = 61f
+        binding.chart.transparentCircleRadius = 61f
 
         //chart.setDrawCenterText(true);
 
 
         //chart.setDrawCenterText(true);
-        chart.rotationAngle = 0f
+        binding.chart.rotationAngle = 0f
         // enable rotation of the chart by touch
         // enable rotation of the chart by touch
-        chart.isRotationEnabled = true
-        chart.isHighlightPerTapEnabled = true
+        binding.chart.isRotationEnabled = true
+        binding.chart.isHighlightPerTapEnabled = true
 
         // chart.setUnit(" €");
         // chart.setDrawUnitsInChart(true);
@@ -193,7 +195,7 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         // chart.setDrawUnitsInChart(true);
 
         // add a selection listener
-        chart.setOnChartValueSelectedListener(this)
+        binding.chart.setOnChartValueSelectedListener(this)
 
         //seekBarX.setProgress(4);
         //seekBarY.setProgress(10);
@@ -201,11 +203,11 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
         //seekBarX.setProgress(4);
         //seekBarY.setProgress(10);
-        chart.animateY(1400, Easing.EaseInOutQuad)
+        binding.chart.animateY(1400, Easing.EaseInOutQuad)
         // chart.spin(2000, 0, 360);
 
         // chart.spin(2000, 0, 360);
-        val l = chart.legend
+        val l = binding.chart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l.orientation = Legend.LegendOrientation.VERTICAL
@@ -215,13 +217,13 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         l.yOffset = 0f
 
         // entry label styling
-        chart.setEntryLabelColor(Color.WHITE)
+        binding.chart.setEntryLabelColor(Color.WHITE)
         //chart.setEntryLabelTypeface(tfRegular);
         //chart.setEntryLabelTypeface(tfRegular);
-        chart.setEntryLabelTextSize(12f)
+        binding.chart.setEntryLabelTextSize(12f)
 
-        chart.isDrawHoleEnabled = false //remove center area
-        chart.setDrawEntryLabels(false)//hide text in chart (label text)
+        binding.chart.isDrawHoleEnabled = false //remove center area
+        binding.chart.setDrawEntryLabels(false)//hide text in chart (label text)
         setData()
     }
 
@@ -281,11 +283,11 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         data.setValueTextSize(11f)
         data.setValueTextColor(Color.WHITE)
         //data.setValueTypeface(tfLight);
-        chart.data = data
+        binding.chart.data = data
 
         // undo all highlights
-        chart.highlightValues(null)
-        chart.invalidate()
+        binding.chart.highlightValues(null)
+        binding.chart.invalidate()
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
@@ -303,11 +305,11 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
     private fun handleAnswerResponse(commonResponse: GiveMLARatingResponse) {
         if (commonResponse.status == "1") {
-            btSubmitLivePOllAnswer.visibility = View.VISIBLE
-            pbSubmitLivePOllAnswer.visibility = View.GONE
-            btSubmitLivePOllAnswer.visibility = View.INVISIBLE
-            tvGive_rate_get_10_point.visibility = View.INVISIBLE
-            tvAnswerSubmitted.visibility = View.VISIBLE
+            binding.btSubmitLivePOllAnswer.visibility = View.VISIBLE
+            binding.pbSubmitLivePOllAnswer.visibility = View.GONE
+            binding.btSubmitLivePOllAnswer.visibility = View.INVISIBLE
+            binding.tvGiveRateGet10Point.visibility = View.INVISIBLE
+            binding.tvAnswerSubmitted.visibility = View.VISIBLE
             setUserPoints(commonResponse.user_points)
             showAlertDialog(commonResponse.message)
 
@@ -319,8 +321,8 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
     }
 
     private fun handleResponse(quizAndContestRunningResponse: LivePollDetailResponse?) {
-        pbQuizAndContestRunning.visibility = View.GONE
-        cvQuizAndContestRunning.visibility = View.VISIBLE
+        binding.pbQuizAndContestRunning.visibility = View.GONE
+        binding.cvQuizAndContestRunning.visibility = View.VISIBLE
 
         if (null != quizAndContestRunningResponse) {
             setupViews(quizAndContestRunningResponse)
@@ -331,7 +333,7 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
         livePollDetailResponse = quizAndContestRunningResponse
         setupChart()
 
-        tvLivePollQuestion.text = quizAndContestRunningResponse.poll[0].poll_question
+        binding.tvLivePollQuestion.text = quizAndContestRunningResponse.poll[0].poll_question
 
 //        rbExcellentLivePollRunning.text =
 //            quizAndContestRunningResponse.poll[0].poll_options[0].option_name
@@ -383,7 +385,7 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
                 RadioGroup.LayoutParams.WRAP_CONTENT,
                 RadioGroup.LayoutParams.WRAP_CONTENT
             )
-            rgLivePollRunning.addView(radioButton, rprms)
+            binding.rgLivePollRunning.addView(radioButton, rprms)
 
             radioButton.setOnCheckedChangeListener { _, b ->
                 if (b) {
@@ -403,12 +405,12 @@ class LivePollRunningActivity : ExtendedToolbarActivity(), OnChartValueSelectedL
 
         if (quizAndContestRunningResponse.poll[0].user_rating.isNotEmpty()) {
             //answer already submitted
-            btSubmitLivePOllAnswer.visibility = View.INVISIBLE
-            tvGive_rate_get_10_point.visibility = View.INVISIBLE
-            tvAnswerSubmitted.visibility = View.VISIBLE
+            binding.btSubmitLivePOllAnswer.visibility = View.INVISIBLE
+            binding.tvGiveRateGet10Point.visibility = View.INVISIBLE
+            binding.tvAnswerSubmitted.visibility = View.VISIBLE
         }
 
-        ivLivePollShare.setOnClickListener {
+        binding.ivLivePollShare.setOnClickListener {
             shareIntent(
                 "Participate in Live Poll and Win Prizes:\n\n" +
                         quizAndContestRunningResponse.poll[0].poll_question,

@@ -19,12 +19,12 @@ import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.NewsCommentAdapter
 import com.app.colorsofgujarat.adapter.NewsDetailsImageAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityNewsDetailBinding
 import com.app.colorsofgujarat.pojo.GiveUserRatingToGovtWorkResponse
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
 import com.app.colorsofgujarat.pojo.NewsDetailResponse
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
-import kotlinx.android.synthetic.main.activity_news_detail.*
 import java.io.Serializable
 
 class NewsDetailActivity : ExtendedToolbarActivity() {
@@ -35,13 +35,14 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
     private var nid = ""
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
+    private lateinit var binding: ActivityNewsDetailBinding
 
     override val layoutId: Int
         get() = R.layout.activity_news_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding = ActivityNewsDetailBinding.inflate(layoutInflater)
         nid = intent.getStringExtra(AppConstants.ID)!!
 
         setToolbarTitle(getString(R.string.latest_news))
@@ -58,8 +59,8 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            pbNewsDetail.visibility = View.VISIBLE
-            nsvGovtWorkDetail.visibility = View.GONE
+            binding.pbNewsDetail.visibility = View.VISIBLE
+            binding.nsvGovtWorkDetail.visibility = View.GONE
             govtWorkViewModel.getNewsDetail(nid)
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -84,7 +85,7 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        tvGive_opinion_get_10_point.append(yellowText)
+        binding.tvGiveOpinionGet10Point.append(yellowText)
 
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
         thirdText.setSpan(
@@ -92,7 +93,7 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        tvGive_opinion_get_10_point.append(thirdText)
+        binding.tvGiveOpinionGet10Point.append(thirdText)
 
         if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
             setupRepeatableBannerAd(
@@ -104,8 +105,8 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(govtWorkDetailResponse: NewsDetailResponse?) {
-        pbNewsDetail.visibility = View.GONE
-        nsvGovtWorkDetail.visibility = View.VISIBLE
+        binding.pbNewsDetail.visibility = View.GONE
+        binding.nsvGovtWorkDetail.visibility = View.VISIBLE
         if (null != govtWorkDetailResponse) {
             setupViews(govtWorkDetailResponse)
             addItems(govtWorkDetailResponse.user_comment)
@@ -116,23 +117,23 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
 
     private fun setupViews(govtWorkDetailResponse: NewsDetailResponse) {
 
-        tvViewAllComment.setOnClickListener {
+        binding.tvViewAllComment.setOnClickListener {
             startActivity(
                 Intent(this, NewsAllCommentActivity::class.java)
                     .putExtra(AppConstants.ID, nid)
             )
         }
 
-        btSubmitComment.setOnClickListener {
-            if (!TextUtils.isEmpty(etUserComment.text.toString())) {
+        binding.btSubmitComment.setOnClickListener {
+            if (!TextUtils.isEmpty(binding.etUserComment.text.toString())) {
                 if (isConnected(this)) {
                     hideKeyboard(this)
-                    pbComment.visibility = View.VISIBLE
-                    btSubmitComment.visibility = View.INVISIBLE
+                    binding.pbComment.visibility = View.VISIBLE
+                    binding.btSubmitComment.visibility = View.INVISIBLE
                     govtWorkViewModel.addNewsComment(
                         nid,
                         SPreferenceManager.getInstance(this).session,
-                        etUserComment.text.toString()
+                        binding.etUserComment.text.toString()
                     )
                 } else {
                     showSnackBar(getString(R.string.no_internet))
@@ -142,7 +143,7 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
             }
         }
 
-        ivShareNews.setOnClickListener {
+        binding.ivShareNews.setOnClickListener {
             shareIntent(
                 govtWorkDetailResponse.news_detail[0].name,
                 govtWorkDetailResponse.news_detail[0].up_pro_img,
@@ -164,9 +165,9 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
 //            .load(govtWorkDetailResponse.news_detail[0].up_pro_img)
 //            .into(ivNewsDetail)
 
-        tvNewsDetailTitle.text = govtWorkDetailResponse.news_detail[0].name
+        binding.tvNewsDetailTitle.text = govtWorkDetailResponse.news_detail[0].name
 
-        tvNewsDetailDesc.text = HtmlCompat.fromHtml(
+        binding.tvNewsDetailDesc.text = HtmlCompat.fromHtml(
             govtWorkDetailResponse.news_detail[0].description,
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
@@ -183,12 +184,12 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
 
         }
         adapter.setItem(imageList)
-        newsDetailsViewpager.adapter = adapter
+        binding.newsDetailsViewpager.adapter = adapter
     }
 
     private fun initList() {
         layoutManager = LinearLayoutManager(this)
-        rvComments.layoutManager = layoutManager
+        binding.rvComments.layoutManager = layoutManager
 
         govtWorkNewsAdapter = NewsCommentAdapter(
             {
@@ -197,23 +198,23 @@ class NewsDetailActivity : ExtendedToolbarActivity() {
                 //browserIntent(this, it.website!!)
             }
         )
-        rvComments.adapter = govtWorkNewsAdapter
+        binding.rvComments.adapter = govtWorkNewsAdapter
     }
 
     private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>) {
         if (userComment.isNotEmpty()) {
-            tvViewAllComment.visibility = View.VISIBLE
+            binding.tvViewAllComment.visibility = View.VISIBLE
             govtWorkNewsAdapter.setItem(userComment)
         } else {
-            tvViewAllComment.visibility = View.GONE
+            binding.tvViewAllComment.visibility = View.GONE
         }
     }
 
     private fun handleResponseOfNewComment(giveUserRatingToGovtWorkResponse: GiveUserRatingToGovtWorkResponse?) {
-        btSubmitComment.visibility = View.VISIBLE
-        pbComment.visibility = View.GONE
+        binding.btSubmitComment.visibility = View.VISIBLE
+        binding.pbComment.visibility = View.GONE
         if (null != giveUserRatingToGovtWorkResponse) {
-            etUserComment.setText("")
+            binding.etUserComment.setText("")
             govtWorkNewsAdapter.reset()
             addItems(giveUserRatingToGovtWorkResponse.comment_list)
             setUserPoints(giveUserRatingToGovtWorkResponse.user_points)

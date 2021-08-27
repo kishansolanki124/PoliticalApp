@@ -14,21 +14,27 @@ import com.app.colorsofgujarat.BuildConfig
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.IntroAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityIntroBinding
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_intro.*
 import java.util.*
 
 class IntroActivity : AppCompatActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
+    private lateinit var binding: ActivityIntroBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intro)
+        //setContentView(R.layout.activity_intro)
 
-        btGetStarted.setOnClickListener {
+        binding = ActivityIntroBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+
+        binding.btGetStarted.setOnClickListener {
             openHome()
         }
 
@@ -46,9 +52,9 @@ class IntroActivity : AppCompatActivity() {
             browserIntent(this, it.url)
         }
         adapter.setItem(homeBanner)
-        introViewpager.adapter = adapter
+        binding.introViewpager.adapter = adapter
 
-        TabLayoutMediator(introTabLayout, introViewpager as ViewPager2) { _, _ ->
+        TabLayoutMediator(binding.introTabLayout, binding.introViewpager) { _, _ ->
         }.attach()
 
         var currentPage = 0
@@ -58,7 +64,7 @@ class IntroActivity : AppCompatActivity() {
             if (currentPage == homeBanner.size) {
                 currentPage = 0
             }
-            introViewpager.setCurrentItem(currentPage++, true)
+            binding.introViewpager.setCurrentItem(currentPage++, true)
         }
 
         Timer().schedule(object : TimerTask() {
@@ -67,7 +73,8 @@ class IntroActivity : AppCompatActivity() {
             }
         }, 2000, 3500)
 
-        introViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.introViewpager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 currentPage = position
@@ -77,7 +84,7 @@ class IntroActivity : AppCompatActivity() {
 
     private fun fetchSettings() {
         if (isConnected(this)) {
-            pbIntro.visibility = View.VISIBLE
+            binding.pbIntro.visibility = View.VISIBLE
             settingsViewModel.getSettings("")
         } else {
             showSnackBar(getString(R.string.no_internet), this)
@@ -94,7 +101,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun handleResponse(settingsResponse: SettingsResponse?) {
-        pbIntro.visibility = View.GONE
+        binding.pbIntro.visibility = View.GONE
 
         if (null != settingsResponse) {
             SPreferenceManager.getInstance(this).saveSettings(settingsResponse)

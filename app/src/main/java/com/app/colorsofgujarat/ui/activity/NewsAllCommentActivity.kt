@@ -10,10 +10,10 @@ import com.app.colorsofgujarat.adapter.NewsCommentAdapter
 import com.app.colorsofgujarat.apputils.EndlessRecyclerOnScrollListener
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityGovtWorkAllCommentBinding
 import com.app.colorsofgujarat.pojo.GovtWorkAllCommentResponse
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
-import kotlinx.android.synthetic.main.activity_govt_work_all_comment.*
 
 class NewsAllCommentActivity : ExtendedToolbarActivity() {
 
@@ -24,12 +24,15 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
     private lateinit var govtWorkNewsAdapter: NewsCommentAdapter
     private lateinit var govtWorkViewModel: GovtWorkViewModel
     private var nid = ""
+    private lateinit var binding: ActivityGovtWorkAllCommentBinding
+
 
     override val layoutId: Int
         get() = R.layout.activity_govt_work_all_comment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding =  ActivityGovtWorkAllCommentBinding.inflate(layoutInflater)
 
         nid = intent.getStringExtra(AppConstants.ID)!!
 
@@ -44,8 +47,8 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
 
         if (isConnected(this)) {
             loading = true
-            pbNewsDetail.visibility = View.VISIBLE
-            rvComments.visibility = View.GONE
+            binding.pbNewsDetail.visibility = View.VISIBLE
+            binding.rvComments.visibility = View.GONE
             govtWorkViewModel.getNewsComments(nid, pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -54,8 +57,8 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
 
     private fun handleResponse(govtWorkDetailResponse: GovtWorkAllCommentResponse) {
         loading = false
-        pbNewsDetail.visibility = View.GONE
-        rvComments.visibility = View.VISIBLE
+        binding.pbNewsDetail.visibility = View.GONE
+        binding.rvComments.visibility = View.VISIBLE
         when {
             !govtWorkDetailResponse.user_comment.isNullOrEmpty() -> {
                 totalRecords = govtWorkDetailResponse.total_records
@@ -73,9 +76,9 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
 
     private fun initList() {
         layoutManager = LinearLayoutManager(this)
-        rvComments.layoutManager = layoutManager
+        binding.rvComments.layoutManager = layoutManager
 
-        rvComments.addOnScrollListener(object :
+        binding.rvComments.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -95,7 +98,7 @@ class NewsAllCommentActivity : ExtendedToolbarActivity() {
                 //browserIntent(this, it.website!!)
             }
         )
-        rvComments.adapter = govtWorkNewsAdapter
+        binding.rvComments.adapter = govtWorkNewsAdapter
     }
 
     private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>?) {

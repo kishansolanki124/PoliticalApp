@@ -7,19 +7,21 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityTncBinding
 import com.app.colorsofgujarat.pojo.StaticPageResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
-import kotlinx.android.synthetic.main.activity_tnc.*
 
 class TNCActivity : ExtendedToolbarActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
+    private lateinit var binding: ActivityTncBinding
 
     override val layoutId: Int
         get() = R.layout.activity_tnc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityTncBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.Terms_Of_Use))
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
@@ -29,8 +31,8 @@ class TNCActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            tvTNC.visibility = View.GONE
-            pbTNC.visibility = View.VISIBLE
+            binding.tvTNC.visibility = View.GONE
+            binding.pbTNC.visibility = View.VISIBLE
             settingsViewModel.getStaticPages()
         } else {
             showSnackBar(getString(R.string.no_internet), this)
@@ -38,12 +40,12 @@ class TNCActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(staticPageResponse: StaticPageResponse?) {
-        pbTNC.visibility = View.GONE
-        tvTNC.visibility = View.VISIBLE
+        binding.pbTNC.visibility = View.GONE
+        binding.tvTNC.visibility = View.VISIBLE
         if (null != staticPageResponse) {
             for (item in staticPageResponse.staticpage) {
                 if (item.name == "Terms & Conditions") {
-                    tvTNC.text = HtmlCompat.fromHtml(
+                    binding.tvTNC.text = HtmlCompat.fromHtml(
                         item.description,
                         HtmlCompat.FROM_HTML_MODE_LEGACY
                     )

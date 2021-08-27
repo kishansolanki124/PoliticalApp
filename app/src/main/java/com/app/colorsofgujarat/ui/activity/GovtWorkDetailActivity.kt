@@ -21,12 +21,12 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.NewsCommentAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityGovtWorkDetailBinding
 import com.app.colorsofgujarat.pojo.GiveUserRatingToGovtWorkResponse
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_govt_work_detail.*
 
 class GovtWorkDetailActivity : ExtendedToolbarActivity() {
 
@@ -42,12 +42,14 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     private var rating = 0
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
+    private lateinit var binding: ActivityGovtWorkDetailBinding
 
     override val layoutId: Int
         get() = R.layout.activity_govt_work_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityGovtWorkDetailBinding.inflate(layoutInflater)
 
         gid = intent.getStringExtra(AppConstants.GID)!!
 
@@ -69,8 +71,8 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            pbNewsDetail.visibility = View.VISIBLE
-            nsvGovtWorkDetail.visibility = View.GONE
+            binding.pbNewsDetail.visibility = View.VISIBLE
+            binding.nsvGovtWorkDetail.visibility = View.GONE
             govtWorkViewModel.getGovtWorkDetail(gid, SPreferenceManager.getInstance(this).session)
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -86,8 +88,8 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.text = greenText
-        tvGive_opinion_get_10_point.text = greenText2
+        binding.tvGiveOpinionGet10Point.text = greenText
+        binding.tvGiveOpinionGet10Point.text = greenText2
 
         //val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
 
@@ -98,16 +100,16 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        tvGive_rate_get_10_point.append(yellowText)
-        tvGive_opinion_get_10_point.append(yellowText)
+        binding.tvGiveOpinionGet10Point.append(yellowText)
+        binding.tvGiveOpinionGet10Point.append(yellowText)
 
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
         thirdText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.append(thirdText)
-        tvGive_opinion_get_10_point.append(thirdText)
+        binding.tvGiveOpinionGet10Point.append(thirdText)
+        binding.tvGiveOpinionGet10Point.append(thirdText)
 
         if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
             setupRepeatableBannerAd(
@@ -119,10 +121,10 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponseOfNewComment(giveUserRatingToGovtWorkResponse: GiveUserRatingToGovtWorkResponse?) {
-        btSubmitComment.visibility = View.VISIBLE
-        pbComment.visibility = View.GONE
+        binding.btSubmitComment.visibility = View.VISIBLE
+        binding.pbComment.visibility = View.GONE
         if (null != giveUserRatingToGovtWorkResponse) {
-            etUserComment.setText("")
+            binding.etUserComment.setText("")
             govtWorkNewsAdapter.reset()
             addItems(giveUserRatingToGovtWorkResponse.comment_list)
             setUserPoints(giveUserRatingToGovtWorkResponse.user_points)
@@ -131,25 +133,25 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponseOfRating(giveUserRatingToGovtWorkResponse: GiveUserRatingToGovtWorkResponse?) {
-        pbRateGovtWork.visibility = View.GONE
-        btSubmitRatingOfGovtWorkDetail.visibility = View.VISIBLE
+        binding.pbRateGovtWork.visibility = View.GONE
+        binding.btSubmitRatingOfGovtWorkDetail.visibility = View.VISIBLE
 
         if (null != giveUserRatingToGovtWorkResponse) {
             showAlertDialog(giveUserRatingToGovtWorkResponse.message)
             setUserPoints(giveUserRatingToGovtWorkResponse.user_points)
             ratingDone = true
             //rating of this article is done now
-            llRatingSubmit.visibility = View.GONE
-            tvYourRating.text = getString(R.string.your_ratings)
+            binding.llRatingSubmit.visibility = View.GONE
+            binding.tvYourRating.text = getString(R.string.your_ratings)
             refreshPage = true
             averageRating = giveUserRatingToGovtWorkResponse.average_rating
-            tvRateReceived.text = giveUserRatingToGovtWorkResponse.average_rating
+            binding.tvRateReceived.text = giveUserRatingToGovtWorkResponse.average_rating
         }
     }
 
     private fun handleResponse(govtWorkDetailResponse: GovtWorkDetailResponse?) {
-        pbNewsDetail.visibility = View.GONE
-        nsvGovtWorkDetail.visibility = View.VISIBLE
+        binding.pbNewsDetail.visibility = View.GONE
+        binding.nsvGovtWorkDetail.visibility = View.VISIBLE
         if (null != govtWorkDetailResponse) {
             setupViews(govtWorkDetailResponse)
             addItems(govtWorkDetailResponse.user_comment)
@@ -161,12 +163,12 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
     private fun setupViews(govtWorkDetailResponse: GovtWorkDetailResponse) {
         Glide.with(this)
             .load(govtWorkDetailResponse.gov_work_detail[0].up_pro_img)
-            .into(ivNewsDetail)
+            .into(binding.ivNewsDetail)
 
-        tvRateReceived.text = govtWorkDetailResponse.gov_work_detail[0].average_rating
-        tvNewsDetailTitle.text = govtWorkDetailResponse.gov_work_detail[0].name
+        binding.tvRateReceived.text = govtWorkDetailResponse.gov_work_detail[0].average_rating
+        binding.tvNewsDetailTitle.text = govtWorkDetailResponse.gov_work_detail[0].name
 
-        tvNewsDetailDesc.text = HtmlCompat.fromHtml(
+        binding.tvNewsDetailDesc.text = HtmlCompat.fromHtml(
             govtWorkDetailResponse.gov_work_detail[0].description,
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
@@ -178,39 +180,39 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
         if (govtWorkDetailResponse.gov_work_detail[0].user_rating.isEmpty()) {
             //rating is pending
             ratingDone = false
-            llRatingSubmit.visibility = View.VISIBLE
+            binding.llRatingSubmit.visibility = View.VISIBLE
         } else {
             ratingDone = true
             //rating of this article is done
-            llRatingSubmit.visibility = View.GONE
-            tvYourRating.text = getString(R.string.your_ratings)
+            binding.llRatingSubmit.visibility = View.GONE
+            binding.tvYourRating.text = getString(R.string.your_ratings)
             setupRates(govtWorkDetailResponse.gov_work_detail[0].user_rating)
         }
     }
 
     private fun setupRatings() {
 
-        tvShareGovtWork.setOnClickListener {
+        binding.tvShareGovtWork.setOnClickListener {
             shareIntent(sharableText, imageURL, this)
         }
 
-        tvViewAllComment.setOnClickListener {
+        binding.tvViewAllComment.setOnClickListener {
             startActivity(
                 Intent(this, GovtWorkAllCommentActivity::class.java)
                     .putExtra(AppConstants.GID, gid)
             )
         }
 
-        btSubmitComment.setOnClickListener {
-            if (!TextUtils.isEmpty(etUserComment.text.toString())) {
+        binding.btSubmitComment.setOnClickListener {
+            if (!TextUtils.isEmpty(binding.etUserComment.text.toString())) {
                 if (isConnected(this)) {
                     hideKeyboard(this)
-                    pbComment.visibility = View.VISIBLE
-                    btSubmitComment.visibility = View.INVISIBLE
+                    binding.pbComment.visibility = View.VISIBLE
+                    binding.btSubmitComment.visibility = View.INVISIBLE
                     govtWorkViewModel.addGovtWorkComment(
                         gid,
                         SPreferenceManager.getInstance(this).session,
-                        etUserComment.text.toString()
+                        binding.etUserComment.text.toString()
                     )
                 } else {
                     showSnackBar(getString(R.string.no_internet))
@@ -220,11 +222,11 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             }
         }
 
-        btSubmitRatingOfGovtWorkDetail.setOnClickListener {
+        binding.btSubmitRatingOfGovtWorkDetail.setOnClickListener {
             if (isConnected(this)) {
                 if (rating > 0) {
-                    btSubmitRatingOfGovtWorkDetail.visibility = View.INVISIBLE
-                    pbRateGovtWork.visibility = View.VISIBLE
+                    binding.btSubmitRatingOfGovtWorkDetail.visibility = View.INVISIBLE
+                    binding.pbRateGovtWork.visibility = View.VISIBLE
                     govtWorkViewModel.giveUserRating(
                         gid,
                         SPreferenceManager.getInstance(this).session,
@@ -236,61 +238,61 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
             }
         }
 
-        tvRate1.setOnClickListener {
+        binding.tvRate1.setOnClickListener {
             if (!ratingDone) {
                 oneStar()
             }
         }
 
-        tvRate2.setOnClickListener {
+        binding.tvRate2.setOnClickListener {
             if (!ratingDone) {
                 twoStar()
             }
         }
 
-        tvRate3.setOnClickListener {
+        binding.tvRate3.setOnClickListener {
             if (!ratingDone) {
                 threeStar()
             }
         }
 
-        tvRate4.setOnClickListener {
+        binding.tvRate4.setOnClickListener {
             if (!ratingDone) {
                 fourStar()
             }
         }
 
-        tvRate5.setOnClickListener {
+        binding.tvRate5.setOnClickListener {
             if (!ratingDone) {
                 fiveStar()
             }
         }
 
-        tvRate6.setOnClickListener {
+        binding.tvRate6.setOnClickListener {
             if (!ratingDone) {
                 sixStar()
             }
         }
 
-        tvRate7.setOnClickListener {
+        binding.tvRate7.setOnClickListener {
             if (!ratingDone) {
                 sevenStar()
             }
         }
 
-        tvRate8.setOnClickListener {
+        binding.tvRate8.setOnClickListener {
             if (!ratingDone) {
                 eightStar()
             }
         }
 
-        tvRate9.setOnClickListener {
+        binding.tvRate9.setOnClickListener {
             if (!ratingDone) {
                 nineStar()
             }
         }
 
-        tvRate10.setOnClickListener {
+        binding.tvRate10.setOnClickListener {
             if (!ratingDone) {
                 tenStar()
             }
@@ -299,128 +301,128 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
 
     private fun tenStar() {
         rating = 10
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setFilled(tvRate4)
-        setFilled(tvRate5)
-        setFilled(tvRate6)
-        setFilled(tvRate7)
-        setFilled(tvRate8)
-        setFilled(tvRate9)
-        setFilled(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setFilled(binding.tvRate4)
+        setFilled(binding.tvRate5)
+        setFilled(binding.tvRate6)
+        setFilled(binding.tvRate7)
+        setFilled(binding.tvRate8)
+        setFilled(binding.tvRate9)
+        setFilled(binding.tvRate10)
     }
 
     private fun nineStar() {
         rating = 9
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setFilled(tvRate4)
-        setFilled(tvRate5)
-        setFilled(tvRate6)
-        setFilled(tvRate7)
-        setFilled(tvRate8)
-        setFilled(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setFilled(binding.tvRate4)
+        setFilled(binding.tvRate5)
+        setFilled(binding.tvRate6)
+        setFilled(binding.tvRate7)
+        setFilled(binding.tvRate8)
+        setFilled(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun eightStar() {
         rating = 8
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setFilled(tvRate4)
-        setFilled(tvRate5)
-        setFilled(tvRate6)
-        setFilled(tvRate7)
-        setFilled(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setFilled(binding.tvRate4)
+        setFilled(binding.tvRate5)
+        setFilled(binding.tvRate6)
+        setFilled(binding.tvRate7)
+        setFilled(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun sevenStar() {
         rating = 7
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setFilled(tvRate4)
-        setFilled(tvRate5)
-        setFilled(tvRate6)
-        setFilled(tvRate7)
-        setEmpty(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setFilled(binding.tvRate4)
+        setFilled(binding.tvRate5)
+        setFilled(binding.tvRate6)
+        setFilled(binding.tvRate7)
+        setEmpty(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun sixStar() {
         rating = 6
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setFilled(tvRate4)
-        setFilled(tvRate5)
-        setFilled(tvRate6)
-        setEmpty(tvRate7)
-        setEmpty(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setFilled(binding.tvRate4)
+        setFilled(binding.tvRate5)
+        setFilled(binding.tvRate6)
+        setEmpty(binding.tvRate7)
+        setEmpty(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun fiveStar() {
         rating = 5
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setFilled(tvRate4)
-        setFilled(tvRate5)
-        setEmpty(tvRate6)
-        setEmpty(tvRate7)
-        setEmpty(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setFilled(binding.tvRate4)
+        setFilled(binding.tvRate5)
+        setEmpty(binding.tvRate6)
+        setEmpty(binding.tvRate7)
+        setEmpty(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun fourStar() {
         rating = 4
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setFilled(tvRate4)
-        setEmpty(tvRate5)
-        setEmpty(tvRate6)
-        setEmpty(tvRate7)
-        setEmpty(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setFilled(binding.tvRate4)
+        setEmpty(binding.tvRate5)
+        setEmpty(binding.tvRate6)
+        setEmpty(binding.tvRate7)
+        setEmpty(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun threeStar() {
         rating = 3
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setFilled(tvRate3)
-        setEmpty(tvRate4)
-        setEmpty(tvRate5)
-        setEmpty(tvRate6)
-        setEmpty(tvRate7)
-        setEmpty(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setFilled(binding.tvRate3)
+        setEmpty(binding.tvRate4)
+        setEmpty(binding.tvRate5)
+        setEmpty(binding.tvRate6)
+        setEmpty(binding.tvRate7)
+        setEmpty(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun twoStar() {
         rating = 2
-        setFilled(tvRate1)
-        setFilled(tvRate2)
-        setEmpty(tvRate3)
-        setEmpty(tvRate4)
-        setEmpty(tvRate5)
-        setEmpty(tvRate6)
-        setEmpty(tvRate7)
-        setEmpty(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setFilled(binding.tvRate2)
+        setEmpty(binding.tvRate3)
+        setEmpty(binding.tvRate4)
+        setEmpty(binding.tvRate5)
+        setEmpty(binding.tvRate6)
+        setEmpty(binding.tvRate7)
+        setEmpty(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun setupRates(userRating: String) {
@@ -460,21 +462,21 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
 
     private fun oneStar() {
         rating = 1
-        setFilled(tvRate1)
-        setEmpty(tvRate2)
-        setEmpty(tvRate3)
-        setEmpty(tvRate4)
-        setEmpty(tvRate5)
-        setEmpty(tvRate6)
-        setEmpty(tvRate7)
-        setEmpty(tvRate8)
-        setEmpty(tvRate9)
-        setEmpty(tvRate10)
+        setFilled(binding.tvRate1)
+        setEmpty(binding.tvRate2)
+        setEmpty(binding.tvRate3)
+        setEmpty(binding.tvRate4)
+        setEmpty(binding.tvRate5)
+        setEmpty(binding.tvRate6)
+        setEmpty(binding.tvRate7)
+        setEmpty(binding.tvRate8)
+        setEmpty(binding.tvRate9)
+        setEmpty(binding.tvRate10)
     }
 
     private fun initList() {
         layoutManager = LinearLayoutManager(this)
-        rvComments.layoutManager = layoutManager
+        binding.rvComments.layoutManager = layoutManager
 
         govtWorkNewsAdapter = NewsCommentAdapter(
             {
@@ -483,15 +485,15 @@ class GovtWorkDetailActivity : ExtendedToolbarActivity() {
                 //browserIntent(this, it.website!!)
             }
         )
-        rvComments.adapter = govtWorkNewsAdapter
+        binding.rvComments.adapter = govtWorkNewsAdapter
     }
 
     private fun addItems(userComment: ArrayList<GovtWorkDetailResponse.UserComment>?) {
         if (null != userComment && userComment.isNotEmpty()) {
-            tvViewAllComment.visibility = View.VISIBLE
+            binding.tvViewAllComment.visibility = View.VISIBLE
             govtWorkNewsAdapter.setItem(userComment)
         } else {
-            tvViewAllComment.visibility = View.GONE
+            binding.tvViewAllComment.visibility = View.GONE
         }
     }
 

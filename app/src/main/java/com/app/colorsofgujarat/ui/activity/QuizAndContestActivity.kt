@@ -10,21 +10,24 @@ import com.app.colorsofgujarat.adapter.QuizAndContestAdapter
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.shareIntent
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityQuizAndContestBinding
 import com.app.colorsofgujarat.pojo.QuizAndContestResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
-import kotlinx.android.synthetic.main.activity_quiz_and_contest.*
 
 class QuizAndContestActivity : ExtendedToolbarActivity() {
 
     private lateinit var govtWorkNewsAdapter: QuizAndContestAdapter
     private var startPage = 0
     private lateinit var settingsViewModel: QuizAndContestViewModel
+    private lateinit var binding: ActivityQuizAndContestBinding
 
     override val layoutId: Int
         get() = R.layout.activity_quiz_and_contest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityQuizAndContestBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.quiz_and_contest))
         setupList()
@@ -36,8 +39,8 @@ class QuizAndContestActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            rvPollAndSurvey.visibility = View.GONE
-            pbQuizAndContest.visibility = View.VISIBLE
+            binding.rvPollAndSurvey.visibility = View.GONE
+            binding.pbQuizAndContest.visibility = View.VISIBLE
             settingsViewModel.getQuizAndContest("0", "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -45,8 +48,8 @@ class QuizAndContestActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(quizAndContestResponse: QuizAndContestResponse) {
-        rvPollAndSurvey.visibility = View.VISIBLE
-        pbQuizAndContest.visibility = View.GONE
+        binding.rvPollAndSurvey.visibility = View.VISIBLE
+        binding.pbQuizAndContest.visibility = View.GONE
         when {
             quizAndContestResponse.quiz_list.isNotEmpty() -> {
                 addItems(quizAndContestResponse.quiz_list)
@@ -87,6 +90,6 @@ class QuizAndContestActivity : ExtendedToolbarActivity() {
             }
         )
         //govtWorkNewsAdapter.setItem(stringList)
-        rvPollAndSurvey.adapter = govtWorkNewsAdapter
+        binding.rvPollAndSurvey.adapter = govtWorkNewsAdapter
     }
 }

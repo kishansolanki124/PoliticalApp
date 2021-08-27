@@ -11,18 +11,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
-import kotlinx.android.synthetic.main.activity_display_picture.*
+import com.app.colorsofgujarat.databinding.ActivityDisplayPictureBinding
+import com.bumptech.glide.Glide
 
 class DisplayPictureActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     private var mAlbumList: ArrayList<String>? = null
     private var mSize: Int = 0
+    private lateinit var binding: ActivityDisplayPictureBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_picture)
+        binding = ActivityDisplayPictureBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         init()
     }
 
@@ -31,11 +34,11 @@ class DisplayPictureActivity : AppCompatActivity(), ViewPager.OnPageChangeListen
             intent.getSerializableExtra(AppConstants.IMAGE_LIST) as ArrayList<String>
         val pos = intent.getIntExtra(AppConstants.IMAGE_POSITION, 0)
 
-        viewPager.addOnPageChangeListener(this)
-        viewPager.adapter = PictureAdapter(this)
+        binding.viewPager.addOnPageChangeListener(this)
+        binding.viewPager.adapter = PictureAdapter(this)
         mSize = if (mAlbumList != null) mAlbumList!!.size else 0
         if (pos < mSize) {
-            viewPager.currentItem = pos
+            binding.viewPager.currentItem = pos
         }
     }
 

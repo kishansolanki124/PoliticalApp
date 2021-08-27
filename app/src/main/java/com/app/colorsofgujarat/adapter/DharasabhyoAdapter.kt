@@ -2,13 +2,12 @@ package com.app.colorsofgujarat.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.databinding.DharasabhyoItemBinding
 import com.app.colorsofgujarat.pojo.MLAListResponse
-import kotlinx.android.synthetic.main.dharasabhyo_item.view.*
+import com.bumptech.glide.Glide
 
 class DharasabhyoAdapter(
     private val itemClickCall: (MLAListResponse.GovMla) -> Unit,
@@ -19,12 +18,20 @@ class DharasabhyoAdapter(
     private var list: ArrayList<MLAListResponse.GovMla> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.dharasabhyo_item, parent, false)
-        return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
-        )
+//        val view =
+//            LayoutInflater.from(parent.context)
+//                .inflate(R.layout.dharasabhyo_item, parent, false)
+//        return HomeOffersViewHolder(
+//            view, itemClickCall, itemClickWeb
+//        )
+
+        val binding =
+            DharasabhyoItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return HomeOffersViewHolder(binding, itemClickCall, itemClickWeb)
     }
 
     override fun onBindViewHolder(holder: HomeOffersViewHolder, position: Int) {
@@ -44,10 +51,10 @@ class DharasabhyoAdapter(
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
-        view: View,
+        private val binding: DharasabhyoItemBinding,
         private val itemClickCall: (MLAListResponse.GovMla) -> Unit,
         private val itemClickWeb: (MLAListResponse.GovMla) -> Unit
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
 //        constructor(parent: ViewGroup) : this(
 //            LayoutInflater.from(parent.context).inflate(
@@ -62,47 +69,47 @@ class DharasabhyoAdapter(
         ) {
             with(newsPortal) {
 
-                itemView.tvMLAName.text = newsPortal.mla_name
-                itemView.tvPartyName.text = newsPortal.political_party
-                itemView.tvCityName.text = newsPortal.city
-                itemView.pbMLA.progress = newsPortal.percentage.toFloat().toInt()
-                itemView.tvPercentage.text = itemView.tvPercentage.context.getString(
+                binding.tvMLAName.text = newsPortal.mla_name
+                binding.tvPartyName.text = newsPortal.political_party
+                binding.tvCityName.text = newsPortal.city
+                binding.pbMLA.progress = newsPortal.percentage.toFloat().toInt()
+                binding.tvPercentage.text = binding.tvPercentage.context.getString(
                     R.string.percentage_,
                     newsPortal.percentage
                 )
-                itemView.tvVotesTotal.text = "Votes: " + newsPortal.votes
+                binding.tvVotesTotal.text = "Votes: " + newsPortal.votes
 
-                Glide.with(itemView.ivMLA.context)
+                Glide.with(binding.ivMLA.context)
                     .load(newsPortal.up_pro_img)
-                    .into(itemView.ivMLA)
+                    .into(binding.ivMLA)
 //
 //                if (newsPortal.name.isNullOrEmpty()) {
-//                    itemView.tvNewsPortalTitle.visibility = View.GONE
+//                    binding.tvNewsPortalTitle.visibility = View.GONE
 //                }
 //                if (newsPortal.address.isNullOrEmpty()) {
-//                    itemView.llNewsPortalAddress.visibility = View.GONE
+//                    binding.llNewsPortalAddress.visibility = View.GONE
 //                }
 //                if (newsPortal.contact_no.isNullOrEmpty()) {
-//                    itemView.llNewsPortalPhone.visibility = View.GONE
+//                    binding.llNewsPortalPhone.visibility = View.GONE
 //                }
 //                if (newsPortal.email.isNullOrEmpty()) {
-//                    itemView.llNewsPortalEmail.visibility = View.GONE
+//                    binding.llNewsPortalEmail.visibility = View.GONE
 //                }
 //                if (newsPortal.website.isNullOrEmpty()) {
-//                    itemView.llNewsPortalWebsite.visibility = View.GONE
+//                    binding.llNewsPortalWebsite.visibility = View.GONE
 //                }
 //
-//                itemView.tvNewsPortalTitle.text = newsPortal.name
-//                itemView.tvNewsPortalAddress.text = newsPortal.address
-//                itemView.tvNewsPortalPhone.text = newsPortal.contact_no
-//                itemView.tvNewsPortalEmail.text = newsPortal.email
-//                itemView.tvNewsPortalWebsite.text = newsPortal.website
+//                binding.tvNewsPortalTitle.text = newsPortal.name
+//                binding.tvNewsPortalAddress.text = newsPortal.address
+//                binding.tvNewsPortalPhone.text = newsPortal.contact_no
+//                binding.tvNewsPortalEmail.text = newsPortal.email
+//                binding.tvNewsPortalWebsite.text = newsPortal.website
 //
-                itemView.rlDharasabhyaRoot.setOnClickListener {
+                binding.rlDharasabhyaRoot.setOnClickListener {
                     itemClickCall(this)
                 }
 //
-//                itemView.ivWeb.setOnClickListener {
+//                binding.ivWeb.setOnClickListener {
 //                    itemClickWeb(this)
 //                }
             }

@@ -15,11 +15,11 @@ import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.getUserSelectedDistrictIndex
 import com.app.colorsofgujarat.apputils.showProgressDialog
+import com.app.colorsofgujarat.databinding.ActivityPollAndSurveyBinding
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.ui.fragment.PollAndSurveyFragment
 import com.app.colorsofgujarat.ui.fragment.PollAndSurveyResultFragment
-import kotlinx.android.synthetic.main.activity_poll_and_survey.*
 
 class PollAndSurveyActivity : ExtendedToolbarActivity() {
 
@@ -29,12 +29,14 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
     private var districtId = ""
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var viewPager: ViewPager
+    private lateinit var binding: ActivityPollAndSurveyBinding
 
     override val layoutId: Int
         get() = R.layout.activity_poll_and_survey
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityPollAndSurveyBinding.inflate(layoutInflater)
 
         setToolbarTitle("પોલ અને સર્વે")
         setupDistrictSpinner()
@@ -97,11 +99,11 @@ class PollAndSurveyActivity : ExtendedToolbarActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spDistrictPollAndSurvey.adapter = adapter
+        binding.spDistrictPollAndSurvey.adapter = adapter
 
-        spDistrictPollAndSurvey.setSelection(getUserSelectedDistrictIndex())
+        binding.spDistrictPollAndSurvey.setSelection(getUserSelectedDistrictIndex())
 
-        spDistrictPollAndSurvey.onItemSelectedListener =
+        binding.spDistrictPollAndSurvey.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,

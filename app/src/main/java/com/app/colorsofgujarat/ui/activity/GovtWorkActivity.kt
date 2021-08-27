@@ -13,10 +13,10 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.GovtWorkNewsAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityGovtWorkBinding
 import com.app.colorsofgujarat.pojo.GovtWorkListResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.GovtWorkViewModel
-import kotlinx.android.synthetic.main.activity_govt_work.*
 
 class GovtWorkActivity : ExtendedToolbarActivity() {
 
@@ -29,6 +29,7 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: GovtWorkNewsAdapter
+    private lateinit var binding: ActivityGovtWorkBinding
 
     override val layoutId: Int
         get() = R.layout.activity_govt_work
@@ -49,6 +50,7 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityGovtWorkBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.govt_work))
         setupList()
@@ -66,8 +68,8 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
         if (isConnected(this)) {
             pageNo = 0
             loading = true
-            pbNewsPortal.visibility = View.VISIBLE
-            rvNewsPortal.visibility = View.GONE
+            binding.pbNewsPortal.visibility = View.VISIBLE
+            binding.rvNewsPortal.visibility = View.GONE
             govtWorkViewModel.getGovtWorkList(districtId, pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -88,11 +90,11 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spDistrict.adapter = adapter
+        binding.spDistrict.adapter = adapter
 
-        spDistrict.setSelection(getUserSelectedDistrictIndex())
+        binding.spDistrict.setSelection(getUserSelectedDistrictIndex())
 
-        spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,
@@ -112,8 +114,8 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
 
     private fun handleResponse(govtWorkListResponse: GovtWorkListResponse) {
         loading = false
-        pbNewsPortal.visibility = View.GONE
-        rvNewsPortal.visibility = View.VISIBLE
+        binding.pbNewsPortal.visibility = View.GONE
+        binding.rvNewsPortal.visibility = View.VISIBLE
         when {
             govtWorkListResponse.gov_work_list.isNotEmpty() -> {
                 totalRecords = govtWorkListResponse.total_records
@@ -132,9 +134,9 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
 
     private fun setupList() {
         layoutManager = LinearLayoutManager(this)
-        rvNewsPortal.layoutManager = layoutManager
+        binding.rvNewsPortal.layoutManager = layoutManager
 
-        rvNewsPortal.addOnScrollListener(object :
+        binding.rvNewsPortal.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -162,6 +164,6 @@ class GovtWorkActivity : ExtendedToolbarActivity() {
                 shareIntent(it.name, it.up_pro_img, this)
             }
         )
-        rvNewsPortal.adapter = govtWorkNewsAdapter
+        binding.rvNewsPortal.adapter = govtWorkNewsAdapter
     }
 }

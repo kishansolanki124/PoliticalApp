@@ -11,15 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.QuizAndContestAdapter
-import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.apputils.EndlessRecyclerOnScrollListener
+import com.app.colorsofgujarat.apputils.isConnected
+import com.app.colorsofgujarat.apputils.shareIntent
+import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.FragmentQuizAndCommentBinding
 import com.app.colorsofgujarat.pojo.QuizAndContestResponse
 import com.app.colorsofgujarat.ui.activity.HomeActivity
 import com.app.colorsofgujarat.ui.activity.QuizAndContestRunningActivity
 import com.app.colorsofgujarat.ui.activity.QuizAndContestWinnerActivity
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
-import kotlinx.android.synthetic.main.fragment_quiz_and_comment.*
 
 class QuizAndContestFragment : Fragment() {
+
+    private var _binding: FragmentQuizAndCommentBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var govtWorkNewsAdapter: QuizAndContestAdapter
     private var totalRecords = 0
@@ -31,8 +37,10 @@ class QuizAndContestFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_quiz_and_comment, container, false)
+    ): View {
+        //return inflater.inflate(R.layout.fragment_quiz_and_comment, container, false)
+        _binding = FragmentQuizAndCommentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,8 +56,8 @@ class QuizAndContestFragment : Fragment() {
 
         if (isConnected(requireContext())) {
             loading = true
-            rvPollAndSurvey.visibility = View.GONE
-            pbQuizAndContest.visibility = View.VISIBLE
+            binding.rvPollAndSurvey.visibility = View.GONE
+            binding.pbQuizAndContest.visibility = View.VISIBLE
             settingsViewModel.getQuizAndContest(pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet), requireActivity())
@@ -58,8 +66,8 @@ class QuizAndContestFragment : Fragment() {
 
     private fun handleResponse(quizAndContestResponse: QuizAndContestResponse) {
         loading = false
-        rvPollAndSurvey.visibility = View.VISIBLE
-        pbQuizAndContest.visibility = View.GONE
+        binding.rvPollAndSurvey.visibility = View.VISIBLE
+        binding.pbQuizAndContest.visibility = View.GONE
         when {
             quizAndContestResponse.quiz_list.isNotEmpty() -> {
                 totalRecords = quizAndContestResponse.total_records
@@ -81,9 +89,9 @@ class QuizAndContestFragment : Fragment() {
 
     private fun setupList() {
         val layoutManager = LinearLayoutManager(requireContext())
-        rvPollAndSurvey.layoutManager = layoutManager
+        binding.rvPollAndSurvey.layoutManager = layoutManager
 
-        rvPollAndSurvey.addOnScrollListener(object :
+        binding.rvPollAndSurvey.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -117,7 +125,7 @@ class QuizAndContestFragment : Fragment() {
             }
         )
         //govtWorkNewsAdapter.setItem(stringList)
-        rvPollAndSurvey.adapter = govtWorkNewsAdapter
+        binding.rvPollAndSurvey.adapter = govtWorkNewsAdapter
     }
 
     override fun onResume() {

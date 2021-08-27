@@ -6,13 +6,13 @@ import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityWinnerNamesBinding
 import com.app.colorsofgujarat.pojo.PrizeDetailResponse
 import com.app.colorsofgujarat.viewmodel.WinnerViewModel
-import kotlinx.android.synthetic.main.activity_winner_names.*
+import com.bumptech.glide.Glide
 
 class WinnerNamesActivity : ExtendedToolbarActivity() {
 
@@ -20,9 +20,11 @@ class WinnerNamesActivity : ExtendedToolbarActivity() {
     private lateinit var settingsViewModel: WinnerViewModel
     override val layoutId: Int
         get() = R.layout.activity_winner_names
+    private lateinit var binding: ActivityWinnerNamesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityWinnerNamesBinding.inflate(layoutInflater)
 
         pid = intent.getStringExtra(AppConstants.ID)!!
 
@@ -34,8 +36,8 @@ class WinnerNamesActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            llWinnerPrizeWinner.visibility = View.GONE
-            pbWinnerPrizeWinner.visibility = View.VISIBLE
+            binding.llWinnerPrizeWinner.visibility = View.GONE
+            binding.pbWinnerPrizeWinner.visibility = View.VISIBLE
             settingsViewModel.getPrizeDetail(pid)
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -44,8 +46,8 @@ class WinnerNamesActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(prizeDetailResponse: PrizeDetailResponse?) {
-        pbWinnerPrizeWinner.visibility = View.GONE
-        llWinnerPrizeWinner.visibility = View.VISIBLE
+        binding.pbWinnerPrizeWinner.visibility = View.GONE
+        binding.llWinnerPrizeWinner.visibility = View.VISIBLE
         if (null != prizeDetailResponse) {
             setupViews(prizeDetailResponse)
         } else {
@@ -57,14 +59,14 @@ class WinnerNamesActivity : ExtendedToolbarActivity() {
     private fun setupViews(prizeDetailResponse: PrizeDetailResponse) {
         Glide.with(this)
             .load(prizeDetailResponse.prize_detail[0].winner_banner)
-            .into(ivPrizeWinner)
+            .into(binding.ivPrizeWinner)
 
-        tvPrizeWinnerList.text = HtmlCompat.fromHtml(
+        binding.tvPrizeWinnerList.text = HtmlCompat.fromHtml(
             prizeDetailResponse.prize_detail[0].prize_winner,
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
 
-        tvPrizeWinner.text =
+        binding.tvPrizeWinner.text =
             prizeDetailResponse.prize_detail[0].name1 + "\n(" + prizeDetailResponse.prize_detail[0].name2 + ")"
     }
 }

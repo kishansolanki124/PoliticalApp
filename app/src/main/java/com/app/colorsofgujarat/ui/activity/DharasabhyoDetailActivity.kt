@@ -14,12 +14,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showProgressDialog
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityDharasabhyoDetailBinding
 import com.app.colorsofgujarat.pojo.MLADetailResponse
 import com.app.colorsofgujarat.pojo.MLAListResponse
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
@@ -27,8 +27,7 @@ import com.app.colorsofgujarat.ui.fragment.DharasabhyoProfileFragment
 import com.app.colorsofgujarat.ui.fragment.DharasabhyoSpecialWorkFragment
 import com.app.colorsofgujarat.ui.fragment.DharasabhyoYourReviewFragment
 import com.app.colorsofgujarat.viewmodel.MLAViewModel
-import kotlinx.android.synthetic.main.activity_dharasabhyo_detail.*
-import kotlinx.android.synthetic.main.dharasabhyo_item_large.*
+import com.bumptech.glide.Glide
 
 
 class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
@@ -41,12 +40,15 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
     private lateinit var mlaViewModel: MLAViewModel
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
-    
+    private lateinit var binding: ActivityDharasabhyoDetailBinding
+
+
     override val layoutId: Int
         get() = R.layout.activity_dharasabhyo_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDharasabhyoDetailBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.dharasabhyo))
 
@@ -61,8 +63,8 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            pbMLADetail.visibility = View.VISIBLE
-            pager.visibility = View.GONE
+            binding.pbMLADetail.visibility = View.VISIBLE
+            binding.pager.visibility = View.GONE
             mlaViewModel.getMLADetail(govMla!!.id, SPreferenceManager.getInstance(this).session)
         } else {
             showSnackBar(getString(R.string.no_internet))
@@ -78,8 +80,8 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleResponse(mlaDetailResponse: MLADetailResponse?) {
-        pager.visibility = View.VISIBLE
-        pbMLADetail.visibility = View.GONE
+        binding.pager.visibility = View.VISIBLE
+        binding.pbMLADetail.visibility = View.GONE
         if (null != mlaDetailResponse) {
             this.mlaDetailResponse = mlaDetailResponse
             setupViewPager()
@@ -103,16 +105,17 @@ class DharasabhyoDetailActivity : ExtendedToolbarActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews() {
         if (null != govMla) {
-            tvMLAName.text = govMla!!.mla_name
-            tvPartyName.text = govMla!!.political_party
-            tvCityName.text = govMla!!.city
-            pbMLA.progress = govMla!!.percentage.toFloat().toInt()
-            tvPercentage.text = getString(R.string.percentage_, govMla!!.percentage)
-            tvVotesTotal.text = "Votes: " + govMla!!.votes
+            binding.layoutDharasabhyoLarge.tvMLAName.text = govMla!!.mla_name
+            binding.layoutDharasabhyoLarge.tvPartyName.text = govMla!!.political_party
+            binding.layoutDharasabhyoLarge.tvCityName.text = govMla!!.city
+            binding.layoutDharasabhyoLarge.pbMLA.progress = govMla!!.percentage.toFloat().toInt()
+            binding.layoutDharasabhyoLarge.tvPercentage.text =
+                getString(R.string.percentage_, govMla!!.percentage)
+            binding.layoutDharasabhyoLarge.tvVotesTotal.text = "Votes: " + govMla!!.votes
 
-            Glide.with(ivMLA.context)
+            Glide.with(binding.layoutDharasabhyoLarge.ivMLA.context)
                 .load(govMla!!.up_pro_img)
-                .into(ivMLA)
+                .into(binding.layoutDharasabhyoLarge.ivMLA)
 //
         }
     }

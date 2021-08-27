@@ -12,11 +12,11 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.LivePollAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.FragmentLivePollBinding
 import com.app.colorsofgujarat.pojo.LivePollListResponse
 import com.app.colorsofgujarat.ui.activity.HomeActivity
 import com.app.colorsofgujarat.ui.activity.LivePollRunningActivity
 import com.app.colorsofgujarat.viewmodel.LivePollViewModel
-import kotlinx.android.synthetic.main.fragment_live_poll.*
 
 class LivePollFragment : Fragment() {
 
@@ -25,13 +25,17 @@ class LivePollFragment : Fragment() {
     private var loading = false
     private var pageNo = 0
     private lateinit var settingsViewModel: LivePollViewModel
+    private var _binding: FragmentLivePollBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_live_poll, container, false)
+    ): View {
+        //return inflater.inflate(R.layout.fragment_live_poll, container, false)
+        _binding = FragmentLivePollBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,8 +51,8 @@ class LivePollFragment : Fragment() {
 
         if (isConnected(requireContext())) {
             loading = true
-            rvPollAndSurvey.visibility = View.GONE
-            pbLivePoll.visibility = View.VISIBLE
+            binding.rvPollAndSurvey.visibility = View.GONE
+            binding.pbLivePoll.visibility = View.VISIBLE
             settingsViewModel.getLivePollList(
                 SPreferenceManager.getInstance(requireContext()).session,
                 pageNo.toString(),
@@ -61,8 +65,8 @@ class LivePollFragment : Fragment() {
 
     private fun handleResponse(livePollListResponse: LivePollListResponse?) {
         loading = false
-        rvPollAndSurvey.visibility = View.VISIBLE
-        pbLivePoll.visibility = View.GONE
+        binding.rvPollAndSurvey.visibility = View.VISIBLE
+        binding.pbLivePoll.visibility = View.GONE
 
         if (null != livePollListResponse) {
             when {
@@ -85,9 +89,9 @@ class LivePollFragment : Fragment() {
 
     private fun setupList() {
         val layoutManager = LinearLayoutManager(requireContext())
-        rvPollAndSurvey.layoutManager = layoutManager
+        binding.rvPollAndSurvey.layoutManager = layoutManager
 
-        rvPollAndSurvey.addOnScrollListener(object :
+        binding.rvPollAndSurvey.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -124,7 +128,7 @@ class LivePollFragment : Fragment() {
             }
         )
 
-        rvPollAndSurvey.adapter = govtWorkNewsAdapter
+        binding.rvPollAndSurvey.adapter = govtWorkNewsAdapter
     }
 
     private fun addItems(quizList: ArrayList<LivePollListResponse.LivePoll>) {

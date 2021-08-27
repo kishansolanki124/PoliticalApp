@@ -17,12 +17,12 @@ import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityAddQuestionSuggestionBinding
 import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.UserAdviseViewModel
 import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker.ImagePicker
-import kotlinx.android.synthetic.main.activity_add_question_suggestion.*
 import java.io.File
 
 class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
@@ -32,6 +32,7 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
     private var districtPosition = 0
     private lateinit var selectedFile: File
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
+    private lateinit var binding: ActivityAddQuestionSuggestionBinding
 
     override val layoutId: Int
         get() = R.layout.activity_add_question_suggestion
@@ -43,7 +44,7 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
                 // Use the uri to load the image
                 val filePath = FetchPath.getPath(this, uri)
                 selectedFile = File(filePath)
-                Glide.with(this).load(selectedFile).into(ivSelectedImage)
+                Glide.with(this).load(selectedFile).into(binding.ivSelectedImage)
             }
         }
 
@@ -51,12 +52,14 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivityAddQuestionSuggestionBinding.inflate(layoutInflater)
+
         districtPosition = intent.getIntExtra(AppConstants.DISTRICTID, 0)
 
         setToolbarTitle(getString(R.string.que_suggestion))
         setupDistrictSpinner()
 
-        tvTNC.text = HtmlCompat.fromHtml(
+        binding.tvTNC.text = HtmlCompat.fromHtml(
             getTermsByName("User Question"),
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
@@ -67,20 +70,20 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
             handleResponse(it)
         })
 
-        btSubmitQuestion.setOnClickListener {
+        binding.btSubmitQuestion.setOnClickListener {
             if (fieldsAreValid()) {
                 if (isConnected(this)) {
                     if (!::selectedFile.isInitialized) {
                         showUploadStoryWithoutImageAlertDialog()
                     } else {
-                        pbSubmitQuizContestAnswer.visibility = View.VISIBLE
-                        btSubmitQuestion.visibility = View.INVISIBLE
+                        binding.pbSubmitQuizContestAnswer.visibility = View.VISIBLE
+                        binding.btSubmitQuestion.visibility = View.INVISIBLE
                         govtWorkViewModel.addUserAdvice(
                             districtId,
                             SPreferenceManager.getInstance(this).session,
-                            etCity.text.toString(),
-                            etTitle.text.toString(),
-                            etDescription.text.toString(),
+                            binding.etCity.text.toString(),
+                            binding.etTitle.text.toString(),
+                            binding.etDescription.text.toString(),
                             selectedFile
                         )
                     }
@@ -90,7 +93,7 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
             }
         }
 
-        rlImage.setOnClickListener {
+        binding.rlImage.setOnClickListener {
             //GligarPicker().requestCode(100).limit(1).withActivity(this).show()
             launcher.launch(
                 ImagePicker.with(this)
@@ -99,15 +102,15 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
             )
         }
 
-        ivCamera.setOnClickListener {
-            rlImage.callOnClick()
+        binding.ivCamera.setOnClickListener {
+            binding.rlImage.callOnClick()
         }
 
-        ivSelectedImage.setOnClickListener {
-            rlImage.callOnClick()
+        binding.ivSelectedImage.setOnClickListener {
+            binding.rlImage.callOnClick()
         }
 
-        etDescription.setOnTouchListener { view, event ->
+        binding.etDescription.setOnTouchListener { view, event ->
             view.parent.requestDisallowInterceptTouchEvent(true)
             if ((event.action and MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
                 view.parent.requestDisallowInterceptTouchEvent(false)
@@ -119,23 +122,23 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     private fun handleResponse(commonResponse: CommonResponse?) {
         if (null != commonResponse) {
-            btSubmitQuestion.visibility = View.VISIBLE
-            pbSubmitQuizContestAnswer.visibility = View.GONE
+            binding.btSubmitQuestion.visibility = View.VISIBLE
+            binding.pbSubmitQuizContestAnswer.visibility = View.GONE
             showAlertDialog(commonResponse.message)
         }
     }
 
     private fun fieldsAreValid(): Boolean {
         return when {
-            TextUtils.isEmpty(etTitle.text.toString()) -> {
+            TextUtils.isEmpty(binding.etTitle.text.toString()) -> {
                 showSnackBar(getString(R.string.Enter_Title))
                 false
             }
-            TextUtils.isEmpty(etDescription.text.toString()) -> {
+            TextUtils.isEmpty(binding.etDescription.text.toString()) -> {
                 showSnackBar(getString(R.string.Enter_Desc))
                 false
             }
-            TextUtils.isEmpty(etCity.text.toString()) -> {
+            TextUtils.isEmpty(binding.etCity.text.toString()) -> {
                 showSnackBar(getString(R.string.Enter_City))
                 false
             }
@@ -153,11 +156,11 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spDistrictQuestionSuggestion.adapter = adapter
+        binding.spDistrictQuestionSuggestion.adapter = adapter
 
-        spDistrictQuestionSuggestion.setSelection(districtPosition)
+        binding.spDistrictQuestionSuggestion.setSelection(districtPosition)
 
-        spDistrictQuestionSuggestion.onItemSelectedListener =
+        binding.spDistrictQuestionSuggestion.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -230,14 +233,14 @@ class AddQuestionSuggestionActivity : ExtendedToolbarActivity() {
             getString(android.R.string.ok)
         ) { dialog, _ ->
             dialog.dismiss()
-            pbSubmitQuizContestAnswer.visibility = View.VISIBLE
-            btSubmitQuestion.visibility = View.INVISIBLE
+            binding.pbSubmitQuizContestAnswer.visibility = View.VISIBLE
+            binding.btSubmitQuestion.visibility = View.INVISIBLE
             govtWorkViewModel.addUserAdvice(
                 districtId,
                 SPreferenceManager.getInstance(this).session,
-                etCity.text.toString(),
-                etTitle.text.toString(),
-                etDescription.text.toString(),
+                binding.etCity.text.toString(),
+                binding.etTitle.text.toString(),
+                binding.etDescription.text.toString(),
                 null
             )
         }

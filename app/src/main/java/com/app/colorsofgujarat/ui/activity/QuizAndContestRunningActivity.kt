@@ -19,14 +19,14 @@ import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import app.app.patidarsaurabh.apputils.AppConstants
-import com.bumptech.glide.Glide
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityQuizAndContestRunningBinding
 import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.QuizAndContestRunningResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
-import kotlinx.android.synthetic.main.activity_quiz_and_contest_running.*
+import com.bumptech.glide.Glide
 
 class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
 
@@ -38,33 +38,35 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
     private lateinit var settingsViewModel: QuizAndContestViewModel
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
-    
+    private lateinit var binding: ActivityQuizAndContestRunningBinding
+
     override val layoutId: Int
         get() = R.layout.activity_quiz_and_contest_running
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityQuizAndContestRunningBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.quiz_and_contest))
 
         qid = intent.getStringExtra(AppConstants.ID)!!
 
-        ivSponsor.setOnClickListener {
+        binding.ivSponsor.setOnClickListener {
             openBrowser(this, browserURL)
         }
 
-        btPrizeDetailsAndRules.setOnClickListener {
+        binding.btPrizeDetailsAndRules.setOnClickListener {
             showAlertDialog()
         }
 
-        btSubmitQuizContestAnswer.setOnClickListener {
+        binding.btSubmitQuizContestAnswer.setOnClickListener {
             val index: Int =
-                rgQuestionSuggestionRunning.indexOfChild(findViewById(rgQuestionSuggestionRunning.checkedRadioButtonId))
+                binding.rgQuestionSuggestionRunning.indexOfChild(findViewById(binding.rgQuestionSuggestionRunning.checkedRadioButtonId))
 
             if (index != -1) {
                 if (isConnected(this)) {
-                    btSubmitQuizContestAnswer.visibility = View.INVISIBLE
-                    pbSubmitQuizContestAnswer.visibility = View.VISIBLE
+                    binding.btSubmitQuizContestAnswer.visibility = View.INVISIBLE
+                    binding.pbSubmitQuizContestAnswer.visibility = View.VISIBLE
                     settingsViewModel.addQuiZAnswer(
                         qid,
                         SPreferenceManager.getInstance(this).session,
@@ -89,7 +91,7 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
             ),
             0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.text = greenText
+        binding.tvGiveRateGet10Point.text = greenText
 
 //        val yellowText =
 //            SpannableString(getString(R.string.give_rate_get_10_point_2))
@@ -106,7 +108,7 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        tvGive_rate_get_10_point.append(yellowText)
+        binding.tvGiveRateGet10Point.append(yellowText)
 
         val thirdText =
             SpannableString(getString(R.string.points_and_win_prizes))
@@ -119,7 +121,7 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
             ),
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.append(thirdText)
+        binding.tvGiveRateGet10Point.append(thirdText)
 
         val forthText =
             SpannableString(getString(R.string.points_and_win_prizes_2))
@@ -132,7 +134,7 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
             ),
             0, forthText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.append(forthText)
+        binding.tvGiveRateGet10Point.append(forthText)
 
         settingsViewModel = ViewModelProvider(this).get(QuizAndContestViewModel::class.java)
 
@@ -145,8 +147,8 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            cvQuizAndContestRunning.visibility = View.GONE
-            pbQuizAndContestRunning.visibility = View.VISIBLE
+            binding.cvQuizAndContestRunning.visibility = View.GONE
+            binding.pbQuizAndContestRunning.visibility = View.VISIBLE
             settingsViewModel.getQuizAndContestDetail(
                 qid,
                 SPreferenceManager.getInstance(this).session
@@ -167,13 +169,13 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
 
     private fun handleAnswerResponse(commonResponse: CommonResponse?) {
         if (null != commonResponse) {
-            btSubmitQuizContestAnswer.visibility = View.VISIBLE
-            pbSubmitQuizContestAnswer.visibility = View.GONE
+            binding.btSubmitQuizContestAnswer.visibility = View.VISIBLE
+            binding.pbSubmitQuizContestAnswer.visibility = View.GONE
             setUserPoints(commonResponse.user_points)
 
             //answer submitted
-            llQuizAndContestAnswer.visibility = View.GONE
-            tvAnswerSubmitted.visibility = View.VISIBLE
+            binding.llQuizAndContestAnswer.visibility = View.GONE
+            binding.tvAnswerSubmitted.visibility = View.VISIBLE
             showAlertDialog(commonResponse.message)
             disableRadioButtons()
         } else {
@@ -182,15 +184,15 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
     }
 
     private fun disableRadioButtons() {
-        rbExcellent.isEnabled = false
-        rbGood.isEnabled = false
-        rbcantAnswer.isEnabled = false
-        rbBad.isEnabled = false
+        binding.rbExcellent.isEnabled = false
+        binding.rbGood.isEnabled = false
+        binding.rbcantAnswer.isEnabled = false
+        binding.rbBad.isEnabled = false
     }
 
     private fun handleResponse(quizAndContestRunningResponse: QuizAndContestRunningResponse?) {
-        pbQuizAndContestRunning.visibility = View.GONE
-        cvQuizAndContestRunning.visibility = View.VISIBLE
+        binding.pbQuizAndContestRunning.visibility = View.GONE
+        binding.cvQuizAndContestRunning.visibility = View.VISIBLE
 
         if (null != quizAndContestRunningResponse) {
             setupViews(quizAndContestRunningResponse)
@@ -200,82 +202,84 @@ class QuizAndContestRunningActivity : ExtendedToolbarActivity() {
     private fun setupViews(quizAndContestRunningResponse: QuizAndContestRunningResponse) {
 
         if (!quizAndContestRunningResponse.quiz_detail[0].sponser_img.isNullOrEmpty()) {
-            tvSponsor.visibility = View.VISIBLE
+            binding.tvSponsor.visibility = View.VISIBLE
             Glide.with(this)
                 .load(quizAndContestRunningResponse.quiz_detail[0].sponser_img)
-                .into(ivSponsor)
+                .into(binding.ivSponsor)
         } else {
-            tvSponsor.visibility = View.GONE
+            binding.tvSponsor.visibility = View.GONE
         }
 
-        tvQuestionSuggestion.text = quizAndContestRunningResponse.quiz_question[0].question
+        binding.tvQuestionSuggestion.text = quizAndContestRunningResponse.quiz_question[0].question
 
-        rbExcellent.text =
+        binding.rbExcellent.text =
             quizAndContestRunningResponse.quiz_question[0].quiz_options[0].option_name
         if (quizAndContestRunningResponse.quiz_question[0].quiz_options[0].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
         ) {
-            rbExcellent.isChecked = true
+            binding.rbExcellent.isChecked = true
         }
 
-        rbGood.text = quizAndContestRunningResponse.quiz_question[0].quiz_options[1].option_name
+        binding.rbGood.text =
+            quizAndContestRunningResponse.quiz_question[0].quiz_options[1].option_name
         if (quizAndContestRunningResponse.quiz_question[0].quiz_options[1].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
         ) {
-            rbGood.isChecked = true
+            binding.rbGood.isChecked = true
         }
 
-        rbcantAnswer.text =
+        binding.rbcantAnswer.text =
             quizAndContestRunningResponse.quiz_question[0].quiz_options[2].option_name
         if (quizAndContestRunningResponse.quiz_question[0].quiz_options[2].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
         ) {
-            rbcantAnswer.isChecked = true
+            binding.rbcantAnswer.isChecked = true
         }
 
-        rbBad.text = quizAndContestRunningResponse.quiz_question[0].quiz_options[3].option_name
+        binding.rbBad.text =
+            quizAndContestRunningResponse.quiz_question[0].quiz_options[3].option_name
         if (quizAndContestRunningResponse.quiz_question[0].quiz_options[3].option_id == quizAndContestRunningResponse.quiz_detail[0].user_answer
         ) {
-            rbBad.isChecked = true
+            binding.rbBad.isChecked = true
         }
 
         if (quizAndContestRunningResponse.quiz_detail[0].user_answer.isNotEmpty()) {
             //answer already submitted
-            llQuizAndContestAnswer.visibility = View.GONE
-            tvAnswerSubmitted.visibility = View.VISIBLE
+            binding.llQuizAndContestAnswer.visibility = View.GONE
+            binding.tvAnswerSubmitted.visibility = View.VISIBLE
             disableRadioButtons()
         }
 
-        rbExcellent.setOnCheckedChangeListener { _, b ->
+        binding.rbExcellent.setOnCheckedChangeListener { _, b ->
             if (b) {
                 answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[0].option_id
             }
         }
 
-        rbGood.setOnCheckedChangeListener { _, b ->
+        binding.rbGood.setOnCheckedChangeListener { _, b ->
             if (b) {
                 answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[1].option_id
             }
         }
 
-        rbcantAnswer.setOnCheckedChangeListener { _, b ->
+        binding.rbcantAnswer.setOnCheckedChangeListener { _, b ->
             if (b) {
                 answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[2].option_id
             }
         }
 
-        rbBad.setOnCheckedChangeListener { _, b ->
+        binding.rbBad.setOnCheckedChangeListener { _, b ->
             if (b) {
                 answerId = quizAndContestRunningResponse.quiz_question[0].quiz_options[3].option_id
             }
         }
 
-        tvQuizStartDate.text = quizAndContestRunningResponse.quiz_detail[0].start_date
-        tvQuizEndDate.text = quizAndContestRunningResponse.quiz_detail[0].end_date
-        tvQuizWinnerDate.text = quizAndContestRunningResponse.quiz_detail[0].result_date
+        binding.tvQuizStartDate.text = quizAndContestRunningResponse.quiz_detail[0].start_date
+        binding.tvQuizEndDate.text = quizAndContestRunningResponse.quiz_detail[0].end_date
+        binding.tvQuizWinnerDate.text = quizAndContestRunningResponse.quiz_detail[0].result_date
 
         browserURL = quizAndContestRunningResponse.quiz_detail[0].sponser_url
         rules = quizAndContestRunningResponse.quiz_detail[0].quiz_rules
         prizeDetail = quizAndContestRunningResponse.quiz_detail[0].quiz_detail
 
-        ivShareQuizAndContestDetail.setOnClickListener {
+        binding.ivShareQuizAndContestDetail.setOnClickListener {
             shareIntent(
                 "Participate in Quiz and Contest and Win Prizes:\n\n" +
                         quizAndContestRunningResponse.quiz_question[0].question,

@@ -1,13 +1,11 @@
 package com.app.colorsofgujarat.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.databinding.IntroItemBinding
 import com.app.colorsofgujarat.pojo.SettingsResponse
-import kotlinx.android.synthetic.main.intro_item.view.*
+import com.bumptech.glide.Glide
 
 class IntroAdapter(private val itemClick: (SettingsResponse.WelcomeBanner) -> Unit) :
     RecyclerView.Adapter<IntroAdapter.HomeOffersViewHolder>() {
@@ -15,8 +13,15 @@ class IntroAdapter(private val itemClick: (SettingsResponse.WelcomeBanner) -> Un
     private var list: List<SettingsResponse.WelcomeBanner> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
+        val binding =
+            IntroItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+
         return HomeOffersViewHolder(
-            parent
+            binding
         )
     }
 
@@ -31,14 +36,9 @@ class IntroAdapter(private val itemClick: (SettingsResponse.WelcomeBanner) -> Un
 
     override fun getItemCount(): Int = list.size
 
-    class HomeOffersViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        constructor(parent: ViewGroup) : this(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.intro_item,
-                parent, false
-            )
-        )
+    class HomeOffersViewHolder(
+        private val binding: IntroItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             introImageModel: SettingsResponse.WelcomeBanner,
@@ -71,11 +71,11 @@ class IntroAdapter(private val itemClick: (SettingsResponse.WelcomeBanner) -> Un
                 itemClick(introImageModel)
             }
 
-            Glide.with(itemView.introImage.context)
+            Glide.with(binding.introImage.context)
                 .load(introImageModel.up_pro_img)
                 //.error(R.drawable.error_load)
                 //.placeholder(circularProgressDrawable)
-                .into(itemView.introImage)
+                .into(binding.introImage)
         }
     }
 }

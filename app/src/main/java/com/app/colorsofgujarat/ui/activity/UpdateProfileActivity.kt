@@ -13,39 +13,39 @@ import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.getUserSelectedDistrictIndex
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityUpdateProfileBinding
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
-import kotlinx.android.synthetic.main.activity_update_profile.*
-import kotlinx.android.synthetic.main.common_toolbar.*
 
 class UpdateProfileActivity : ExtendedToolbarActivity() {
 
     private var districtId = ""
     private lateinit var settingsViewModel: SettingsViewModel
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
+    private lateinit var binding: ActivityUpdateProfileBinding
 
     override val layoutId: Int
         get() = R.layout.activity_update_profile
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
         setToolbarTitle(getString(R.string.Update_Profile))
 
-        ab_layout.setBackgroundResource(android.R.color.transparent)
+        binding.commonToolbar.abLayout.setBackgroundResource(android.R.color.transparent)
 
         setupDistrictSpinner()
 
-        btUpdateProfile.setOnClickListener {
+        binding.btUpdateProfile.setOnClickListener {
             if (isConnected(this)) {
                 if (areFieldsValid()) {
-                    pbRegister.visibility = View.VISIBLE
-                    btUpdateProfile.visibility = View.INVISIBLE
+                    binding.pbRegister.visibility = View.VISIBLE
+                    binding.btUpdateProfile.visibility = View.INVISIBLE
                     settingsViewModel.editProfile(
                         SPreferenceManager.getInstance(this).session,
-                        et_name.text.toString(),
+                        binding.etName.text.toString(),
                         districtId,
-                        et_city.text.toString()
+                        binding.etCity.text.toString()
                     )
                 }
             } else {
@@ -60,8 +60,8 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
 //        })
 
         settingsViewModel.updateProfileResponse().observe(this, {
-            pbRegister.visibility = View.GONE
-            btUpdateProfile.visibility = View.VISIBLE
+            binding.pbRegister.visibility = View.GONE
+            binding.btUpdateProfile.visibility = View.VISIBLE
 
             val settings = SPreferenceManager.getInstance(this).settings
             settings.user_city = it.user_city
@@ -73,8 +73,8 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
             showAlertDialog(it.message)
         })
 
-        et_city.setText(SPreferenceManager.getInstance(this).settings.user_city)
-        et_name.setText(SPreferenceManager.getInstance(this).settings.user_name)
+        binding.etCity.setText(SPreferenceManager.getInstance(this).settings.user_city)
+        binding.etName.setText(SPreferenceManager.getInstance(this).settings.user_name)
     }
 
     private fun areFieldsValid(): Boolean {
@@ -83,11 +83,11 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
                 showSnackBar(getString(R.string.something_went_wrong))
                 false
             }
-            TextUtils.isEmpty(et_city.text.toString()) -> {
+            TextUtils.isEmpty(binding.etCity.text.toString()) -> {
                 showSnackBar(getString(R.string.invalid_city))
                 false
             }
-            TextUtils.isEmpty(et_name.text.toString()) -> {
+            TextUtils.isEmpty(binding.etName.text.toString()) -> {
                 showSnackBar(getString(R.string.invalid_name))
                 false
             }
@@ -153,11 +153,11 @@ class UpdateProfileActivity : ExtendedToolbarActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        sp_district.adapter = adapter
+        binding.spDistrict.adapter = adapter
 
-        sp_district.setSelection(getUserSelectedDistrictIndex())
+        binding.spDistrict.setSelection(getUserSelectedDistrictIndex())
 
-        sp_district.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,

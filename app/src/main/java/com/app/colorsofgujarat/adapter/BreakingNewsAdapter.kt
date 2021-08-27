@@ -1,13 +1,11 @@
 package com.app.colorsofgujarat.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.databinding.HomeNewsItemBinding
 import com.app.colorsofgujarat.pojo.SettingsResponse
-import kotlinx.android.synthetic.main.home_news_item.view.*
+import com.bumptech.glide.Glide
 
 class BreakingNewsAdapter(
     private val itemClick: (SettingsResponse.News) -> Unit
@@ -15,11 +13,30 @@ class BreakingNewsAdapter(
 
     private var list: List<SettingsResponse.News> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
-        return HomeOffersViewHolder(
-            parent
-        )
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): HomeOffersViewHolder {
+        val binding =
+            HomeNewsItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return HomeOffersViewHolder(binding, itemClick)
     }
+
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
+//        val itemBinding: HomeNewsItemBinding = HomeNewsItemBinding.inflate(
+//            LayoutInflater.from(parent.context),
+//            parent,
+//            false
+//        )
+//        return HomeOffersViewHolder(itemBinding,parent)
+////        return HomeOffersViewHolder(
+////            parent
+////        )
+//    }
 
     override fun onBindViewHolder(holder: HomeOffersViewHolder, position: Int) {
 
@@ -37,21 +54,35 @@ class BreakingNewsAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    class HomeOffersViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+//    class HomeOffersViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+//
+//        constructor(parent: ViewGroup) : this(
+//            LayoutInflater.from(parent.context).inflate(
+//                R.layout.home_news_item,
+//                parent, false
+//            )
+//        )
+//
+//        fun bind(introImageModel: SettingsResponse.News) {
+//            Glide.with(itemView.ivBreakingNews.context)
+//                .load(introImageModel.up_pro_img)
+//                .into(itemView.ivBreakingNews)
+//
+//            itemView.tvNewsTitle.text = introImageModel.name
+//        }
+//    }
 
-        constructor(parent: ViewGroup) : this(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.home_news_item,
-                parent, false
-            )
-        )
+    class HomeOffersViewHolder(
+        private val binding: HomeNewsItemBinding,
+        private val itemClick: (SettingsResponse.News) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(introImageModel: SettingsResponse.News) {
-            Glide.with(itemView.ivBreakingNews.context)
+            Glide.with(binding.ivBreakingNews.context)
                 .load(introImageModel.up_pro_img)
-                .into(itemView.ivBreakingNews)
+                .into(binding.ivBreakingNews)
 
-            itemView.tvNewsTitle.text = introImageModel.name
+            binding.tvNewsTitle.text = introImageModel.name
         }
     }
 }

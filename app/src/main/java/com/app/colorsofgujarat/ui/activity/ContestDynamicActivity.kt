@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityContestDynamicBinding
 import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.QuizAndContestDynamicResponse
@@ -26,7 +27,6 @@ import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker.ImagePicker
-import kotlinx.android.synthetic.main.activity_contest_dynamic.*
 import java.io.File
 
 class ContestDynamicActivity : ExtendedToolbarActivity() {
@@ -40,6 +40,7 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
     private var cid = ""
     private var prizeDetail = ""
     private var winners = ""
+    private lateinit var binding: ActivityContestDynamicBinding
 
     override val layoutId: Int
         get() = R.layout.activity_contest_dynamic
@@ -51,12 +52,14 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
                 // Use the uri to load the image
                 val filePath = FetchPath.getPath(this, uri)
                 selectedFile = File(filePath)
-                Glide.with(this).load(selectedFile).into(ivSelectedImage)
+                Glide.with(this).load(selectedFile).into(binding.ivSelectedImage)
             }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityContestDynamicBinding.inflate(layoutInflater)
 
         setToolbarTitle(SPreferenceManager.getInstance(this).settings.contest[0].menu_name)
 
@@ -77,15 +80,15 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            llContestDynamicMain.visibility = View.GONE
-            pbContestDynamic.visibility = View.VISIBLE
+            binding.llContestDynamicMain.visibility = View.GONE
+            binding.pbContestDynamic.visibility = View.VISIBLE
             quizAndContestViewModel.getQuizAndContestDynamic(SPreferenceManager.getInstance(this).session)
             settingsViewModel.getPopupBanner("photo_contest")
         } else {
             showSnackBar(getString(R.string.no_internet))
         }
 
-        btSelectImage.setOnClickListener {
+        binding.btSelectImage.setOnClickListener {
             //GligarPicker().requestCode(100).limit(1).withActivity(this).show()
             launcher.launch(
                 ImagePicker.with(this)
@@ -94,19 +97,19 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
             )
         }
 
-        btPrizeDetailsAndRules.setOnClickListener {
+        binding.btPrizeDetailsAndRules.setOnClickListener {
             showAlertDialog()
         }
 
-        btWinners.setOnClickListener {
+        binding.btWinners.setOnClickListener {
             showWinnerAlertDialog()
         }
 
-        btSubmitQuestion.setOnClickListener {
+        binding.btSubmitQuestion.setOnClickListener {
             if (fieldsAreValid()) {
                 if (isConnected(this)) {
-                    pbSubmitQuizContestAnswer.visibility = View.VISIBLE
-                    btSubmitQuestion.visibility = View.INVISIBLE
+                    binding.pbSubmitQuizContestAnswer.visibility = View.VISIBLE
+                    binding.btSubmitQuestion.visibility = View.INVISIBLE
                     quizAndContestViewModel.addPhotoContestUser(
                         SPreferenceManager.getInstance(this).session,
                         cid,
@@ -117,27 +120,26 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
                 }
             }
         }
-
     }
 
     private fun handleCommonResponse(commonResponse: CommonResponse?) {
         if (null != commonResponse) {
-            pbSubmitQuizContestAnswer.visibility = View.GONE
-            btSubmitQuestion.visibility = View.GONE
-            btSelectImage.visibility = View.GONE
+            binding.pbSubmitQuizContestAnswer.visibility = View.GONE
+            binding.btSubmitQuestion.visibility = View.GONE
+            binding.btSelectImage.visibility = View.GONE
 
-            tvAlreadySubmittedResponse.text = commonResponse.message
-            tvAlreadySubmittedResponse.visibility = View.VISIBLE
+            binding.tvAlreadySubmittedResponse.text = commonResponse.message
+            binding.tvAlreadySubmittedResponse.visibility = View.VISIBLE
 
             showAlertDialog(commonResponse.message)
         }
     }
 
     private fun handleResponse(quizAndContestResponse: QuizAndContestDynamicResponse) {
-        llContestDynamicMain.visibility = View.VISIBLE
-        pbContestDynamic.visibility = View.GONE
+        binding.llContestDynamicMain.visibility = View.VISIBLE
+        binding.pbContestDynamic.visibility = View.GONE
 
-        tvTitleQuiz.text = quizAndContestResponse.photo_contest[0].contest_name
+        binding.tvTitleQuiz.text = quizAndContestResponse.photo_contest[0].contest_name
 
         rules = quizAndContestResponse.photo_contest[0].contest_rules
         winners = quizAndContestResponse.photo_contest[0].contest_winner
@@ -145,14 +147,14 @@ class ContestDynamicActivity : ExtendedToolbarActivity() {
         prizeDetail = quizAndContestResponse.photo_contest[0].contest_detail
 
         if (null != quizAndContestResponse.user_participate) {
-            tvAlreadySubmittedResponse.visibility = View.VISIBLE
-            tvAlreadySubmittedResponse.text = quizAndContestResponse.user_participate
-            btSubmitQuestion.visibility = View.GONE
-            btSelectImage.visibility = View.GONE
+            binding.tvAlreadySubmittedResponse.visibility = View.VISIBLE
+            binding.tvAlreadySubmittedResponse.text = quizAndContestResponse.user_participate
+            binding.btSubmitQuestion.visibility = View.GONE
+            binding.btSelectImage.visibility = View.GONE
         } else {
-            tvAlreadySubmittedResponse.visibility = View.GONE
-            btSubmitQuestion.visibility = View.VISIBLE
-            btSelectImage.visibility = View.VISIBLE
+            binding.tvAlreadySubmittedResponse.visibility = View.GONE
+            binding.btSubmitQuestion.visibility = View.VISIBLE
+            binding.btSelectImage.visibility = View.VISIBLE
         }
     }
 

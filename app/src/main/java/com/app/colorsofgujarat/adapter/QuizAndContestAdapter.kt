@@ -5,14 +5,13 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.getPollPoints
+import com.app.colorsofgujarat.databinding.QuizAndContestItemBinding
 import com.app.colorsofgujarat.pojo.QuizAndContestResponse
-import kotlinx.android.synthetic.main.quiz_and_contest_item.view.*
 
 class QuizAndContestAdapter(
     private val itemClickCall: (QuizAndContestResponse.Quiz) -> Unit,
@@ -24,11 +23,17 @@ class QuizAndContestAdapter(
     private var list: ArrayList<QuizAndContestResponse.Quiz> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.quiz_and_contest_item, parent, false)
+//        val view =
+//            LayoutInflater.from(parent.context)
+//                .inflate(R.layout.quiz_and_contest_item, parent, false)
+        val binding =
+            QuizAndContestItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickShare, itemClickWeb
+            binding, itemClickCall, itemClickShare, itemClickWeb
         )
     }
 
@@ -49,11 +54,11 @@ class QuizAndContestAdapter(
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
-        view: View,
+        private val binding: QuizAndContestItemBinding,
         private val itemClickCall: (QuizAndContestResponse.Quiz) -> Unit,
         private val itemClickShare: (QuizAndContestResponse.Quiz) -> Unit,
         private val itemClickWeb: (QuizAndContestResponse.Quiz) -> Unit
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
 //        constructor(parent: ViewGroup) : this(
 //            LayoutInflater.from(parent.context).inflate(
@@ -68,132 +73,133 @@ class QuizAndContestAdapter(
         ) {
             with(newsPortal) {
 
-                itemView.tvQuizAndContestTitle.text = newsPortal.name
+                binding.tvQuizAndContestTitle.text = newsPortal.name
 
                 if (newsPortal.quiz_mode == "Quiz Winner") {
-                    itemView.tvGive_rate_get_10_point.text = ""
-                    itemView.btViewWinner.text = "check winner"
-                    itemView.btViewWinner.setBackgroundColor(
+                    binding.tvGiveRateGet10Point.text = ""
+                    binding.btViewWinner.text = "check winner"
+                    binding.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(
-                            itemView.btViewWinner.context, R.color.gray_BEBEBE
+                            binding.btViewWinner.context, R.color.gray_BEBEBE
                         )
                     )
                 } else {
-                    itemView.tvGive_rate_get_10_point.text =
+                    binding.tvGiveRateGet10Point.text =
                         "(Participate &amp; Get 10 points / Win Prize)"
 
                     val greenText =
-                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.participate_and))
+                        SpannableString(binding.tvGiveRateGet10Point.context.getString(R.string.participate_and))
                     greenText.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(
-                                itemView.tvGive_rate_get_10_point.context,
+                                binding.tvGiveRateGet10Point.context,
                                 R.color.black
                             )
                         ),
                         0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                    itemView.tvGive_rate_get_10_point.text = greenText
+                    binding.tvGiveRateGet10Point.text = greenText
 
 //                    val yellowText =
-//                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.give_rate_get_10_point_2))
+//                        SpannableString(binding.tvGiveRateGet10Point.context.getString(R.string.give_rate_get_10_point_2))
 
-                    val yellowText = SpannableString(itemView.tvGive_rate_get_10_point.context.getPollPoints())
+                    val yellowText =
+                        SpannableString(binding.tvGiveRateGet10Point.context.getPollPoints())
 
                     yellowText.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(
-                                itemView.tvGive_rate_get_10_point.context,
+                                binding.tvGiveRateGet10Point.context,
                                 R.color.red_CC252C
                             )
                         ),
                         0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
 
-                    itemView.tvGive_rate_get_10_point.append(yellowText)
+                    binding.tvGiveRateGet10Point.append(yellowText)
 
                     val thirdText =
-                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.points_and_win_prizes))
+                        SpannableString(binding.tvGiveRateGet10Point.context.getString(R.string.points_and_win_prizes))
                     thirdText.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(
-                                itemView.tvGive_rate_get_10_point.context,
+                                binding.tvGiveRateGet10Point.context,
                                 R.color.black
                             )
                         ),
                         0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                    itemView.tvGive_rate_get_10_point.append(thirdText)
+                    binding.tvGiveRateGet10Point.append(thirdText)
 
                     val forthText =
-                        SpannableString(itemView.tvGive_rate_get_10_point.context.getString(R.string.points_and_win_prizes_2))
+                        SpannableString(binding.tvGiveRateGet10Point.context.getString(R.string.points_and_win_prizes_2))
                     forthText.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(
-                                itemView.tvGive_rate_get_10_point.context,
+                                binding.tvGiveRateGet10Point.context,
                                 R.color.red_CC252C
                             )
                         ),
                         0, forthText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                    itemView.tvGive_rate_get_10_point.append(forthText)
+                    binding.tvGiveRateGet10Point.append(forthText)
 
                     ///(Participate &amp; Get 10 points / Win Prize)
-                    itemView.btViewWinner.text = "running"
-                    itemView.btViewWinner.setBackgroundColor(
+                    binding.btViewWinner.text = "running"
+                    binding.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(
-                            itemView.btViewWinner.context, R.color.red_CC252C
+                            binding.btViewWinner.context, R.color.red_CC252C
                         )
                     )
                 }
 
-//                Glide.with(itemView.ivNewsPortal.context)
+//                Glide.with(binding.ivNewsPortal.context)
 //                    .load(newsPortal.up_pro_img)
-//                    .into(itemView.ivNewsPortal)
+//                    .into(binding.ivNewsPortal)
 //
 //                if (newsPortal.name.isNullOrEmpty()) {
-//                    itemView.tvNewsPortalTitle.visibility = View.GONE
+//                    binding.tvNewsPortalTitle.visibility = View.GONE
 //                }
 //                if (newsPortal.address.isNullOrEmpty()) {
-//                    itemView.llNewsPortalAddress.visibility = View.GONE
+//                    binding.llNewsPortalAddress.visibility = View.GONE
 //                }
 //                if (newsPortal.contact_no.isNullOrEmpty()) {
-//                    itemView.llNewsPortalPhone.visibility = View.GONE
+//                    binding.llNewsPortalPhone.visibility = View.GONE
 //                }
 //                if (newsPortal.email.isNullOrEmpty()) {
-//                    itemView.llNewsPortalEmail.visibility = View.GONE
+//                    binding.llNewsPortalEmail.visibility = View.GONE
 //                }
 //                if (newsPortal.website.isNullOrEmpty()) {
-//                    itemView.llNewsPortalWebsite.visibility = View.GONE
+//                    binding.llNewsPortalWebsite.visibility = View.GONE
 //                }
 //
-//                itemView.tvNewsPortalTitle.text = newsPortal.name
-//                itemView.tvNewsPortalAddress.text = newsPortal.address
-//                itemView.tvNewsPortalPhone.text = newsPortal.contact_no
-//                itemView.tvNewsPortalEmail.text = newsPortal.email
-//                itemView.tvNewsPortalWebsite.text = newsPortal.website
+//                binding.tvNewsPortalTitle.text = newsPortal.name
+//                binding.tvNewsPortalAddress.text = newsPortal.address
+//                binding.tvNewsPortalPhone.text = newsPortal.contact_no
+//                binding.tvNewsPortalEmail.text = newsPortal.email
+//                binding.tvNewsPortalWebsite.text = newsPortal.website
 //
-                itemView.cvRootGovtWorkNewsItem.setOnClickListener {
-                    if (itemView.btViewWinner.text.equals("running")) {
+                binding.cvRootGovtWorkNewsItem.setOnClickListener {
+                    if (binding.btViewWinner.text.equals("running")) {
                         itemClickCall(this)
                     } else {
                         itemClickWeb(this)
                     }
                 }
 
-                itemView.btViewWinner.setOnClickListener {
-                    if (itemView.btViewWinner.text.equals("check winner")) {
+                binding.btViewWinner.setOnClickListener {
+                    if (binding.btViewWinner.text.equals("check winner")) {
                         itemClickWeb(this)
                     } else {
                         itemClickCall(this)
                     }
                 }
 
-                itemView.ivShareQuizAndContest.setOnClickListener {
-                        itemClickShare(this)
+                binding.ivShareQuizAndContest.setOnClickListener {
+                    itemClickShare(this)
                 }
 //
-//                itemView.ivWeb.setOnClickListener {
+//                binding.ivWeb.setOnClickListener {
 //                    itemClickWeb(this)
 //                }
             }

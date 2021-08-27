@@ -28,7 +28,9 @@
 
                 <include layout="@layout/common_toolbar" />
 
-                <include layout="@layout/dharasabhyo_item_large" />
+                <include
+                    android:id="@+id/layout_dharasabhyo_large"
+                    layout="@layout/dharasabhyo_item_large" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

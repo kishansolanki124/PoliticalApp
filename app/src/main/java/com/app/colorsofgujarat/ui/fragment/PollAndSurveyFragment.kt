@@ -14,23 +14,27 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.PollAndSurveyAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.FragmentPollAndSurveyBinding
 import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.DistrictPollListResponse
 import com.app.colorsofgujarat.ui.activity.PollAndSurveyActivity
 import com.app.colorsofgujarat.viewmodel.PollAndSurveyViewModel
-import kotlinx.android.synthetic.main.fragment_poll_and_survey.*
 
 class PollAndSurveyFragment : Fragment() {
 
     private lateinit var govtWorkNewsAdapter: PollAndSurveyAdapter
     private lateinit var settingsViewModel: PollAndSurveyViewModel
+    private var _binding: FragmentPollAndSurveyBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_poll_and_survey, container, false)
+    ): View {
+        //return inflater.inflate(R.layout.fragment_poll_and_survey, container, false)
+        _binding = FragmentPollAndSurveyBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +53,7 @@ class PollAndSurveyFragment : Fragment() {
             handleResponseDistrictPollRating(it)
         })
 
-        btSubmitPollAndSurvey.setOnClickListener {
+        binding.btSubmitPollAndSurvey.setOnClickListener {
             if (govtWorkNewsAdapter.getPollList().isNotEmpty() && isAllAnswerSubmitted()) {
                 val pollListQuestions = ArrayList<String>()
                 val pollListAnswers = ArrayList<String>()
@@ -60,8 +64,8 @@ class PollAndSurveyFragment : Fragment() {
                 }
 
                 if (isConnected(requireContext())) {
-                    btSubmitPollAndSurvey.visibility = View.INVISIBLE
-                    pbSubmitPollAndSurvey.visibility = View.VISIBLE
+                    binding.btSubmitPollAndSurvey.visibility = View.INVISIBLE
+                    binding.pbSubmitPollAndSurvey.visibility = View.VISIBLE
 
                     val commaSeparatedStringQuestions =
                         //pollListQuestions.joinToString { "\'${it}\'" }
@@ -93,15 +97,15 @@ class PollAndSurveyFragment : Fragment() {
     }
 
     private fun handleResponseDistrictPollRating(commonResponse: CommonResponse?) {
-        pbSubmitPollAndSurvey.visibility = View.GONE
-        btSubmitPollAndSurvey.visibility = View.VISIBLE
+        binding.pbSubmitPollAndSurvey.visibility = View.GONE
+        binding.btSubmitPollAndSurvey.visibility = View.VISIBLE
 
         if (null != commonResponse) {
             requireContext().setUserPoints(commonResponse.user_points)
             //rating is done
-            btSubmitPollAndSurvey.visibility = View.GONE
-            tvGive_rate_get_10_point.visibility = View.GONE
-            tvRatingDone.visibility = View.VISIBLE
+            binding.btSubmitPollAndSurvey.visibility = View.GONE
+            binding.tvGiveRateGet10Point.visibility = View.GONE
+            binding.tvRatingDone.visibility = View.VISIBLE
             showAlertDialog(commonResponse.message)
         } else {
             showSnackBar(getString(R.string.something_went_wrong), requireActivity())
@@ -109,19 +113,19 @@ class PollAndSurveyFragment : Fragment() {
     }
 
     private fun handleResponse(districtPollListResponse: DistrictPollListResponse?) {
-        rvPollAndSurvey.visibility = View.VISIBLE
-        pbPollAndSurvey.visibility = View.GONE
+        binding.rvPollAndSurvey.visibility = View.VISIBLE
+        binding.pbPollAndSurvey.visibility = View.GONE
 
         if (null != districtPollListResponse) {
             if (districtPollListResponse.rating_status.isNotEmpty()) {
                 //already rating is done
-                btSubmitPollAndSurvey.visibility = View.GONE
-                tvGive_rate_get_10_point.visibility = View.GONE
-                tvRatingDone.visibility = View.VISIBLE
+                binding.btSubmitPollAndSurvey.visibility = View.GONE
+                binding.tvGiveRateGet10Point.visibility = View.GONE
+                binding.tvRatingDone.visibility = View.VISIBLE
             } else {
-                btSubmitPollAndSurvey.visibility = View.VISIBLE
-                tvGive_rate_get_10_point.visibility = View.VISIBLE
-                tvRatingDone.visibility = View.GONE
+                binding.btSubmitPollAndSurvey.visibility = View.VISIBLE
+                binding.tvGiveRateGet10Point.visibility = View.VISIBLE
+                binding.tvRatingDone.visibility = View.GONE
             }
 
             if (null != districtPollListResponse.poll_list && districtPollListResponse.poll_list.isNotEmpty()) {
@@ -144,7 +148,7 @@ class PollAndSurveyFragment : Fragment() {
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)),
             0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.text = greenText
+        binding.tvGiveRateGet10Point.text = greenText
 
         //val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
         val yellowText = SpannableString(requireActivity().getPollPoints())
@@ -154,14 +158,14 @@ class PollAndSurveyFragment : Fragment() {
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        tvGive_rate_get_10_point.append(yellowText)
+        binding.tvGiveRateGet10Point.append(yellowText)
 
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
         thirdText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)),
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.append(thirdText)
+        binding.tvGiveRateGet10Point.append(thirdText)
     }
 
     private fun setupList() {
@@ -173,13 +177,13 @@ class PollAndSurveyFragment : Fragment() {
                 //browserIntent(this, it.website!!)
             }
         )
-        rvPollAndSurvey.adapter = govtWorkNewsAdapter
+        binding.rvPollAndSurvey.adapter = govtWorkNewsAdapter
     }
 
     fun refreshPollAndSurvey() {
         if (isConnected(requireContext())) {
-            pbPollAndSurvey.visibility = View.VISIBLE
-            rvPollAndSurvey.visibility = View.GONE
+            binding.pbPollAndSurvey.visibility = View.VISIBLE
+            binding.rvPollAndSurvey.visibility = View.GONE
             settingsViewModel.getGovtWorkList(
                 ((activity as PollAndSurveyActivity).getDistrictId()),
                 SPreferenceManager.getInstance(requireContext()).session

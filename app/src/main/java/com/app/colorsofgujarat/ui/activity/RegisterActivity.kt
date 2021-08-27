@@ -15,10 +15,10 @@ import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityRegisterBinding
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.pojo.request.RegisterRequest
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
-import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -26,13 +26,15 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var settingsResponse: SettingsResponse
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
 
-        btSubmitRegister.setOnClickListener {
+        binding.btSubmitRegister.setOnClickListener {
             if (isConnected(this)) {
                 if (areFieldsValid()) {
                     showAlertDialog()
@@ -54,8 +56,8 @@ class RegisterActivity : AppCompatActivity() {
             SPreferenceManager.getInstance(this)
                 .saveSession(
                     this.settingsResponse,
-                    et_mobile.text.toString(),
-                    et_name.text.toString()
+                    binding.etMobile.text.toString(),
+                    binding.etName.text.toString()
                 )
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
@@ -71,13 +73,13 @@ class RegisterActivity : AppCompatActivity() {
         } else if (districtId == "-1") {
             showSnackBar(getString(R.string.invalid_district))
             return false
-        } else if (TextUtils.isEmpty(et_city.text.toString())) {
+        } else if (TextUtils.isEmpty(binding.etCity.text.toString())) {
             showSnackBar(getString(R.string.invalid_city))
             return false
-        } else if (TextUtils.isEmpty(et_name.text.toString())) {
+        } else if (TextUtils.isEmpty(binding.etName.text.toString())) {
             showSnackBar(getString(R.string.invalid_name))
             return false
-        } else if (TextUtils.isEmpty(et_mobile.text.toString()) || et_mobile.text.toString().length < 10) {
+        } else if (TextUtils.isEmpty(binding.etMobile.text.toString()) || binding.etMobile.text.toString().length < 10) {
             showSnackBar(getString(R.string.invalid_phone))
             return false
         }
@@ -92,9 +94,9 @@ class RegisterActivity : AppCompatActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        sp_district.adapter = adapter
+        binding.spDistrict.adapter = adapter
 
-        sp_district.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.spDistrict.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,
@@ -111,8 +113,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun handleResponse(settingsResponse: SettingsResponse?) {
-        pbRegister.visibility = View.GONE
-        btSubmitRegister.visibility = View.VISIBLE
+        binding.pbRegister.visibility = View.GONE
+        binding.btSubmitRegister.visibility = View.VISIBLE
         if (null != settingsResponse) {
             this.settingsResponse = settingsResponse
             districtList.add(SettingsResponse.District("-1", "તમારો જિલ્લો પસંદ કરો"))
@@ -125,8 +127,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun fetchSettings() {
         if (isConnected(this)) {
-            pbRegister.visibility = View.VISIBLE
-            btSubmitRegister.visibility = View.INVISIBLE
+            binding.pbRegister.visibility = View.VISIBLE
+            binding.btSubmitRegister.visibility = View.INVISIBLE
             settingsViewModel.getSettings("")
         } else {
             showSnackBar(getString(R.string.no_internet), this)
@@ -135,23 +137,25 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun showAlertDialog() {
         val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-        alertDialogBuilder.setMessage("Hey ! Friends for the participate in Quiz & Contest, Please Confirm Your Mobile No. ("
-            + et_mobile.text.toString() +") once Again.\n" +
-                "You Can't change it later.")
+        alertDialogBuilder.setMessage(
+            "Hey ! Friends for the participate in Quiz & Contest, Please Confirm Your Mobile No. ("
+                    + binding.etMobile.text.toString() + ") once Again.\n" +
+                    "You Can't change it later."
+        )
         alertDialogBuilder.setCancelable(false)
 
         alertDialogBuilder.setPositiveButton(
             getString(R.string.submit)
         ) { dialog, _ ->
             dialog.dismiss()
-            pbRegister.visibility = View.VISIBLE
-            btSubmitRegister.visibility = View.INVISIBLE
+            binding.pbRegister.visibility = View.VISIBLE
+            binding.btSubmitRegister.visibility = View.INVISIBLE
             settingsViewModel.registration(
                 RegisterRequest(
                     districtId,
-                    et_city.text.toString(),
-                    et_name.text.toString(),
-                    et_mobile.text.toString()
+                    binding.etCity.text.toString(),
+                    binding.etName.text.toString(),
+                    binding.etMobile.text.toString()
                 )
             )
         }
@@ -170,5 +174,4 @@ class RegisterActivity : AppCompatActivity() {
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
             .setTextColor(ContextCompat.getColor(this, R.color.red_CC252C))
     }
-
 }

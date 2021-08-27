@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.NotificationAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityNotificationBinding
 import com.app.colorsofgujarat.pojo.NotificationResponse
 import com.app.colorsofgujarat.viewmodel.UserAdviseViewModel
-import kotlinx.android.synthetic.main.activity_notification.*
 
 class NotificationActivity : ExtendedToolbarActivity() {
 
@@ -18,12 +18,14 @@ class NotificationActivity : ExtendedToolbarActivity() {
     private var loading = false
     private var pageNo = 0
     private lateinit var govtWorkViewModel: UserAdviseViewModel
+    private lateinit var binding: ActivityNotificationBinding
 
     override val layoutId: Int
         get() = R.layout.activity_notification
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityNotificationBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.notification))
         setupList()
@@ -39,8 +41,8 @@ class NotificationActivity : ExtendedToolbarActivity() {
 
     private fun handleResponse(userAdviseResponse: NotificationResponse) {
         loading = false
-        rvPollAndSurvey.visibility = View.VISIBLE
-        pbQuestionSuggestion.visibility = View.GONE
+        binding.rvPollAndSurvey.visibility = View.VISIBLE
+        binding.pbQuestionSuggestion.visibility = View.GONE
 
         when {
             !userAdviseResponse.notification_list.isNullOrEmpty() -> {
@@ -59,9 +61,9 @@ class NotificationActivity : ExtendedToolbarActivity() {
 
     private fun setupList() {
         val layoutManager = LinearLayoutManager(this)
-        rvPollAndSurvey.layoutManager = layoutManager
+        binding.rvPollAndSurvey.layoutManager = layoutManager
 
-        rvPollAndSurvey.addOnScrollListener(object :
+        binding.rvPollAndSurvey.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -79,15 +81,15 @@ class NotificationActivity : ExtendedToolbarActivity() {
         })
 
         govtWorkNewsAdapter = NotificationAdapter()
-        rvPollAndSurvey.adapter = govtWorkNewsAdapter
+        binding.rvPollAndSurvey.adapter = govtWorkNewsAdapter
     }
 
     private fun getNews() {
         if (isConnected(this)) {
             pageNo = 0
             loading = true
-            pbQuestionSuggestion.visibility = View.VISIBLE
-            rvPollAndSurvey.visibility = View.GONE
+            binding.pbQuestionSuggestion.visibility = View.VISIBLE
+            binding.rvPollAndSurvey.visibility = View.GONE
             govtWorkViewModel.getNotification(
                 SPreferenceManager.getInstance(this@NotificationActivity).session,
                 pageNo.toString(),

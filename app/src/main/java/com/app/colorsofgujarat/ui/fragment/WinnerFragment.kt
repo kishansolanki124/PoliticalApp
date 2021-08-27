@@ -14,12 +14,12 @@ import com.app.colorsofgujarat.adapter.WinnerAdapter
 import com.app.colorsofgujarat.apputils.EndlessRecyclerOnScrollListener
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.FragmentWinnerBinding
 import com.app.colorsofgujarat.pojo.WinnerListResponse
 import com.app.colorsofgujarat.ui.activity.HomeActivity
 import com.app.colorsofgujarat.ui.activity.WinnerNamesActivity
 import com.app.colorsofgujarat.ui.activity.WinnerPrizeDetailActivity
 import com.app.colorsofgujarat.viewmodel.WinnerViewModel
-import kotlinx.android.synthetic.main.fragment_winner.*
 
 class WinnerFragment : Fragment() {
 
@@ -28,12 +28,17 @@ class WinnerFragment : Fragment() {
     private var loading = false
     private var pageNo = 0
     private lateinit var settingsViewModel: WinnerViewModel
+    private var _binding: FragmentWinnerBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_winner, container, false)
+    ): View {
+        //return inflater.inflate(R.layout.fragment_winner, container, false)
+        _binding = FragmentWinnerBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,8 +54,8 @@ class WinnerFragment : Fragment() {
 
         if (isConnected(requireContext())) {
             loading = true
-            rvWinner.visibility = View.GONE
-            pbWinnerList.visibility = View.VISIBLE
+            binding.rvWinner.visibility = View.GONE
+            binding.pbWinnerList.visibility = View.VISIBLE
             settingsViewModel.getWinnerList(
                 pageNo.toString(),
                 "10"
@@ -63,9 +68,9 @@ class WinnerFragment : Fragment() {
     private fun setupList() {
 
         val layoutManager = LinearLayoutManager(requireContext())
-        rvWinner.layoutManager = layoutManager
+        binding.rvWinner.layoutManager = layoutManager
 
-        rvWinner.addOnScrollListener(object :
+        binding.rvWinner.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -98,13 +103,13 @@ class WinnerFragment : Fragment() {
                 )
             }
         )
-        rvWinner.adapter = govtWorkNewsAdapter
+        binding.rvWinner.adapter = govtWorkNewsAdapter
     }
 
     private fun handleResponse(livePollListResponse: WinnerListResponse?) {
         loading = false
-        rvWinner.visibility = View.VISIBLE
-        pbWinnerList.visibility = View.GONE
+        binding.rvWinner.visibility = View.VISIBLE
+        binding.pbWinnerList.visibility = View.GONE
 
         if (null != livePollListResponse) {
             when {

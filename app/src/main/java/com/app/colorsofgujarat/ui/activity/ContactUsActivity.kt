@@ -13,14 +13,15 @@ import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.hideKeyboard
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityContactUsBinding
 import com.app.colorsofgujarat.pojo.CommonResponse
 import com.app.colorsofgujarat.pojo.ContactUsResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
-import kotlinx.android.synthetic.main.activity_contact_us.*
 
 class ContactUsActivity : ExtendedToolbarActivity() {
 
     private lateinit var settingsViewModel: SettingsViewModel
+    private lateinit var binding: ActivityContactUsBinding
 
     override val layoutId: Int
         get() = R.layout.activity_contact_us
@@ -28,7 +29,7 @@ class ContactUsActivity : ExtendedToolbarActivity() {
     @SuppressLint("QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding  = ActivityContactUsBinding.inflate(layoutInflater)
         setToolbarTitle(getString(R.string.Contact_Us))
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
@@ -41,38 +42,38 @@ class ContactUsActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            cvContactUs.visibility = View.GONE
-            pbContactUs.visibility = View.VISIBLE
+            binding.cvContactUs.visibility = View.GONE
+            binding.pbContactUs.visibility = View.VISIBLE
             settingsViewModel.getContactUs()
         } else {
             showSnackBar(getString(R.string.no_internet), this)
         }
 
-        tvPhone.setOnClickListener {
+        binding.tvPhone.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${tvPhone.text}")
+            intent.data = Uri.parse("tel:${binding.tvPhone.text}")
             startActivity(intent)
         }
 
-        tvEmail.setOnClickListener {
+        binding.tvEmail.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO)
             intent.data = Uri.parse("mailto:")
-            intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(tvEmail.text.toString()))
+            intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(binding.tvEmail.text.toString()))
             intent.putExtra(Intent.EXTRA_SUBJECT, "Contact Us")
             startActivity(Intent.createChooser(intent, "Email via..."))
         }
 
-        btSendContactUs.setOnClickListener {
+        binding.btSendContactUs.setOnClickListener {
             if (fieldsValid()) {
                 if (isConnected(this)) {
                     hideKeyboard(this)
-                    btSendContactUs.visibility = View.INVISIBLE
-                    pbSendContactUs.visibility = View.VISIBLE
+                    binding.btSendContactUs.visibility = View.INVISIBLE
+                    binding.pbSendContactUs.visibility = View.VISIBLE
                     settingsViewModel.inquiry(
-                        etName.text.toString(),
-                        etMobile.text.toString(),
-                        etEmail.text.toString(),
-                        etSuggestion.text.toString()
+                        binding.etName.text.toString(),
+                        binding.etMobile.text.toString(),
+                        binding.etEmail.text.toString(),
+                        binding.etSuggestion.text.toString()
                     )
                 } else {
                     showSnackBar(getString(R.string.no_internet))
@@ -82,13 +83,13 @@ class ContactUsActivity : ExtendedToolbarActivity() {
     }
 
     private fun handleContactUsResponse(contactUsResponse: CommonResponse?) {
-        btSendContactUs.visibility = View.VISIBLE
-        pbSendContactUs.visibility = View.GONE
+        binding.btSendContactUs.visibility = View.VISIBLE
+        binding.pbSendContactUs.visibility = View.GONE
         if (null != contactUsResponse) {
-            etName.setText("")
-            etMobile.setText("")
-            etEmail.setText("")
-            etSuggestion.setText("")
+            binding.etName.setText("")
+            binding.etMobile.setText("")
+            binding.etEmail.setText("")
+            binding.etSuggestion.setText("")
             showAlertDialog(contactUsResponse.message)
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
@@ -96,16 +97,16 @@ class ContactUsActivity : ExtendedToolbarActivity() {
     }
 
     private fun fieldsValid(): Boolean {
-        if (TextUtils.isEmpty(etName.text.toString())) {
+        if (TextUtils.isEmpty(binding.etName.text.toString())) {
             showSnackBar(getString(R.string.invalid_name))
             return false
-        } else if (TextUtils.isEmpty(etEmail.text.toString())) {
+        } else if (TextUtils.isEmpty(binding.etEmail.text.toString())) {
             showSnackBar(getString(R.string.invalid_email))
             return false
-        } else if (TextUtils.isEmpty(etMobile.text.toString()) || etMobile.text.toString().length < 10) {
+        } else if (TextUtils.isEmpty(binding.etMobile.text.toString()) || binding.etMobile.text.toString().length < 10) {
             showSnackBar(getString(R.string.invalid_phone))
             return false
-        } else if (TextUtils.isEmpty(etSuggestion.text.toString())) {
+        } else if (TextUtils.isEmpty(binding.etSuggestion.text.toString())) {
             showSnackBar(getString(R.string.invalid_question_comment))
             return false
         }
@@ -114,17 +115,17 @@ class ContactUsActivity : ExtendedToolbarActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun handleResponse(staticPageResponse: ContactUsResponse?) {
-        pbContactUs.visibility = View.GONE
-        cvContactUs.visibility = View.VISIBLE
+        binding.pbContactUs.visibility = View.GONE
+        binding.cvContactUs.visibility = View.VISIBLE
         if (null != staticPageResponse) {
 
-            wbMap.settings.javaScriptEnabled = true
-            wbMap.loadData(staticPageResponse.contact_us[0].google_map, "text/html", "utf-8")
+            binding.wbMap.settings.javaScriptEnabled = true
+            binding.wbMap.loadData(staticPageResponse.contact_us[0].google_map, "text/html", "utf-8")
 
-            tvName.text = staticPageResponse.contact_us[0].name
-            tvAddress.text = staticPageResponse.contact_us[0].address
-            tvPhone.text = staticPageResponse.contact_us[0].phone
-            tvEmail.text = staticPageResponse.contact_us[0].email
+            binding.tvName.text = staticPageResponse.contact_us[0].name
+            binding.tvAddress.text = staticPageResponse.contact_us[0].address
+            binding.tvPhone.text = staticPageResponse.contact_us[0].phone
+            binding.tvEmail.text = staticPageResponse.contact_us[0].email
         } else {
             showSnackBar(getString(R.string.something_went_wrong))
         }

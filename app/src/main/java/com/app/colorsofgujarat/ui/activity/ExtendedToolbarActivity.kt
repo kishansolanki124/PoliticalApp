@@ -6,52 +6,55 @@ import android.view.View
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import com.app.colorsofgujarat.apputils.hideKeyboard
-import kotlinx.android.synthetic.main.common_toolbar.*
+import com.app.colorsofgujarat.databinding.CommonToolbarBinding
 
 abstract class ExtendedToolbarActivity : AppCompatActivity() {
 
     abstract val layoutId: Int
+    private lateinit var binding: CommonToolbarBinding
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = CommonToolbarBinding.inflate(layoutInflater)
         setContentView(layoutId)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         //ibBack.visibility = View.VISIBLE
         //ivNavigation.visibility = View.VISIBLE
 
-        ibBack.setOnClickListener {
+        binding.ibBack.setOnClickListener {
             hideKeyboard(this)
             onBackPressed()
         }
 
-        ivNotification.setOnClickListener {
+        binding.ivNotification.setOnClickListener {
             hideUnreadCount()
             startActivity(Intent(this, NotificationActivity::class.java))
         }
     }
 
     fun showUnreadCount() {
-        ivNotificationUnread.visibility = View.VISIBLE
+        binding.ivNotificationUnread.visibility = View.VISIBLE
     }
 
     fun hideUnreadCount() {
-        ivNotificationUnread.visibility = View.GONE
+        binding.ivNotificationUnread.visibility = View.GONE
     }
 
     fun setToolbarTitle(title: String?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        tvTitle.visibility = View.VISIBLE
-        tvTitle.text = title
+        binding.tvTitle.visibility = View.VISIBLE
+        binding.tvTitle.text = title
         setTitle("")
     }
 
     fun hideBackButton() {
-        ibBack.visibility = View.GONE
+        binding.ibBack.visibility = View.GONE
     }
 
     fun showNotificationIcon() {
-        ivNotification.visibility = View.VISIBLE
+        binding.ivNotification.visibility = View.VISIBLE
     }
 
 //    fun hideappLogo() {

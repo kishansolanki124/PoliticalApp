@@ -13,10 +13,10 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.QuestionsAndSuggestionAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityQuestionSuggestionBinding
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.pojo.UserAdviseResponse
 import com.app.colorsofgujarat.viewmodel.UserAdviseViewModel
-import kotlinx.android.synthetic.main.activity_question_suggestion.*
 
 class QuestionSuggestionActivity : ExtendedToolbarActivity() {
 
@@ -28,6 +28,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     private var districtId = ""
     private var districtPosition = 0
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
+    private lateinit var binding: ActivityQuestionSuggestionBinding
 
     override val layoutId: Int
         get() = R.layout.activity_question_suggestion
@@ -42,8 +43,10 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
                 }
             }
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityQuestionSuggestionBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.que_suggestion))
         setupList()
@@ -55,7 +58,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
             handleResponse(it)
         })
 
-        tvAddQuestionSuggestion.setOnClickListener {
+        binding.tvAddQuestionSuggestion.setOnClickListener {
             resultLauncher.launch(
                 Intent(this, AddQuestionSuggestionActivity::class.java)
                     .putExtra(AppConstants.DISTRICTID, districtPosition)
@@ -65,13 +68,13 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
 
     private fun handleResponse(userAdviseResponse: UserAdviseResponse?) {
         loading = false
-        rvPollAndSurvey.visibility = View.VISIBLE
-        pbQuestionSuggestion.visibility = View.GONE
+        binding.rvPollAndSurvey.visibility = View.VISIBLE
+        binding.pbQuestionSuggestion.visibility = View.GONE
 
         if (null != userAdviseResponse) {
             when {
                 userAdviseResponse.user_advice_list.isNotEmpty() -> {
-                    totalRecords =userAdviseResponse.total_records
+                    totalRecords = userAdviseResponse.total_records
                     addItems(userAdviseResponse.user_advice_list)
                 }
                 pageNo == 0 -> {
@@ -90,9 +93,9 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
     private fun setupList() {
 
         val layoutManager = LinearLayoutManager(this)
-        rvPollAndSurvey.layoutManager = layoutManager
+        binding.rvPollAndSurvey.layoutManager = layoutManager
 
-        rvPollAndSurvey.addOnScrollListener(object :
+        binding.rvPollAndSurvey.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -117,7 +120,7 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
                 shareIntent(it.title, it.up_pro_img, this)
             }
         )
-        rvPollAndSurvey.adapter = govtWorkNewsAdapter
+        binding.rvPollAndSurvey.adapter = govtWorkNewsAdapter
     }
 
     private fun setupDistrictSpinner() {
@@ -130,11 +133,11 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spDistrictQuestionSuggestion.adapter = adapter
+        binding.spDistrictQuestionSuggestion.adapter = adapter
 
-        spDistrictQuestionSuggestion.setSelection(getUserSelectedDistrictIndex())
+        binding.spDistrictQuestionSuggestion.setSelection(getUserSelectedDistrictIndex())
 
-        spDistrictQuestionSuggestion.onItemSelectedListener =
+        binding.spDistrictQuestionSuggestion.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -158,8 +161,8 @@ class QuestionSuggestionActivity : ExtendedToolbarActivity() {
             pageNo = 0
             loading = true
             govtWorkNewsAdapter.reset()
-            pbQuestionSuggestion.visibility = View.VISIBLE
-            rvPollAndSurvey.visibility = View.GONE
+            binding.pbQuestionSuggestion.visibility = View.VISIBLE
+            binding.rvPollAndSurvey.visibility = View.GONE
             govtWorkViewModel.getUserAdviseList(districtId, pageNo.toString(), "10")
         } else {
             showSnackBar(getString(R.string.no_internet))

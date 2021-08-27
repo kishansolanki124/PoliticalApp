@@ -14,10 +14,10 @@ import app.app.patidarsaurabh.apputils.AppConstants
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.adapter.DharasabhyoAdapter
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityDharasabhyoBinding
 import com.app.colorsofgujarat.pojo.MLAListResponse
 import com.app.colorsofgujarat.pojo.SettingsResponse
 import com.app.colorsofgujarat.viewmodel.MLAViewModel
-import kotlinx.android.synthetic.main.activity_dharasabhyo.*
 
 class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
@@ -29,6 +29,7 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
     private var districtList: ArrayList<SettingsResponse.District> = ArrayList()
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var govtWorkNewsAdapter: DharasabhyoAdapter
+    private lateinit var binding: ActivityDharasabhyoBinding
 
     override val layoutId: Int
         get() = R.layout.activity_dharasabhyo
@@ -36,6 +37,7 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivityDharasabhyoBinding.inflate(layoutInflater)
         setToolbarTitle(getString(R.string.dharasabhyo))
         setupList()
 
@@ -50,8 +52,8 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
     private fun handleResponse(mlaListResponse: MLAListResponse?) {
         loading = false
-        pbMLAs.visibility = View.GONE
-        rvMLAs.visibility = View.VISIBLE
+        binding.pbMLAs.visibility = View.GONE
+        binding.rvMLAs.visibility = View.VISIBLE
         if (null != mlaListResponse) {
             when {
                 mlaListResponse.gov_mla_list.isNotEmpty() -> {
@@ -76,8 +78,8 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
         if (isConnected(this)) {
             pageNo = 0
             loading = true
-            pbMLAs.visibility = View.VISIBLE
-            rvMLAs.visibility = View.GONE
+            binding.pbMLAs.visibility = View.VISIBLE
+            binding.rvMLAs.visibility = View.GONE
             govtWorkNewsAdapter.reset()
             mlaViewModel.getGovtWorkList(districtId, pageNo.toString(), "10")
         } else {
@@ -87,9 +89,9 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
 
     private fun setupList() {
         layoutManager = GridLayoutManager(this, 2)
-        rvMLAs.layoutManager = layoutManager
+        binding.rvMLAs.layoutManager = layoutManager
 
-        rvMLAs.addOnScrollListener(object :
+        binding.rvMLAs.addOnScrollListener(object :
             EndlessRecyclerOnScrollListener(layoutManager, 3) {
             override fun onLoadMore() {
                 if (!loading && totalRecords != govtWorkNewsAdapter.itemCount) {
@@ -113,7 +115,7 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
                 //browserIntent(this, it.website!!)
             }
         )
-        rvMLAs.adapter = govtWorkNewsAdapter
+        binding.rvMLAs.adapter = govtWorkNewsAdapter
     }
 
     private fun addItems(govMlaList: ArrayList<MLAListResponse.GovMla>) {
@@ -141,11 +143,11 @@ class DharasabhyoListActivity : ExtendedToolbarActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spDistrict.adapter = adapter
+        binding.spDistrict.adapter = adapter
 
-        spDistrict.setSelection(getUserSelectedDistrictIndex())
+        binding.spDistrict.setSelection(getUserSelectedDistrictIndex())
 
-        spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,

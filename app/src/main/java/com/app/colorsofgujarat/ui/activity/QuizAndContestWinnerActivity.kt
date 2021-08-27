@@ -11,22 +11,25 @@ import com.app.colorsofgujarat.apputils.SPreferenceManager
 import com.app.colorsofgujarat.apputils.isConnected
 import com.app.colorsofgujarat.apputils.openBrowser
 import com.app.colorsofgujarat.apputils.showSnackBar
+import com.app.colorsofgujarat.databinding.ActivityQuizAndContestWinnerBinding
 import com.app.colorsofgujarat.pojo.QuizAndContestRunningResponse
 import com.app.colorsofgujarat.viewmodel.QuizAndContestViewModel
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_quiz_and_contest_winner.*
 
 class QuizAndContestWinnerActivity : ExtendedToolbarActivity() {
 
     private var qid = ""
     private var browserURL = ""
     private lateinit var settingsViewModel: QuizAndContestViewModel
+    private lateinit var binding: ActivityQuizAndContestWinnerBinding
 
     override val layoutId: Int
         get() = R.layout.activity_quiz_and_contest_winner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityQuizAndContestWinnerBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.quiz_and_contest))
 
@@ -39,8 +42,8 @@ class QuizAndContestWinnerActivity : ExtendedToolbarActivity() {
         })
 
         if (isConnected(this)) {
-            cvQuizAndContestWinner.visibility = View.GONE
-            pbQuizAndContestWinner.visibility = View.VISIBLE
+            binding.cvQuizAndContestWinner.visibility = View.GONE
+            binding.pbQuizAndContestWinner.visibility = View.VISIBLE
             settingsViewModel.getQuizAndContestDetail(
                 qid,
                 SPreferenceManager.getInstance(this).session
@@ -49,14 +52,14 @@ class QuizAndContestWinnerActivity : ExtendedToolbarActivity() {
             showSnackBar(getString(R.string.no_internet))
         }
 
-        ivSponsor.setOnClickListener {
+        binding.ivSponsor.setOnClickListener {
             openBrowser(this, browserURL)
         }
     }
 
     private fun handleResponse(quizAndContestRunningResponse: QuizAndContestRunningResponse?) {
-        pbQuizAndContestWinner.visibility = View.GONE
-        cvQuizAndContestWinner.visibility = View.VISIBLE
+        binding.pbQuizAndContestWinner.visibility = View.GONE
+        binding.cvQuizAndContestWinner.visibility = View.VISIBLE
 
         if (null != quizAndContestRunningResponse) {
             setupViews(quizAndContestRunningResponse)
@@ -66,17 +69,18 @@ class QuizAndContestWinnerActivity : ExtendedToolbarActivity() {
     @SuppressLint("SetTextI18n")
     private fun setupViews(quizAndContestRunningResponse: QuizAndContestRunningResponse) {
         if (!quizAndContestRunningResponse.quiz_detail[0].sponser_img.isNullOrEmpty()) {
-            tvSponsor.visibility = View.VISIBLE
+            binding.tvSponsor.visibility = View.VISIBLE
             Glide.with(this)
                 .load(quizAndContestRunningResponse.quiz_detail[0].sponser_img)
-                .into(ivSponsor)
+                .into(binding.ivSponsor)
         } else {
-            tvSponsor.visibility = View.GONE
+            binding.tvSponsor.visibility = View.GONE
         }
 
-        tvQuestionSuggestion.text = quizAndContestRunningResponse.quiz_question[0].question
-        tvAnswer.text = "જવાબ: " + quizAndContestRunningResponse.quiz_detail[0].correct_answer
-        tvQuizWinnerNames.text = HtmlCompat.fromHtml(
+        binding.tvQuestionSuggestion.text = quizAndContestRunningResponse.quiz_question[0].question
+        binding.tvAnswer.text =
+            "જવાબ: " + quizAndContestRunningResponse.quiz_detail[0].correct_answer
+        binding.tvQuizWinnerNames.text = HtmlCompat.fromHtml(
             quizAndContestRunningResponse.quiz_detail[0].quiz_winner,
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )

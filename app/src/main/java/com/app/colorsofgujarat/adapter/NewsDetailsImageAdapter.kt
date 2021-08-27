@@ -1,12 +1,10 @@
 package com.app.colorsofgujarat.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.app.colorsofgujarat.databinding.NewsDetailsImageItemBinding
 import com.bumptech.glide.Glide
-import com.app.colorsofgujarat.R
-import kotlinx.android.synthetic.main.news_details_image_item.view.*
 
 class NewsDetailsImageAdapter(
     private val mListener: (String?, Int) -> Unit
@@ -16,8 +14,15 @@ class NewsDetailsImageAdapter(
     private var list: List<String> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
+        val binding =
+            NewsDetailsImageItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+
         return HomeOffersViewHolder(
-            parent
+            binding
         )
     }
 
@@ -37,19 +42,12 @@ class NewsDetailsImageAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    class HomeOffersViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        constructor(parent: ViewGroup) : this(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.news_details_image_item,
-                parent, false
-            )
-        )
-
+    class HomeOffersViewHolder(private val binding: NewsDetailsImageItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(viewPagerImageModel: String) {
-            Glide.with(itemView.ivHomeViewPager.context)
+            Glide.with(binding.ivHomeViewPager.context)
                 .load(viewPagerImageModel)
-                .into(itemView.ivHomeViewPager)
+                .into(binding.ivHomeViewPager)
         }
     }
 }

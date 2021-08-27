@@ -1,12 +1,10 @@
 package com.app.colorsofgujarat.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.databinding.CommentItemBinding
 import com.app.colorsofgujarat.pojo.GovtWorkDetailResponse
-import kotlinx.android.synthetic.main.comment_item.view.*
 
 class NewsCommentAdapter(
     private val itemClickCall: (GovtWorkDetailResponse.UserComment) -> Unit,
@@ -17,11 +15,18 @@ class NewsCommentAdapter(
     private var list: ArrayList<GovtWorkDetailResponse.UserComment> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.comment_item, parent, false)
+//        val view =
+//            LayoutInflater.from(parent.context)
+//                .inflate(R.layout.comment_item, parent, false)
+        val binding =
+            CommentItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
+            binding, itemClickCall, itemClickWeb
         )
     }
 
@@ -42,10 +47,10 @@ class NewsCommentAdapter(
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
-        view: View,
+        private val binding: CommentItemBinding,
         private val itemClickCall: (GovtWorkDetailResponse.UserComment) -> Unit,
         private val itemClickWeb: (GovtWorkDetailResponse.UserComment) -> Unit
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
 //        constructor(parent: ViewGroup) : this(
 //            LayoutInflater.from(parent.context).inflate(
@@ -58,8 +63,8 @@ class NewsCommentAdapter(
             newsPortal: GovtWorkDetailResponse.UserComment
         ) {
             with(newsPortal) {
-                itemView.tvCommentBy.text = newsPortal.user_name
-                itemView.tvComment.text = newsPortal.comment
+                binding.tvCommentBy.text = newsPortal.user_name
+                binding.tvComment.text = newsPortal.comment
 
 //                if (newsPortal.name.isNullOrEmpty()) {
 //                    itemView.tvNewsPortalTitle.visibility = View.GONE

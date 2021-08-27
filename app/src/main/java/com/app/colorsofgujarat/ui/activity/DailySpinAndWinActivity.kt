@@ -14,11 +14,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityDailySpinAndWinBinding
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.pojo.ScratchCardResponse
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.bluehomestudio.luckywheel.WheelItem
-import kotlinx.android.synthetic.main.activity_daily_spin_and_win.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.util.*
@@ -33,12 +33,16 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
     private var points = 0
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
+    private lateinit var binding: ActivityDailySpinAndWinBinding
+
     override val layoutId: Int
         get() = R.layout.activity_daily_spin_and_win
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding =  ActivityDailySpinAndWinBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.daily_spin_and_win))
 
@@ -55,12 +59,12 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
                 setUserPoints(it.user_points)
 
                 Handler(Looper.getMainLooper()).postDelayed({
-                    lwv.visibility = View.GONE
-                    tvSpinAndWin.visibility = View.GONE
-                    tvSpinAlreadyDone.visibility = View.VISIBLE
-                    tvTNCHeader.visibility = View.VISIBLE
-                    tvTNC.visibility = View.VISIBLE
-                    tvSpinAlreadyDone.text = it.message
+                    binding.lwv.visibility = View.GONE
+                    binding.tvSpinAndWin.visibility = View.GONE
+                    binding.tvSpinAlreadyDone.visibility = View.VISIBLE
+                    binding.tvTNCHeader.visibility = View.VISIBLE
+                    binding.tvTNC.visibility = View.VISIBLE
+                    binding.tvSpinAlreadyDone.text = it.message
                     //tvYourPoints.visibility = View.VISIBLE
 //                    tvYourPoints.text =
 //                        "Your Points Are: " + SPreferenceManager.getInstance(this).settings.user_points
@@ -103,7 +107,7 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
     }
 
     private fun showWinnerAnimation() {
-        viewKonfetti.build()
+        binding.viewKonfetti.build()
             .addColors(
                 ContextCompat.getColor(this, R.color.red_CC252C),
                 ContextCompat.getColor(this, R.color.red_light_2),
@@ -116,19 +120,19 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
             .setTimeToLive(2000L)
             .addShapes(Shape.Square, Shape.Circle)
             .addSizes(Size(12))
-            .setPosition(-50f, viewKonfetti.width + 50f, -50f, -50f)
+            .setPosition(-50f, binding.viewKonfetti.width + 50f, -50f, -50f)
             .streamFor(300, 3000L)
     }
 
     @SuppressLint("SetTextI18n")
     private fun handleResponse(scratchCardResponse: ScratchCardResponse?) {
-        lwv.visibility = View.VISIBLE
-        tvSpinAndWin.visibility = View.VISIBLE
-        tvTNCHeader.visibility = View.VISIBLE
-        tvTNC.visibility = View.VISIBLE
-        pbScratchCard.visibility = View.GONE
+        binding.lwv.visibility = View.VISIBLE
+        binding.tvSpinAndWin.visibility = View.VISIBLE
+        binding.tvTNCHeader.visibility = View.VISIBLE
+        binding.tvTNC.visibility = View.VISIBLE
+        binding.pbScratchCard.visibility = View.GONE
 
-        tvTNC.text = HtmlCompat.fromHtml(
+        binding.tvTNC.text = HtmlCompat.fromHtml(
             getTermsByName("Scratch Card"),
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
@@ -136,12 +140,12 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
         if (null != scratchCardResponse && scratchCardResponse.status == "1") {
             setupSpinWheel(scratchCardResponse)
         } else {
-            lwv.visibility = View.GONE
-            tvSpinAndWin.visibility = View.GONE
-            tvTNCHeader.visibility = View.VISIBLE
-            tvTNC.visibility = View.VISIBLE
-            tvSpinAlreadyDone.visibility = View.VISIBLE
-            tvSpinAlreadyDone.text = scratchCardResponse?.message
+            binding.lwv.visibility = View.GONE
+            binding.tvSpinAndWin.visibility = View.GONE
+            binding.tvTNCHeader.visibility = View.VISIBLE
+            binding.tvTNC.visibility = View.VISIBLE
+            binding.tvSpinAlreadyDone.visibility = View.VISIBLE
+            binding.tvSpinAlreadyDone.text = scratchCardResponse?.message
 //            tvYourPoints.visibility = View.VISIBLE
 //            tvYourPoints.text =
 //                "Your Points are: " + SPreferenceManager.getInstance(this).settings.user_points
@@ -272,11 +276,11 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
             )
         )
 
-        lwv.setTarget(randomNumber())
+        binding.lwv.setTarget(randomNumber())
 
-        lwv.addWheelItems(wheelItems)
+        binding.lwv.addWheelItems(wheelItems)
 
-        lwv.setLuckyWheelReachTheTarget {
+        binding.lwv.setLuckyWheelReachTheTarget {
             if (isConnected(this)) {
                 settingsViewModel.addScratchCard(
                     SPreferenceManager.getInstance(this).session,
@@ -309,24 +313,24 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
             )
         )
 
-        lwv.setTarget(1)
+        binding.lwv.setTarget(1)
 
-        lwv.addWheelItems(wheelItems)
+        binding.lwv.addWheelItems(wheelItems)
 
-        lwv.setLuckyWheelReachTheTarget {
+        binding.lwv.setLuckyWheelReachTheTarget {
 
         }
 
-        lwv.visibility = View.GONE
+        binding.lwv.visibility = View.GONE
     }
 
     private fun fetchScratchCard() {
         if (isConnected(this)) {
-            pbScratchCard.visibility = View.VISIBLE
-            lwv.visibility = View.GONE
-            tvSpinAndWin.visibility = View.GONE
-            tvTNCHeader.visibility = View.GONE
-            tvTNC.visibility = View.GONE
+            binding.pbScratchCard.visibility = View.VISIBLE
+            binding.lwv.visibility = View.GONE
+            binding.tvSpinAndWin.visibility = View.GONE
+            binding.tvTNCHeader.visibility = View.GONE
+            binding.tvTNC.visibility = View.GONE
             settingsViewModel.getScratchCard(SPreferenceManager.getInstance(this).session)
         } else {
             showSnackBar(getString(R.string.no_internet), this)
@@ -374,7 +378,7 @@ class DailySpinAndWinActivity : ExtendedToolbarActivity() {
         return numbers
     }
 
-    fun getRandomInt(min: Int, max: Int): Int {
+    private fun getRandomInt(min: Int, max: Int): Int {
         val random = Random()
         return random.nextInt(max - min + 1) + min
     }

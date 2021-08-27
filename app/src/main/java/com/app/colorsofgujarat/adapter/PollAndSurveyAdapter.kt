@@ -1,12 +1,10 @@
 package com.app.colorsofgujarat.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.databinding.PollAndSurveyItemBinding
 import com.app.colorsofgujarat.pojo.DistrictPollListResponse
-import kotlinx.android.synthetic.main.poll_and_survey_item.view.*
 
 class PollAndSurveyAdapter(
     private val itemClickCall: (DistrictPollListResponse.Poll) -> Unit,
@@ -18,11 +16,17 @@ class PollAndSurveyAdapter(
     private var pollOptionList: ArrayList<DistrictPollListResponse.PollOption> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.poll_and_survey_item, parent, false)
+//        val view =
+//            LayoutInflater.from(parent.context)
+//                .inflate(R.layout.poll_and_survey_item, parent, false)
+        val binding =
+            PollAndSurveyItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
+            binding, itemClickCall, itemClickWeb
         )
     }
 
@@ -52,10 +56,10 @@ class PollAndSurveyAdapter(
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
-        view: View,
+        private val binding: PollAndSurveyItemBinding,
         private val itemClickCall: (DistrictPollListResponse.Poll) -> Unit,
         private val itemClickWeb: (DistrictPollListResponse.Poll) -> Unit
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
 //        constructor(parent: ViewGroup) : this(
 //            LayoutInflater.from(parent.context).inflate(
@@ -68,68 +72,68 @@ class PollAndSurveyAdapter(
             newsPortal: DistrictPollListResponse.Poll,
             pollOption: ArrayList<DistrictPollListResponse.PollOption>
         ) {
-            itemView.tvPollAndSurveyQuestion.text = newsPortal.name
+            binding.tvPollAndSurveyQuestion.text = newsPortal.name
 
-            itemView.rbExcellent.text = pollOption[0].option_name
-            itemView.rbGood.text = pollOption[1].option_name
-            itemView.rbcantAnswer.text = pollOption[2].option_name
-            itemView.rbBad.text = pollOption[3].option_name
-            itemView.rbVeryBad.text = pollOption[4].option_name
+            binding.rbExcellent.text = pollOption[0].option_name
+            binding.rbGood.text = pollOption[1].option_name
+            binding.rbcantAnswer.text = pollOption[2].option_name
+            binding.rbBad.text = pollOption[3].option_name
+            binding.rbVeryBad.text = pollOption[4].option_name
 
-            itemView.rbExcellent.setOnClickListener {
+            binding.rbExcellent.setOnClickListener {
                 newsPortal.checkedRadioId = pollOption[0].option_id
                 resetRadioButtons()
-                itemView.rbExcellent.isChecked = !itemView.rbExcellent.isChecked
+                binding.rbExcellent.isChecked = !binding.rbExcellent.isChecked
             }
 
-            itemView.rbGood.setOnClickListener {
+            binding.rbGood.setOnClickListener {
                 newsPortal.checkedRadioId = pollOption[1].option_id
                 resetRadioButtons()
-                itemView.rbGood.isChecked = !itemView.rbGood.isChecked
+                binding.rbGood.isChecked = !binding.rbGood.isChecked
             }
 
-            itemView.rbcantAnswer.setOnClickListener {
+            binding.rbcantAnswer.setOnClickListener {
                 newsPortal.checkedRadioId = pollOption[2].option_id
                 resetRadioButtons()
-                itemView.rbcantAnswer.isChecked = !itemView.rbcantAnswer.isChecked
+                binding.rbcantAnswer.isChecked = !binding.rbcantAnswer.isChecked
             }
 
-            itemView.rbBad.setOnClickListener {
+            binding.rbBad.setOnClickListener {
                 newsPortal.checkedRadioId = pollOption[3].option_id
                 resetRadioButtons()
-                itemView.rbBad.isChecked = !itemView.rbBad.isChecked
+                binding.rbBad.isChecked = !binding.rbBad.isChecked
             }
 
-            itemView.rbVeryBad.setOnClickListener {
+            binding.rbVeryBad.setOnClickListener {
                 newsPortal.checkedRadioId = pollOption[4].option_id
                 resetRadioButtons()
-                itemView.rbVeryBad.isChecked = !itemView.rbVeryBad.isChecked
+                binding.rbVeryBad.isChecked = !binding.rbVeryBad.isChecked
             }
 
             if (newsPortal.user_rating.isNotEmpty()) {
                 if (newsPortal.user_rating == pollOption[0].option_id) {
                     resetRadioButtons()
-                    itemView.rbExcellent.isChecked = true
+                    binding.rbExcellent.isChecked = true
                 }
 
                 if (newsPortal.user_rating == pollOption[1].option_id) {
                     resetRadioButtons()
-                    itemView.rbGood.isChecked = true
+                    binding.rbGood.isChecked = true
                 }
 
                 if (newsPortal.user_rating == pollOption[2].option_id) {
                     resetRadioButtons()
-                    itemView.rbcantAnswer.isChecked = true
+                    binding.rbcantAnswer.isChecked = true
                 }
 
                 if (newsPortal.user_rating == pollOption[3].option_id) {
                     resetRadioButtons()
-                    itemView.rbBad.isChecked = true
+                    binding.rbBad.isChecked = true
                 }
 
                 if (newsPortal.user_rating == pollOption[4].option_id) {
                     resetRadioButtons()
-                    itemView.rbVeryBad.isChecked = true
+                    binding.rbVeryBad.isChecked = true
                 }
                 radioButtonenableStatus(false)
             } else {
@@ -139,19 +143,19 @@ class PollAndSurveyAdapter(
         }
 
         private fun resetRadioButtons() {
-            itemView.rbExcellent.isChecked = false
-            itemView.rbGood.isChecked = false
-            itemView.rbcantAnswer.isChecked = false
-            itemView.rbBad.isChecked = false
-            itemView.rbVeryBad.isChecked = false
+            binding.rbExcellent.isChecked = false
+            binding.rbGood.isChecked = false
+            binding.rbcantAnswer.isChecked = false
+            binding.rbBad.isChecked = false
+            binding.rbVeryBad.isChecked = false
         }
 
         private fun radioButtonenableStatus(isenable: Boolean) {
-            itemView.rbExcellent.isEnabled = isenable
-            itemView.rbGood.isEnabled = isenable
-            itemView.rbcantAnswer.isEnabled = isenable
-            itemView.rbBad.isEnabled = isenable
-            itemView.rbVeryBad.isEnabled = isenable
+            binding.rbExcellent.isEnabled = isenable
+            binding.rbGood.isEnabled = isenable
+            binding.rbcantAnswer.isEnabled = isenable
+            binding.rbBad.isEnabled = isenable
+            binding.rbVeryBad.isEnabled = isenable
         }
     }
 }

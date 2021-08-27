@@ -1,13 +1,11 @@
 package com.app.colorsofgujarat.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.databinding.GovtWorkNewsItemBinding
 import com.app.colorsofgujarat.pojo.GovtWorkListResponse
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.govt_work_news_item.view.*
 
 class GovtWorkNewsAdapter(
     private val itemClickCall: (GovtWorkListResponse.GovWork, Int) -> Unit,
@@ -18,11 +16,18 @@ class GovtWorkNewsAdapter(
     private var list: ArrayList<GovtWorkListResponse.GovWork> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.govt_work_news_item, parent, false)
+//        val view =
+//            LayoutInflater.from(parent.context)
+//                .inflate(R.layout.govt_work_news_item, parent, false)
+
+        val binding =
+            GovtWorkNewsItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickShare
+            binding, itemClickCall, itemClickShare
         )
     }
 
@@ -48,10 +53,10 @@ class GovtWorkNewsAdapter(
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
-        view: View,
+        private val binding: GovtWorkNewsItemBinding,
         private val itemClickCall: (GovtWorkListResponse.GovWork, Int) -> Unit,
         private val itemClickShare: (GovtWorkListResponse.GovWork) -> Unit
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindForecast(
             newsPortal: GovtWorkListResponse.GovWork,
@@ -59,18 +64,18 @@ class GovtWorkNewsAdapter(
         ) {
             with(newsPortal) {
 
-                itemView.tvNewsTitle.text = newsPortal.name
-                itemView.tvRateReceived.text = newsPortal.average_rating
+                binding.tvNewsTitle.text = newsPortal.name
+                binding.tvRateReceived.text = newsPortal.average_rating
 
-                Glide.with(itemView.ivNews.context)
+                Glide.with(binding.ivNews.context)
                     .load(newsPortal.up_pro_img)
-                    .into(itemView.ivNews)
+                    .into(binding.ivNews)
 
-                itemView.cvRootGovtWorkNewsItem.setOnClickListener {
+                binding.cvRootGovtWorkNewsItem.setOnClickListener {
                     itemClickCall(this, index)
                 }
 
-                itemView.ivNewsShare.setOnClickListener {
+                binding.ivNewsShare.setOnClickListener {
                     itemClickShare(this)
                 }
 //

@@ -13,6 +13,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.FragmentDharasabhyoYourReviewBinding
+import com.app.colorsofgujarat.pojo.GiveMLARatingResponse
+import com.app.colorsofgujarat.pojo.MLADetailResponse
+import com.app.colorsofgujarat.ui.activity.DharasabhyoDetailActivity
+import com.app.colorsofgujarat.viewmodel.MLAViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
@@ -23,13 +30,6 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.MPPointF
-import com.app.colorsofgujarat.R
-import com.app.colorsofgujarat.apputils.*
-import com.app.colorsofgujarat.pojo.GiveMLARatingResponse
-import com.app.colorsofgujarat.pojo.MLADetailResponse
-import com.app.colorsofgujarat.ui.activity.DharasabhyoDetailActivity
-import com.app.colorsofgujarat.viewmodel.MLAViewModel
-import kotlinx.android.synthetic.main.fragment_dharasabhyo_your_review.*
 import java.util.*
 
 class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
@@ -37,13 +37,17 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var mlaDetailResponse: MLADetailResponse
     private lateinit var mlaViewModel: MLAViewModel
     private var checkedRadioId = ""
+    private var _binding: FragmentDharasabhyoYourReviewBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_dharasabhyo_your_review, container, false)
+    ): View {
+        //return inflater.inflate(R.layout.fragment_dharasabhyo_your_review, container, false)
+        _binding = FragmentDharasabhyoYourReviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,7 +68,7 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)),
             0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.text = greenText
+        binding.tvGiveRateGet10Point.text = greenText
 
         //val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
         val yellowText = SpannableString(requireActivity().getPollPoints())
@@ -73,29 +77,29 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        tvGive_rate_get_10_point.append(yellowText)
+        binding.tvGiveRateGet10Point.append(yellowText)
 
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
         thirdText.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.black)),
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        tvGive_rate_get_10_point.append(thirdText)
+        binding.tvGiveRateGet10Point.append(thirdText)
     }
 
     private fun handleResponse(commonResponse: GiveMLARatingResponse?) {
         if (null != commonResponse) {
-            pbMLAReviewSubmit.visibility = View.GONE
-            btMLAReviewSubmit.visibility = View.VISIBLE
-            llGiveRatingToMLA.visibility = View.GONE
+            binding.pbMLAReviewSubmit.visibility = View.GONE
+            binding.btMLAReviewSubmit.visibility = View.VISIBLE
+            binding.llGiveRatingToMLA.visibility = View.GONE
             //rgDharasabhyaReview.visibility = View.GONE
-            tvAnswerSubmitted.visibility = View.VISIBLE
+            binding.tvAnswerSubmitted.visibility = View.VISIBLE
 
-            rbExcellent.isEnabled = false
-            rbGood.isEnabled = false
-            rbCantAnswer.isEnabled = false
-            rbBad.isEnabled = false
-            rbVeryBad.isEnabled = false
+            binding.rbExcellent.isEnabled = false
+            binding.rbGood.isEnabled = false
+            binding.rbCantAnswer.isEnabled = false
+            binding.rbBad.isEnabled = false
+            binding.rbVeryBad.isEnabled = false
 
             showAlertDialog(commonResponse.message)
             requireContext().setUserPoints(commonResponse.user_points)
@@ -110,51 +114,51 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
     private fun setupViews() {
         if (mlaDetailResponse.gov_mla_detail[0].user_rating.isNotEmpty()) {
             //rating is already done by this user
-            llGiveRatingToMLA.visibility = View.GONE
+            binding.llGiveRatingToMLA.visibility = View.GONE
             //rgDharasabhyaReview.visibility = View.GONE
-            tvAnswerSubmitted.visibility = View.VISIBLE
+            binding.tvAnswerSubmitted.visibility = View.VISIBLE
 
-            rbExcellent.isEnabled = false
-            rbGood.isEnabled = false
-            rbCantAnswer.isEnabled = false
-            rbBad.isEnabled = false
-            rbVeryBad.isEnabled = false
+            binding.rbExcellent.isEnabled = false
+            binding.rbGood.isEnabled = false
+            binding.rbCantAnswer.isEnabled = false
+            binding.rbBad.isEnabled = false
+            binding.rbVeryBad.isEnabled = false
         }
 
         if (mlaDetailResponse.poll.isNotEmpty()) {
-            tvDharasabhyaReviewQuestion.text = mlaDetailResponse.poll[0].poll_question
+            binding.tvDharasabhyaReviewQuestion.text = mlaDetailResponse.poll[0].poll_question
 
-            rbExcellent.text = mlaDetailResponse.poll[0].poll_options[0].option_name
+            binding.rbExcellent.text = mlaDetailResponse.poll[0].poll_options[0].option_name
             if (mlaDetailResponse.poll[0].poll_options[0].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
-                rbExcellent.isChecked = true
+                binding.rbExcellent.isChecked = true
             }
-            rbGood.text = mlaDetailResponse.poll[0].poll_options[1].option_name
+            binding.rbGood.text = mlaDetailResponse.poll[0].poll_options[1].option_name
             if (mlaDetailResponse.poll[0].poll_options[1].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
-                rbGood.isChecked = true
+                binding.rbGood.isChecked = true
             }
-            rbCantAnswer.text = mlaDetailResponse.poll[0].poll_options[2].option_name
+            binding.rbCantAnswer.text = mlaDetailResponse.poll[0].poll_options[2].option_name
             if (mlaDetailResponse.poll[0].poll_options[2].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
-                rbCantAnswer.isChecked = true
+                binding.rbCantAnswer.isChecked = true
             }
-            rbBad.text = mlaDetailResponse.poll[0].poll_options[3].option_name
+            binding.rbBad.text = mlaDetailResponse.poll[0].poll_options[3].option_name
             if (mlaDetailResponse.poll[0].poll_options[3].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
-                rbBad.isChecked = true
+                binding.rbBad.isChecked = true
             }
-            rbVeryBad.text = mlaDetailResponse.poll[0].poll_options[4].option_name
+            binding.rbVeryBad.text = mlaDetailResponse.poll[0].poll_options[4].option_name
             if (mlaDetailResponse.poll[0].poll_options[4].option_id == mlaDetailResponse.gov_mla_detail[0].user_rating) {
-                rbVeryBad.isChecked = true
+                binding.rbVeryBad.isChecked = true
             }
             setupRadioButtons()
         }
     }
 
     private fun setupRadioButtons() {
-        btMLAReviewSubmit.setOnClickListener {
+        binding.btMLAReviewSubmit.setOnClickListener {
             if (checkedRadioId.isEmpty()) {
                 showSnackBar(getString(R.string.invalid_option), requireActivity())
             } else {
-                pbMLAReviewSubmit.visibility = View.VISIBLE
-                btMLAReviewSubmit.visibility = View.INVISIBLE
+                binding.pbMLAReviewSubmit.visibility = View.VISIBLE
+                binding.btMLAReviewSubmit.visibility = View.INVISIBLE
 
                 mlaDetailResponse.gov_mla_detail[0].user_rating = mlaDetailResponse.poll[0].poll_id
 
@@ -167,33 +171,33 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
             }
         }
 
-        rbExcellent.setOnClickListener {
+        binding.rbExcellent.setOnClickListener {
             resetRadioButtons()
-            rbExcellent.isChecked = !rbExcellent.isChecked
+            binding.rbExcellent.isChecked = !binding.rbExcellent.isChecked
             checkedRadioId = mlaDetailResponse.poll[0].poll_options[0].option_id
         }
 
-        rbGood.setOnClickListener {
+        binding.rbGood.setOnClickListener {
             resetRadioButtons()
-            rbGood.isChecked = !rbGood.isChecked
+            binding.rbGood.isChecked = !binding.rbGood.isChecked
             checkedRadioId = mlaDetailResponse.poll[0].poll_options[1].option_id
         }
 
-        rbCantAnswer.setOnClickListener {
+        binding.rbCantAnswer.setOnClickListener {
             resetRadioButtons()
-            rbCantAnswer.isChecked = !rbCantAnswer.isChecked
+            binding.rbCantAnswer.isChecked = !binding.rbCantAnswer.isChecked
             checkedRadioId = mlaDetailResponse.poll[0].poll_options[2].option_id
         }
 
-        rbBad.setOnClickListener {
+        binding.rbBad.setOnClickListener {
             resetRadioButtons()
-            rbBad.isChecked = !rbBad.isChecked
+            binding.rbBad.isChecked = !binding.rbBad.isChecked
             checkedRadioId = mlaDetailResponse.poll[0].poll_options[3].option_id
         }
 
-        rbVeryBad.setOnClickListener {
+        binding.rbVeryBad.setOnClickListener {
             resetRadioButtons()
-            rbVeryBad.isChecked = !rbVeryBad.isChecked
+            binding.rbVeryBad.isChecked = !binding.rbVeryBad.isChecked
             checkedRadioId = mlaDetailResponse.poll[0].poll_options[4].option_id
         }
 
@@ -201,11 +205,11 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     private fun setupChart() {
-        chart.description.isEnabled = false
-        chart.setExtraOffsets(0f, 10f, 15f, 5f)
+        binding.chart.description.isEnabled = false
+        binding.chart.setExtraOffsets(0f, 10f, 15f, 5f)
         //https://stackoverflow.com/questions/56276481/android-mp-chart-set-space-between-legend-and-axis
 
-        chart.dragDecelerationFrictionCoef = 0.95f
+        binding.chart.dragDecelerationFrictionCoef = 0.95f
 
         //chart.setCenterTextTypeface(tfLight);
         //chart.setCenterText(generateCenterSpannableText());
@@ -219,22 +223,22 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
 
         //chart.setDrawHoleEnabled(true);
         //chart.setHoleColor(Color.WHITE);
-        chart.setTransparentCircleColor(Color.WHITE)
-        chart.setTransparentCircleAlpha(110)
+        binding.chart.setTransparentCircleColor(Color.WHITE)
+        binding.chart.setTransparentCircleAlpha(110)
 
         //chart.setHoleRadius(58f);
 
         //chart.setHoleRadius(58f);
-        chart.transparentCircleRadius = 61f
+        binding.chart.transparentCircleRadius = 61f
 
         //chart.setDrawCenterText(true);
 
 
         //chart.setDrawCenterText(true);
-        chart.rotationAngle = 0f
+        binding.chart.rotationAngle = 0f
         // enable rotation of the chart by touch
-        chart.isRotationEnabled = true
-        chart.isHighlightPerTapEnabled = true
+        binding.chart.isRotationEnabled = true
+        binding.chart.isHighlightPerTapEnabled = true
         // chart.setUnit(" €");
         // chart.setDrawUnitsInChart(true);
 
@@ -244,7 +248,7 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         // chart.setDrawUnitsInChart(true);
 
         // add a selection listener
-        chart.setOnChartValueSelectedListener(this)
+        binding.chart.setOnChartValueSelectedListener(this)
 
         //seekBarX.setProgress(4);
         //seekBarY.setProgress(10);
@@ -252,10 +256,10 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
 
         //seekBarX.setProgress(4);
         //seekBarY.setProgress(10);
-        chart.animateY(1400, Easing.EaseInOutQuad)
+        binding.chart.animateY(1400, Easing.EaseInOutQuad)
         // chart.spin(2000, 0, 360);
 
-        val l = chart.legend
+        val l = binding.chart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l.orientation = Legend.LegendOrientation.VERTICAL
@@ -265,13 +269,13 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         l.yOffset = 0f
 
         // entry label styling
-        chart.setEntryLabelColor(Color.WHITE)
+        binding.chart.setEntryLabelColor(Color.WHITE)
         //chart.setEntryLabelTypeface(tfRegular);
         //chart.setEntryLabelTypeface(tfRegular);
-        chart.setEntryLabelTextSize(12f)
+        binding.chart.setEntryLabelTextSize(12f)
 
-        chart.isDrawHoleEnabled = false //remove center area
-        chart.setDrawEntryLabels(false)//hide text in chart (label text)
+        binding.chart.isDrawHoleEnabled = false //remove center area
+        binding.chart.setDrawEntryLabels(false)//hide text in chart (label text)
         setData()
     }
 
@@ -320,11 +324,11 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
         data.setValueTextSize(11f)
         data.setValueTextColor(Color.WHITE)
         //data.setValueTypeface(tfLight);
-        chart.data = data
+        binding.chart.data = data
 
         // undo all highlights
-        chart.highlightValues(null)
-        chart.invalidate()
+        binding.chart.highlightValues(null)
+        binding.chart.invalidate()
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
@@ -341,11 +345,11 @@ class DharasabhyoYourReviewFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     private fun resetRadioButtons() {
-        rbExcellent.isChecked = false
-        rbGood.isChecked = false
-        rbCantAnswer.isChecked = false
-        rbBad.isChecked = false
-        rbVeryBad.isChecked = false
+        binding.rbExcellent.isChecked = false
+        binding.rbGood.isChecked = false
+        binding.rbCantAnswer.isChecked = false
+        binding.rbBad.isChecked = false
+        binding.rbVeryBad.isChecked = false
     }
 
     private fun showAlertDialog(msg: String) {

@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.app.colorsofgujarat.R
 import com.app.colorsofgujarat.apputils.*
+import com.app.colorsofgujarat.databinding.ActivityHomeBinding
 import com.app.colorsofgujarat.pojo.PopupBannerResponse
 import com.app.colorsofgujarat.ui.fragment.HomeFragment
 import com.app.colorsofgujarat.ui.fragment.LivePollFragment
@@ -20,8 +21,6 @@ import com.app.colorsofgujarat.ui.fragment.QuizAndContestFragment
 import com.app.colorsofgujarat.ui.fragment.WinnerFragment
 import com.app.colorsofgujarat.viewmodel.SettingsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.fragment_menu.*
 
 class HomeActivity : ExtendedToolbarActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -30,18 +29,19 @@ class HomeActivity : ExtendedToolbarActivity(),
     private var handler: Handler? = null
     private var runnableCode: Runnable? = null
     private lateinit var settingsViewModel: SettingsViewModel
-
+    private lateinit var binding: ActivityHomeBinding
     override val layoutId: Int
         get() = R.layout.activity_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
 
         setToolbarTitle(getString(R.string.colors_of_guj))
         hideBackButton()
         showNotificationIcon()
         setupListener()
-        bottomNavigationView.setOnNavigationItemSelectedListener(this)
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         switchFragment(HomeFragment(), false)
 
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
@@ -54,27 +54,27 @@ class HomeActivity : ExtendedToolbarActivity(),
     }
 
     private fun setupListener() {
-        ivAboutUs.setOnClickListener {
+        binding.newsCategory.ivAboutUs.setOnClickListener {
             hideMenu()
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-        tvContactUs.setOnClickListener {
+        binding.newsCategory.tvContactUs.setOnClickListener {
             hideMenu()
             startActivity(Intent(this, ContactUsActivity::class.java))
         }
 
-        ivShareApp.setOnClickListener {
+        binding.newsCategory.ivShareApp.setOnClickListener {
             hideMenu()
             shareApp()
         }
 
-        ivRateUs.setOnClickListener {
+        binding.newsCategory.ivRateUs.setOnClickListener {
             hideMenu()
             rateApp()
         }
 
-        ivTNC.setOnClickListener {
+        binding.newsCategory.ivTNC.setOnClickListener {
             hideMenu()
             startActivity(Intent(this, TNCActivity::class.java))
         }
@@ -87,17 +87,17 @@ class HomeActivity : ExtendedToolbarActivity(),
 //            startActivity(mIntent)
 //        }
 
-        ivClose.setOnClickListener {
-            if (newsCategory.isVisible) {
-                newsCategory.visibility = View.GONE
+        binding.newsCategory.ivClose.setOnClickListener {
+            if (binding.newsCategory.root.isVisible) {
+                binding.newsCategory.root.visibility = View.GONE
             } else {
-                newsCategory.visibility = View.VISIBLE
+                binding.newsCategory.root.visibility = View.VISIBLE
             }
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (bottomNavigationView.selectedItemId != item.itemId) {
+        if (binding.bottomNavigationView.selectedItemId != item.itemId) {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     switchFragment(HomeFragment(), false)
@@ -109,8 +109,8 @@ class HomeActivity : ExtendedToolbarActivity(),
                     switchFragment(QuizAndContestFragment(), false)
                 }
                 R.id.navigation_menu -> {
-                    if (!newsCategory.isVisible) {
-                        newsCategory.visibility = View.VISIBLE
+                    if (!binding.newsCategory.root.isVisible) {
+                        binding.newsCategory.root.visibility = View.VISIBLE
                     }
                     return false
                 }
@@ -135,8 +135,8 @@ class HomeActivity : ExtendedToolbarActivity(),
 
     private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
-        if (newsCategory.isVisible) {
-            newsCategory.visibility = View.GONE
+        if (binding.newsCategory.root.isVisible) {
+            binding.newsCategory.root.visibility = View.GONE
         } else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed()
@@ -152,8 +152,8 @@ class HomeActivity : ExtendedToolbarActivity(),
     }
 
     private fun hideMenu() {
-        if (newsCategory.isVisible) {
-            newsCategory.visibility = View.GONE
+        if (binding.newsCategory.root.isVisible) {
+            binding.newsCategory.root.visibility = View.GONE
         }
     }
 

@@ -2,13 +2,12 @@ package com.app.colorsofgujarat.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.colorsofgujarat.R
+import com.app.colorsofgujarat.databinding.WinnerItemBinding
 import com.app.colorsofgujarat.pojo.WinnerListResponse
-import kotlinx.android.synthetic.main.winner_item.view.*
 
 class WinnerAdapter(
     private val itemClickCall: (WinnerListResponse.PointsPrize, Boolean) -> Unit,
@@ -19,11 +18,17 @@ class WinnerAdapter(
     private var list: ArrayList<WinnerListResponse.PointsPrize> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.winner_item, parent, false)
+//        val view =
+//            LayoutInflater.from(parent.context)
+//                .inflate(R.layout.winner_item, parent, false)
+        val binding =
+            WinnerItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return HomeOffersViewHolder(
-            view, itemClickCall, itemClickWeb
+            binding, itemClickCall, itemClickWeb
         )
     }
 
@@ -44,10 +49,10 @@ class WinnerAdapter(
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
-        view: View,
+        private val binding: WinnerItemBinding,
         private val itemClickCall: (WinnerListResponse.PointsPrize, Boolean) -> Unit,
         private val itemClickWeb: (WinnerListResponse.PointsPrize) -> Unit
-    ) : RecyclerView.ViewHolder(view) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
         fun bindForecast(
@@ -55,53 +60,53 @@ class WinnerAdapter(
         ) {
             with(newsPortal) {
 
-                itemView.tvWinnerTitle.text = newsPortal.name1 + "\n(" + newsPortal.name2 + ")"
+                binding.tvWinnerTitle.text = newsPortal.name1 + "\n(" + newsPortal.name2 + ")"
                 if (newsPortal.prize_mode == "Points Winner") {
-                    itemView.btViewWinner.text =
-                        itemView.btViewWinner.context.getString(R.string.Check_Winner)
-                    itemView.btViewWinner.setBackgroundColor(
+                    binding.btViewWinner.text =
+                        binding.btViewWinner.context.getString(R.string.Check_Winner)
+                    binding.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(
-                            itemView.btViewWinner.context, R.color.gray_BEBEBE
+                            binding.btViewWinner.context, R.color.gray_BEBEBE
                         )
                     )
                 } else {
-                    itemView.btViewWinner.text =
-                        itemView.btViewWinner.context.getString(R.string.Prize_Details)
-                    itemView.btViewWinner.setBackgroundColor(
+                    binding.btViewWinner.text =
+                        binding.btViewWinner.context.getString(R.string.Prize_Details)
+                    binding.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(
-                            itemView.btViewWinner.context, R.color.red_CC252C
+                            binding.btViewWinner.context, R.color.red_CC252C
                         )
                     )
                 }
 
-//                Glide.with(itemView.ivNewsPortal.context)
+//                Glide.with(binding.ivNewsPortal.context)
 //                    .load(newsPortal.up_pro_img)
-//                    .into(itemView.ivNewsPortal)
+//                    .into(binding.ivNewsPortal)
 //
 //                if (newsPortal.name.isNullOrEmpty()) {
-//                    itemView.tvNewsPortalTitle.visibility = View.GONE
+//                    binding.tvNewsPortalTitle.visibility = View.GONE
 //                }
 //                if (newsPortal.address.isNullOrEmpty()) {
-//                    itemView.llNewsPortalAddress.visibility = View.GONE
+//                    binding.llNewsPortalAddress.visibility = View.GONE
 //                }
 //                if (newsPortal.contact_no.isNullOrEmpty()) {
-//                    itemView.llNewsPortalPhone.visibility = View.GONE
+//                    binding.llNewsPortalPhone.visibility = View.GONE
 //                }
 //                if (newsPortal.email.isNullOrEmpty()) {
-//                    itemView.llNewsPortalEmail.visibility = View.GONE
+//                    binding.llNewsPortalEmail.visibility = View.GONE
 //                }
 //                if (newsPortal.website.isNullOrEmpty()) {
-//                    itemView.llNewsPortalWebsite.visibility = View.GONE
+//                    binding.llNewsPortalWebsite.visibility = View.GONE
 //                }
 //
-//                itemView.tvNewsPortalTitle.text = newsPortal.name
-//                itemView.tvNewsPortalAddress.text = newsPortal.address
-//                itemView.tvNewsPortalPhone.text = newsPortal.contact_no
-//                itemView.tvNewsPortalEmail.text = newsPortal.email
-//                itemView.tvNewsPortalWebsite.text = newsPortal.website
+//                binding.tvNewsPortalTitle.text = newsPortal.name
+//                binding.tvNewsPortalAddress.text = newsPortal.address
+//                binding.tvNewsPortalPhone.text = newsPortal.contact_no
+//                binding.tvNewsPortalEmail.text = newsPortal.email
+//                binding.tvNewsPortalWebsite.text = newsPortal.website
 //
-//                itemView.cvRootGovtWorkNewsItem.setOnClickListener {
-//                    if (itemView.btViewWinner.text.equals("result")) {
+//                binding.cvRootGovtWorkNewsItem.setOnClickListener {
+//                    if (binding.btViewWinner.text.equals("result")) {
 //                        itemClickCall(this, false)
 //                    } else {
 //                        itemClickCall(this, true)
@@ -109,9 +114,9 @@ class WinnerAdapter(
 //
 //                }
 
-                itemView.btViewWinner.setOnClickListener {
-                    if (itemView.btViewWinner.text.equals(
-                            itemView.btViewWinner.context.getString(R.string.Check_Winner)
+                binding.btViewWinner.setOnClickListener {
+                    if (binding.btViewWinner.text.equals(
+                            binding.btViewWinner.context.getString(R.string.Check_Winner)
                         )
                     ) {
                         itemClickWeb(this)
@@ -120,7 +125,7 @@ class WinnerAdapter(
                     }
                 }
 //
-//                itemView.ivWeb.setOnClickListener {
+//                binding.ivWeb.setOnClickListener {
 //                    itemClickWeb(this)
 //                }
             }
