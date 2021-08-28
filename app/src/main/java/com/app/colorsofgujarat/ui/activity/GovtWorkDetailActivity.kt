@@ -99,7 +99,7 @@ class GovtWorkDetailActivity : AppCompatActivity() {
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             0, greenText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        binding.tvGiveOpinionGet10Point.text = greenText
+        binding.tvGiveRateGet10Point.text = greenText
         binding.tvGiveOpinionGet10Point.text = greenText2
 
         //val yellowText = SpannableString(getString(R.string.give_rate_get_10_point_2))
@@ -111,7 +111,7 @@ class GovtWorkDetailActivity : AppCompatActivity() {
             0, yellowText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        binding.tvGiveOpinionGet10Point.append(yellowText)
+        binding.tvGiveRateGet10Point.append(yellowText)
         binding.tvGiveOpinionGet10Point.append(yellowText)
 
         val thirdText = SpannableString(getString(R.string.give_rate_get_10_point_3))
@@ -119,7 +119,7 @@ class GovtWorkDetailActivity : AppCompatActivity() {
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)),
             0, thirdText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        binding.tvGiveOpinionGet10Point.append(thirdText)
+        binding.tvGiveRateGet10Point.append(thirdText)
         binding.tvGiveOpinionGet10Point.append(thirdText)
 
         if (!SPreferenceManager.getInstance(this).banners.popup_banner.isNullOrEmpty()) {
