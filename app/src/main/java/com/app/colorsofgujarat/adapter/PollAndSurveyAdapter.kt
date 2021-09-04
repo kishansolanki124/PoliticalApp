@@ -135,10 +135,39 @@ class PollAndSurveyAdapter(
                     resetRadioButtons()
                     binding.rbVeryBad.isChecked = true
                 }
-                radioButtonenableStatus(false)
+                radioButtonEnableStatus(false)
             } else {
                 resetRadioButtons()
-                radioButtonenableStatus(true)
+                radioButtonEnableStatus(true)
+            }
+
+            if (newsPortal.checkedRadioId.isNotEmpty()) {
+                when (newsPortal.checkedRadioId) {
+                    pollOption[4].option_id -> {
+                        resetRadioButtons()
+                        binding.rbVeryBad.isChecked = true
+                    }
+
+                    pollOption[3].option_id -> {
+                        resetRadioButtons()
+                        binding.rbBad.isChecked = true
+                    }
+
+                    pollOption[2].option_id -> {
+                        resetRadioButtons()
+                        binding.rbcantAnswer.isChecked = true
+                    }
+
+                    pollOption[1].option_id -> {
+                        resetRadioButtons()
+                        binding.rbGood.isChecked = true
+                    }
+
+                    pollOption[0].option_id -> {
+                        resetRadioButtons()
+                        binding.rbExcellent.isChecked = true
+                    }
+                }
             }
         }
 
@@ -150,7 +179,7 @@ class PollAndSurveyAdapter(
             binding.rbVeryBad.isChecked = false
         }
 
-        private fun radioButtonenableStatus(isenable: Boolean) {
+        private fun radioButtonEnableStatus(isenable: Boolean) {
             binding.rbExcellent.isEnabled = isenable
             binding.rbGood.isEnabled = isenable
             binding.rbcantAnswer.isEnabled = isenable
