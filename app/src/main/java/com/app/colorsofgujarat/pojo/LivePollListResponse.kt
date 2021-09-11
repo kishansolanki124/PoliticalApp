@@ -9,6 +9,7 @@ data class LivePollListResponse(
     data class LivePoll(
         var id: String = "",
         var name: String = "",
+        var votes: Int = 0,
         var poll_status: String = ""
     )
 }

@@ -72,6 +72,8 @@ class LivePollAdapter(
                 if (newsPortal.poll_status == "Result") {
                     binding.tvGiveRateGet10Point.text = ""
                     binding.btViewWinner.text = "result"
+
+                    binding.tvVotesTotal.text = "Votes: " + newsPortal.votes
                     binding.btViewWinner.setBackgroundColor(
                         ContextCompat.getColor(
                             binding.btViewWinner.context, R.color.gray_BEBEBE
@@ -125,6 +127,7 @@ class LivePollAdapter(
                     )
                     binding.tvGiveRateGet10Point.append(thirdText)
 
+                    binding.tvVotesTotal.text = ""
 
                     binding.btViewWinner.text = "running"
                     binding.btViewWinner.setBackgroundColor(

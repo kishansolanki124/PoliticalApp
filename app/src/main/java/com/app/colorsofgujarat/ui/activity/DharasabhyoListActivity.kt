@@ -160,13 +160,13 @@ class DharasabhyoListActivity : AppCompatActivity() {
 
         binding.spDistrict.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
+                parent: AdapterView<*>?,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
                 val district: SettingsResponse.District =
-                    parent.selectedItem as SettingsResponse.District
+                    parent?.selectedItem as SettingsResponse.District
                 districtId = district.id
                 getNews()
             }

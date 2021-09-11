@@ -53,13 +53,25 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvVotesTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/regular"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                tools:text="Votes: 1200" />
+
             <FrameLayout
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:visibility="invisible"
                     android:id="@+id/ivLivePollShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

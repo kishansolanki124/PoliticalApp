@@ -218,7 +218,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        //(activity as HomeActivity).setToolbarTitle(getString(R.string.colors_of_guj))
+        (activity as HomeActivity).setToolbarTitle(getString(R.string.colors_of_guj))
 
         binding.tvUserPoints.text = SPreferenceManager.getInstance(requireContext())
             .settings.user_points

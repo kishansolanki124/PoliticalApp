@@ -18,11 +18,13 @@ import android.os.Build
 import android.os.Environment
 import android.text.InputType
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.WindowManager.BadTokenException
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -538,7 +540,12 @@ fun showProgressDialog(context: Context, popup_banner: List<PopupBannerResponse.
         }
     } else if (null != pgDialog && (!pgDialog!!.isShowing)) {
         if (!(context as Activity).isFinishing) {
-            pgDialog?.show()
+            try {
+                pgDialog?.show()
+            } catch (e: BadTokenException) {
+                Log.e("WindowManagerBad ", e.toString())
+                dismissProgressDialog()
+            }
         }
     }
 }
